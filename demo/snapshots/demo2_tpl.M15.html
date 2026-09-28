@@ -1544,18 +1544,6 @@ i.tw{font-style:normal;opacity:0}
 .wth{display:flex;flex-direction:column;gap:8px;padding-top:10px;border-top:1px solid var(--line)}
 .wtr{display:flex;gap:8px;align-items:flex-start;font-size:14px;line-height:1.35}.wtr .bgav span{width:24px;height:24px;border:0}.wtr b{font-weight:600}
 .wtf{display:flex;gap:8px;align-items:center}.wtf input{flex:1;min-width:0;height:38px;padding:0 14px;border:0;border-radius:var(--r-pill);background:var(--card2);font:inherit;font-size:14px;outline:none}.wtf button{height:38px;padding:0 14px;border-radius:var(--r-pill);background:#0B0B0C;color:#fff;font-weight:600;font-size:13.5px}
-
-.tchips em.nx{background:#fff;color:#0B0B0C}
-.wact{position:absolute;left:0;right:0;top:226px;height:44px;display:flex;gap:8px;opacity:0;transform:translateY(-8px);pointer-events:none;transition:opacity .3s .15s,transform .4s cubic-bezier(.2,.8,.2,1) .15s;z-index:60}
-.wact.on{opacity:1;transform:none;pointer-events:auto}
-.wact button{flex:1;height:44px;border-radius:var(--r-pill);background:var(--card);box-shadow:inset 0 0 0 1px var(--line);display:inline-flex;align-items:center;justify-content:center;gap:6px;font-size:13.5px;font-weight:600;color:var(--text)}
-.wact button:first-child{background:#0B0B0C;color:#fff;box-shadow:none}
-.splitc{margin:0 16px;padding:0;background:var(--card);overflow:hidden}
-.sph2{display:flex;align-items:center;gap:12px;width:100%;padding:12px 14px;text-align:left;color:var(--text)}.sph2>svg{color:var(--dim);transition:transform .25s}.splitc.op .sph2>svg{transform:rotate(180deg)}
-.spav2{display:flex}.spav2 span{width:32px;height:32px;border-radius:50%;overflow:hidden;position:relative;border:2px solid var(--card);margin-left:-10px}.spav2 span:first-child{margin-left:0}.spav2 img{width:100%;height:100%;object-fit:cover}
-.sptx{flex:1;display:flex;flex-direction:column;gap:2px}.sptx b{font-size:15px;letter-spacing:-.02em}.sptx small{font-size:12.5px;color:var(--muted)}
-.splitc.op .spr2,.splitc.op .sprel{margin-left:14px;margin-right:14px}.splitc.op .sprel{margin-bottom:12px}
-.wnx{font-style:normal;background:#fff;color:#0B0B0C;padding:3px 8px;border-radius:var(--r-pill)}
 </style>
 
 <div class="app framed" id="app">
@@ -2187,7 +2175,7 @@ function sparesView(){
   return `<div class="scroll"><div style="padding-bottom:130px">
     <header class="whead"><span></span><div class="wtitle"><h1 class="sh1">Tickets <span class="emo">🎟️</span></h1><span class="wcity">Spares in ${state.city} · face value only</span></div><button class="wicon" data-act="sellstart" aria-label="List a spare">${ic('plus',20)}</button></header>
     ${tSeg('spares')}
-    <div class="sprule"><span><i class="eb">🔒</i>Face value + $2</span><span><i class="eb">👯</i>Crews first</span><span><i class="eb">✌️</i>Max 2 each</span></div>
+    <div class="sprule"><span><i class="eb">🔒</i>Face value + $2 flat</span><span><i class="eb">👯</i>Crews get 24h first</span><span><i class="eb">✌️</i>Max 2 per show</span></div>
     <div class="spfl">${[['all','All'],['week','This week'],['under','Under $150'],['open','Open to all']].map(([k,l])=>`<button data-act="spf" data-v="${k}" aria-pressed="${f===k}">${l}</button>`).join('')}</div>
     <div class="splist">${L.map(x=>spareCard(x)).join('')||'<p class="mempty">No spares match. Try another filter.</p>'}</div>
     <p class="slab" style="margin-top:26px">No spares yet</p>
@@ -2199,12 +2187,12 @@ function tickets(){
   const claimed=Object.keys(state.claimed||{}).map(id=>byId[id]).filter(Boolean).map(s=>[s,spareOf(s).sec,'Next to your crew','crew','Gate A',true]);
   const all=claimed.concat(mine,(state.extraTix||[]).map(t=>[t[0],t[1],t[2],'imported',t[4]])).sort((x,y)=>x[0].dates[0].localeCompare(y[0].dates[0]));
   const days=d=>{ const n=Math.round((Date.UTC(...d.split('-').map((v,i)=>i===1?v-1:+v))-Date.UTC(2026,8,27))/864e5); return n<=0?'today':n===1?'tomorrow':'in '+n+' days'; };
-  const nx=all[0], wl=all.slice().reverse(); window._wall=wl;
+  const nx=all[0];
   const chip=(s,pending)=>pending?'<em class="pend"><i class="spin sm"></i>Transfer pending</em>':(state.listed&&state.listed[s.id])?`<em class="live"><i class="ldot"></i>Listed · $${spareOf(s).face}</em>`:`<em>${ic('check',12)}Verified</em>`;
   const card=([s,sec,seat,sub,gate,pending],i)=>`<div class="wc" data-i="${i}" style="--i:${i}"><button class="wcin" data-act="wtap" data-i="${i}" aria-label="${esc(s.artist)} ticket"><span class="tflip">
       <span class="tface f">${img(s)}<span class="wsh"></span>
-        <span class="wtop"><b>${esc(s.artist)}</b><span>${s===nx[0]?`<i class="wnx">UP NEXT · ${days(s.dates[0]).toUpperCase()}</i>`:sd(s.dates[0]).toUpperCase()}</span></span>
-        <span class="tchips">${s===nx[0]&&!pending?`<em class="nx">Up next · ${days(s.dates[0])}</em>`:''}${chip(s,pending)}</span>
+        <span class="wtop"><b>${esc(s.artist)}</b><span>${sd(s.dates[0]).toUpperCase()}</span></span>
+        <span class="tchips">${chip(s,pending)}</span>
         <span class="wstub"><span><small>Section</small><b>${sec}</b></span><span><small>Seat</small><b>${seat.replace('Row ','R').replace(' · Seat ',' · S')}</b></span><span><small>Entry</small><b>${gate}</b></span></span></span>
       <span class="tface b">${pending?`<span class="tpend"><i class="spin"></i><b>Arriving soon</b><span>${spareOf(s).seller[0]} is transferring it now</span></span>`:qrSvg(s.id)}
         <span class="tbk"><b>${esc(s.artist)}</b><span>${sec} · ${seat}</span><span>${lng(s.dates[0])} · ${esc(s.venue.replace('Madison Square Garden','MSG'))}</span><span class="tgo">${[0,1,2].map(k=>`<span>${avi(PEOPLE[(k+i+3)%8][3])}</span>`).join('')}<em>With your ${sub}</em></span></span></span>
@@ -2212,19 +2200,17 @@ function tickets(){
   if(state.tview==='spares') return sparesView();
   return `<div class="scroll"><div style="padding-bottom:130px">
     <header class="whead"><span></span><div class="wtitle"><h1 class="sh1">Tickets <span class="emo">🎟️</span></h1><span class="wcity">${all.length} upcoming · tap to open</span></div><button class="wicon" data-act="itopen" aria-label="Add ticket">${ic('plus',20)}</button></header>${tSeg('mine')}
-    <div class="wal" id="wal" data-n="${all.length}">${wl.map(card).join('')}<div class="wact" id="wact" aria-hidden="true"><button data-act="wqr">${ic('ticket',16)} Show QR</button><button data-act="wchat">${ic('chat',16)} Crew chat</button><button data-act="wsell">${ic('share',16)} Sell spare</button></div></div>
+    <div class="upnx"><span class="upk">Up next</span><b>${esc(nx[0].artist)}</b><span class="upd">${days(nx[0].dates[0])}</span><span class="upr"><i class="eb">🚪</i>Doors 7:00<i class="eb">👯</i>Meet 6:15</span></div>
+    ${splitCard()}<div class="wal" id="wal" data-n="${all.length}">${all.map(card).join('')}</div>
     <button class="wall" id="wall" data-act="wclose">Show all tickets</button>
-    <p class="slab" style="margin:22px 20px 8px">To do</p>${splitCard()}
     <p class="note" style="margin-top:14px">Tickets live in your official ticketing app.<br>Plus One mirrors them to verify you and unlock crews.</p>
   </div></div>${dock('tickets')}`;
 }
 function layWallet(open){ const w=document.getElementById('wal'); if(!w) return; const cs=[...w.querySelectorAll('.wc')], n=cs.length;
   w.dataset.open=open==null?'':open; document.getElementById('wall').classList.toggle('on',open!=null);
-  if(open==null){ const wa=document.getElementById('wact'); if(wa){ wa.classList.remove('on'); wa.setAttribute('aria-hidden','true'); }
-    cs.forEach((c,i)=>{ c.style.transform=`translateY(${i*76}px)`; c.style.zIndex=i+1; c.classList.remove('op','bk'); c.querySelector('.tflip').classList.remove('on'); }); w.style.height=(76*(n-1)+214)+'px'; return; }
-  const wa=document.getElementById('wact'); if(wa){ wa.classList.add('on'); wa.setAttribute('aria-hidden','false'); }
-  let j=0; cs.forEach((c,i)=>{ if(i===open){ c.style.transform='translateY(0)'; c.style.zIndex=50; c.classList.add('op'); c.classList.remove('bk'); } else { c.style.transform=`translateY(${282+j*14}px) scale(${1-(n-1-j)*.035})`; c.style.zIndex=j+1; c.classList.remove('op'); c.classList.add('bk'); c.querySelector('.tflip').classList.remove('on'); j++; } });
-  w.style.height=(282+(n-2)*14+214)+'px'; }
+  if(open==null){ cs.forEach((c,i)=>{ c.style.transform=`translateY(${i*76}px)`; c.style.zIndex=i+1; c.classList.remove('op','bk'); c.querySelector('.tflip').classList.remove('on'); }); w.style.height=(76*(n-1)+214)+'px'; return; }
+  let j=0; cs.forEach((c,i)=>{ if(i===open){ c.style.transform='translateY(0)'; c.style.zIndex=50; c.classList.add('op'); c.classList.remove('bk'); } else { c.style.transform=`translateY(${232+j*14}px) scale(${1-(n-1-j)*.035})`; c.style.zIndex=j+1; c.classList.remove('op'); c.classList.add('bk'); c.querySelector('.tflip').classList.remove('on'); j++; } });
+  w.style.height=(232+(n-2)*14+214)+'px'; }
 function show(){
   const s=byId[state.id];
   const cs=xCrews().filter(c=>c.s===s);
@@ -2347,11 +2333,11 @@ function vBadges(p){ const r=REL[p]||[5,5]; return `<div class="vbadges"><span>$
 function vCard(){ const st=ME.idv; return st===true?`<div class="vbadges"><span>${ic('check',12)} ID + ticket verified</span><span>🤝 Showed up 8/8</span></div>`
   :`<button class="vcard ${st==='busy'?'busy':''}" data-act="idv" ${st==='busy'?'disabled':''}><span class="vci">🪪</span><span class="vcb"><b>${st==='busy'?'Checking your ID…':'Verify your ID · 1 min'}</b><small>Ticket ✓ · ID not yet · unlocks women-only crews</small></span>${st==='busy'?'<i class="spin sm"></i>':ic('right',16)}</button>`; }
 function rptRow(p){ return `<div class="rpt"><button data-act="report" data-v="${p}">Report</button><span>·</span><button data-act="block" data-v="${p}">${(state.blocked||{})[p]?'Blocked':'Block'}</button></div>`; }
-function splitCard(){ const s=A(SPLIT.show); if(!s) return ''; const tot=spareOf(s).face+FEE, op=!!state.splitOpen, paid=SPLIT.released?2:1;
-  return `<div class="splitc ${op?'op':''}"><button class="sph2" data-act="splitop" aria-expanded="${op}"><span class="spav2"><span>${avi(PEOPLE[1][3])}</span><span>${avi(PEOPLE[6][3])}</span></span><span class="sptx"><b>Split · ${esc(s.artist)}</b><small>${SPLIT.released?'Seat released to your crew':`${paid} of 2 paid · ${P0(6)} owes $${tot}`}</small></span>${ic('chev',14)}</button>
-  ${op?`<div class="spr2"><span class="spav">${avi(PEOPLE[1][3])}</span><span class="spt"><b>${PEOPLE[1][0]}</b><small>Paid $${tot}</small></span><em>${ic('check',12)} Paid</em></div>
+function splitCard(){ const s=A(SPLIT.show); if(!s) return ''; const tot=spareOf(s).face+FEE;
+  return `<div class="splitc"><div class="sph"><b>Split · ${esc(s.artist)}</b><span>3 tickets · you paid upfront</span></div>
+  <div class="spr2"><span class="spav">${avi(PEOPLE[1][3])}</span><span class="spt"><b>${PEOPLE[1][0]}</b><small>Paid $${tot}</small></span><em>${ic('check',12)} Paid</em></div>
   <div class="spr2"><span class="spav">${avi(PEOPLE[6][3])}</span><span class="spt"><b>${PEOPLE[6][0]}</b><small>${SPLIT.released?'Seat listed · your crew gets 24h first':'$'+tot+' due in 2 days'}</small></span>${SPLIT.released?'<em>Listed</em>':'<button data-act="nudge">Nudge</button>'}</div>
-  ${SPLIT.released?'':'<button class="sprel" data-act="release">Unpaid by the deadline? Release the seat to your crew</button>'}`:''}</div>`; }
+  ${SPLIT.released?'':'<button class="sprel" data-act="release">Unpaid by the deadline? Release the seat to your crew</button>'}</div>`; }
 function lockedCard(s){ return `<h2 class="h2 sec">Spare tickets <span class="emo">🎟️</span></h2><div class="spnone lk"><b>🔒 Transfers are locked for this show</b><span>The artist only allows resale through Ticketmaster’s Face Value Exchange. Crews still work as usual.</span><a href="https://help.ticketmaster.com/hc/en-us/articles/9781464415249-How-does-Ticketmaster-s-Face-Value-Exchange-work" target="_blank" rel="noopener">Face Value Exchange ↗</a></div>`; }
 const bState=p=>BUD[p]?'buddy':BREQ[p]?'sent':'none';
 function addBuddy(p){ if(BUD[p]||BREQ[p]) return; BREQ[p]=true; setTimeout(()=>{ delete BREQ[p]; BUD[p]=true; toast(`${P0(p)} accepted · you’re buddies 🤝`); if(['person','crews','crew'].includes(state.screen)) render(); },2200); }
@@ -2612,10 +2598,6 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='tpay'){ state.tstep='paying'; render(); setTimeout(()=>{ if(!state.tsheet) return; (state.claimed ||= {})[state.tsheet]=true; const spx=state.tspare||spareOf(byId[state.tsheet]).id; (state.claimedIds ||= {})[spx]=true; const th=threadFor(state.tsheet); if(!th.spare) th.msgs.push({d:'sys',t:'You claimed a spare ticket · seat next to the crew'}); th.ts=++TSEQ; state.tstep='done'; render(); requestAnimationFrame(()=>{ const f=document.querySelector('#tsheet .tflip'); f&&f.classList.add('go'); }); },1300); }
   else if(a==='tclose'){ closeTSheet(); }
   else if(a==='tgo'){ closeTSheet(()=>{ state.history=[]; state.screen='tickets'; render(true); }); }
-  else if(a==='splitop'){ state.splitOpen=!state.splitOpen; const sc=document.querySelector('.scroll'), y=sc&&sc.scrollTop, o=(document.getElementById('wal')||{}).dataset; const op=o&&o.open; render(); const n=document.querySelector('.scroll'); if(n) n.scrollTop=y; if(op!==''&&op!=null) layWallet(+op); }
-  else if(a==='wqr'){ const w=document.getElementById('wal'), c=w&&w.querySelector('.wc.op'); if(c) c.querySelector('.tflip').classList.toggle('on'); }
-  else if(a==='wchat'){ const w=document.getElementById('wal'), r=(window._wall||[])[+w.dataset.open]; if(r) openThread(threadFor(r[0].id)); }
-  else if(a==='wsell'){ const w=document.getElementById('wal'), r=(window._wall||[])[+w.dataset.open]; if(r&&MYTIX().some(x=>x[0]===r[0])){ state.sell={step:1,id:r[0].id,qty:1,why:'Can’t make it',crew:true}; go('sell'); } else toast('Only tickets in your name can be listed'); }
   else if(a==='wtap'){ const w=document.getElementById('wal'), i=+t.dataset.i, o=w.dataset.open; if(o===''||+o!==i) layWallet(i); else t.querySelector('.tflip').classList.toggle('on'); }
   else if(a==='wclose'){ layWallet(null); }
   else if(a==='tflip'){ t.querySelector('.tflip').classList.toggle('on'); }
