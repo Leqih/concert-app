@@ -1450,7 +1450,8 @@ i.tw{font-style:normal;opacity:0}
 .umon{margin:0;padding:14px 2px 6px;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border-top:1px solid var(--line)}
 .umon+.urow{border-top:0}
 .flys{box-shadow:0 12px 30px rgba(0,0,0,.18);background:#111}
-.shEnter .hero{transform-origin:0 0;will-change:transform,clip-path}
+.shEnter .hero .htext,.shEnter .hero .nav{animation:fadein .35s ease both .32s}
+.shEnter .pad{animation:sin .45s cubic-bezier(.2,.8,.2,1) both .18s}
 .uback{animation:none}
 .ptr{position:absolute;left:50%;top:calc(var(--st) + 6px);z-index:8;width:34px;height:34px;border-radius:50%;background:#fff;box-shadow:0 4px 14px rgba(0,0,0,.12);display:grid;place-items:center;opacity:0;transform:translate(-50%,-40px);pointer-events:none;color:#6B6B70}
 .ptr.ready{color:#0B0B0C}.ptr.spin{animation:ptrs .7s linear infinite;opacity:1!important}
@@ -1786,20 +1787,13 @@ const RM=()=>matchMedia('(prefers-reduced-motion: reduce)').matches;
 function flyBox(src,from,to,rf,rt,done){ const c=document.createElement('div'); c.className='flyc flys'; c.innerHTML=`<img alt="" src="${src}">`; document.body.appendChild(c);
   const A=(r,rad)=>({left:r.left+'px',top:r.top+'px',width:r.width+'px',height:r.height+'px',borderRadius:rad+'px'});
   Object.assign(c.style,A(to,rt)); const an=c.animate([A(from,rf),A(to,rt)],{duration:540,easing:'cubic-bezier(.2,.8,.2,1)',fill:'backwards'}); an.onfinish=()=>{ c.remove(); done&&done(); }; }
-function showFly(row,id){ const th=row.querySelector('.uthumb'); if(!th||RM()){ go('show',id); return; }
+function showFly(row,id){ const th=row.querySelector('.uthumb'), im=th&&th.querySelector('img'); if(!im||RM()){ go('show',id); return; }
   const from=th.getBoundingClientRect(), sc=document.getElementById('sc'); state.homeScroll=[sc?sc.scrollTop:0,0];
   state.history.push([state.screen,state.id]); state.screen='show'; state.id=id; state.showFly=id; render(false);
-  const hero=document.querySelector('.hero'); if(!hero) return; const v=document.getElementById('view'); v.classList.add('shEnter');
-  const hr=hero.getBoundingClientRect(), k=from.width/hr.width, cy=Math.max(0,(hr.height*k-from.height)/2/k);
-  const E='cubic-bezier(.22,.9,.24,1)';
-  hero.animate([{transform:`translate(${from.left-hr.left}px,${from.top-hr.top-cy*k}px) scale(${k})`,clipPath:`inset(${cy}px 0 ${cy}px 0 round ${14/k}px)`},
-                {transform:'none',clipPath:'inset(0px 0 0px 0 round 32px)'}],{duration:560,easing:E});
-  const st=(el,d,y)=>el&&el.animate([{opacity:0,transform:`translateY(${y}px)`},{opacity:1,transform:'none'}],{duration:420,delay:d,easing:E,fill:'backwards'});
-  const ht=hero.querySelector('.htext'); if(ht) [...ht.children].forEach((c,i)=>st(c,330+i*70,14));
-  st(hero.querySelector('.nav'),380,-6);
-  [...document.querySelectorAll('#view .scroll .pad>*')].slice(0,6).forEach((c,i)=>st(c,260+i*50,18));
-  st(document.querySelector('#view .wbar'),420,24);
-  setTimeout(()=>v.classList.remove('shEnter'),1100); }
+  const hero=document.querySelector('.hero'), hi=hero&&hero.querySelector('img'); if(!hi) return;
+  const v=document.getElementById('view'); v.classList.add('shEnter'); hi.style.visibility='hidden';
+  flyBox(im.src,from,hero.getBoundingClientRect(),14,32,()=>{ hi.style.visibility=''; });
+  setTimeout(()=>v.classList.remove('shEnter'),900); }
 function showBack(){ const id=state.id, hero=document.querySelector('.hero'), hi=hero&&hero.querySelector('img'), sc0=document.querySelector('.scroll');
   const from=hero&&hero.getBoundingClientRect(), src=hi&&hi.src, heroVis=from&&from.bottom>60;
   const p=state.history.pop()||['home',null]; state.screen=p[0]; state.id=p[1]; render(false);
