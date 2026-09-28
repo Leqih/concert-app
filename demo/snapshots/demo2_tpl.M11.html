@@ -1431,21 +1431,6 @@ i.tw{font-style:normal;opacity:0}
 .ufl .gch{flex-shrink:0;display:inline-flex;align-items:center;gap:5px}.ufl .gch em{font-style:normal;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
 .ufl .gch[aria-pressed=true] em{color:rgba(255,255,255,.75)}.ufl .gch:disabled{opacity:.35}
 .udiv{flex-shrink:0;width:1px;height:20px;background:var(--line);margin:0 4px}
-
-.urow{transition:transform .18s cubic-bezier(.2,.8,.2,1),background .18s;border-radius:14px}
-.urow:active{transform:scale(.975);background:var(--bg)}
-.urow .uthumb img{transition:transform .5s cubic-bezier(.2,.8,.2,1)}.urow:active .uthumb img{transform:scale(1.08)}
-.uin{animation:uin .46s cubic-bezier(.2,.8,.2,1) both}
-@keyframes uin{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-.usent{min-height:1px}
-.usk{display:flex;align-items:center;gap:12px;padding:10px 2px;border-top:1px solid var(--line)}
-.usk i,.usk span i{display:block;border-radius:8px;background:linear-gradient(90deg,#ECECEF 0%,#F6F6F8 50%,#ECECEF 100%);background-size:200% 100%;animation:shim 1.1s linear infinite}
-.usk .d{width:30px;height:34px;margin:0 2px}.usk .t{width:52px;height:52px;border-radius:14px}.usk span{flex:1;display:flex;flex-direction:column;gap:7px}
-.usk span i:nth-child(1){width:62%;height:14px}.usk span i:nth-child(2){width:40%;height:10px}.usk span i:nth-child(3){width:52%;height:10px}
-@keyframes shim{to{background-position:-200% 0}}
-.uend{display:flex;align-items:center;justify-content:center;gap:6px;margin:6px 0 4px;padding:14px 0 10px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
-@media (prefers-reduced-motion:reduce){.uin,.usk i{animation:none}.urow:active{transform:none}}
-.ufl .gch em{letter-spacing:0;font-variant-numeric:normal}
 </style>
 
 <div class="app framed" id="app">
@@ -1763,14 +1748,6 @@ function plusSheet(){ const o=[['🤝','Start a crew','Pick a show, up to 8 peop
   return `<div class="pfbg" data-act="plusclose"></div><div class="pfan" id="psheet" role="dialog" aria-label="Create"><p class="pfh">What are you up to?</p>
     ${o.map(([e,t,d,act,msg],k)=>`<button class="pfc p${k}" data-act="${act}" ${msg?`data-msg="${msg}"`:''}><i class="pfe">${e}</i><b>${t}</b><small>${d}</small><span class="pfgo">${ic('right',14)}</span></button>`).join('')}</div>`; }
 
-function upTail(feed){ return state.upN<feed.length?`<div class="usent" id="upsent" aria-hidden="true"></div>`:`<p class="uend">${ic('check',13)} That’s every show in ${state.city} · ${feed.length} ${feed.length===1?'show':'shows'}</p>`; }
-const USK=`<div class="usk"><i class="d"></i><i class="t"></i><span><i></i><i></i><i></i></span></div>`;
-function upMore(){ const sent=document.getElementById('upsent'), feed=window._upFeed||[]; if(!sent||state._upBusy||state.upN>=feed.length) return; state._upBusy=true; sent.innerHTML=USK+USK+USK;
-  setTimeout(()=>{ const n0=state.upN, n1=Math.min(n0+6,feed.length), s2=document.getElementById('upsent'); state.upN=n1; state._upBusy=false; if(!s2) return;
-    s2.insertAdjacentHTML('beforebegin',feed.slice(n0,n1).map((x,i)=>feedRow(x).replace('class="urow"',`class="urow uin" style="animation-delay:${i*55}ms"`)).join(''));
-    if(n1>=feed.length) s2.outerHTML=`<p class="uend uin" style="animation-delay:${(n1-n0)*55}ms">${ic('check',13)} That’s every show in ${state.city} · ${feed.length} shows</p>`; else { s2.innerHTML=''; upWatch(); } },520); }
-function upWatch(){ const sent=document.getElementById('upsent'), sc=document.getElementById('sc'); if(!sent||!sc) return; if(window._upIO) window._upIO.disconnect();
-  window._upIO=new IntersectionObserver(es=>{ if(es.some(e=>e.isIntersecting)) upMore(); },{root:sc,rootMargin:'0px 0px 160px 0px'}); window._upIO.observe(sent); }
 function feedRow(s){ const sp=sparesFor(s).filter(x=>!(state.claimedIds||{})[x.id]).length, n=6+h(s.id)%60, d=new Date(s.dates[0]+'T12:00:00Z'), k=Math.abs(h(s.id));
   return `<button class="urow" data-act="show" data-id="${s.id}"><span class="udate"><small>${MON[d.getUTCMonth()]}</small><b>${d.getUTCDate()}</b></span><span class="uthumb">${img(s)}</span>
     <span class="ub"><b>${esc(s.artist)}</b><span class="um">${DOW[d.getUTCDay()]} · ${esc(VSH(s.venue))}${s.dates.length>1?' · '+s.dates.length+' nights':''}</span>
@@ -1849,7 +1826,7 @@ function home(){
     <section class="sec pad hsec"><h2 class="h2">Upcoming in ${state.city} <span class="emo">${CITY_EMO[state.city]||'🎶'}</span></h2><p class="sub">${SHOWS.length-drops.length} more shows · find a buddy for any</p>
       <div class="wcard flush wup">
       <div class="ufl hs">${[['all','All'],['week','This week'],['month','This month']].map(([w,l])=>{ const n=wc(w); return `<button class="gch" data-act="when" data-v="${w}" aria-pressed="${W===w}" ${n?'':'disabled'}>${l} <em>${n}</em></button>`; }).join('')}<i class="udiv"></i>${GEN.map(g=>{ const n=GC[g]||0; return `<button class="gch" data-act="genre" data-v="${G===g?'All':g}" aria-pressed="${G===g}" ${n?'':'disabled'}>${GEMO[g]?GEMO[g]+' ':''}${g.replace('Hip-Hop/Rap','Hip-Hop')} <em>${n}</em></button>`; }).join('')}</div>
-      <div class="wlist ulist">${(window._upFeed=feed, state.upN=Math.min(state.upN||6,feed.length), feed.length)?feed.slice(0,state.upN).map((x,i)=>state._ufAnim?feedRow(x).replace('class="urow"',`class="urow uin" style="animation-delay:${i*45}ms"`):feedRow(x)).join('')+upTail(feed):`<p class="sub" style="text-align:center;padding:24px 0">No shows match. <button data-act="ufclear" style="font-weight:600;color:var(--text)">Clear filters</button></p>`}</div>
+      <div class="wlist ulist">${feed.length?(state.upAll?feed:feed.slice(0,6)).map(feedRow).join('')+(feed.length>6?`<button class="umore" data-act="upall">${state.upAll?'Show less':'Show all '+feed.length+' shows'}</button>`:''):`<p class="sub" style="text-align:center;padding:24px 0">No shows match. <button data-act="ufclear" style="font-weight:600;color:var(--text)">Clear filters</button></p>`}</div>
     </div>
     </section>
     <p class="note" style="margin-top:22px">Shows and images from Ticketmaster (Sept 27 2026 snapshot).<br>Crews, people and chats are demo data. Profile photos from Unsplash.</p>
@@ -2272,7 +2249,6 @@ function render(anim){ window._dockActive=null; const _ap=document.getElementByI
   if(state.sheet) initCitySheet();
   if(document.getElementById('wal')) layWallet(null);
   syncNav(window._dockActive);
-  state._ufAnim=false; if(state.screen==='home') upWatch();
   const xs=document.querySelector('.xtop'); if(xs){ const sc=xs.closest('.scroll'), f=()=>xs.classList.toggle('stuck',sc.scrollTop>2); sc&&sc.addEventListener('scroll',f,{passive:true}); f(); } if(state.screen==='search'&&!state._sqf){ const i=document.getElementById('sq'); if(i){ i.focus(); state._sqf=true; } }
   const form=document.getElementById('composer');
   if(form) form.addEventListener('submit',e=>{ e.preventDefault(); const i=document.getElementById('msg'); const t=i.value.trim(); if(!t) return; sendMsg(t); const m2=document.getElementById('msg'); m2&&m2.focus(); });
@@ -2363,9 +2339,9 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='tickets'){ state.history=[]; state.screen='tickets'; render(); }
   else if(a==='shuffle'){ state.drop++; render(); }
   else if(a==='dropto'){ const nv=+v, dir=nv===(state.drop+1)%3?1:-1; state.drop=nv; paintDrop(dir); armDrop(); }
-  else if(a==='genre'){ state.genre=v; state.upN=6; state._ufAnim=true; const sc=document.getElementById('sc'), y=sc&&sc.scrollTop; render(); const n=document.getElementById('sc'); if(n) n.scrollTop=y; }
+  else if(a==='genre'){ state.genre=v; state.upAll=false; const sc=document.getElementById('sc'), y=sc&&sc.scrollTop; render(); const n=document.getElementById('sc'); if(n) n.scrollTop=y; }
   else if(a==='sort'){ state.sort=v; render(); }
-  else if(a==='when'||a==='ufclear'){ if(a==='when') state.when=v; else { state.when='all'; state.genre='All'; } state.upN=6; state._ufAnim=true; const sc=document.getElementById('sc'), y=sc&&sc.scrollTop; render(); const n=document.getElementById('sc'); if(n) n.scrollTop=y; }
+  else if(a==='when'||a==='ufclear'){ if(a==='when') state.when=v; else { state.when='all'; state.genre='All'; } state.upAll=false; const sc=document.getElementById('sc'), y=sc&&sc.scrollTop; render(); const n=document.getElementById('sc'); if(n) n.scrollTop=y; }
   else if(a==='me'){ state.history=[]; state.screen='me'; render(); }
   else if(a==='tab'){ state.tab=v; render(); }
   else if(a==='rsvp'){ state.rsvp[id]= state.rsvp[id]===v ? '' : v; render(); toast(state.rsvp[id]? (v==='Going'?'You’re going. Pick a crew to head in together.':v==='Maybe'?'Marked as maybe':'Got it, not going') : 'RSVP cleared'); }
