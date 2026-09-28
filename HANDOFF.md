@@ -32,7 +32,7 @@
 ```
 HANDOFF.md            ← 本文件
 CLAUDE.md             ← 给 Claude 的工作规则（精简版）
-demo/                 ← 主作品：单文件 HTML 交互 demo（当前 = M14 / 线上 v81）
+demo/                 ← 主作品：单文件 HTML 交互 demo（当前 = M15 / 线上 v82）
   demo2_tpl.html      模板源码（唯一需要改的文件）
   build.py            把数据注入模板 → dist/plusone-demo.html
   shows.js            纽约演出数据（Ticketmaster 抓取后的静态快照）
@@ -108,6 +108,7 @@ pip install playwright && python3 demo/tests/m7test.py   # 可选：批量截屏
 | M13 | v79 | 真实数据 + 首页 Filters 面板 | 纽约演出从 15 场扩到 41 场真实 Ticketmaster 活动（2026-09-28 抓取，含 NYC 与周边：Barclays、UBS Arena、Town Hall、Brooklyn Paramount、Prudential Center、MetLife 等），原始数据 data/tm_nyc_2026-09-28.psv，合并脚本 data/merge_tm.py（新增字段 sub / n / kind / size）；新演出海报直接引用 Ticketmaster 图片链接，加载失败自动换黑白首字母海报（ptile）；首页 Upcoming 筛选行 = 时间 + 「Filters」按钮（带已选数量），底部面板：演出形式（Concerts / Classical & orchestra / Festivals & lineups / Residencies，带数量）、曲风多选、场馆（Any / Arenas / Theatres）、只看有余票，底部「Clear all」+「Show N shows」实时计数，只在点应用时刷新列表 |
 | M14 | v80 | 设计规范统一 | 以首页为基准建立 token（DESIGN.md）：页面标题 26/800 统一在距顶 66px（Explore、Chats、Tickets、Sell），板块标题 26/700 居中 + 14 副标题（演出页、场景页、个人页的「Going to」原为 24/22/28 且有左对齐），大图标题统一 44，分组标签统一 12 大写；圆角收敛为 30/20/18/14/12/胶囊六档（原先 30 多种数值） |
 | M14.1 | v81 | 全站规范复查 | 新增 demo/tests/audit_full.py（22 个页面与面板、整页高度）；修正面板里残留的圆角：安全面板行、Keep in touch 行、认领票面板、城市面板缩略图、场景页演出卡、聊天余票图、Notify me 按钮 |
+| M15 | v82 | 所有按钮都有真功能 | 导入门票（邮箱找票 / 截图识别 → 进票夹，演出墙可发帖）；编辑资料（简介、最多 4 个标签、常站位置，保存后个人页更新）；联系场馆安保（发送位置 + 座位 + 通知小队 → Staff notified，可取消）；聊天附件（照片 / 我的票 / 集合点）；演出墙回复（展开回复、持票人可回复）；安全面板「Report or block」跳到对方主页；分享类按钮真正复制链接 |
 
 ## 6. 链接（原账号所有，新账号只能查看）
 

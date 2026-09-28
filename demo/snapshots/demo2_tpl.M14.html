@@ -1525,25 +1525,6 @@ i.tw{font-style:normal;opacity:0}
 .spimg,.cpthumb{border-radius:var(--r-sm)!important}
 .spnone button{border-radius:var(--r-pill)!important}
 .shero{border-radius:0 0 var(--r-xl) var(--r-xl)}
-
-.sopt{display:flex;align-items:center;gap:12px;width:100%;padding:14px;margin-top:8px;border-radius:var(--r-lg);background:var(--card2);text-align:left;color:var(--text)}
-.sopt i{font-style:normal;font-size:22px}.sopt span{flex:1;display:flex;flex-direction:column;gap:2px}.sopt b{font-size:15px}.sopt small{font-size:12.5px;color:var(--muted)}
-.itbusy{display:flex;flex-direction:column;align-items:center;gap:6px;padding:28px 0;text-align:center}.itbusy b{font-size:15px}.itbusy small{font-size:13px;color:var(--muted)}
-.itrow{display:flex;align-items:center;gap:12px;width:100%;padding:10px 0;border-top:1px solid var(--line);text-align:left;color:var(--text)}.itrow:first-of-type{border-top:0}
-.itrow .kitc{width:24px;height:24px;border-radius:50%;box-shadow:inset 0 0 0 1.5px #C9C9CE;display:grid;place-items:center;color:transparent;flex-shrink:0}.itrow[aria-pressed=true] .kitc{background:#0B0B0C;box-shadow:none;color:#fff}
-.itscan{display:flex;gap:14px;align-items:center;padding:8px 0}.itshot{position:relative;width:96px;height:150px;border-radius:var(--r-md);overflow:hidden;flex-shrink:0;background:#111}
-.itshot i{position:absolute;left:0;right:0;height:2px;background:#fff;box-shadow:0 0 12px #fff;animation:scanl 1.6s ease-in-out infinite}@keyframes scanl{0%{top:8%}50%{top:88%}100%{top:8%}}
-.itscan>span:last-child{display:flex;flex-direction:column;gap:3px;font-size:13px;color:var(--muted)}.itscan b{font-family:var(--display);font-size:20px;color:var(--text);letter-spacing:-.03em}.itscan em{font-style:normal;display:inline-flex;align-items:center;gap:4px;margin-top:6px;color:var(--text);font-weight:600;font-size:12.5px}
-.eptx{width:100%;box-sizing:border-box;padding:12px 14px;border:0;border-radius:var(--r-md);background:var(--card2);font:inherit;font-size:15px;color:var(--text);resize:none;outline:none}
-.epn{font-style:normal;float:right;letter-spacing:0;text-transform:none}
-.secl{display:flex;flex-direction:column;gap:8px}.secl span{display:grid;grid-template-columns:28px 1fr;align-items:center;padding:12px 14px;border-radius:var(--r-lg);background:var(--card2);font-size:18px}.secl b{font-size:15px}.secl small{grid-column:2;font-size:12.5px;color:var(--muted)}
-.secok{display:flex;flex-direction:column;align-items:center;gap:6px;padding:20px 0;text-align:center}.secok i{width:48px;height:48px;border-radius:50%;background:#0B0B0C;color:#fff;display:grid;place-items:center}.secok b{font-size:17px}.secok small{font-size:13px;color:var(--muted);max-width:260px}
-.attm{position:absolute;left:14px;bottom:calc(80px + var(--sb));z-index:4;display:flex;gap:8px;animation:sin .25s cubic-bezier(.2,.8,.2,1)}
-.attm button{height:40px;padding:0 14px;border-radius:var(--r-pill);background:rgba(28,28,32,.86);backdrop-filter:blur(16px);color:#fff;font-size:14px;font-weight:600;display:inline-flex;align-items:center;gap:6px}.attm i{font-style:normal}
-.bub.bimg{padding:4px;width:200px}.bub.bimg span{display:block;position:relative;height:130px;border-radius:18px;overflow:hidden}
-.wth{display:flex;flex-direction:column;gap:8px;padding-top:10px;border-top:1px solid var(--line)}
-.wtr{display:flex;gap:8px;align-items:flex-start;font-size:14px;line-height:1.35}.wtr .bgav span{width:24px;height:24px;border:0}.wtr b{font-weight:600}
-.wtf{display:flex;gap:8px;align-items:center}.wtf input{flex:1;min-width:0;height:38px;padding:0 14px;border:0;border-radius:var(--r-pill);background:var(--card2);font:inherit;font-size:14px;outline:none}.wtf button{height:38px;padding:0 14px;border-radius:var(--r-pill);background:#0B0B0C;color:#fff;font-weight:600;font-size:13.5px}
 </style>
 
 <div class="app framed" id="app">
@@ -1925,36 +1906,6 @@ function ufSheet(){ const F=state.ufd, drops=DROPS(), base=SHOWS.filter(s=>!drop
   <div class="uff"><button class="ufx" data-act="ufreset" ${ufCount(F)?'':'disabled'}>Clear all</button><button class="cgo new" data-act="ufapply" ${tot?'':'disabled'}>${tot?`Show ${tot} ${tot===1?'show':'shows'}`:'No shows match'}</button></div></div>`; }
 function ufRedraw(){ const sh=document.getElementById('ufsheet'); if(!sh) return; const b=sh.querySelector('.ufb'), y=b?b.scrollTop:0; const t=document.createElement('div'); t.innerHTML=ufSheet(); const n=t.querySelector('#ufsheet'); n.style.animation='none'; sh.replaceWith(n); const nb=n.querySelector('.ufb'); if(nb) nb.scrollTop=y; }
 function ufClose(){ const sh=document.getElementById('ufsheet'), bg=sh&&sh.previousElementSibling; state.ufo=false; if(!sh) return; sh.classList.add('out'); bg&&bg.classList.add('out'); setTimeout(()=>{ sh.remove(); bg&&bg.remove(); },260); }
-// ---------- M15: real flows for former placeholder buttons
-const IMPORTABLE=()=>[[A('Beck'),'Orchestra','Row K · Seat 12',1,'Main'],[A('The Neighbourhood'),'Section 214','Row 8 · Seats 3–4',2,'Gate C'],[A('Weezer'),'Floor GA','General admission',1,'Gate B']].filter(r=>r[0]&&!(state.extraTix||[]).some(x=>x[0]===r[0]));
-function itSheet(){ const k=state.itk, L=IMPORTABLE();
-  const head=`<div class="sheetbg" data-act="itclose"></div><div class="sheet csheet" role="dialog" aria-label="Add a ticket"><div class="cgrab"><i class="grab"></i><h3>Add a ticket</h3><p>We verify every ticket with the seller before it shows in your wallet</p></div><div class="ufb">`;
-  let b='';
-  if(k.step==='choose') b=`<button class="sopt" data-act="itstep" data-v="email"><i>📧</i><span><b>From your email</b><small>Find Ticketmaster and AXS confirmations</small></span>${ic('right',16)}</button>
-      <button class="sopt" data-act="itstep" data-v="scan"><i>📷</i><span><b>From a screenshot</b><small>We read the barcode and check it</small></span>${ic('right',16)}</button>`;
-  else if(k.busy) b=`<div class="itbusy"><i class="spin"></i><b>${k.step==='email'?'Checking your inbox…':'Reading the barcode…'}</b><small>${k.step==='email'?'Looking for ticket confirmations from the last 90 days':'Matching it with the official event'}</small></div>`;
-  else if(k.step==='email'){ b=L.length?`<p class="ncl">Found ${L.length} ${L.length===1?'ticket':'tickets'}</p>${L.map((r,i)=>`<button class="itrow" data-act="itpick" data-v="${i}" aria-pressed="${!!(k.pick||{})[i]}"><span class="uthumb">${img(r[0])}</span><span class="ub"><b>${esc(r[0].artist)}</b><span class="um">${sd(r[0].dates[0])} · ${esc(VSH(r[0].venue))} · ${r[1]}</span></span><i class="kitc">${ic('check',14)}</i></button>`).join('')}`:`<div class="itbusy"><b>No new tickets found</b><small>Everything in your inbox is already in your wallet</small></div>`; }
-  else { const r=L[0]; b=r?`<div class="itscan"><span class="itshot">${img(r[0])}<i></i></span><span><small>Found in your screenshot</small><b>${esc(r[0].artist)}</b><span>${sd(r[0].dates[0])} · ${esc(VSH(r[0].venue))}</span><span>${r[1]} · ${r[2]}</span><em>${ic('check',12)} Matches the official event</em></span></div>`:`<div class="itbusy"><b>No new tickets found</b></div>`; }
-  const n=k.step==='email'?Object.values(k.pick||{}).filter(Boolean).length:(L.length?1:0);
-  const cta=k.step==='choose'||k.busy?'':`<div class="uff"><button class="ufx" data-act="itstep" data-v="choose">Back</button><button class="cgo new" data-act="itadd" ${n?'':'disabled'}>${n?`Add ${n} ${n===1?'ticket':'tickets'}`:'Pick a ticket'}</button></div>`;
-  return head+b+'</div>'+cta+'</div>'; }
-function epSheet(){ const p=state.ep, TG=['indie','rnb','hiphop','pop','rock','jazz','latin','classical','soundboard','frontrow','dinnerfirst','sober'];
-  return `<div class="sheetbg" data-act="epclose"></div><div class="sheet csheet ufs" role="dialog" aria-label="Edit profile"><div class="cgrab"><i class="grab"></i><h3>Edit profile</h3></div><div class="ufb">
-    <p class="ncl">Bio</p><textarea id="epbio" class="eptx" rows="2" maxlength="80" aria-label="Bio">${esc(p.bio)}</textarea>
-    <p class="ncl">Tags <em class="epn">${p.tags.length}/4</em></p><div class="ncv">${TG.map(t=>`<button class="gch" data-act="eptag" data-v="${t}" aria-pressed="${p.tags.includes(t)}" ${p.tags.length>=4&&!p.tags.includes(t)?'disabled':''}>#${t}</button>`).join('')}</div>
-    <p class="ncl">Where you usually stand</p><div class="ncsz">${['Front row','Soundboard','Balcony','Bar'].map(x=>`<button data-act="epspot" data-v="${x}" aria-pressed="${p.spot===x}">${x}</button>`).join('')}</div>
-    <small class="nch">Crews see this before they invite you.</small></div>
-    <div class="uff"><button class="ufx" data-act="epclose">Cancel</button><button class="cgo new" data-act="epsave">Save</button></div></div>`; }
-function secSheet(){ const t=thById(state.tid), s=t&&thShow(t), my=s&&MYTIX().find(r=>r[0]===s), seat=my?my[1]+(my[2]&&!/General/.test(my[2])?' · '+my[2]:''):'General admission', sent=state.secSent;
-  return `<div class="sheetbg" data-act="secclose"></div><div class="sheet csheet" role="dialog" aria-label="Alert venue staff"><div class="cgrab"><i class="grab"></i><h3>Alert venue staff</h3><p>${s?esc(VSH(s.venue)):'Venue'} · for anything that feels unsafe</p></div><div class="ufb">
-    ${sent?`<div class="secok"><i>${ic('check',18)}</i><b>Staff notified</b><small>Stay where you are. Your crew can see your live location.</small></div>`
-      :`<p class="ncl">What we send</p><div class="secl"><span>📍<b>Your live location</b><small>Updated every few seconds</small></span><span>🎟️<b>${esc(seat)}</b><small>From your verified ticket</small></span><span>👯<b>Your crew</b><small>${t?t.who.length+1:1} people get a ping too</small></span></div>`}
-  </div><div class="uff">${sent?`<button class="ufx" data-act="seccancel">Cancel alert</button><button class="cgo new" data-act="secclose">Done</button>`:`<button class="ufx" data-act="secclose">Not now</button><button class="cgo new" data-act="secsend">Send alert</button>`}</div></div>`; }
-function attMenu(t,s,dm){ return `<div class="attm" role="menu"><button data-act="attsend" data-v="photo" role="menuitem"><i>📷</i>Photo</button><button data-act="attsend" data-v="ticket" role="menuitem"><i>🎟️</i>My ticket</button>${dm?'':`<button data-act="attsend" data-v="pin" role="menuitem"><i>📍</i>Meetup pin</button>`}</div>`; }
-function wallThread(o,x,me){ const k=Math.abs(h(o.id)), R=[[(k+2)%8,['Same! See you there','I’ll be on the 6 train around then','Saving this'][k%3]],[(k+5)%8,['Count me in','Love this','Where exactly?'][k%3]]].concat(((state.wrp||{})[o.id]||[]).map(t=>['me',t]));
-  return `<div class="wth">${R.map(([p,t])=>`<div class="wtr"><span class="bgav"><span>${avi(p==='me'?MEP[3]:PEOPLE[p][3])}</span></span><span><b>${p==='me'?'You':PEOPLE[p][0]}</b> ${esc(t)}</span></div>`).join('')}
-    ${me?`<form class="wtf" onsubmit="return wallReply(event,'${o.id}')"><label hidden for="wr-${o.id}">Reply</label><input id="wr-${o.id}" placeholder="Reply to ${o.me?'your post':P0(o.p)}" autocomplete="off"><button type="submit">Reply</button></form>`:`<p class="note" style="margin:6px 0 0;text-align:left">Add your ticket to reply</p>`}</div>`; }
-function wallReply(e,id){ e.preventDefault(); const i=document.getElementById('wr-'+id), v=i.value.trim(); if(!v) return false; state.wrp=state.wrp||{}; (state.wrp[id]=state.wrp[id]||[]).push(v); const sc=document.querySelector('.scroll'), y=sc&&sc.scrollTop; render(); const n=document.querySelector('.scroll'); if(n) n.scrollTop=y; return false; }
 function upSwap(anim){ const old=document.querySelector('#sc .wup'); if(!old){ render(); return; } state._ufAnim=anim; const tmp=document.createElement('div'); tmp.innerHTML=home(); state._ufAnim=false; window._dockActive='home';
   const nw=tmp.querySelector('.wup'); if(!nw){ render(); return; } const sl=(old.querySelector('.ufl')||{}).scrollLeft||0; old.replaceWith(nw); const f=nw.querySelector('.ufl'); if(f) f.scrollLeft=sl; upWatch(); }
 function upTail(feed){ return state.upN<feed.length?`<div class="usent" id="upsent" aria-hidden="true"></div>`:`<p class="uend">${ic('check',13)} That’s every show in ${state.city} · ${feed.length} ${feed.length===1?'show':'shows'}</p>`; }
@@ -2004,11 +1955,11 @@ function wallView(x){ const tag=state.wtag||'All', L=wallPosts(x).filter(o=>(tag
   return `<div id="wall"><h2 class="h2 sec" style="margin-top:14px">Show wall <span class="emo">🧱</span></h2><p class="sub" style="margin:-6px 0 2px">Only people with a ticket to this show can post</p>
     <div class="hs wtg">${WTAGS.map(t=>`<button class="gch" data-act="wtag" data-v="${t}" aria-pressed="${tag===t}">${t}</button>`).join('')}</div>
     ${me?`<form class="wcomp2" onsubmit="return wallPost(event,'${x.id}')"><span class="bgav"><span>${avi(MEP[3])}</span></span><label for="wq" hidden>Post</label><input id="wq" placeholder="Post to the ${esc(x.artist)} wall" autocomplete="off"><button type="submit">Post</button></form>`
-      :`<div class="wlock"><span>🎟️</span><span><b>Read-only for now</b><small>Claim a spare or import your ticket to post</small></span><button data-act="itopen">Add ticket</button></div>`}
+      :`<div class="wlock"><span>🎟️</span><span><b>Read-only for now</b><small>Claim a spare or import your ticket to post</small></span><button data-act="toast" data-msg="Import a ticket from email or a screenshot">Add ticket</button></div>`}
     ${L.map(o=>{ const p=o.me?MEP:PEOPLE[o.p], liked=!!lk[o.id];
       return `<article class="wp"><div class="wph"><button class="bgav" ${o.me?'':`data-act="person" data-v="${o.p}"`} aria-label="${p[0]}"><span>${avi(p[3])}</span></button><span class="wpn"><b>${o.me?'You':p[0]}</b><small>${ic('check',10)} Ticket holder · ${o.m<60?o.m+' min':Math.round(o.m/60)+' h'} ago</small></span><i class="wpt">${o.tag}</i></div>
         <p>${esc(o.t)}</p>${o.img?`<span class="wpi">${img(x)}</span>`:''}
-        <div class="wpf"><button data-act="wlike" data-v="${o.id}" aria-pressed="${liked}">${liked?'♥':'♡'} ${o.l+(liked?1:0)}</button><button data-act="wrep" data-v="${o.id}" aria-expanded="${!!(state.wopen||{})[o.id]}">💬 ${o.r+((state.wrp||{})[o.id]||[]).length}</button>${o.me?'':o.mc?`<button class="wme" data-act="wmc" data-v="${o.p}">That’s me 👋</button>`:`<button class="wme" data-act="dm" data-v="${o.p}">Say hi</button>`}</div>${(state.wopen||{})[o.id]?wallThread(o,x,me):''}</article>`; }).join('')||`<p class="note">Nothing here yet. Be the first to post.</p>`}</div>`; }
+        <div class="wpf"><button data-act="wlike" data-v="${o.id}" aria-pressed="${liked}">${liked?'♥':'♡'} ${o.l+(liked?1:0)}</button><button data-act="toast" data-msg="Replies open in the full thread">💬 ${o.r}</button>${o.me?'':o.mc?`<button class="wme" data-act="wmc" data-v="${o.p}">That’s me 👋</button>`:`<button class="wme" data-act="dm" data-v="${o.p}">Say hi</button>`}</div></article>`; }).join('')||`<p class="note">Nothing here yet. Be the first to post.</p>`}</div>`; }
 function wallPost(e,sid){ e.preventDefault(); const i=document.getElementById('wq'), v=i.value.trim(); if(!v) return false; state.wall=state.wall||{}; (state.wall[sid]=state.wall[sid]||[]).unshift({me:true,p:null,tag:state.wtag&&state.wtag!=='All'?state.wtag:'Getting there',t:v,m:0,l:0,r:0}); render(); toast('Posted to the wall'); setTimeout(()=>{ const w=document.getElementById('wall'); w&&(w.scrollIntoView({block:'start'}),document.querySelector('.scroll').scrollBy(0,-64)); },30); return false; }
 function home(){
   const drops=DROPS();
@@ -2107,7 +2058,7 @@ function search(){ const q=(state.sq||'').trim().toLowerCase(), rec=state.recent
   return `<div class="scroll"><div class="xpg" style="padding-bottom:60px"><div class="xtop shd"><div class="shrow"><label class="sbar"><span hidden>Search</span>${ic('search',20)}<input id="sq" value="${esc(state.sq||'')}" placeholder="Artists, crews, or people" autocomplete="off" data-live2="1"></label><button class="scan" data-act="back">Cancel</button></div></div>${body}</div></div>`;
 }
 
-const MYTIX=()=>[[A('Gorillaz'),'Floor GA','General admission',2],[A('Doja Cat'),'Section 105','Row 12 · Seats 8–9',2]].concat((state.extraTix||[]).map(t=>[t[0],t[1],t[2],t[3]]));
+const MYTIX=()=>[[A('Gorillaz'),'Floor GA','General admission',2],[A('Doja Cat'),'Section 105','Row 12 · Seats 8–9',2]];
 const SELL_HEAD={1:['List a spare','Tap the ticket you can’t use'],2:['Set it up','Face value is locked in'],3:['Review','Swipe to go live'],4:['You’re live','Fans are being notified']};
 function sell(){
   const S=state.sell, T=MYTIX();
@@ -2185,7 +2136,7 @@ function sparesView(){
 function tickets(){
   const mine=[[A('Gorillaz'),'Floor GA','General admission','crew of 4','Gate B'],[A('Doja Cat'),'Section 105','Row 12 · Seat 8','crew of 3','Gate D'],[A('Steve Lacy'),'Balcony','Row C · Seat 14','crew of 5','Main']];
   const claimed=Object.keys(state.claimed||{}).map(id=>byId[id]).filter(Boolean).map(s=>[s,spareOf(s).sec,'Next to your crew','crew','Gate A',true]);
-  const all=claimed.concat(mine,(state.extraTix||[]).map(t=>[t[0],t[1],t[2],'imported',t[4]])).sort((x,y)=>x[0].dates[0].localeCompare(y[0].dates[0]));
+  const all=claimed.concat(mine).sort((x,y)=>x[0].dates[0].localeCompare(y[0].dates[0]));
   const days=d=>{ const n=Math.round((Date.UTC(...d.split('-').map((v,i)=>i===1?v-1:+v))-Date.UTC(2026,8,27))/864e5); return n<=0?'today':n===1?'tomorrow':'in '+n+' days'; };
   const nx=all[0];
   const chip=(s,pending)=>pending?'<em class="pend"><i class="spin sm"></i>Transfer pending</em>':(state.listed&&state.listed[s.id])?`<em class="live"><i class="ldot"></i>Listed · $${spareOf(s).face}</em>`:`<em>${ic('check',12)}Verified</em>`;
@@ -2199,7 +2150,7 @@ function tickets(){
     </span></button></div>`;
   if(state.tview==='spares') return sparesView();
   return `<div class="scroll"><div style="padding-bottom:130px">
-    <header class="whead"><span></span><div class="wtitle"><h1 class="sh1">Tickets <span class="emo">🎟️</span></h1><span class="wcity">${all.length} upcoming · tap to open</span></div><button class="wicon" data-act="itopen" aria-label="Add ticket">${ic('plus',20)}</button></header>${tSeg('mine')}
+    <header class="whead"><span></span><div class="wtitle"><h1 class="sh1">Tickets <span class="emo">🎟️</span></h1><span class="wcity">${all.length} upcoming · tap to open</span></div><button class="wicon" data-act="toast" data-msg="Import a ticket from email or a screenshot" aria-label="Add ticket">${ic('plus',20)}</button></header>${tSeg('mine')}
     <div class="upnx"><span class="upk">Up next</span><b>${esc(nx[0].artist)}</b><span class="upd">${days(nx[0].dates[0])}</span><span class="upr"><i class="eb">🚪</i>Doors 7:00<i class="eb">👯</i>Meet 6:15</span></div>
     ${splitCard()}<div class="wal" id="wal" data-n="${all.length}">${all.map(card).join('')}</div>
     <button class="wall" id="wall" data-act="wclose">Show all tickets</button>
@@ -2324,8 +2275,8 @@ function safetySheet(){ const t=thById(state.tid)||{}, s=t.show?thShow(t):null, 
    <button class="sfr" data-act="loc" aria-pressed="${on}"><i class="eb">📍</i><span class="sft"><b>Share my location</b><small>Doors → 1h after the show · crew only</small></span><span class="tg"><i></i></span></button>
    <button class="sfr" data-act="homeplan"><i class="eb">🏠</i><span class="sft"><b>Plan the ride home</b><small>Pair up with crew-mates heading your way</small></span>${ic('right',16)}</button>
    <button class="sfr" data-act="alert"><i class="eb">🚨</i><span class="sft"><b>Alert my crew</b><small>Sends “need help” and where you are</small></span>${ic('right',16)}</button>
-   <button class="sfr" data-act="secopen"><i class="eb">☎️</i><span class="sft"><b>Venue security</b><small>${s?esc(s.venue.replace('Madison Square Garden','MSG')):'Venue'} · staff point by the main entrance</small></span>${ic('right',16)}</button>
-   <button class="sfr" data-act="rptpick"><i class="eb">🚫</i><span class="sft"><b>Report or block</b><small>From any profile · they leave your crews</small></span>${ic('right',16)}</button>
+   <button class="sfr" data-act="toast" data-msg="Calling venue security (demo)"><i class="eb">☎️</i><span class="sft"><b>Venue security</b><small>${s?esc(s.venue.replace('Madison Square Garden','MSG')):'Venue'} · staff point by the main entrance</small></span>${ic('right',16)}</button>
+   <button class="sfr" data-act="toast" data-msg="Open someone’s profile to report or block"><i class="eb">🚫</i><span class="sft"><b>Report or block</b><small>From any profile · they leave your crews</small></span>${ic('right',16)}</button>
   </div></div>`; }
 function closeSafe(after){ const sh=document.getElementById('safesheet'), bg=document.querySelector('.sheetbg'); if(!sh){ state.safe=false; render(); after&&after(); return; }
   sh.classList.add('out'); bg&&bg.classList.add('out'); setTimeout(()=>{ state.safe=false; render(); after&&after(); },260); }
@@ -2390,7 +2341,7 @@ function crew(){
         ${t.mine?`<span class="hostme">${t.priv?`<button data-act="toast" data-msg="Invite link copied · only people with the link can join">🔗 Invite</button>`:''}<b>You’re hosting</b></span></div>`:`<button class="row" data-act="person" data-v="${t.host}" style="margin-left:auto;gap:8px;height:38px;padding:0 14px 0 4px;border-radius:19px;background:rgba(60,60,64,.5);backdrop-filter:blur(12px);color:#fff" aria-label="Host profile">${av(person,'style="border:0"')}<span style="font-size:14px;font-weight:600">${person[0]}</span></button></div>`}
       <div class="ctitle">${esc(t.long)}</div>
       <div class="plan" style="margin-top:16px"><div><small>Meet</small><b>${t.plan?t.plan[0]:'Not set'}</b><small>${t.plan?esc(t.plan[1]):'Optional'}</small></div><div><small>Doors</small><b>7:00 PM</b><small>${esc(s.venue.replace('Madison Square Garden','MSG'))}</small></div><div><small>Date</small><b>${sd(s.dates[0])}</b><small>${DOW[new Date(s.dates[0]+'T12:00:00Z').getUTCDay()]}</small></div></div>${state.loc&&state.loc[t.id]?'<div class="locchip">📍 Sharing location with this crew · until 1h after the show</div>':''}`;
-  const bub=m=>m.d==='img'?`<div class="bub out bimg"><span>${img(s)}</span></div><div class="when">${m.time}</div>`:m.d==='home'?homeCard(t):m.d==='spare'?`<div class="spare ${claimed?'done':''}"><span class="spimg">${img(s)}</span><span class="spb"><em>🎟️ Face value + $2 flat</em><b>${esc(s.artist)}</b><span>${sd(s.dates[0])} · ${sp.sec} · next to the crew</span><span class="spv">${ic('check',12)}Verified ticket</span></span><span class="spr"><b>$${sp.face+FEE}</b>${claimed?'<span class="spc">Claimed</span>':`<button data-act="claim" data-id="${s.id}">Claim</button>`}</span></div><div class="who">${av(sp.seller,'style="border:0;width:26px;height:26px"')}${sp.seller[0]} <span>${m.time}</span></div>`
+  const bub=m=>m.d==='home'?homeCard(t):m.d==='spare'?`<div class="spare ${claimed?'done':''}"><span class="spimg">${img(s)}</span><span class="spb"><em>🎟️ Face value + $2 flat</em><b>${esc(s.artist)}</b><span>${sd(s.dates[0])} · ${sp.sec} · next to the crew</span><span class="spv">${ic('check',12)}Verified ticket</span></span><span class="spr"><b>$${sp.face+FEE}</b>${claimed?'<span class="spc">Claimed</span>':`<button data-act="claim" data-id="${s.id}">Claim</button>`}</span></div><div class="who">${av(sp.seller,'style="border:0;width:26px;height:26px"')}${sp.seller[0]} <span>${m.time}</span></div>`
     :m.d==='sys'?`<div class="sysm">${ic('check',12)}${esc(m.t)}</div>`
     :m.d==='in'?`<div class="bub in">${esc(m.t)}</div>${dm?'':`<div class="who">${av(PEOPLE[m.p],'style="border:0;width:26px;height:26px"')}${PEOPLE[m.p][0]} <span>${m.time}</span></div>`}`
     :`<div class="bub out">${esc(m.t)}</div><div class="when">${m.time}${m.time===nowT()||m.time==='now'?' · Delivered':''}</div>`;
@@ -2400,7 +2351,7 @@ function crew(){
       <div class="msgs" ${dm?'style="margin-top:220px"':''}>${dm?'':pollCard(t)}${msgs.map(bub).join('')}${t.typing!=null?`<div class="bub in tpb"><span class="mtyp"><i></i><i></i><i></i></span></div><div class="who">${av(PEOPLE[t.typing],'style="border:0;width:26px;height:26px"')}${P0(t.typing)} is typing…</div>`:''}</div>
       <p class="note" style="color:rgba(255,255,255,.4);margin-top:10px">${dm?(t.pending?(t.reqSent?'Request sent · '+P0(t.person)+' can reply once they accept':'Not buddies yet · your first message arrives as a request'):'Only crew-mates and buddies can message you.'):'Everyone here is ID + ticket verified. Meetups are in public spots.'}</p>
     </div>
-    ${state.att?attMenu(t,s,dm):''}${dm||state.att?'':`<div class="mstpin">${meetStrip(t)}</div>`}<form class="composer" id="composer"><button type="button" aria-label="Attach" data-act="attach" aria-expanded="${!!state.att}">${ic('clip',20)}</button><label for="msg" hidden>Message</label><input id="msg" placeholder="${dm?'Message '+P0(t.person):'Message the crew'}" autocomplete="off"><button class="send" type="submit" aria-label="Send">${ic('send',18)}</button></form>
+    ${dm?'':`<div class="mstpin">${meetStrip(t)}</div>`}<form class="composer" id="composer"><button type="button" aria-label="Attach" data-act="toast" data-msg="Share a photo or your ticket">${ic('clip',20)}</button><label for="msg" hidden>Message</label><input id="msg" placeholder="${dm?'Message '+P0(t.person):'Message the crew'}" autocomplete="off"><button class="send" type="submit" aria-label="Send">${ic('send',18)}</button></form>
   </div>`;
 }
 
@@ -2437,10 +2388,9 @@ function profileView(mine){
   const P = mine ? {ini:'JL',cls:'a2',ph:10,name:'Jordan Lee',handle:'@jordanlive · 4.9 buddy rating',stats:[[23,'Shows'],[9,'Crews'],[14,'Buddies'],[2,'Tickets']],quote:'"Always down to be someone\'s plus one."',bio:'Indie, R&B, anything live.<br>Usually by the soundboard.',tags:['#indie','#soundboard','#dinnerfirst'],cells:[A('Harry Styles'),A('Doja Cat'),A('Gorillaz'),A('Steve Lacy')],title:'Going to'}
                  : (state.pid&&state.pid!==0)?{ini:PEOPLE[state.pid][1],cls:PEOPLE[state.pid][2],ph:PEOPLE[state.pid][3],name:PEOPLE[state.pid][0],handle:'@'+P0(state.pid).toLowerCase()+'live · 4.8 buddy rating',stats:[[12+h(PEOPLE[state.pid][0])%40,'Shows'],[3+h(PEOPLE[state.pid][0])%9,'Crews'],[10+h(PEOPLE[state.pid][0])%60,'Buddies'],['Pit','Spot']],quote:'"Here for the music, stayed for the people."',bio:'Usually early. Always down for food after.',tags:['#singalong','#dinnerfirst'],cells:[A('Harry Styles'),A('Doja Cat')],title:'Going to'}
                  : {ini:'MR',cls:'a1',ph:0,name:'Maya Rivera',handle:'@mayalive · 4.9 buddy rating',stats:[[63,'Shows'],[21,'Crews'],[148,'Buddies'],['Rail','Spot']],quote:'"Front row or nothing."',bio:'Indie, pop, anything loud.<br>Always early, always knows the setlist.<br>Brooklyn → wherever the tour goes',tags:['#frontrow','#singalong','#afterparty'],cells:[A('Harry Styles'),A('Dave Matthews Band'),A('Sombr'),A('beabadoobee')],title:'Hosting'};
-  if(mine&&state.prof){ P.bio=esc(state.prof.bio||'')+(state.prof.spot?`<br>Usually by the ${esc(state.prof.spot.toLowerCase())}.`:''); P.tags=state.prof.tags.map(t=>'#'+t); }
   return `<div class="scroll"><div style="padding-bottom:${mine?120:110}px">
     <div class="phero"><div class="cover" style="background:radial-gradient(120% 90% at 20% 20%,#5A5A5F 0%,rgba(90,90,95,0) 55%),radial-gradient(110% 90% at 85% 60%,#B4B4B9 0%,rgba(180,180,185,0) 55%),#1a1a1d"></div><span class="av ${P.ph!=null?'ph':P.cls}" style="position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);width:150px;height:150px;font-size:54px;border:4px solid rgba(255,255,255,.85);z-index:1">${P.ph!=null?avi(P.ph):P.ini}</span>
-      <div class="nav">${mine?'<span></span>':`<button class="nb" data-act="back" aria-label="Back">${ic('back')}</button>`}${mine?`<button class="nb" data-act="epopen" aria-label="Edit profile" style="width:auto;padding:0 16px;font-size:14px;font-weight:600;color:#fff">Edit</button>`:''}</div></div>
+      <div class="nav">${mine?'<span></span>':`<button class="nb" data-act="back" aria-label="Back">${ic('back')}</button>`}${mine?`<button class="nb" data-act="toast" data-msg="Edit your profile, genres and meetup preferences" aria-label="Edit profile" style="width:auto;padding:0 16px;font-size:14px;font-weight:600;color:#fff">Edit</button>`:''}</div></div>
     <div class="pad" style="margin-top:-86px;position:relative">
       <div class="pname">${P.name}</div><div style="font-size:15px;margin-top:6px;color:var(--muted)">${P.handle}</div>${mine?vCard():vBadges(state.pid||0)}
       <div class="pstats">${P.stats.map(([n,l])=>`<div><b>${n}</b><small>${l}</small></div>`).join('')}</div>
@@ -2458,7 +2408,7 @@ function person(){ return profileView(false); }
 function render(anim){ window._dockActive=null; const _ap=document.getElementById('app'); _ap.classList.toggle('dk',['crew','me','person'].includes(state.screen)); _ap.classList.toggle('framed',!(matchMedia('(pointer:coarse)').matches&&innerWidth<500));
   const v=document.getElementById('view');
   const prev=document.getElementById('sc'); const keep=prev&&state.screen==='home'&&state._last==='home'?prev.scrollTop:0; state._last=state.screen;
-  v.innerHTML={home,show,crew,crews,me,person,explore,tickets,scene,sell,search}[state.screen]()+(state.sheet?citySheet():'')+(state.tsheet?ticketSheet():'')+(state.psheet?plusSheet():'')+(state.kit?kitSheet():'')+(state.safe?safetySheet():'')+(state.nc?ncSheet():'')+(state.ufo?ufSheet():'')+(state.itk?itSheet():'')+(state.ep?epSheet():'')+(state.secO?secSheet():'');
+  v.innerHTML={home,show,crew,crews,me,person,explore,tickets,scene,sell,search}[state.screen]()+(state.sheet?citySheet():'')+(state.tsheet?ticketSheet():'')+(state.psheet?plusSheet():'')+(state.kit?kitSheet():'')+(state.safe?safetySheet():'')+(state.nc?ncSheet():'')+(state.ufo?ufSheet():'');
   const nsc=document.getElementById('sc'); if(nsc&&keep) nsc.scrollTop=keep;
   if(anim){ v.classList.remove('screen'); void v.offsetWidth; v.classList.add('screen'); }
   const ci=document.getElementById('ci'); if(ci) ci.scrollTop=ci.scrollHeight;
@@ -2509,26 +2459,6 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='ufsp'){ state.ufd.sp=!state.ufd.sp; ufRedraw(); }
   else if(a==='ufreset'){ state.ufd={k:[],g:[],z:'any',sp:false}; ufRedraw(); }
   else if(a==='ufapply'){ state.uf=state.ufd; state.upN=6; ufClose(); upSwap(true); }
-  else if(a==='itopen'){ state.itk={step:'choose'}; render(); }
-  else if(a==='itclose'){ state.itk=null; render(); }
-  else if(a==='itstep'){ state.itk={step:v,busy:v!=='choose',pick:{0:true}}; render(); if(v!=='choose') setTimeout(()=>{ if(state.itk){ state.itk.busy=false; render(); } },1100); }
-  else if(a==='itpick'){ const k=state.itk; k.pick=k.pick||{}; k.pick[v]=!k.pick[v]; render(); }
-  else if(a==='itadd'){ const k=state.itk, L=IMPORTABLE(), add=k.step==='email'?L.filter((_,i)=>(k.pick||{})[i]):L.slice(0,1); state.extraTix=(state.extraTix||[]).concat(add); state.itk=null; render(); toast(`${add.length} ${add.length===1?'ticket':'tickets'} added · verified ✓`); }
-  else if(a==='epopen'){ state.prof=state.prof||{bio:'Indie, R&B, anything live.',tags:['indie','soundboard','dinnerfirst'],spot:'Soundboard'}; state.ep={...state.prof,tags:state.prof.tags.slice()}; state.prof=state.ep._keep||state.prof; render(); }
-  else if(a==='epclose'){ state.ep=null; render(); }
-  else if(a==='eptag'){ const b=document.getElementById('epbio'); if(b) state.ep.bio=b.value; const L=state.ep.tags, i=L.indexOf(v); if(i<0){ if(L.length<4) L.push(v); } else L.splice(i,1); render(); }
-  else if(a==='epspot'){ const b=document.getElementById('epbio'); if(b) state.ep.bio=b.value; state.ep.spot=v; render(); }
-  else if(a==='epsave'){ const b=document.getElementById('epbio'); state.prof={bio:(b?b.value:state.ep.bio).trim(),tags:state.ep.tags,spot:state.ep.spot}; state.ep=null; render(); toast('Profile updated'); }
-  else if(a==='secopen'){ state.safe=false; state.secO=true; state.secSent=false; render(); }
-  else if(a==='secsend'){ state.secSent=true; const t=thById(state.tid); if(t){ t.msgs.push({d:'sys',t:'You alerted venue staff · your crew can see your location'}); t.ts=++TSEQ; state.loc=state.loc||{}; state.loc[t.id]=true; } render(); }
-  else if(a==='seccancel'){ state.secSent=false; state.secO=false; render(); toast('Alert cancelled'); }
-  else if(a==='secclose'){ state.secO=false; render(); }
-  else if(a==='attach'){ state.att=!state.att; render(); }
-  else if(a==='attsend'){ const t=thById(state.tid), s=thShow(t); state.att=false; if(v==='photo'){ t.msgs.push({d:'img',time:nowT()}); }
-    else if(v==='ticket'){ const my=MYTIX().find(r=>r[0]===s); if(!my){ render(); toast('No ticket for this show yet · add one in Tickets'); return; } t.msgs.push({d:'sys',t:`You shared your verified ticket · ${my[1]}`}); }
-    else { if(!t.plan){ render(); toast('Set a meetup first'); return; } t.msgs.push({d:'out',t:`📍 I’m at ${t.plan[1]}`,time:nowT()}); }
-    t.ts=++TSEQ; render(); }
-  else if(a==='wrep'){ state.wopen=state.wopen||{}; state.wopen[v]=!state.wopen[v]; const sc=document.querySelector('.scroll'), y=sc&&sc.scrollTop; render(); const n=document.querySelector('.scroll'); if(n) n.scrollTop=y; }
   else if(a==='xtag'){ state.xtag=+v<0?null:+v; render(); }
   else if(a==='hold'){ const t=thById(state.tid); t.hold='held'; render(); toast('$5 held · it comes back when you check in'); }
   else if(a==='checkin'&&!thById(state.tid).dep){ const t=thById(state.tid); t.hold='in'; t.msgs.push({d:'sys',t:`You’re at ${t.plan[1]}`}); t.ts=++TSEQ; render(); toast('Nice · this counts toward your show-up record'); }
@@ -2612,8 +2542,7 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='sellwhy'){ state.sell.why=v; document.querySelectorAll('.swhy button').forEach(x=>x.setAttribute('aria-pressed',x.dataset.v===v)); }
   else if(a==='sellexit'){ state.sell=null; back(); }
   else if(a==='selltix'){ state.sell=null; state.history=[]; state.screen='tickets'; render(true); }
-  else if(a==='toast'){ if(state.psheet){ closePlus(); } const m=t.dataset.msg; if(/copied/i.test(m)){ try{ navigator.clipboard.writeText(location.href); }catch(_){} } toast(m); }
-  else if(a==='rptpick'){ const tt=thById(state.tid); state.safe=false; state.pid=tt&&tt.host>=0?tt.host:1; go('person'); setTimeout(()=>{ const r=document.querySelector('[data-act=report]'); r&&r.scrollIntoView({block:'center'}); },200); }
+  else if(a==='toast'){ if(state.psheet){ closePlus(); } toast(t.dataset.msg); }
 });
 document.getElementById('app').addEventListener('keydown',e=>{ if(e.key==='Enter'&&e.target.id==='sq'){ e.preventDefault(); const v=e.target.value.trim(); if(v){ state.recent=[v].concat((state.recent||RECENT0).filter(r=>r!==v)).slice(0,5); render(); } return; } if(e.key==='Enter'&&e.target.dataset.enter){ e.preventDefault(); state.q=e.target.value; state.genre='All'; state.history=[]; state.screen='explore'; render(); } });
 document.getElementById('app').addEventListener('input',e=>{ if(e.target.dataset.live2){ state.sq=e.target.value; const pos=e.target.selectionStart; render(); const i=document.getElementById('sq'); i.focus(); i.setSelectionRange(pos,pos); return; } if(e.target.dataset.live){ state.q=e.target.value; const pos=e.target.selectionStart; render(); const i=document.getElementById('xq'); i.focus(); i.setSelectionRange(pos,pos); } });
