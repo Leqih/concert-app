@@ -1314,7 +1314,7 @@ i.tw{font-style:normal;opacity:0}
 .xfv{flex-shrink:0;height:32px;padding:0 12px;border-radius:16px;background:#0B0B0C;color:#fff;font-size:12.5px;font-weight:600;display:inline-flex;align-items:center;text-decoration:none}
 
 .xstick{position:sticky;top:var(--st);z-index:6;background:var(--bg);padding:10px 0 8px;margin-top:2px}
-.xstick::before{content:'';position:absolute;left:0;right:0;bottom:100%;height:calc(var(--st) + 4px);background:var(--bg)}
+.xstick.stuck::before{content:'';position:absolute;left:0;right:0;bottom:100%;height:calc(var(--st) + 4px);background:var(--bg)}
 .xstick .xseg{margin-top:0}
 .xchips{margin:10px 0 0;padding:0 16px}
 .xstick .sprule{margin-top:10px}
@@ -1386,6 +1386,27 @@ i.tw{font-style:normal;opacity:0}
 .wpi{display:block;position:relative;height:170px;border-radius:16px;overflow:hidden}
 .wpf{display:flex;align-items:center;gap:6px}.wpf button{height:32px;padding:0 12px;border-radius:16px;background:var(--card2);font-size:13px;font-weight:600;color:var(--text)}
 .wpf button[aria-pressed=true]{background:#0B0B0C;color:#fff}.wpf .wme{margin-left:auto;background:transparent;box-shadow:inset 0 0 0 1.5px #0B0B0C}
+
+.ulist{margin-top:10px}
+.urow{display:flex;align-items:center;gap:12px;width:100%;padding:10px 2px;text-align:left;color:var(--text)}
+.urow+.urow{border-top:1px solid var(--line)}
+.udate{width:34px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;line-height:1}
+.udate small{font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.udate b{font-family:var(--display);font-size:22px;font-weight:800;letter-spacing:-.04em;margin-top:3px;font-variant-numeric:tabular-nums}
+.uthumb{position:relative;width:52px;height:52px;border-radius:14px;overflow:hidden;flex-shrink:0;background:var(--card2)}
+.ub{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.ub>b{font-family:var(--display);font-size:16.5px;font-weight:700;letter-spacing:-.03em;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.um{font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ug{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);margin-top:2px;white-space:nowrap}.ug b{color:var(--text);font-weight:600}
+.ug .bgav span{width:18px;height:18px;border-width:1.5px;margin-left:-5px}
+.umore{width:100%;height:44px;margin-top:4px;border-top:1px solid var(--line);font-size:14px;font-weight:600;color:var(--text);letter-spacing:-.01em}
+.xstick.stuck{box-shadow:0 1px 0 var(--line)}
+.xtl{align-items:center;gap:6px}.xse{font-style:normal;font-size:15px;flex-shrink:0}
+.xstart{display:flex;align-items:center;gap:12px;width:calc(100% - 24px);margin:10px 12px 0;padding:12px 14px;border-radius:20px;background:var(--card);text-align:left;color:var(--text)}
+.xstart>i{width:36px;height:36px;border-radius:50%;background:#0B0B0C;color:#fff;display:grid;place-items:center;flex-shrink:0}
+.xstart>span{flex:1;display:flex;flex-direction:column;gap:2px}.xstart b{font-size:15px;letter-spacing:-.02em}.xstart small{font-size:12.5px;color:var(--muted)}.xstart>svg{color:var(--dim)}
+
+.xstick .sprule{gap:5px;margin-left:12px;margin-right:12px}.xstick .sprule span{padding:0 9px 0 3px;font-size:11.5px;gap:5px}.xstick .sprule .eb{width:22px;height:22px;font-size:11px}
 </style>
 
 <div class="app framed" id="app">
@@ -1665,7 +1686,7 @@ function sceneFly(tile,v){
 }
 const COMMUNITIES = [ ['Pop','Pop'], ['Rock','Rock'], ['R&B','R&B'], ['Hip-Hop','Hip-Hop/Rap'], ['Classical','Classical'] ];
 
-const state = { city:'New York', sheet:false, screen:'home', id:null, tab:'For You', genre:'All', sort:'rec', q:'', drop:0, secs:6*3600+19*60+16, rsvp:{}, followed:false, history:[], msgs:{} };
+const state = { city:'New York', sheet:false, screen:'home', id:null, tab:'For You', genre:'All', sort:'date', q:'', drop:0, secs:6*3600+19*60+16, rsvp:{}, followed:false, history:[], msgs:{} };
 function go(screen,id){ state.history.push([state.screen,state.id]); state.screen=screen; state.id=id||null; render(true); }
 function back(){ const p=state.history.pop()||['home',null]; state.screen=p[0]; state.id=p[1]; render(true); }
 let tt; function toast(m){ const t=document.getElementById('toast'); t.textContent=m; t.hidden=false; clearTimeout(tt); tt=setTimeout(()=>t.hidden=true,2000); }
@@ -1703,13 +1724,13 @@ function plusSheet(){ const o=[['🤝','Start a crew','Pick a show, up to 8 peop
   return `<div class="pfbg" data-act="plusclose"></div><div class="pfan" id="psheet" role="dialog" aria-label="Create"><p class="pfh">What are you up to?</p>
     ${o.map(([e,t,d,act,msg],k)=>`<button class="pfc p${k}" data-act="${act}" ${msg?`data-msg="${msg}"`:''}><i class="pfe">${e}</i><b>${t}</b><small>${d}</small><span class="pfgo">${ic('right',14)}</span></button>`).join('')}</div>`; }
 
-function feedRow(s){
-  return `<button class="wrow" data-act="show" data-id="${s.id}"><span class="wthumb">${img(s)}</span>
-    <span style="min-width:0;flex:1"><b>${esc(s.artist)}</b><span class="m">${when(s)} · ${esc(s.venue)}</span>
-    <span class="bd">${ic('users',13)}${6+h(s.id)%60} looking for a buddy${sparesFor(s).filter(x=>!(state.claimedIds||{})[x.id]).length?`<em class="spchip">🎟️ ${sparesFor(s).filter(x=>!(state.claimedIds||{})[x.id]).length} spare${sparesFor(s).length>1?'s':''}</em>`:''}</span></span>${ic('right',18)}</button>`;
+function feedRow(s){ const sp=sparesFor(s).filter(x=>!(state.claimedIds||{})[x.id]).length, n=6+h(s.id)%60, d=new Date(s.dates[0]+'T12:00:00Z'), k=Math.abs(h(s.id));
+  return `<button class="urow" data-act="show" data-id="${s.id}"><span class="udate"><small>${MON[d.getUTCMonth()]}</small><b>${d.getUTCDate()}</b></span><span class="uthumb">${img(s)}</span>
+    <span class="ub"><b>${esc(s.artist)}</b><span class="um">${DOW[d.getUTCDay()]} · ${esc(VSH(s.venue))}${s.dates.length>1?' · '+s.dates.length+' nights':''}</span>
+    <span class="ug"><span class="bgav">${[0,1,2].map(m=>`<span>${avi(PEOPLE[(k+m*3)%8][3])}</span>`).join('')}</span><span>${n} looking${sp?` · <b>${sp} spare${sp>1?'s':''}</b>`:''}</span></span></span></button>`;
 }
 
-const VSH=v=>v.replace('Madison Square Garden','MSG').replace('Radio City Music Hall','Radio City').replace('Barclays Center','Barclays');
+const VSH=v=>v.replace('Madison Square Garden','MSG').replace('Radio City Music Hall','Radio City').replace('Barclays Center','Barclays').replace(' Theatre','').replace(' Theater','');
 function trending(){ const c=SHOWS.filter(x=>xDays(x.dates[0])>=0&&xDays(x.dates[0])<=31).sort((a,b)=>(h(b.id)%97+(XOV[b.artist]?60:0))-(h(a.id)%97+(XOV[a.artist]?60:0))).slice(0,5);
   return c.map((x,i)=>{ const k=Math.abs(h(x.id)), song=songsFor(x.artist)[k%3];
     const T=[[`${x.artist} · ${18+k%30} crews forming`,'Hot','show',`${(1.2+(k%30)/10).toFixed(1)}k going`],
@@ -1778,7 +1799,7 @@ ${state.city==='New York'?buddiesGoing():''}
     <section class="sec pad hsec"><h2 class="h2">Upcoming in ${state.city} <span class="emo">${CITY_EMO[state.city]||'🎶'}</span></h2><p class="sub">${SHOWS.length-drops.length} more shows · find a buddy for any</p>
       <div class="wcard flush wup">
       <div class="wfrow"><button class="wsort" data-act="sort" data-v="${state.sort==='date'?'rec':'date'}" aria-label="Change sort">${state.sort==='date'?'Soonest':'Most going'} ${ic('chev',12)}</button><div class="hs">${GEN.map(g=>`<button class="gch" data-act="genre" data-v="${g}" aria-pressed="${state.genre===g}">${GEMO[g]?GEMO[g]+' ':''}${g}</button>`).join('')}</div></div>
-      <div class="wlist">${feed.length?feed.map(feedRow).join(''):`<p class="sub" style="text-align:center;padding:24px 0">No ${esc(state.genre)} shows coming up.</p>`}</div>
+      <div class="wlist ulist">${feed.length?(state.upAll?feed:feed.slice(0,6)).map(feedRow).join('')+(feed.length>6?`<button class="umore" data-act="upall">${state.upAll?'Show less':'Show all '+feed.length+' shows'}</button>`:''):`<p class="sub" style="text-align:center;padding:24px 0">No ${esc(state.genre)} shows coming up.</p>`}</div>
     </div>
     </section>
     <p class="note" style="margin-top:22px">Shows and images from Ticketmaster (Sept 27 2026 snapshot).<br>Crews, people and chats are demo data. Profile photos from Unsplash.</p>
@@ -1810,12 +1831,12 @@ function xCard(c){ const left=c.n-c.f, sh=v=>v.replace('Madison Square Garden','
 function xRow(c){ const left=c.n-c.f, hot=left===1;
   if(c.full) return `<div class="xcr xfull"><span class="xfi">${ic('check',12)}</span><span class="xci"><b>${esc(c.name)} is full · ${c.n} of ${c.n}</b><small>We opened crew 2 for everyone else ↓</small></span></div>`;
   const avs=c.mine?[MEP[3]].concat(c.who.map(k=>PEOPLE[k][3])):Array.from({length:c.f},(_,m)=>PEOPLE[(PEOPLE.indexOf(c.host)+m*3)%8][3]);
-  return `<div class="xcr"><div class="xci"><span class="xtl"><b>${esc(c.name)}</b><span class="xsc">${SCENE_EMO[c.j]} ${SCENE_LIST[c.j][0]}</span></span>
+  return `<div class="xcr"><div class="xci"><span class="xtl"><i class="xse">${SCENE_EMO[c.j]}</i><b>${esc(c.name)}</b></span>
       <span class="xmt">📍 ${c.time?c.time+' · ':''}${esc(c.spot)}</span>
-      <span class="xft"><span class="xav">${avs.slice(0,3).map(p=>`<span>${avi(p)}</span>`).join('')}</span><span class="xdots">${Array.from({length:c.n},(_,k)=>`<i class="${k<c.f?'on':''}"></i>`).join('')}</span><em>${c.mine?'Your crew · ':''}${c.auto?'Just opened · ':''}${hot?'1 spot left':left+' spots left'}${c.rel?' · 100% showed up':''}</em></span></div>
+      <span class="xft"><span class="xav">${avs.slice(0,3).map(p=>`<span>${avi(p)}</span>`).join('')}</span><span class="xdots">${Array.from({length:c.n},(_,k)=>`<i class="${k<c.f?'on':''}"></i>`).join('')}</span><em>${c.mine?'Your crew · ':''}${c.wo?'Women only · ':''}${c.auto?'Just opened · ':''}${hot?'1 spot left':left+' spots left'}${c.rel?' · 100% showed up':''}</em></span></div>
     <button class="xjn ${hot&&!c.mine?'hot':''}" data-act="xjoin" data-v="${c.ix}">${c.mine?'Open':hot?'Last spot':'Join'}</button></div>`; }
 function xGroup(cs){ const s=cs[0].s, sh=v=>v.replace('Madison Square Garden','MSG').replace('Radio City Music Hall','Radio City');
-  return `<div class="xgrp"><button class="xsh" data-act="show" data-id="${s.id}"><span class="xth">${img(s)}</span><span class="xsb"><b>${esc(s.artist)}</b><small>${sd(s.dates[0])} · ${esc(sh(s.venue))}</small></span><span class="xsp">👤 ${cs[0].solo} solo</span></button>${cs.map(xRow).join('')}<button class="xnew" data-act="ncopen" data-id="${s.id}">${ic('plus',14)} Start a crew for this show</button></div>`; }
+  return `<div class="xgrp"><button class="xsh" data-act="show" data-id="${s.id}"><span class="xth">${img(s)}</span><span class="xsb"><b>${esc(s.artist)}</b><small>${sd(s.dates[0])} · ${esc(sh(s.venue))}</small></span><span class="xsp">👤 ${cs[0].solo} solo</span></button>${cs.map(xRow).join('')}</div>`; }
 function explore(){
   const q=(state.q||'').trim().toLowerCase(), mode=state.xmode||'crew', tag=state.xtag==null?-1:state.xtag;
   const match=t=>!q||t.toLowerCase().includes(q);
@@ -1830,13 +1851,13 @@ function explore(){
     chips=`<div class="hs xchips"><button class="gch" data-act="xtag" data-v="-1" aria-pressed="${tag<0}">All</button>${order.map(j=>`<button class="gch" data-act="xtag" data-v="${j}" aria-pressed="${tag===j}">${SCENE_EMO[j]} ${SCENE_LIST[j][0]}</button>`).join('')}</div>`;
     const proof=`<div class="xsolo2"><span class="xav">${[3,5,7].map(k=>`<span>${avi(PEOPLE[k][3])}</span>`).join('')}</span><span><b>${solo} people</b> are going solo this week · every crew is ID + ticket verified</span></div>`;
     const groups=XB.map(bk=>{ const cs=L.filter(c=>xBucket(c.s.dates[0])===bk); const by=[]; cs.forEach(c=>{ let g=by.find(x=>x[0].s===c.s); if(!g){ g=[]; by.push(g); } g.push(c); }); return [bk,by]; }).filter(g=>g[1].length);
-    body=proof+(tag<0&&!q?trendCard():'')+(groups.length?groups.map(([bk,by])=>`<p class="slab">${bk}</p>${by.slice(0,5).map(xGroup).join('')}`).join('')
+    body=proof+(tag<0&&!q?trendCard()+`<button class="xstart" data-act="ncopen"><i>${ic('plus',18)}</i><span><b>Don’t see your vibe?</b><small>Start a crew for any show · up to 8 people</small></span>${ic('right',16)}</button>`:'')+(groups.length?groups.map(([bk,by])=>`<p class="slab">${bk}</p>${by.slice(0,5).map(xGroup).join('')}`).join('')
       :`<div class="xempty"><b>No ${tag>=0?esc(SCENE_LIST[tag][0].toLowerCase())+' ':''}crews ${q?'match “'+esc(state.q)+'”':'yet'}</b><span>Be the first. We’ll suggest a meetup spot and time.</span><button data-act="ncopen" data-id="${(L[0]||all[0]).s.id}">＋ Start the first crew</button></div>`);
   } else {
     const L=allSpares().filter(x=>match(byId[x.sid].artist+' '+byId[x.sid].venue)).sort((a,b)=>byId[a.sid].dates[0].localeCompare(byId[b.sid].dates[0]));
     const locked=SHOWS.filter(x=>LOCKED(x)&&match(x.artist+' '+x.venue)).slice(0,3);
     sub=`${L.length} spare tickets · face value + $${FEE}`;
-    chips=`<div class="sprule xchips"><span><i class="eb">🔒</i>Face value + $${FEE} flat</span><span><i class="eb">👯</i>Crews get 24h first</span><span><i class="eb">↩️</i>Refund if it doesn’t arrive</span></div>`;
+    chips=`<div class="sprule xchips"><span><i class="eb">🔒</i>Face value + $${FEE}</span><span><i class="eb">👯</i>Crews first</span><span><i class="eb">↩️</i>Refund if lost</span></div>`;
     const groups=XB.map(bk=>[bk,L.filter(x=>xBucket(byId[x.sid].dates[0])===bk)]).filter(g=>g[1].length);
     body=(groups.length?groups.map(([bk,xs])=>`<p class="slab">${bk}</p><div class="splist">${xs.map(x=>spareCard(x)).join('')}</div>`).join(''):`<div class="xempty"><b>No spares match</b><span>Turn on alerts and we’ll ping you when one drops.</span></div>`)
       +(locked.length?`<p class="slab">Official exchange only</p><div class="spwait">${locked.map(x=>`<div class="spwr"><span class="spwi">${img(x)}</span><span class="spwb"><b>${esc(x.artist)}</b><small>${sd(x.dates[0])} · transfers locked by the artist</small></span><a class="xfv" href="https://help.ticketmaster.com/hc/en-us/articles/9781464415249-How-does-Ticketmaster-s-Face-Value-Exchange-work" target="_blank" rel="noopener">Exchange ↗</a></div>`).join('')}</div>`:'');
@@ -1979,7 +2000,7 @@ function show(){
 
 const SECS=['Floor GA','Section 105','Section 212','Balcony','Lower Bowl 118','Mezzanine'];
 function sparesFor(s){ if(!s||LOCKED(s)) return []; const k=h(s.id); const n=s.artist==='Harry Styles'?2:[0,1,0,2,1,0,1][k%7];
-  return Array.from({length:n},(_,i)=>({id:s.id+'-'+i,sid:s.id,seller:PEOPLE[s.artist==='Harry Styles'&&i===0?3:(k+i*3)%8],face:79+((k>>i)%140),sec:s.artist==='Harry Styles'&&i===0?'Floor GA':SECS[(k+i)%SECS.length],qty:1+((k>>(i+2))%2),crews:1+(k+i)%4,mins:[8,26,52,95,140][(k+i)%5],crewFirst:i===1}))
+  return Array.from({length:n},(_,i)=>({id:s.id+'-'+i,sid:s.id,seller:PEOPLE[s.artist==='Harry Styles'&&i===0?3:(k+i*3)%8],face:79+(Math.abs(k>>i)%140),sec:s.artist==='Harry Styles'&&i===0?'Floor GA':SECS[(k+i)%SECS.length],qty:1+((k>>(i+2))%2),crews:1+(k+i)%4,mins:[8,26,52,95,140][(k+i)%5],crewFirst:i===1}))
    ; }
 const allSpares=()=>SHOWS.flatMap(sparesFor).filter(x=>!(state.claimedIds||{})[x.id]&&!(state.listed||{})[x.sid]);
 const spareOf=s=>{ const sp=sparesFor(s)[0]; return sp?{seller:sp.seller,face:sp.face,sec:sp.sec,id:sp.id}:{seller:PEOPLE[3],face:79+h(s.id)%140,sec:'Floor GA'}; };
@@ -2204,6 +2225,7 @@ function render(anim){ window._dockActive=null; const _ap=document.getElementByI
   if(state.sheet) initCitySheet();
   if(document.getElementById('wal')) layWallet(null);
   syncNav(window._dockActive);
+  const xs=document.querySelector('.xstick'); if(xs){ const sc=xs.closest('.scroll'), f=()=>xs.classList.toggle('stuck',xs.getBoundingClientRect().top<=parseFloat(getComputedStyle(xs).top)+1); sc&&sc.addEventListener('scroll',f,{passive:true}); f(); }
   const form=document.getElementById('composer');
   if(form) form.addEventListener('submit',e=>{ e.preventDefault(); const i=document.getElementById('msg'); const t=i.value.trim(); if(!t) return; sendMsg(t); const m2=document.getElementById('msg'); m2&&m2.focus(); });
   const mq=document.getElementById('mq'); if(mq){ mq.addEventListener('input',()=>{ state.mq=mq.value; const pos=mq.selectionStart; render(); const n=document.getElementById('mq'); n.focus(); n.setSelectionRange(pos,pos); }); if(state.msFocus){ mq.focus(); state.msFocus=false; } }
@@ -2234,6 +2256,7 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='bjoin'){ const x=byId[id]||A('Gorillaz'), ps=v.split(',').map(Number); let tt=TH.find(q=>q.k==='crew'&&q.show===x.artist&&ps.every(k=>q.who.includes(k)));
     if(!tt){ tt={id:'t'+(++TSEQ),k:'crew',show:x.artist,title:'Buddies',long:`${x.artist} with ${P0(ps[0])} and ${P0(ps[1])}`,host:ps[0],who:ps.slice(),cap:6,un:0,ts:++TSEQ,plan:['6:30 PM',XSPOT[Math.abs(h(x.id))%XSPOT.length]],msgs:[{d:'in',p:ps[0],t:`Oh nice, you’re coming too? 🙌`,time:nowT()}],replies:[[ps[1],'Finally, the whole gang']]}; TH.unshift(tt); }
     tt.msgs.push({d:'sys',t:`You joined ${P0(ps[0])} and ${P0(ps[1])}`}); openThread(tt); }
+  else if(a==='upall'){ state.upAll=!state.upAll; const sc=document.getElementById('sc'), y=sc&&sc.scrollTop; render(); const n=document.getElementById('sc'); if(n) n.scrollTop=y; }
   else if(a==='xtag'){ state.xtag=+v<0?null:+v; render(); }
   else if(a==='hold'){ const t=thById(state.tid); t.hold='held'; render(); toast('$5 held · it comes back when you check in'); }
   else if(a==='checkin'&&!thById(state.tid).dep){ const t=thById(state.tid); t.hold='in'; t.msgs.push({d:'sys',t:`You’re at ${t.plan[1]}`}); t.ts=++TSEQ; render(); toast('Nice · this counts toward your show-up record'); }
