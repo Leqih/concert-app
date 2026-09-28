@@ -1426,6 +1426,11 @@ i.tw{font-style:normal;opacity:0}
 .spp{display:flex;align-items:center;gap:12px;width:100%;padding:10px 0;text-align:left;color:var(--text)}.spp+.spp{border-top:1px solid var(--line)}
 .spp .bgav span{width:40px;height:40px;border:0}.spp>span:nth-child(2){flex:1;display:flex;flex-direction:column}.spp b{font-size:15px}.spp small{font-size:12.5px;color:var(--muted)}.spp>svg{color:var(--dim)}
 .xtop+.xsolo2{margin-top:10px}
+
+.ufl{display:flex;align-items:center;gap:6px;margin:0 -12px;padding:0 12px}
+.ufl .gch{flex-shrink:0;display:inline-flex;align-items:center;gap:5px}.ufl .gch em{font-style:normal;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.ufl .gch[aria-pressed=true] em{color:rgba(255,255,255,.75)}.ufl .gch:disabled{opacity:.35}
+.udiv{flex-shrink:0;width:1px;height:20px;background:var(--line);margin:0 4px}
 </style>
 
 <div class="app framed" id="app">
@@ -1445,7 +1450,7 @@ let SHOWS = NYC_SHOWS;
 const ALL_SHOWS = Object.values(CITIES).flat();
 const byId = Object.fromEntries(ALL_SHOWS.map(s=>[s.id,s]));
 const A = n => SHOWS.find(s=>s.artist===n) || NYC_SHOWS.find(s=>s.artist===n) || SHOWS[0];
-function setCity(c){ if(!CITIES[c]) return; state.city=c; SHOWS=CITIES[c]; state.drop=0; state.genre='All'; state.sheet=false; state.history=[]; state.screen='home'; render(); armDrop(); const sc=document.getElementById('sc'); if(sc) sc.scrollTop=0; }
+function setCity(c){ if(!CITIES[c]) return; state.city=c; SHOWS=CITIES[c]; state.drop=0; state.genre='All'; state.when='all'; state.sheet=false; state.history=[]; state.screen='home'; render(); armDrop(); const sc=document.getElementById('sc'); if(sc) sc.scrollTop=0; }
 const CITY_TZ={'New York':'America/New_York','Los Angeles':'America/Los_Angeles','Chicago':'America/Chicago','London':'Europe/London','Toronto':'America/Toronto'};
 const localTime=c=>{ try{ return new Intl.DateTimeFormat('en-US',{hour:'numeric',minute:'2-digit',timeZone:CITY_TZ[c]}).format(new Date()); }catch(e){ return ''; } };
 const MAP=/*MAP*/;
@@ -1790,9 +1795,13 @@ function wallPost(e,sid){ e.preventDefault(); const i=document.getElementById('w
 function home(){
   const drops=DROPS();
   const k=state.drop%drops.length, d=drops[k];
-  const GEN=['All',...[...new Set(SHOWS.map(s=>s.genre))].filter(g=>g&&g!=='Music').slice(0,6)];
-  let feed=SHOWS.filter(s=>!drops.includes(s)&&(state.genre==='All'||s.genre===state.genre));
-  feed = state.sort==='date' ? [...feed].sort((a,b)=>a.dates[0].localeCompare(b.dates[0])) : [...feed].sort((a,b)=>going(b)-going(a));
+  const base=SHOWS.filter(s=>!drops.includes(s)), W=state.when||'all', G=state.genre||'All';
+  const inW=(s,w)=>w==='all'||(w==='week'?xDays(s.dates[0])<=7:xDays(s.dates[0])<=31), inG=(s,g)=>g==='All'||s.genre===g;
+  const GC={}; base.filter(s=>inW(s,W)).forEach(s=>{ if(s.genre&&s.genre!=='Music') GC[s.genre]=(GC[s.genre]||0)+1; });
+  const GALL={}; base.forEach(s=>{ if(s.genre&&s.genre!=='Music') GALL[s.genre]=(GALL[s.genre]||0)+1; });
+  const GEN=Object.keys(GALL).filter(g=>GALL[g]>=2).sort((a,b)=>GALL[b]-GALL[a]);
+  const feed=base.filter(s=>inW(s,W)&&inG(s,G)).sort((a,b)=>a.dates[0].localeCompare(b.dates[0]));
+  const wc=w=>base.filter(s=>inW(s,w)&&inG(s,G)).length;
   const commImgs = g => SHOWS.filter(s=>s.genre===g).slice(0,4);
   const short=v=>v.replace('Madison Square Garden','MSG').replace('Radio City Music Hall','Radio City');
   const looking=s=>6+h(s.id)%60;
@@ -1816,8 +1825,8 @@ function home(){
 
     <section class="sec pad hsec"><h2 class="h2">Upcoming in ${state.city} <span class="emo">${CITY_EMO[state.city]||'🎶'}</span></h2><p class="sub">${SHOWS.length-drops.length} more shows · find a buddy for any</p>
       <div class="wcard flush wup">
-      <div class="wfrow"><button class="wsort" data-act="sort" data-v="${state.sort==='date'?'rec':'date'}" aria-label="Change sort">${state.sort==='date'?'Soonest':'Most going'} ${ic('chev',12)}</button><div class="hs">${GEN.map(g=>`<button class="gch" data-act="genre" data-v="${g}" aria-pressed="${state.genre===g}">${GEMO[g]?GEMO[g]+' ':''}${g}</button>`).join('')}</div></div>
-      <div class="wlist ulist">${feed.length?(state.upAll?feed:feed.slice(0,6)).map(feedRow).join('')+(feed.length>6?`<button class="umore" data-act="upall">${state.upAll?'Show less':'Show all '+feed.length+' shows'}</button>`:''):`<p class="sub" style="text-align:center;padding:24px 0">No ${esc(state.genre)} shows coming up.</p>`}</div>
+      <div class="ufl hs">${[['all','All'],['week','This week'],['month','This month']].map(([w,l])=>{ const n=wc(w); return `<button class="gch" data-act="when" data-v="${w}" aria-pressed="${W===w}" ${n?'':'disabled'}>${l} <em>${n}</em></button>`; }).join('')}<i class="udiv"></i>${GEN.map(g=>{ const n=GC[g]||0; return `<button class="gch" data-act="genre" data-v="${G===g?'All':g}" aria-pressed="${G===g}" ${n?'':'disabled'}>${GEMO[g]?GEMO[g]+' ':''}${g.replace('Hip-Hop/Rap','Hip-Hop')} <em>${n}</em></button>`; }).join('')}</div>
+      <div class="wlist ulist">${feed.length?(state.upAll?feed:feed.slice(0,6)).map(feedRow).join('')+(feed.length>6?`<button class="umore" data-act="upall">${state.upAll?'Show less':'Show all '+feed.length+' shows'}</button>`:''):`<p class="sub" style="text-align:center;padding:24px 0">No shows match. <button data-act="ufclear" style="font-weight:600;color:var(--text)">Clear filters</button></p>`}</div>
     </div>
     </section>
     <p class="note" style="margin-top:22px">Shows and images from Ticketmaster (Sept 27 2026 snapshot).<br>Crews, people and chats are demo data. Profile photos from Unsplash.</p>
@@ -2330,8 +2339,9 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='tickets'){ state.history=[]; state.screen='tickets'; render(); }
   else if(a==='shuffle'){ state.drop++; render(); }
   else if(a==='dropto'){ const nv=+v, dir=nv===(state.drop+1)%3?1:-1; state.drop=nv; paintDrop(dir); armDrop(); }
-  else if(a==='genre'){ state.genre=v; render(); }
+  else if(a==='genre'){ state.genre=v; state.upAll=false; const sc=document.getElementById('sc'), y=sc&&sc.scrollTop; render(); const n=document.getElementById('sc'); if(n) n.scrollTop=y; }
   else if(a==='sort'){ state.sort=v; render(); }
+  else if(a==='when'||a==='ufclear'){ if(a==='when') state.when=v; else { state.when='all'; state.genre='All'; } state.upAll=false; const sc=document.getElementById('sc'), y=sc&&sc.scrollTop; render(); const n=document.getElementById('sc'); if(n) n.scrollTop=y; }
   else if(a==='me'){ state.history=[]; state.screen='me'; render(); }
   else if(a==='tab'){ state.tab=v; render(); }
   else if(a==='rsvp'){ state.rsvp[id]= state.rsvp[id]===v ? '' : v; render(); toast(state.rsvp[id]? (v==='Going'?'You’re going. Pick a crew to head in together.':v==='Maybe'?'Marked as maybe':'Got it, not going') : 'RSVP cleared'); }
