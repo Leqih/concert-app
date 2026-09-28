@@ -32,7 +32,7 @@
 ```
 HANDOFF.md            ← 本文件
 CLAUDE.md             ← 给 Claude 的工作规则（精简版）
-demo/                 ← 主作品：单文件 HTML 交互 demo（当前 = M10 / 线上 v71）
+demo/                 ← 主作品：单文件 HTML 交互 demo（当前 = M11 / 线上 v72）
   demo2_tpl.html      模板源码（唯一需要改的文件）
   build.py            把数据注入模板 → dist/plusone-demo.html
   shows.js            纽约演出数据（Ticketmaster 抓取后的静态快照）
@@ -99,6 +99,7 @@ pip install playwright && python3 demo/tests/m7test.py   # 可选：批量截屏
 | M8 | v69 | 用户自建小队 + 信任轻量化 | 「Start a crew」流程（氛围、4–8 人上限、公开/仅邀请、可选集合点、可选 $5 押金；女性专属需认证），入口在演出页、Explore 每场演出、＋菜单；小队满员自动关闭并开 crew 2；演出页小队列表改为真实数据；押金只在发起人开启时出现，其余小队是一键「I’m here」签到（计入到场记录）；没设集合点可一键建议；暖场投票默认收起 |
 | M9 | v70 | 社交内容层 | Explore 顶部「Trending in 城市」热搜榜（5 条，来自组队行为：小队数、独自去的人增长、演出墙话题、面值余票、错过的人），点「Talk / Wall」直达演出墙；首页「Your buddies are going」一键加入好友所在小队；演出页 Show wall（只有持票人能发帖，分 Getting there / Outfits / Setlist / Missed connections，点赞、Say hi、错过的人「That’s me」双向确认）；场景页建小队接入新流程并预选氛围；＋菜单「Find a plus one」切换可被邀请状态 |
 | M10 | v71 | Explore 与首页 Upcoming 精修 | 修复 Explore 搜索框被吸顶遮罩盖住的 bug（遮罩只在吸顶时出现，并加底线）；小队行改为「场景 emoji + 名称」不再截断，女性专属标在底部；去掉每组重复的「Start a crew for this show」，改为热搜下方一张「Don’t see your vibe?」卡；票规则 chip 缩短；修复余票出现负价格（$-27）的 bug；首页 Upcoming 改为日期列 + 缩略图 + 头像行（「47 looking · 1 spare」），默认按日期排序，只显示 6 场并可「Show all」 |
+| M11 | v72 | Explore 信息架构重整 | Explore 只做找小队：去掉「Find a ticket」模式（余票只在小队聊天、演出页、Tickets 页 Spares 出现）；标题 + 搜索入口 + 场景筛选整体固定在顶部，只有列表滚动；热搜移到二级「Search」页（点搜索框进入，也可从首页搜索图标进入）：最近搜索、Trending 榜、Browse by vibe，输入后实时分组结果（Shows / Crews / People），回车记入最近搜索 |
 
 ## 6. 链接（原账号所有，新账号只能查看）
 
@@ -111,6 +112,8 @@ pip install playwright && python3 demo/tests/m7test.py   # 可选：批量截屏
   - M6 分区 `1353:11953` 里有 19 个 393×852 空矩形（`1353:11959 … 1353:12013`），**截图还没传上去**（19 张截图就在 `iterations/shots/`，文件名与画框一一对应）
 
 ## 定位共识（M8）
+
+- **Plus One 不卖票**：原价票跳 Ticketmaster（Buy tickets ↗）；只撮合粉丝间多余票按面值转让，小队优先，过户走官方渠道。
 
 - 找搭子和面值票单独都不是壁垒（Radiate、ConcertBuddy、Ticketmaster × CashorTrade 都在做）。
 - 差异化落在「一定会一起到场的小队」：持票身份、到场记录（会累积的数据）、小队而非配对、多余票优先给小队、小队可延续。

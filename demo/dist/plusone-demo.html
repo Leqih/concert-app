@@ -1407,6 +1407,25 @@ i.tw{font-style:normal;opacity:0}
 .xstart>span{flex:1;display:flex;flex-direction:column;gap:2px}.xstart b{font-size:15px;letter-spacing:-.02em}.xstart small{font-size:12.5px;color:var(--muted)}.xstart>svg{color:var(--dim)}
 
 .xstick .sprule{gap:5px;margin-left:12px;margin-right:12px}.xstick .sprule span{padding:0 9px 0 3px;font-size:11.5px;gap:5px}.xstick .sprule .eb{width:22px;height:22px;font-size:11px}
+
+.scroll>.xpg:first-child{padding-top:0}
+.xtop{position:sticky;top:0;z-index:6;background:var(--bg);padding:calc(var(--st) + 2px) 0 10px;transition:box-shadow .2s}
+.xtop.stuck{box-shadow:0 1px 0 var(--line)}
+.xhd{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 16px 10px}
+.sfake{width:100%;height:48px;text-align:left}.sfake span{flex:1;font-size:16px;color:var(--dim);letter-spacing:-.02em}
+.shot{font-style:normal;flex-shrink:0;height:26px;padding:0 10px;border-radius:13px;background:var(--card2);font-size:12px;font-weight:600;color:#3C3C40;display:inline-flex;align-items:center}
+.xtop .xchips{margin-top:10px}
+.shd{padding-bottom:6px}.shrow{display:flex;align-items:center;gap:10px;padding:6px 16px 0}.shrow .sbar{flex:1;height:48px}
+.scan{font-size:15px;font-weight:600;color:var(--text);flex-shrink:0}
+.srh{display:flex;align-items:baseline;justify-content:space-between;margin:18px 20px 8px}.srh b{font-family:var(--display);font-size:17px;letter-spacing:-.03em}.srh button{font-size:13px;color:var(--muted);font-weight:600}
+.srec{display:flex;flex-wrap:wrap;gap:6px;padding:0 16px}.srec .gch{display:inline-flex;align-items:center;gap:5px}
+.svibe{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:0 12px}
+.svibe button{height:76px;border-radius:18px;background:var(--card);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:var(--text)}
+.svibe i{font-style:normal;font-size:22px}.svibe span{font-size:11.5px;font-weight:600;letter-spacing:-.01em}
+.ssec2{margin:0 12px;padding:2px 12px}
+.spp{display:flex;align-items:center;gap:12px;width:100%;padding:10px 0;text-align:left;color:var(--text)}.spp+.spp{border-top:1px solid var(--line)}
+.spp .bgav span{width:40px;height:40px;border:0}.spp>span:nth-child(2){flex:1;display:flex;flex-direction:column}.spp b{font-size:15px}.spp small{font-size:12.5px;color:var(--muted)}.spp>svg{color:var(--dim)}
+.xtop+.xsolo2{margin-top:10px}
 </style>
 
 <div class="app framed" id="app">
@@ -1781,7 +1800,7 @@ function home(){
     <header class="whead">
       <button class="wicon" data-act="crews" aria-label="Crew requests, 1 new">${ic('bell',20)}<span class="wdot"></span></button>
       <div class="wtitle"><h1>Plus One</h1><button class="wcity" data-act="citysheet" aria-haspopup="dialog">${ic('pin',13)}${state.city} ${ic('chev',12)}</button></div>
-      <button class="wicon" data-act="explore" aria-label="Search shows">${ic('search',20)}</button>
+      <button class="wicon" data-act="search" aria-label="Search">${ic('search',20)}</button>
     </header>
 
     <section class="sec pad hsec" style="margin-top:18px"><h2 class="h2">This week's drop <span class="emo">🔥</span></h2><p class="sub">Most-wanted shows in ${state.city}</p>
@@ -1838,34 +1857,31 @@ function xRow(c){ const left=c.n-c.f, hot=left===1;
 function xGroup(cs){ const s=cs[0].s, sh=v=>v.replace('Madison Square Garden','MSG').replace('Radio City Music Hall','Radio City');
   return `<div class="xgrp"><button class="xsh" data-act="show" data-id="${s.id}"><span class="xth">${img(s)}</span><span class="xsb"><b>${esc(s.artist)}</b><small>${sd(s.dates[0])} · ${esc(sh(s.venue))}</small></span><span class="xsp">👤 ${cs[0].solo} solo</span></button>${cs.map(xRow).join('')}</div>`; }
 function explore(){
-  const q=(state.q||'').trim().toLowerCase(), mode=state.xmode||'crew', tag=state.xtag==null?-1:state.xtag;
-  const match=t=>!q||t.toLowerCase().includes(q);
-  const seg=`<div class="tseg xseg" role="tablist"><button data-act="xmode" data-v="crew" aria-selected="${mode==='crew'}">Find a crew</button><button data-act="xmode" data-v="ticket" aria-selected="${mode==='ticket'}">Find a ticket</button><span class="tsegi ${mode==='crew'?'mine':'spares'}"></span></div>`;
-  const search=`<div class="pad" style="margin-top:10px"><label class="sbar">${ic('search',20)}<span hidden>Search</span><input id="xq" value="${esc(state.q||'')}" placeholder="${mode==='crew'?'Artists, venues, or people going':'Artists or venues'}" data-live="1"></label></div>`;
-  let body='', sub='', chips='';
-  if(mode==='crew'){
-    const order=[0,1,2,4,6,7,3,5], all=xCrews();
-    const L=all.filter(c=>(tag<0||c.j===tag)&&match(c.s.artist+' '+c.s.venue+' '+c.name+' '+c.host[0]));
-    sub=`${L.length} crews forming in ${state.city}`;
-    const solo=all.filter(c=>xDays(c.s.dates[0])<=7).reduce((n,c)=>n+c.solo,0)||23;
-    chips=`<div class="hs xchips"><button class="gch" data-act="xtag" data-v="-1" aria-pressed="${tag<0}">All</button>${order.map(j=>`<button class="gch" data-act="xtag" data-v="${j}" aria-pressed="${tag===j}">${SCENE_EMO[j]} ${SCENE_LIST[j][0]}</button>`).join('')}</div>`;
-    const proof=`<div class="xsolo2"><span class="xav">${[3,5,7].map(k=>`<span>${avi(PEOPLE[k][3])}</span>`).join('')}</span><span><b>${solo} people</b> are going solo this week · every crew is ID + ticket verified</span></div>`;
-    const groups=XB.map(bk=>{ const cs=L.filter(c=>xBucket(c.s.dates[0])===bk); const by=[]; cs.forEach(c=>{ let g=by.find(x=>x[0].s===c.s); if(!g){ g=[]; by.push(g); } g.push(c); }); return [bk,by]; }).filter(g=>g[1].length);
-    body=proof+(tag<0&&!q?trendCard()+`<button class="xstart" data-act="ncopen"><i>${ic('plus',18)}</i><span><b>Don’t see your vibe?</b><small>Start a crew for any show · up to 8 people</small></span>${ic('right',16)}</button>`:'')+(groups.length?groups.map(([bk,by])=>`<p class="slab">${bk}</p>${by.slice(0,5).map(xGroup).join('')}`).join('')
-      :`<div class="xempty"><b>No ${tag>=0?esc(SCENE_LIST[tag][0].toLowerCase())+' ':''}crews ${q?'match “'+esc(state.q)+'”':'yet'}</b><span>Be the first. We’ll suggest a meetup spot and time.</span><button data-act="ncopen" data-id="${(L[0]||all[0]).s.id}">＋ Start the first crew</button></div>`);
-  } else {
-    const L=allSpares().filter(x=>match(byId[x.sid].artist+' '+byId[x.sid].venue)).sort((a,b)=>byId[a.sid].dates[0].localeCompare(byId[b.sid].dates[0]));
-    const locked=SHOWS.filter(x=>LOCKED(x)&&match(x.artist+' '+x.venue)).slice(0,3);
-    sub=`${L.length} spare tickets · face value + $${FEE}`;
-    chips=`<div class="sprule xchips"><span><i class="eb">🔒</i>Face value + $${FEE}</span><span><i class="eb">👯</i>Crews first</span><span><i class="eb">↩️</i>Refund if lost</span></div>`;
-    const groups=XB.map(bk=>[bk,L.filter(x=>xBucket(byId[x.sid].dates[0])===bk)]).filter(g=>g[1].length);
-    body=(groups.length?groups.map(([bk,xs])=>`<p class="slab">${bk}</p><div class="splist">${xs.map(x=>spareCard(x)).join('')}</div>`).join(''):`<div class="xempty"><b>No spares match</b><span>Turn on alerts and we’ll ping you when one drops.</span></div>`)
-      +(locked.length?`<p class="slab">Official exchange only</p><div class="spwait">${locked.map(x=>`<div class="spwr"><span class="spwi">${img(x)}</span><span class="spwb"><b>${esc(x.artist)}</b><small>${sd(x.dates[0])} · transfers locked by the artist</small></span><a class="xfv" href="https://help.ticketmaster.com/hc/en-us/articles/9781464415249-How-does-Ticketmaster-s-Face-Value-Exchange-work" target="_blank" rel="noopener">Exchange ↗</a></div>`).join('')}</div>`:'');
-  }
-  return `<div class="scroll"><div style="padding-bottom:130px">
-    <header class="whead"><span></span><div class="wtitle"><h1 class="sh1">Explore <span class="emo">🧭</span></h1><span class="wcity">${sub}</span></div><span></span></header>
-    ${search}<div class="xstick">${seg}${chips}</div>${body}
-  </div></div>${dock('explore')}`;
+  const tag=state.xtag==null?-1:state.xtag, order=[0,1,2,4,6,7,3,5], all=xCrews();
+  const L=all.filter(c=>tag<0||c.j===tag);
+  const solo=all.filter(c=>xDays(c.s.dates[0])<=7).reduce((n,c)=>n+c.solo,0)||23;
+  const top=`<div class="xtop"><header class="xhd"><h1 class="sh1">Explore <span class="emo">🧭</span></h1><span class="wcity">${L.length} crews forming in ${state.city}</span></header>
+    <div class="pad"><button class="sbar sfake" data-act="search" aria-label="Search">${ic('search',20)}<span>Artists, crews, or people</span><i class="shot">🔥 Trending</i></button></div>
+    <div class="hs xchips"><button class="gch" data-act="xtag" data-v="-1" aria-pressed="${tag<0}">All</button>${order.map(j=>`<button class="gch" data-act="xtag" data-v="${j}" aria-pressed="${tag===j}">${SCENE_EMO[j]} ${SCENE_LIST[j][0]}</button>`).join('')}</div></div>`;
+  const proof=`<div class="xsolo2"><span class="xav">${[3,5,7].map(k=>`<span>${avi(PEOPLE[k][3])}</span>`).join('')}</span><span><b>${solo} people</b> are going solo this week · every crew is ID + ticket verified</span></div>`;
+  const groups=XB.map(bk=>{ const cs=L.filter(c=>xBucket(c.s.dates[0])===bk); const by=[]; cs.forEach(c=>{ let g=by.find(x=>x[0].s===c.s); if(!g){ g=[]; by.push(g); } g.push(c); }); return [bk,by]; }).filter(g=>g[1].length);
+  const start=`<button class="xstart" data-act="ncopen"><i>${ic('plus',18)}</i><span><b>Don’t see your vibe?</b><small>Start a crew for any show · up to 8 people</small></span>${ic('right',16)}</button>`;
+  const body=groups.length?proof+groups.map(([bk,by])=>`<p class="slab">${bk}</p>${by.slice(0,5).map(xGroup).join('')}`).join('')+start
+    :`<div class="xempty"><b>No ${tag>=0?esc(SCENE_LIST[tag][0].toLowerCase())+' ':''}crews yet</b><span>Be the first. We’ll suggest a meetup spot and time.</span><button data-act="ncopen" data-j="${tag>=0?tag:0}">＋ Start the first crew</button></div>`;
+  return `<div class="scroll"><div class="xpg" style="padding-bottom:130px">${top}${body}</div></div>${dock('explore')}`;
+}
+const RECENT0=['Harry Styles','Pit crew','MSG'];
+function search(){ const q=(state.sq||'').trim().toLowerCase(), rec=state.recent||RECENT0, m=t=>t.toLowerCase().includes(q);
+  let body='';
+  if(!q){ body=`${rec.length?`<div class="srh"><b>Recent</b><button data-act="sclear">Clear</button></div><div class="srec">${rec.map(r=>`<button class="gch" data-act="sfill" data-v="${esc(r)}">${ic('clock',13)} ${esc(r)}</button>`).join('')}</div>`:''}
+    ${trendCard()}
+    <div class="srh"><b>Browse by vibe</b></div><div class="svibe">${[0,1,2,4,6,7,3,5].map(j=>`<button data-act="svibe" data-v="${j}"><i>${SCENE_EMO[j]}</i><span>${SCENE_LIST[j][0]}</span></button>`).join('')}</div>`; }
+  else { const S=SHOWS.filter(x=>m(x.artist+' '+x.venue)).slice(0,4), C=xCrews().filter(c=>!c.full&&m(c.name+' '+c.s.artist+' '+c.spot)).slice(0,4), Pp=PEOPLE.map((p,i)=>[p,i]).filter(([p])=>m(p[0])).slice(0,4);
+    body=(S.length?`<div class="srh"><b>Shows</b></div><div class="wcard flush ssec2">${S.map(feedRow).join('')}</div>`:'')
+      +(C.length?`<div class="srh"><b>Crews</b></div><div class="xgrp xgs">${C.map(c=>xRow(c).replace('<span class="xmt">📍 ',`<span class="xmt">${esc(c.s.artist)} · `)).join('')}</div>`:'')
+      +(Pp.length?`<div class="srh"><b>People</b></div><div class="wcard flush ssec2">${Pp.map(([p,i])=>`<button class="spp" data-act="person" data-v="${i}"><span class="bgav"><span>${avi(p[3])}</span></span><span><b>${p[0]}</b><small>${BUD[i]?'Buddy · ':''}${REL[i][0]} of ${REL[i][1]} shows showed up</small></span>${ic('right',16)}</button>`).join('')}</div>`:'')
+      ||`<div class="xempty"><b>No results for “${esc(state.sq)}”</b><span>Try an artist, a venue, or a vibe like “pit crew”.</span></div>`; }
+  return `<div class="scroll"><div class="xpg" style="padding-bottom:60px"><div class="xtop shd"><div class="shrow"><label class="sbar"><span hidden>Search</span>${ic('search',20)}<input id="sq" value="${esc(state.sq||'')}" placeholder="Artists, crews, or people" autocomplete="off" data-live2="1"></label><button class="scan" data-act="back">Cancel</button></div></div>${body}</div></div>`;
 }
 
 const MYTIX=()=>[[A('Gorillaz'),'Floor GA','General admission',2],[A('Doja Cat'),'Section 105','Row 12 · Seats 8–9',2]];
@@ -2218,14 +2234,14 @@ function person(){ return profileView(false); }
 function render(anim){ window._dockActive=null; const _ap=document.getElementById('app'); _ap.classList.toggle('dk',['crew','me','person'].includes(state.screen)); _ap.classList.toggle('framed',!(matchMedia('(pointer:coarse)').matches&&innerWidth<500));
   const v=document.getElementById('view');
   const prev=document.getElementById('sc'); const keep=prev&&state.screen==='home'&&state._last==='home'?prev.scrollTop:0; state._last=state.screen;
-  v.innerHTML={home,show,crew,crews,me,person,explore,tickets,scene,sell}[state.screen]()+(state.sheet?citySheet():'')+(state.tsheet?ticketSheet():'')+(state.psheet?plusSheet():'')+(state.kit?kitSheet():'')+(state.safe?safetySheet():'')+(state.nc?ncSheet():'');
+  v.innerHTML={home,show,crew,crews,me,person,explore,tickets,scene,sell,search}[state.screen]()+(state.sheet?citySheet():'')+(state.tsheet?ticketSheet():'')+(state.psheet?plusSheet():'')+(state.kit?kitSheet():'')+(state.safe?safetySheet():'')+(state.nc?ncSheet():'');
   const nsc=document.getElementById('sc'); if(nsc&&keep) nsc.scrollTop=keep;
   if(anim){ v.classList.remove('screen'); void v.offsetWidth; v.classList.add('screen'); }
   const ci=document.getElementById('ci'); if(ci) ci.scrollTop=ci.scrollHeight;
   if(state.sheet) initCitySheet();
   if(document.getElementById('wal')) layWallet(null);
   syncNav(window._dockActive);
-  const xs=document.querySelector('.xstick'); if(xs){ const sc=xs.closest('.scroll'), f=()=>xs.classList.toggle('stuck',xs.getBoundingClientRect().top<=parseFloat(getComputedStyle(xs).top)+1); sc&&sc.addEventListener('scroll',f,{passive:true}); f(); }
+  const xs=document.querySelector('.xtop'); if(xs){ const sc=xs.closest('.scroll'), f=()=>xs.classList.toggle('stuck',sc.scrollTop>2); sc&&sc.addEventListener('scroll',f,{passive:true}); f(); } if(state.screen==='search'&&!state._sqf){ const i=document.getElementById('sq'); if(i){ i.focus(); state._sqf=true; } }
   const form=document.getElementById('composer');
   if(form) form.addEventListener('submit',e=>{ e.preventDefault(); const i=document.getElementById('msg'); const t=i.value.trim(); if(!t) return; sendMsg(t); const m2=document.getElementById('msg'); m2&&m2.focus(); });
   const mq=document.getElementById('mq'); if(mq){ mq.addEventListener('input',()=>{ state.mq=mq.value; const pos=mq.selectionStart; render(); const n=document.getElementById('mq'); n.focus(); n.setSelectionRange(pos,pos); }); if(state.msFocus){ mq.focus(); state.msFocus=false; } }
@@ -2257,6 +2273,10 @@ document.getElementById('app').addEventListener('click',e=>{
     if(!tt){ tt={id:'t'+(++TSEQ),k:'crew',show:x.artist,title:'Buddies',long:`${x.artist} with ${P0(ps[0])} and ${P0(ps[1])}`,host:ps[0],who:ps.slice(),cap:6,un:0,ts:++TSEQ,plan:['6:30 PM',XSPOT[Math.abs(h(x.id))%XSPOT.length]],msgs:[{d:'in',p:ps[0],t:`Oh nice, you’re coming too? 🙌`,time:nowT()}],replies:[[ps[1],'Finally, the whole gang']]}; TH.unshift(tt); }
     tt.msgs.push({d:'sys',t:`You joined ${P0(ps[0])} and ${P0(ps[1])}`}); openThread(tt); }
   else if(a==='upall'){ state.upAll=!state.upAll; const sc=document.getElementById('sc'), y=sc&&sc.scrollTop; render(); const n=document.getElementById('sc'); if(n) n.scrollTop=y; }
+  else if(a==='search'){ state.sq=''; state._sqf=false; go('search'); }
+  else if(a==='sfill'){ state.sq=v; render(); const i=document.getElementById('sq'); i&&i.focus(); }
+  else if(a==='sclear'){ state.recent=[]; render(); }
+  else if(a==='svibe'){ state.xtag=+v; state.history=[]; state.screen='explore'; render(); }
   else if(a==='xtag'){ state.xtag=+v<0?null:+v; render(); }
   else if(a==='hold'){ const t=thById(state.tid); t.hold='held'; render(); toast('$5 held · it comes back when you check in'); }
   else if(a==='checkin'&&!thById(state.tid).dep){ const t=thById(state.tid); t.hold='in'; t.msgs.push({d:'sys',t:`You’re at ${t.plan[1]}`}); t.ts=++TSEQ; render(); toast('Nice · this counts toward your show-up record'); }
@@ -2342,8 +2362,8 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='selltix'){ state.sell=null; state.history=[]; state.screen='tickets'; render(true); }
   else if(a==='toast'){ if(state.psheet){ closePlus(); } toast(t.dataset.msg); }
 });
-document.getElementById('app').addEventListener('keydown',e=>{ if(e.key==='Enter'&&e.target.dataset.enter){ e.preventDefault(); state.q=e.target.value; state.genre='All'; state.history=[]; state.screen='explore'; render(); } });
-document.getElementById('app').addEventListener('input',e=>{ if(e.target.dataset.live){ state.q=e.target.value; const pos=e.target.selectionStart; render(); const i=document.getElementById('xq'); i.focus(); i.setSelectionRange(pos,pos); } });
+document.getElementById('app').addEventListener('keydown',e=>{ if(e.key==='Enter'&&e.target.id==='sq'){ e.preventDefault(); const v=e.target.value.trim(); if(v){ state.recent=[v].concat((state.recent||RECENT0).filter(r=>r!==v)).slice(0,5); render(); } return; } if(e.key==='Enter'&&e.target.dataset.enter){ e.preventDefault(); state.q=e.target.value; state.genre='All'; state.history=[]; state.screen='explore'; render(); } });
+document.getElementById('app').addEventListener('input',e=>{ if(e.target.dataset.live2){ state.sq=e.target.value; const pos=e.target.selectionStart; render(); const i=document.getElementById('sq'); i.focus(); i.setSelectionRange(pos,pos); return; } if(e.target.dataset.live){ state.q=e.target.value; const pos=e.target.selectionStart; render(); const i=document.getElementById('xq'); i.focus(); i.setSelectionRange(pos,pos); } });
 setInterval(()=>{ state.secs=Math.max(0,state.secs-1); const c=document.getElementById('count'); if(c){ const t=state.secs,p=n=>String(n).padStart(2,'0'); c.textContent=p(Math.floor(t/3600))+':'+p(Math.floor(t%3600/60))+':'+p(t%60); } },1000);
 render();
 </script>

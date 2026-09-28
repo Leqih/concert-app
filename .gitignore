@@ -7,3 +7,4 @@ __pycache__/
 deck/shots/
 demo/tests/shots-m8/
 demo/tests/shots-m9/
+demo/tests/shots-*/
