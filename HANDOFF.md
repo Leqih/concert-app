@@ -32,7 +32,7 @@
 ```
 HANDOFF.md            ← 本文件
 CLAUDE.md             ← 给 Claude 的工作规则（精简版）
-demo/                 ← 主作品：单文件 HTML 交互 demo（当前 = M16.2 / 线上 v87）
+demo/                 ← 主作品：单文件 HTML 交互 demo（当前 = M16.3 / 线上 v88）
   demo2_tpl.html      模板源码（唯一需要改的文件）
   build.py            把数据注入模板 → dist/plusone-demo.html
   shows.js            纽约演出数据（Ticketmaster 抓取后的静态快照）
@@ -112,6 +112,7 @@ pip install playwright && python3 demo/tests/m7test.py   # 可选：批量截屏
 | M16 | v85 | ＋ 菜单 v2（Tickets 页维持原设计） | 三张卡从 ＋ 按钮位置弹出（回弹曲线、错峰 50ms），收起时按反序缩回按钮；卡片加大、文字 12 号不再截断，文案带实时信息（可挂票张数、是否已可被邀请）；打开/关闭不再整页重绘；从 ＋ 或 Explore 建小队时先选演出（ncPick）。曾尝试改 Tickets 页布局，主人要求恢复原设计，已还原 |
 | M16.1 | v86 | ＋ 菜单 v3 | 扇形改为三行整宽卡片，从 ＋ 按钮位置依次弹出（最下方黑底 Start a crew 为主操作，离拇指最近）；Find a plus one 直接做成开关，在菜单内切换不关闭；点背景 / × / Esc / 下滑关闭，收起时反序缩回 ＋ |
 | M16.2 | v87 | ＋ 菜单 v4（取代 v3 列表） | 主人觉得整行列表没有设计感，改为「一手牌」：三张竖卡扇形展开（中间黑卡 Start a crew，左 List a spare 票券插画，右 Find a plus one 雷达插画 + ON/OFF），从 ＋ 按钮发牌入场；按住 ＋ 上滑到卡片松手即选（pointer 事件，pkHot/pkPick），直接点也可；选中的卡放大居中、其余落下后进入对应流程；Find a plus one 为开关，开启后雷达脉冲 |
+| M16.3 | v88 | ＋ 菜单 v5：照片卡 | 主人觉得插画卡有 AI 感，改为摄影卡：Start a crew 用本周最热演出照片 + 真实头像，List a spare 用自己下一场票面照片 + 票券缺口和撕口虚线，Find a plus one 用本人照片（关闭时黑白、开启彩色 + Visible 胶囊）；统一暗色渐变 + 颗粒 + 特粗白字，去掉编号/小箭头/手绘图形；右卡镜像右对齐；交互（发牌、按住上滑选卡）保留 |
 
 ## 6. 链接（原账号所有，新账号只能查看）
 
