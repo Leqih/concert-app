@@ -9,3 +9,4 @@ Read `HANDOFF.md` first: product, research, architecture, history, links and to-
 - Never put a Ticketmaster API key (or any key) in the repo or in a published page. Before publishing, `grep` the built file for keys.
 - The owner writes in Chinese; reply in Chinese, keep UI copy in English.
 - Home page: the owner is happy with it. Do not redesign it; only make small, requested changes.
+- Design tokens and type/radius rules live in DESIGN.md (tokens block at the end of the template's CSS). Use the variables; do not add new pixel values for titles or radii.

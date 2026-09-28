@@ -1478,6 +1478,49 @@ i.tw{font-style:normal;opacity:0}
 .ufx{height:52px;padding:0 6px;font-size:15px;font-weight:600;color:var(--text);text-decoration:underline;text-underline-offset:3px}.ufx:disabled{color:var(--dim);text-decoration:none}
 .ptile{display:grid;place-items:center;background:linear-gradient(145deg,#2A2A2E,#0B0B0C);color:#fff;font-family:var(--display);font-weight:800;letter-spacing:-.04em;font-size:clamp(16px,28%,64px)}
 .uthumb .ptile{font-size:18px}.hero .ptile{font-size:120px;color:rgba(255,255,255,.14)}
+
+/* ================= DESIGN TOKENS (M14) — see DESIGN.md ================= */
+:root{
+  --t-brand:32px;   /* Home wordmark only */
+  --t-hero:44px;    /* Title on a full-bleed image hero (show, scene) */
+  --t-page:26px;    /* Page title: Explore, Chats, Tickets, List a spare */
+  --t-section:26px; /* Section title inside a page */
+  --t-card:17px;    /* Card / group title */
+  --t-row:16px;     /* List row title */
+  --t-body:15px; --t-meta:13px; --t-label:12px;
+  --r-xl:30px;  /* page-level cards, sheets, image heroes */
+  --r-lg:20px;  /* single-row cards, banners, chat strips */
+  --r-md:18px;  /* tiles inside cards, primary CTA buttons, inline media (= Home drop image) */
+  --r-sm:14px;  /* thumbnails */
+  --r-xs:12px;  /* segmented controls, small notes */
+  --r-pill:999px;
+}
+/* page titles: same size, weight and vertical position on every tab page */
+.sh1,.chead h1,.xhd h1{font-family:var(--display)!important;font-size:var(--t-page)!important;font-weight:800!important;letter-spacing:-.045em!important;line-height:1.05!important}
+.xhd{padding-top:10px}
+.chead{padding-top:4px}
+.wcity{font-size:var(--t-meta)}
+/* section titles: centred, 26/700, optional 14px subtitle */
+.h2.sec,.hsec>.h2,.ssec h2{font-family:var(--display);font-size:var(--t-section)!important;font-weight:700;letter-spacing:-.045em;line-height:1.05;text-align:center}
+.hsec>.sub,.h2.sec+.sub{font-size:14px;text-align:center}
+/* hero titles on images */
+.hero .big,.stitle h1{font-size:var(--t-hero)!important;letter-spacing:-.055em;line-height:.95}
+/* group labels (dates, form sections, months, search groups) */
+.slab,.ncl,.umon,.srh b{font-family:var(--body)!important;font-size:var(--t-label)!important;font-weight:600!important;letter-spacing:.06em!important;text-transform:uppercase;color:var(--muted)}
+/* card + row titles */
+.xsh .xsb b,.xtrh b{font-size:var(--t-card)}
+.ub>b{font-size:var(--t-row)}
+/* radii */
+.wcard,.xgrp,.xtr,.ssec2,.bgo,.wp,.xempty,.hero,.pcard,.spnone{border-radius:var(--r-xl)!important}
+.sheet{border-radius:var(--r-xl) var(--r-xl) 0 0!important}
+.xstart,.wlock,.wcomp2,.mst,.pollc,.pollmini,.crewrow,.screw,.cpanel,.spk{border-radius:var(--r-lg)!important}
+.ufkc,.svibe button,.plan div,.wpi,.cgo,.wpill.big{border-radius:var(--r-md)!important}
+.uthumb,.xth,.wthumb,.crewrow .thumb,.spwi,.fthumb,.jthumb,.scimg{border-radius:var(--r-sm)!important}
+.ncsz button,.ncw{border-radius:var(--r-xs)!important}
+.upnx,.splitc,.tcard2 .tface,.wc .tface,.ckit,.sstats,.skcp,.skface,.vcard,.spare{border-radius:var(--r-lg)!important}
+.spkimg{border-radius:var(--r-sm)!important}
+.tseg,.gcell .t{border-radius:var(--r-md)!important}
+.shero{border-radius:0 0 var(--r-xl) var(--r-xl)}
 </style>
 
 <div class="app framed" id="app">
@@ -1709,7 +1752,7 @@ function scene(){
     <div class="sstats sin"><div><b>${sceneN(i)}</b><span>crews open</span></div><i></i><div><b>${sc[3]}</b><span>people</span></div><i></i><div><b>${shows.length}</b><span>shows</span></div></div>
     <div class="smem sin"><span class="smav">${members.map(p=>`<span>${avi(p[3])}</span>`).join('')}</span><span class="smt"><b>${members[0][0].split(' ')[0]}, ${members[1][0].split(' ')[0]}</b> and ${sc[3]-2} others are in</span></div>
 
-    <section class="ssec sin"><h2>Crews forming <span class="emo">🤝</span></h2>
+    <section class="ssec sin"><h2 class="h2 sec">Crews forming <span class="emo">🤝</span></h2>
       ${L.map(c=>{ const left=c.n-c.f; return `<button class="screw" data-act="crew" data-id="${c.s.id}">
         <span class="scimg">${img(c.s)}</span>
         <span class="scb"><b>${esc(c.name)}</b><span class="scm">${esc(c.s.artist)} · ${sd(c.s.dates[0])} · ${esc(short(c.s.venue))}</span>
@@ -1905,7 +1948,7 @@ function wallPosts(x){ const k=Math.abs(h(x.id)), S=songsFor(x.artist), v=VSH(x.
   return (state.wall&&state.wall[x.id]||[]).concat(base).map((o,i)=>({...o,id:x.id+'-w'+i})); }
 function hasTix(x){ return MYTIX().some(r=>r[0]===x)||!!(state.claimed&&state.claimed[x.id]); }
 function wallView(x){ const tag=state.wtag||'All', L=wallPosts(x).filter(o=>(tag==='All'||o.tag===tag)&&!(o.p!=null&&(state.blocked||{})[o.p])), lk=state.wlk||{}, me=hasTix(x);
-  return `<div id="wall"><h2 class="h2" style="font-size:24px;text-align:center;margin-top:14px">Show wall <span class="emo">🧱</span></h2><p class="note" style="margin:-4px 0 4px">Only people with a ticket to this show can post</p>
+  return `<div id="wall"><h2 class="h2 sec" style="margin-top:14px">Show wall <span class="emo">🧱</span></h2><p class="sub" style="margin:-6px 0 2px">Only people with a ticket to this show can post</p>
     <div class="hs wtg">${WTAGS.map(t=>`<button class="gch" data-act="wtag" data-v="${t}" aria-pressed="${tag===t}">${t}</button>`).join('')}</div>
     ${me?`<form class="wcomp2" onsubmit="return wallPost(event,'${x.id}')"><span class="bgav"><span>${avi(MEP[3])}</span></span><label for="wq" hidden>Post</label><input id="wq" placeholder="Post to the ${esc(x.artist)} wall" autocomplete="off"><button type="submit">Post</button></form>`
       :`<div class="wlock"><span>🎟️</span><span><b>Read-only for now</b><small>Claim a spare or import your ticket to post</small></span><button data-act="toast" data-msg="Import a ticket from email or a screenshot">Add ticket</button></div>`}
@@ -2130,9 +2173,9 @@ function show(){
     <div class="pad" style="display:flex;flex-direction:column;gap:10px;margin-top:18px">
       <p style="margin:0 0 8px;font-size:16px;line-height:1.45;color:var(--muted);letter-spacing:-.01em">${esc(cleanTitle(s))}. ${s.dates.length>1?s.dates.length+' nights':'One night'} at ${esc(s.venue)}.</p>
       ${LOCKED(s)?lockedCard(s):(()=>{ const L=sparesFor(s).filter(x=>!(state.claimedIds||{})[x.id]); const on=(state.notify||{})[s.id];
-        return `<h2 class="h2" style="font-size:24px;text-align:center">Spare tickets <span class="emo">🎟️</span></h2>`+(L.length?L.map(x=>spareCard(x,true)).join('')+`<p class="note" style="margin:0">Face value only · you’ll join the seller’s crew</p>`
+        return `<h2 class="h2 sec">Spare tickets <span class="emo">🎟️</span></h2>`+(L.length?L.map(x=>spareCard(x,true)).join('')+`<p class="note" style="margin:0">Face value only · you’ll join the seller’s crew</p>`
         :`<div class="spnone"><b>No spares for this show yet</b><span>${4+h(s.id)%30} people are on the waitlist. We’ll ping you the moment one drops.</span><button class="${on?'on':''}" data-act="notify" data-id="${s.id}">${on?ic('check',14)+' You’re on the list':'🔔 Notify me'}</button></div>`); })()}
-      <h2 class="h2" style="font-size:24px;text-align:center">Crews going ${ic('right',16)}</h2>
+      <h2 class="h2 sec">Crews going ${ic('right',16)}</h2>
       <div class="xgrp xgs">${cs.map(xRow).join('')}</div>
       <button class="crewrow newcrew" data-act="ncopen" data-id="${s.id}">${ic('plus',20)}<span style="flex:1;font-weight:600;letter-spacing:-.02em">Start your own crew</span></button>
       <p class="note" style="margin:0">Crews cap at 8 · when one fills, we open the next</p>
@@ -2242,7 +2285,7 @@ function splitCard(){ const s=A(SPLIT.show); if(!s) return ''; const tot=spareOf
   <div class="spr2"><span class="spav">${avi(PEOPLE[1][3])}</span><span class="spt"><b>${PEOPLE[1][0]}</b><small>Paid $${tot}</small></span><em>${ic('check',12)} Paid</em></div>
   <div class="spr2"><span class="spav">${avi(PEOPLE[6][3])}</span><span class="spt"><b>${PEOPLE[6][0]}</b><small>${SPLIT.released?'Seat listed · your crew gets 24h first':'$'+tot+' due in 2 days'}</small></span>${SPLIT.released?'<em>Listed</em>':'<button data-act="nudge">Nudge</button>'}</div>
   ${SPLIT.released?'':'<button class="sprel" data-act="release">Unpaid by the deadline? Release the seat to your crew</button>'}</div>`; }
-function lockedCard(s){ return `<h2 class="h2" style="font-size:24px;text-align:center">Spare tickets <span class="emo">🎟️</span></h2><div class="spnone lk"><b>🔒 Transfers are locked for this show</b><span>The artist only allows resale through Ticketmaster’s Face Value Exchange. Crews still work as usual.</span><a href="https://help.ticketmaster.com/hc/en-us/articles/9781464415249-How-does-Ticketmaster-s-Face-Value-Exchange-work" target="_blank" rel="noopener">Face Value Exchange ↗</a></div>`; }
+function lockedCard(s){ return `<h2 class="h2 sec">Spare tickets <span class="emo">🎟️</span></h2><div class="spnone lk"><b>🔒 Transfers are locked for this show</b><span>The artist only allows resale through Ticketmaster’s Face Value Exchange. Crews still work as usual.</span><a href="https://help.ticketmaster.com/hc/en-us/articles/9781464415249-How-does-Ticketmaster-s-Face-Value-Exchange-work" target="_blank" rel="noopener">Face Value Exchange ↗</a></div>`; }
 const bState=p=>BUD[p]?'buddy':BREQ[p]?'sent':'none';
 function addBuddy(p){ if(BUD[p]||BREQ[p]) return; BREQ[p]=true; setTimeout(()=>{ delete BREQ[p]; BUD[p]=true; toast(`${P0(p)} accepted · you’re buddies 🤝`); if(['person','crews','crew'].includes(state.screen)) render(); },2200); }
 function ncSheet(){ const c=state.nc, s=byId[c.sid], order=[0,1,2,4,6,7,3,5], wo=c.j===7, lock=wo&&ME.idv!==true;
@@ -2350,7 +2393,7 @@ function profileView(mine){
       <div class="quote">${P.quote}</div>
       <div class="bio">${P.bio}</div>
       <div class="tags">${P.tags.map(t=>`<span>${t}</span>`).join('')}</div>${mine?'':rptRow(state.pid||0)}
-      <h2 class="h2" style="margin-top:34px">${P.title}</h2>
+      <h2 class="h2 sec" style="margin-top:34px">${P.title}</h2>
       <div class="g2" style="margin-top:16px">${P.cells.map(c=>`<button class="gcell" data-act="crew" data-id="${c.id}"><span class="t">${img(c)}</span><span style="min-width:0"><small>${sd(c.dates[0])}</small><b>${esc(c.artist)}</b><small>${esc(c.venue.replace('Madison Square Garden','MSG').replace('Radio City Music Hall','Radio City'))}</small></span></button>`).join('')}</div>
     </div></div></div>
     ${mine?dock('me'):(()=>{ const p=state.pid||0, b=bState(p); return `<div class="wbar"><button class="wpill big ghost" data-act="dm" data-v="${p}">${ic('chat',16)}&nbsp;Message</button><button class="wpill big ${b==='none'?'':'ghost'}" data-act="addbuddy" data-v="${p}" ${b==='none'?'':'aria-pressed="true"'}>${b==='buddy'?ic('check',16)+'&nbsp;Buddies':b==='sent'?'Requested…':'＋ Add buddy'}</button></div>`; })()}`;

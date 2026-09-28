@@ -17,7 +17,7 @@
   - **小组比一对一好**：对话在 4 人左右最自然，聚会 5–8 人最佳；Tinder Double Date 女性使用率是男性的 3 倍。
   - **女性安全**：64% 美国女性会共享位置；76% 女性更愿意参加女性专属团。
 
-## 2. 设计规范（必须遵守）
+## 2. 设计规范（必须遵守，完整版见 DESIGN.md）
 
 - **只用黑白灰**，没有品牌色；强调色 = 纯黑 `#0B0B0C`。
 - 字体：标题 **Inter Tight**，正文 **Inter**。
@@ -32,7 +32,7 @@
 ```
 HANDOFF.md            ← 本文件
 CLAUDE.md             ← 给 Claude 的工作规则（精简版）
-demo/                 ← 主作品：单文件 HTML 交互 demo（当前 = M13 / 线上 v79）
+demo/                 ← 主作品：单文件 HTML 交互 demo（当前 = M14 / 线上 v80）
   demo2_tpl.html      模板源码（唯一需要改的文件）
   build.py            把数据注入模板 → dist/plusone-demo.html
   shows.js            纽约演出数据（Ticketmaster 抓取后的静态快照）
@@ -106,6 +106,7 @@ pip install playwright && python3 demo/tests/m7test.py   # 可选：批量截屏
 | M12.1 | v77 | 列表流畅度 | 筛选/下拉刷新只替换 Upcoming 卡（upSwap），不再整页重绘；列表缩略图改异步解码；加载下一批前预解码图片；入场动画 8px / 0.32s / 35ms 错开（最多 8 行）；提前 480px 触发加载 |
 | M12.2 | v78 | 进入演出页改为大图 FLIP | 不再用飞行克隆图：演出页大图本身从缩略图位置用 transform + clip-path 放大展开（0.56s）；标题 → 头像/looking → 日期场馆依次上浮淡入，返回/分享按钮、正文和底部按钮也错峰进场（showFly）；返回仍用克隆图缩回 |
 | M13 | v79 | 真实数据 + 首页 Filters 面板 | 纽约演出从 15 场扩到 41 场真实 Ticketmaster 活动（2026-09-28 抓取，含 NYC 与周边：Barclays、UBS Arena、Town Hall、Brooklyn Paramount、Prudential Center、MetLife 等），原始数据 data/tm_nyc_2026-09-28.psv，合并脚本 data/merge_tm.py（新增字段 sub / n / kind / size）；新演出海报直接引用 Ticketmaster 图片链接，加载失败自动换黑白首字母海报（ptile）；首页 Upcoming 筛选行 = 时间 + 「Filters」按钮（带已选数量），底部面板：演出形式（Concerts / Classical & orchestra / Festivals & lineups / Residencies，带数量）、曲风多选、场馆（Any / Arenas / Theatres）、只看有余票，底部「Clear all」+「Show N shows」实时计数，只在点应用时刷新列表 |
+| M14 | v80 | 设计规范统一 | 以首页为基准建立 token（DESIGN.md）：页面标题 26/800 统一在距顶 66px（Explore、Chats、Tickets、Sell），板块标题 26/700 居中 + 14 副标题（演出页、场景页、个人页的「Going to」原为 24/22/28 且有左对齐），大图标题统一 44，分组标签统一 12 大写；圆角收敛为 30/20/18/14/12/胶囊六档（原先 30 多种数值） |
 
 ## 6. 链接（原账号所有，新账号只能查看）
 
