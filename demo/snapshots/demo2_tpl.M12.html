@@ -1458,10 +1458,6 @@ i.tw{font-style:normal;opacity:0}
 @keyframes ptrs{from{transform:translate(-50%,16px) rotate(0)}to{transform:translate(-50%,16px) rotate(360deg)}}
 .ptrb{position:absolute;left:50%;top:calc(var(--st) + 8px);z-index:8;margin:0;transform:translate(-50%,-12px);opacity:0;height:32px;padding:0 14px;border-radius:16px;background:#0B0B0C;color:#fff;font-size:12.5px;font-weight:600;display:flex;align-items:center;gap:6px;white-space:nowrap;pointer-events:none;transition:opacity .3s,transform .3s cubic-bezier(.2,.8,.2,1)}
 .ptrb.on{opacity:1;transform:translate(-50%,0)}
-
-.uin{animation:uin2 .32s cubic-bezier(.2,.8,.2,1) both}
-@keyframes uin2{from{opacity:0;transform:translate3d(0,8px,0)}to{opacity:1;transform:none}}
-.ulist{contain:layout paint}
 </style>
 
 <div class="app framed" id="app">
@@ -1780,7 +1776,7 @@ function plusSheet(){ const o=[['🤝','Start a crew','Pick a show, up to 8 peop
     ${o.map(([e,t,d,act,msg],k)=>`<button class="pfc p${k}" data-act="${act}" ${msg?`data-msg="${msg}"`:''}><i class="pfe">${e}</i><b>${t}</b><small>${d}</small><span class="pfgo">${ic('right',14)}</span></button>`).join('')}</div>`; }
 
 const MONF=['January','February','March','April','May','June','July','August','September','October','November','December'];
-function upRows(arr,prevM,anim,d0){ let out='', pm=prevM, k=0; arr.forEach(x=>{ const m=new Date(x.dates[0]+'T12:00:00Z').getUTCMonth(), st=anim?` style="animation-delay:${(d0||0)+Math.min(k++,7)*35}ms"`:'';
+function upRows(arr,prevM,anim,d0){ let out='', pm=prevM, k=0; arr.forEach(x=>{ const m=new Date(x.dates[0]+'T12:00:00Z').getUTCMonth(), st=anim?` style="animation-delay:${(d0||0)+(k++)*50}ms"`:'';
     if(pm!=null&&m!==pm) out+=`<p class="umon${anim?' uin':''}"${st}>${MONF[m]}</p>`; pm=m;
     let r=feedRow(x); if(anim) r=r.replace('class="urow"',`class="urow uin"${st}`); out+=r; }); return out; }
 const RM=()=>matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1806,25 +1802,22 @@ function showBack(){ const id=state.id, hero=document.querySelector('.hero'), hi
 function ptrAttach(){ const sc=document.getElementById('sc'); if(!sc||sc._ptr) return; sc._ptr=1; const inner=sc.firstElementChild, ind=document.getElementById('ptr'); let y0=null, dy=0, busy=false, wheel=0, wt;
   const set=d=>{ dy=d; inner.style.transform=d?`translateY(${d}px)`:''; ind.style.opacity=Math.min(1,d/60); ind.style.transform=`translate(-50%,${Math.min(d,70)-40}px) rotate(${d*4}deg)`; ind.classList.toggle('ready',d>=64); };
   const go=()=>{ busy=true; inner.style.transition='transform .25s'; set(56); ind.classList.add('spin');
-    setTimeout(()=>{ ind.classList.remove('spin','ready'); set(0); setTimeout(()=>{ inner.style.transition=''; },260); busy=false; state.rf=(state.rf||0)+1; upSwap(true);
+    setTimeout(()=>{ ind.classList.remove('spin','ready'); set(0); setTimeout(()=>{ inner.style.transition=''; },260); busy=false; state.rf=(state.rf||0)+1; state._ufAnim=true; const y=sc.scrollTop; render(); const n=document.getElementById('sc'); if(n) n.scrollTop=y;
       const b=document.getElementById('ptrb'); if(b){ const nn=2+state.rf%3; b.innerHTML=`${ic('check',13)} Updated · ${nn} new crews and ${nn*4+3} more people looking`; b.classList.add('on'); setTimeout(()=>b.classList.remove('on'),2600); } },950); };
   sc.addEventListener('touchstart',e=>{ if(sc.scrollTop<=0&&!busy) y0=e.touches[0].clientY; },{passive:true});
   sc.addEventListener('touchmove',e=>{ if(y0==null) return; const d=e.touches[0].clientY-y0; if(d>0){ set(Math.min(110,d*.5)); } },{passive:true});
   sc.addEventListener('touchend',()=>{ if(y0==null) return; y0=null; if(dy>=64) go(); else { inner.style.transition='transform .25s'; set(0); setTimeout(()=>inner.style.transition='',260); } });
   sc.addEventListener('wheel',e=>{ if(busy||sc.scrollTop>0||e.deltaY>=0) return; wheel+=-e.deltaY; set(Math.min(110,wheel*.35)); clearTimeout(wt); wt=setTimeout(()=>{ if(dy>=64) go(); else { inner.style.transition='transform .25s'; set(0); setTimeout(()=>inner.style.transition='',260); } wheel=0; },160); },{passive:true}); }
-function upSwap(anim){ const old=document.querySelector('#sc .wup'); if(!old){ render(); return; } state._ufAnim=anim; const tmp=document.createElement('div'); tmp.innerHTML=home(); state._ufAnim=false; window._dockActive='home';
-  const nw=tmp.querySelector('.wup'); if(!nw){ render(); return; } const sl=(old.querySelector('.ufl')||{}).scrollLeft||0; old.replaceWith(nw); const f=nw.querySelector('.ufl'); if(f) f.scrollLeft=sl; upWatch(); }
 function upTail(feed){ return state.upN<feed.length?`<div class="usent" id="upsent" aria-hidden="true"></div>`:`<p class="uend">${ic('check',13)} That’s every show in ${state.city} · ${feed.length} ${feed.length===1?'show':'shows'}</p>`; }
 const USK=`<div class="usk"><i class="d"></i><i class="t"></i><span><i></i><i></i><i></i></span></div>`;
 function upMore(){ const sent=document.getElementById('upsent'), feed=window._upFeed||[]; if(!sent||state._upBusy||state.upN>=feed.length) return; state._upBusy=true; sent.innerHTML=USK+USK+USK;
-  const pre=feed.slice(state.upN,state.upN+6).map(x=>{ const im=new Image(); im.src=x.img; return im.decode().catch(()=>0); }), t0=Date.now();
-  Promise.race([Promise.all(pre),new Promise(r=>setTimeout(r,900))]).then(()=>setTimeout(()=>{ const n0=state.upN, n1=Math.min(n0+6,feed.length), s2=document.getElementById('upsent'); state.upN=n1; state._upBusy=false; if(!s2) return;
+  setTimeout(()=>{ const n0=state.upN, n1=Math.min(n0+6,feed.length), s2=document.getElementById('upsent'); state.upN=n1; state._upBusy=false; if(!s2) return;
     const last=[...document.querySelectorAll('.ulist .urow')].pop(); s2.insertAdjacentHTML('beforebegin',upRows(feed.slice(n0,n1),last?+last.dataset.m:null,true,0));
-    if(n1>=feed.length) s2.outerHTML=`<p class="uend uin" style="animation-delay:${(n1-n0)*55}ms">${ic('check',13)} That’s every show in ${state.city} · ${feed.length} shows</p>`; else { s2.innerHTML=''; upWatch(); } },Math.max(0,240-(Date.now()-t0)))); }
+    if(n1>=feed.length) s2.outerHTML=`<p class="uend uin" style="animation-delay:${(n1-n0)*55}ms">${ic('check',13)} That’s every show in ${state.city} · ${feed.length} shows</p>`; else { s2.innerHTML=''; upWatch(); } },520); }
 function upWatch(){ const sent=document.getElementById('upsent'), sc=document.getElementById('sc'); if(!sent||!sc) return; if(window._upIO) window._upIO.disconnect();
-  window._upIO=new IntersectionObserver(es=>{ if(es.some(e=>e.isIntersecting)) upMore(); },{root:sc,rootMargin:'0px 0px 480px 0px'}); window._upIO.observe(sent); }
+  window._upIO=new IntersectionObserver(es=>{ if(es.some(e=>e.isIntersecting)) upMore(); },{root:sc,rootMargin:'0px 0px 160px 0px'}); window._upIO.observe(sent); }
 function feedRow(s){ const sp=sparesFor(s).filter(x=>!(state.claimedIds||{})[x.id]).length, n=6+h(s.id)%60+(state.rf||0)*(1+Math.abs(h(s.id))%3), d=new Date(s.dates[0]+'T12:00:00Z'), k=Math.abs(h(s.id));
-  return `<button class="urow" data-act="show" data-id="${s.id}" data-m="${d.getUTCMonth()}"><span class="udate"><small>${MON[d.getUTCMonth()]}</small><b>${d.getUTCDate()}</b></span><span class="uthumb"><img class="cover" alt="" decoding="async" src="${s.img}"></span>
+  return `<button class="urow" data-act="show" data-id="${s.id}" data-m="${d.getUTCMonth()}"><span class="udate"><small>${MON[d.getUTCMonth()]}</small><b>${d.getUTCDate()}</b></span><span class="uthumb">${img(s)}</span>
     <span class="ub"><b>${esc(s.artist)}</b><span class="um">${DOW[d.getUTCDay()]} · ${esc(VSH(s.venue))}${s.dates.length>1?' · '+s.dates.length+' nights':''}</span>
     <span class="ug"><span class="bgav">${[0,1,2].map(m=>`<span>${avi(PEOPLE[(k+m*3)%8][3])}</span>`).join('')}</span><span>${n} looking${sp?` · <b>${sp} spare${sp>1?'s':''}</b>`:''}</span></span></span></button>`;
 }
@@ -2415,9 +2408,9 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='tickets'){ state.history=[]; state.screen='tickets'; render(); }
   else if(a==='shuffle'){ state.drop++; render(); }
   else if(a==='dropto'){ const nv=+v, dir=nv===(state.drop+1)%3?1:-1; state.drop=nv; paintDrop(dir); armDrop(); }
-  else if(a==='genre'){ state.genre=v; state.upN=6; upSwap(true); }
+  else if(a==='genre'){ state.genre=v; state.upN=6; state._ufAnim=true; const sc=document.getElementById('sc'), y=sc&&sc.scrollTop; render(); const n=document.getElementById('sc'); if(n) n.scrollTop=y; }
   else if(a==='sort'){ state.sort=v; render(); }
-  else if(a==='when'||a==='ufclear'){ if(a==='when') state.when=v; else { state.when='all'; state.genre='All'; } state.upN=6; upSwap(true); }
+  else if(a==='when'||a==='ufclear'){ if(a==='when') state.when=v; else { state.when='all'; state.genre='All'; } state.upN=6; state._ufAnim=true; const sc=document.getElementById('sc'), y=sc&&sc.scrollTop; render(); const n=document.getElementById('sc'); if(n) n.scrollTop=y; }
   else if(a==='me'){ state.history=[]; state.screen='me'; render(); }
   else if(a==='tab'){ state.tab=v; render(); }
   else if(a==='rsvp'){ state.rsvp[id]= state.rsvp[id]===v ? '' : v; render(); toast(state.rsvp[id]? (v==='Going'?'You’re going. Pick a crew to head in together.':v==='Maybe'?'Marked as maybe':'Got it, not going') : 'RSVP cleared'); }
