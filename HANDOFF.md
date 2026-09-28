@@ -32,7 +32,7 @@
 ```
 HANDOFF.md            ← 本文件
 CLAUDE.md             ← 给 Claude 的工作规则（精简版）
-demo/                 ← 主作品：单文件 HTML 交互 demo（当前 = M12 / 线上 v78）
+demo/                 ← 主作品：单文件 HTML 交互 demo（当前 = M13 / 线上 v79）
   demo2_tpl.html      模板源码（唯一需要改的文件）
   build.py            把数据注入模板 → dist/plusone-demo.html
   shows.js            纽约演出数据（Ticketmaster 抓取后的静态快照）
@@ -105,6 +105,7 @@ pip install playwright && python3 demo/tests/m7test.py   # 可选：批量截屏
 | M12 | v76 | 首页 Upcoming 交互动效 | 从 Upcoming 行点进演出页为同元素过渡：缩略图放大成演出页大图（圆角 14→32），标题与内容随后淡入；返回时大图缩回原来那一行，并恢复首页滚动位置（showFly / showBack / flyBox）；跨月插入月份分隔（upRows）；首页下拉刷新（触摸或触控板上滑，ptrAttach）：旋转指示器 → 列表错峰重进场 → 顶部提示「Updated · 3 new crews…」，looking 数字随刷新增加；均支持 prefers-reduced-motion |
 | M12.1 | v77 | 列表流畅度 | 筛选/下拉刷新只替换 Upcoming 卡（upSwap），不再整页重绘；列表缩略图改异步解码；加载下一批前预解码图片；入场动画 8px / 0.32s / 35ms 错开（最多 8 行）；提前 480px 触发加载 |
 | M12.2 | v78 | 进入演出页改为大图 FLIP | 不再用飞行克隆图：演出页大图本身从缩略图位置用 transform + clip-path 放大展开（0.56s）；标题 → 头像/looking → 日期场馆依次上浮淡入，返回/分享按钮、正文和底部按钮也错峰进场（showFly）；返回仍用克隆图缩回 |
+| M13 | v79 | 真实数据 + 首页 Filters 面板 | 纽约演出从 15 场扩到 41 场真实 Ticketmaster 活动（2026-09-28 抓取，含 NYC 与周边：Barclays、UBS Arena、Town Hall、Brooklyn Paramount、Prudential Center、MetLife 等），原始数据 data/tm_nyc_2026-09-28.psv，合并脚本 data/merge_tm.py（新增字段 sub / n / kind / size）；新演出海报直接引用 Ticketmaster 图片链接，加载失败自动换黑白首字母海报（ptile）；首页 Upcoming 筛选行 = 时间 + 「Filters」按钮（带已选数量），底部面板：演出形式（Concerts / Classical & orchestra / Festivals & lineups / Residencies，带数量）、曲风多选、场馆（Any / Arenas / Theatres）、只看有余票，底部「Clear all」+「Show N shows」实时计数，只在点应用时刷新列表 |
 
 ## 6. 链接（原账号所有，新账号只能查看）
 
@@ -137,5 +138,5 @@ pip install playwright && python3 demo/tests/m7test.py   # 可选：批量截屏
 ## 8. 安全与注意事项
 
 - **Ticketmaster API key 不在仓库里**，也绝不能放进任何发布的页面。需要实时数据时，新账号去 https://developer.ticketmaster.com 申请自己的 key，放进 `app-expo/.env`（根目录 .gitignore 已忽略 .env），或作为本地环境变量使用。
-- `demo/` 的演出数据是静态快照（2026 年 9 月抓取），日期以 2026-09-27 为「今天」计算（见 `xDays`）。
+- `demo/` 的演出数据是静态快照（2026 年 9 月抓取；如何刷新见 data/merge_tm.py：用自己的 key 调 Discovery API，按列写入 .psv 再运行脚本），日期以 2026-09-27 为「今天」计算（见 `xDays`）。
 - 头像为 Unsplash 图片，仅用于作品集演示。
