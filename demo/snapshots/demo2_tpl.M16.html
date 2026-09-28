@@ -265,6 +265,8 @@ h1,h2,h3{margin:0;letter-spacing:-.045em;font-weight:700;line-height:1.02}
 .wrow b{display:block;font-size:17px;letter-spacing:-.04em;line-height:1.1}
 .wrow .m{display:block;font-size:13px;color:var(--muted);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .wrow .bd{display:inline-flex;align-items:center;gap:5px;margin-top:8px;font-size:12px;letter-spacing:-.01em}
+.wact{position:absolute;left:12px;right:12px;bottom:calc(74px + var(--sb));display:flex;gap:6px;z-index:5}
+.wact button{flex:1;height:46px;border-radius:12px;background:#0B0B0C;color:#fff;font-weight:600;font-size:15px;letter-spacing:-.025em;display:flex;align-items:center;justify-content:center;gap:6px;box-shadow:0 8px 20px rgba(0,0,0,.18)}
 .wnav{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-around;align-items:flex-end;padding:10px 8px calc(14px + var(--sb));background:#fff;z-index:5}
 .wnav button{font-size:19px;font-weight:600;letter-spacing:-.05em;color:#C4C4C9;min-height:44px;display:flex;align-items:flex-end}
 .wnav button[aria-current="page"]{color:var(--text)}
@@ -1543,24 +1545,17 @@ i.tw{font-style:normal;opacity:0}
 .wtr{display:flex;gap:8px;align-items:flex-start;font-size:14px;line-height:1.35}.wtr .bgav span{width:24px;height:24px;border:0}.wtr b{font-weight:600}
 .wtf{display:flex;gap:8px;align-items:center}.wtf input{flex:1;min-width:0;height:38px;padding:0 14px;border:0;border-radius:var(--r-pill);background:var(--card2);font:inherit;font-size:14px;outline:none}.wtf button{height:38px;padding:0 14px;border-radius:var(--r-pill);background:#0B0B0C;color:#fff;font-weight:600;font-size:13.5px}
 
-
-/* ---- ＋ menu v2 */
-.pfan{bottom:96px;height:290px}
-.pfh{font-size:24px}
-.pfc{width:110px;height:172px;margin-left:-55px;border-radius:var(--r-lg);padding:14px 12px 14px;animation-duration:.62s;animation-timing-function:cubic-bezier(.34,1.45,.5,1);transition:transform .18s cubic-bezier(.2,.8,.2,1)}
-.pfc.p0{--to:translate(-116px,12px) rotate(-5deg);animation-delay:.03s}
-.pfc.p1{--to:translate(0,-8px);animation-delay:.08s}
-.pfc.p2{--to:translate(116px,12px) rotate(5deg);animation-delay:.13s}
-.pfc b{font-size:16px}
-.pfc small{font-size:12px;line-height:1.35;margin-top:5px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-.pfc.on .pfgo{background:#0B0B0C;color:#fff}
-.pfan .pfc:active{filter:none}
-@keyframes pfin{0%{transform:translate(var(--fx,80px),var(--fy,150px)) scale(.18) rotate(0);opacity:0}35%{opacity:1}100%{transform:var(--to);opacity:1}}
-@keyframes pfout{0%{transform:var(--to);opacity:1}100%{transform:translate(var(--fx,80px),var(--fy,150px)) scale(.18) rotate(0);opacity:0}}
-.pfan.out .pfc{animation-duration:.26s;animation-timing-function:cubic-bezier(.5,0,.75,0)}
-.pfan.out .pfc.p2{animation-delay:0s}.pfan.out .pfc.p1{animation-delay:.03s}.pfan.out .pfc.p0{animation-delay:.06s}
-.pfbg{background:rgba(242,242,244,.62)}
-@media (prefers-reduced-motion:reduce){.pfc{animation:none!important;transform:var(--to)}}
+.tchips em.nx{background:#fff;color:#0B0B0C}
+.wact{position:absolute;left:0;right:0;top:226px;height:44px;display:flex;gap:8px;opacity:0;transform:translateY(-8px);pointer-events:none;transition:opacity .3s .15s,transform .4s cubic-bezier(.2,.8,.2,1) .15s;z-index:60}
+.wact.on{opacity:1;transform:none;pointer-events:auto}
+.wact button{flex:1;height:44px;border-radius:var(--r-pill);background:var(--card);box-shadow:inset 0 0 0 1px var(--line);display:inline-flex;align-items:center;justify-content:center;gap:6px;font-size:13.5px;font-weight:600;color:var(--text)}
+.wact button:first-child{background:#0B0B0C;color:#fff;box-shadow:none}
+.splitc{margin:0 16px;padding:0;background:var(--card);overflow:hidden}
+.sph2{display:flex;align-items:center;gap:12px;width:100%;padding:12px 14px;text-align:left;color:var(--text)}.sph2>svg{color:var(--dim);transition:transform .25s}.splitc.op .sph2>svg{transform:rotate(180deg)}
+.spav2{display:flex}.spav2 span{width:32px;height:32px;border-radius:50%;overflow:hidden;position:relative;border:2px solid var(--card);margin-left:-10px}.spav2 span:first-child{margin-left:0}.spav2 img{width:100%;height:100%;object-fit:cover}
+.sptx{flex:1;display:flex;flex-direction:column;gap:2px}.sptx b{font-size:15px;letter-spacing:-.02em}.sptx small{font-size:12.5px;color:var(--muted)}
+.splitc.op .spr2,.splitc.op .sprel{margin-left:14px;margin-right:14px}.splitc.op .sprel{margin-bottom:12px}
+.wnx{font-style:normal;background:#fff;color:#0B0B0C;padding:3px 8px;border-radius:var(--r-pill)}
 </style>
 
 <div class="app framed" id="app">
@@ -1875,15 +1870,10 @@ function syncNav(active){
   if(!prev){ void ind.offsetWidth; ind.style.transition=''; }
   nav.dataset.tab=tab;
 }
-function closePlusOld(after){ const f=document.getElementById('psheet'), bg=document.querySelector('.pfbg'), pb=document.querySelector('#navroot .bcir[data-act=plusmenu]'); pb&&pb.classList.remove('open'); if(!f){ state.psheet=false; render(); after&&after(); return; } f.classList.add('out'); bg&&bg.classList.add('out'); setTimeout(()=>{ state.psheet=false; render(); after&&after(); },300); }
-function plusSheet(){ const nt=MYTIX().length;
-  const o=[['🤝','Start a crew','Pick any show · 4–8 people','ncopen'],['🎟️','List a spare',`${nt} ${nt===1?'ticket':'tickets'} you can list · face value`,'sellstart'],['🙋',ME.looking?'You’re visible':'Find a plus one',ME.looking?'Crews can invite you · tap to hide':'Let crews invite you to their show','lookon']];
+function closePlus(after){ const f=document.getElementById('psheet'), bg=document.querySelector('.pfbg'), pb=document.querySelector('#navroot .bcir[data-act=plusmenu]'); pb&&pb.classList.remove('open'); if(!f){ state.psheet=false; render(); after&&after(); return; } f.classList.add('out'); bg&&bg.classList.add('out'); setTimeout(()=>{ state.psheet=false; render(); after&&after(); },300); }
+function plusSheet(){ const o=[['🤝','Start a crew','Pick a show, up to 8 people','ncopen',''],['🎟️','List a spare','Face value, paid after transfer','sellstart',''],['🙋',ME.looking?'You’re visible':'Find a plus one',ME.looking?'Crews can invite you · tap to hide':'Let crews find you','lookon','']];
   return `<div class="pfbg" data-act="plusclose"></div><div class="pfan" id="psheet" role="dialog" aria-label="Create"><p class="pfh">What are you up to?</p>
-    ${o.map(([e,t,d,act],k)=>`<button class="pfc p${k}${act==='lookon'&&ME.looking?' on':''}" data-act="${act}"><i class="pfe">${e}</i><b>${t}</b><small>${d}</small><span class="pfgo">${ic(act==='lookon'?(ME.looking?'check':'plus'):'right',14)}</span></button>`).join('')}</div>`; }
-function closePlus(after){ const f=document.getElementById('psheet'), bg=document.querySelector('.pfbg'), pb=document.querySelector('#navroot .bcir[data-act=plusmenu]'); pb&&pb.classList.remove('open'); state.psheet=false;
-  if(!f){ after&&after(); return; } f.classList.add('out'); bg&&bg.classList.add('out'); setTimeout(()=>{ f.remove(); bg&&bg.remove(); after&&after(); },280); }
-function plusAim(){ const pb=document.querySelector('#navroot .bcir[data-act=plusmenu]'); if(!pb) return; const r=pb.getBoundingClientRect(), cx=r.left+r.width/2, cy=r.top+r.height/2;
-  document.querySelectorAll('#psheet .pfc').forEach(c=>{ const prev=c.style.animation; c.style.animation='none'; const q=c.getBoundingClientRect(); c.style.animation=prev; c.style.setProperty('--fx',(cx-(q.left+q.width/2))+'px'); c.style.setProperty('--fy',(cy-(q.top+q.height))+'px'); }); }
+    ${o.map(([e,t,d,act,msg],k)=>`<button class="pfc p${k}" data-act="${act}" ${msg?`data-msg="${msg}"`:''}><i class="pfe">${e}</i><b>${t}</b><small>${d}</small><span class="pfgo">${ic('right',14)}</span></button>`).join('')}</div>`; }
 
 const MONF=['January','February','March','April','May','June','July','August','September','October','November','December'];
 function upRows(arr,prevM,anim,d0){ let out='', pm=prevM, k=0; arr.forEach(x=>{ const m=new Date(x.dates[0]+'T12:00:00Z').getUTCMonth(), st=anim?` style="animation-delay:${(d0||0)+Math.min(k++,7)*35}ms"`:'';
@@ -2197,7 +2187,7 @@ function sparesView(){
   return `<div class="scroll"><div style="padding-bottom:130px">
     <header class="whead"><span></span><div class="wtitle"><h1 class="sh1">Tickets <span class="emo">🎟️</span></h1><span class="wcity">Spares in ${state.city} · face value only</span></div><button class="wicon" data-act="sellstart" aria-label="List a spare">${ic('plus',20)}</button></header>
     ${tSeg('spares')}
-    <div class="sprule"><span><i class="eb">🔒</i>Face value + $2 flat</span><span><i class="eb">👯</i>Crews get 24h first</span><span><i class="eb">✌️</i>Max 2 per show</span></div>
+    <div class="sprule"><span><i class="eb">🔒</i>Face value + $2</span><span><i class="eb">👯</i>Crews first</span><span><i class="eb">✌️</i>Max 2 each</span></div>
     <div class="spfl">${[['all','All'],['week','This week'],['under','Under $150'],['open','Open to all']].map(([k,l])=>`<button data-act="spf" data-v="${k}" aria-pressed="${f===k}">${l}</button>`).join('')}</div>
     <div class="splist">${L.map(x=>spareCard(x)).join('')||'<p class="mempty">No spares match. Try another filter.</p>'}</div>
     <p class="slab" style="margin-top:26px">No spares yet</p>
@@ -2209,12 +2199,12 @@ function tickets(){
   const claimed=Object.keys(state.claimed||{}).map(id=>byId[id]).filter(Boolean).map(s=>[s,spareOf(s).sec,'Next to your crew','crew','Gate A',true]);
   const all=claimed.concat(mine,(state.extraTix||[]).map(t=>[t[0],t[1],t[2],'imported',t[4]])).sort((x,y)=>x[0].dates[0].localeCompare(y[0].dates[0]));
   const days=d=>{ const n=Math.round((Date.UTC(...d.split('-').map((v,i)=>i===1?v-1:+v))-Date.UTC(2026,8,27))/864e5); return n<=0?'today':n===1?'tomorrow':'in '+n+' days'; };
-  const nx=all[0];
+  const nx=all[0], wl=all.slice().reverse(); window._wall=wl;
   const chip=(s,pending)=>pending?'<em class="pend"><i class="spin sm"></i>Transfer pending</em>':(state.listed&&state.listed[s.id])?`<em class="live"><i class="ldot"></i>Listed · $${spareOf(s).face}</em>`:`<em>${ic('check',12)}Verified</em>`;
   const card=([s,sec,seat,sub,gate,pending],i)=>`<div class="wc" data-i="${i}" style="--i:${i}"><button class="wcin" data-act="wtap" data-i="${i}" aria-label="${esc(s.artist)} ticket"><span class="tflip">
       <span class="tface f">${img(s)}<span class="wsh"></span>
-        <span class="wtop"><b>${esc(s.artist)}</b><span>${sd(s.dates[0]).toUpperCase()}</span></span>
-        <span class="tchips">${chip(s,pending)}</span>
+        <span class="wtop"><b>${esc(s.artist)}</b><span>${s===nx[0]?`<i class="wnx">UP NEXT · ${days(s.dates[0]).toUpperCase()}</i>`:sd(s.dates[0]).toUpperCase()}</span></span>
+        <span class="tchips">${s===nx[0]&&!pending?`<em class="nx">Up next · ${days(s.dates[0])}</em>`:''}${chip(s,pending)}</span>
         <span class="wstub"><span><small>Section</small><b>${sec}</b></span><span><small>Seat</small><b>${seat.replace('Row ','R').replace(' · Seat ',' · S')}</b></span><span><small>Entry</small><b>${gate}</b></span></span></span>
       <span class="tface b">${pending?`<span class="tpend"><i class="spin"></i><b>Arriving soon</b><span>${spareOf(s).seller[0]} is transferring it now</span></span>`:qrSvg(s.id)}
         <span class="tbk"><b>${esc(s.artist)}</b><span>${sec} · ${seat}</span><span>${lng(s.dates[0])} · ${esc(s.venue.replace('Madison Square Garden','MSG'))}</span><span class="tgo">${[0,1,2].map(k=>`<span>${avi(PEOPLE[(k+i+3)%8][3])}</span>`).join('')}<em>With your ${sub}</em></span></span></span>
@@ -2222,17 +2212,19 @@ function tickets(){
   if(state.tview==='spares') return sparesView();
   return `<div class="scroll"><div style="padding-bottom:130px">
     <header class="whead"><span></span><div class="wtitle"><h1 class="sh1">Tickets <span class="emo">🎟️</span></h1><span class="wcity">${all.length} upcoming · tap to open</span></div><button class="wicon" data-act="itopen" aria-label="Add ticket">${ic('plus',20)}</button></header>${tSeg('mine')}
-    <div class="upnx"><span class="upk">Up next</span><b>${esc(nx[0].artist)}</b><span class="upd">${days(nx[0].dates[0])}</span><span class="upr"><i class="eb">🚪</i>Doors 7:00<i class="eb">👯</i>Meet 6:15</span></div>
-    ${splitCard()}<div class="wal" id="wal" data-n="${all.length}">${all.map(card).join('')}</div>
+    <div class="wal" id="wal" data-n="${all.length}">${wl.map(card).join('')}<div class="wact" id="wact" aria-hidden="true"><button data-act="wqr">${ic('ticket',16)} Show QR</button><button data-act="wchat">${ic('chat',16)} Crew chat</button><button data-act="wsell">${ic('share',16)} Sell spare</button></div></div>
     <button class="wall" id="wall" data-act="wclose">Show all tickets</button>
+    <p class="slab" style="margin:22px 20px 8px">To do</p>${splitCard()}
     <p class="note" style="margin-top:14px">Tickets live in your official ticketing app.<br>Plus One mirrors them to verify you and unlock crews.</p>
   </div></div>${dock('tickets')}`;
 }
 function layWallet(open){ const w=document.getElementById('wal'); if(!w) return; const cs=[...w.querySelectorAll('.wc')], n=cs.length;
   w.dataset.open=open==null?'':open; document.getElementById('wall').classList.toggle('on',open!=null);
-  if(open==null){ cs.forEach((c,i)=>{ c.style.transform=`translateY(${i*76}px)`; c.style.zIndex=i+1; c.classList.remove('op','bk'); c.querySelector('.tflip').classList.remove('on'); }); w.style.height=(76*(n-1)+214)+'px'; return; }
-  let j=0; cs.forEach((c,i)=>{ if(i===open){ c.style.transform='translateY(0)'; c.style.zIndex=50; c.classList.add('op'); c.classList.remove('bk'); } else { c.style.transform=`translateY(${232+j*14}px) scale(${1-(n-1-j)*.035})`; c.style.zIndex=j+1; c.classList.remove('op'); c.classList.add('bk'); c.querySelector('.tflip').classList.remove('on'); j++; } });
-  w.style.height=(232+(n-2)*14+214)+'px'; }
+  if(open==null){ const wa=document.getElementById('wact'); if(wa){ wa.classList.remove('on'); wa.setAttribute('aria-hidden','true'); }
+    cs.forEach((c,i)=>{ c.style.transform=`translateY(${i*76}px)`; c.style.zIndex=i+1; c.classList.remove('op','bk'); c.querySelector('.tflip').classList.remove('on'); }); w.style.height=(76*(n-1)+214)+'px'; return; }
+  const wa=document.getElementById('wact'); if(wa){ wa.classList.add('on'); wa.setAttribute('aria-hidden','false'); }
+  let j=0; cs.forEach((c,i)=>{ if(i===open){ c.style.transform='translateY(0)'; c.style.zIndex=50; c.classList.add('op'); c.classList.remove('bk'); } else { c.style.transform=`translateY(${282+j*14}px) scale(${1-(n-1-j)*.035})`; c.style.zIndex=j+1; c.classList.remove('op'); c.classList.add('bk'); c.querySelector('.tflip').classList.remove('on'); j++; } });
+  w.style.height=(282+(n-2)*14+214)+'px'; }
 function show(){
   const s=byId[state.id];
   const cs=xCrews().filter(c=>c.s===s);
@@ -2355,18 +2347,15 @@ function vBadges(p){ const r=REL[p]||[5,5]; return `<div class="vbadges"><span>$
 function vCard(){ const st=ME.idv; return st===true?`<div class="vbadges"><span>${ic('check',12)} ID + ticket verified</span><span>🤝 Showed up 8/8</span></div>`
   :`<button class="vcard ${st==='busy'?'busy':''}" data-act="idv" ${st==='busy'?'disabled':''}><span class="vci">🪪</span><span class="vcb"><b>${st==='busy'?'Checking your ID…':'Verify your ID · 1 min'}</b><small>Ticket ✓ · ID not yet · unlocks women-only crews</small></span>${st==='busy'?'<i class="spin sm"></i>':ic('right',16)}</button>`; }
 function rptRow(p){ return `<div class="rpt"><button data-act="report" data-v="${p}">Report</button><span>·</span><button data-act="block" data-v="${p}">${(state.blocked||{})[p]?'Blocked':'Block'}</button></div>`; }
-function splitCard(){ const s=A(SPLIT.show); if(!s) return ''; const tot=spareOf(s).face+FEE;
-  return `<div class="splitc"><div class="sph"><b>Split · ${esc(s.artist)}</b><span>3 tickets · you paid upfront</span></div>
-  <div class="spr2"><span class="spav">${avi(PEOPLE[1][3])}</span><span class="spt"><b>${PEOPLE[1][0]}</b><small>Paid $${tot}</small></span><em>${ic('check',12)} Paid</em></div>
+function splitCard(){ const s=A(SPLIT.show); if(!s) return ''; const tot=spareOf(s).face+FEE, op=!!state.splitOpen, paid=SPLIT.released?2:1;
+  return `<div class="splitc ${op?'op':''}"><button class="sph2" data-act="splitop" aria-expanded="${op}"><span class="spav2"><span>${avi(PEOPLE[1][3])}</span><span>${avi(PEOPLE[6][3])}</span></span><span class="sptx"><b>Split · ${esc(s.artist)}</b><small>${SPLIT.released?'Seat released to your crew':`${paid} of 2 paid · ${P0(6)} owes $${tot}`}</small></span>${ic('chev',14)}</button>
+  ${op?`<div class="spr2"><span class="spav">${avi(PEOPLE[1][3])}</span><span class="spt"><b>${PEOPLE[1][0]}</b><small>Paid $${tot}</small></span><em>${ic('check',12)} Paid</em></div>
   <div class="spr2"><span class="spav">${avi(PEOPLE[6][3])}</span><span class="spt"><b>${PEOPLE[6][0]}</b><small>${SPLIT.released?'Seat listed · your crew gets 24h first':'$'+tot+' due in 2 days'}</small></span>${SPLIT.released?'<em>Listed</em>':'<button data-act="nudge">Nudge</button>'}</div>
-  ${SPLIT.released?'':'<button class="sprel" data-act="release">Unpaid by the deadline? Release the seat to your crew</button>'}</div>`; }
+  ${SPLIT.released?'':'<button class="sprel" data-act="release">Unpaid by the deadline? Release the seat to your crew</button>'}`:''}</div>`; }
 function lockedCard(s){ return `<h2 class="h2 sec">Spare tickets <span class="emo">🎟️</span></h2><div class="spnone lk"><b>🔒 Transfers are locked for this show</b><span>The artist only allows resale through Ticketmaster’s Face Value Exchange. Crews still work as usual.</span><a href="https://help.ticketmaster.com/hc/en-us/articles/9781464415249-How-does-Ticketmaster-s-Face-Value-Exchange-work" target="_blank" rel="noopener">Face Value Exchange ↗</a></div>`; }
 const bState=p=>BUD[p]?'buddy':BREQ[p]?'sent':'none';
 function addBuddy(p){ if(BUD[p]||BREQ[p]) return; BREQ[p]=true; setTimeout(()=>{ delete BREQ[p]; BUD[p]=true; toast(`${P0(p)} accepted · you’re buddies 🤝`); if(['person','crews','crew'].includes(state.screen)) render(); },2200); }
-function ncPick(){ const L=SHOWS.filter(x=>xDays(x.dates[0])>=0).sort((a,b)=>a.dates[0].localeCompare(b.dates[0])).slice(0,10);
-  return `<div class="sheetbg" data-act="ncclose"></div><div class="sheet csheet ncs" role="dialog" aria-label="Pick a show"><div class="cgrab"><i class="grab"></i><h3>Start a crew <span class="emo">🤝</span></h3><p>Which show?</p></div>
-  <div class="ncb">${L.map(x=>`<button class="itrow" data-act="ncshow" data-id="${x.id}"><span class="uthumb">${img(x)}</span><span class="ub"><b>${esc(x.artist)}</b><span class="um">${sd(x.dates[0])} · ${esc(VSH(x.venue))}</span></span>${ic('right',16)}</button>`).join('')}</div></div>`; }
-function ncSheet(){ const c=state.nc; if(!c.sid) return ncPick(); const s=byId[c.sid], order=[0,1,2,4,6,7,3,5], wo=c.j===7, lock=wo&&ME.idv!==true;
+function ncSheet(){ const c=state.nc, s=byId[c.sid], order=[0,1,2,4,6,7,3,5], wo=c.j===7, lock=wo&&ME.idv!==true;
   const tg=(k,on,b,sm)=>`<div class="nct"><span><b>${b}</b><small>${sm}</small></span><button class="tgl" role="switch" aria-checked="${on}" aria-label="${b}" data-act="ncset" data-k="${k}" data-v="${on?0:1}"><i></i></button></div>`;
   return `<div class="sheetbg" data-act="ncclose"></div><div class="sheet csheet ncs" role="dialog" aria-label="Start a crew">
   <div class="cgrab"><i class="grab"></i><h3>Start a crew <span class="emo">🤝</span></h3><p>${esc(s.artist)} · ${sd(s.dates[0])} · ${esc(s.venue.replace('Madison Square Garden','MSG').replace('Radio City Music Hall','Radio City'))}</p></div>
@@ -2490,7 +2479,6 @@ function render(anim){ window._dockActive=null; const _ap=document.getElementByI
   if(state.sheet) initCitySheet();
   if(document.getElementById('wal')) layWallet(null);
   syncNav(window._dockActive);
-  if(state.psheet) plusAim();
   state._ufAnim=false; if(state.screen==='home'){ upWatch(); ptrAttach(); }
   const xs=document.querySelector('.xtop'); if(xs){ const sc=xs.closest('.scroll'), f=()=>xs.classList.toggle('stuck',sc.scrollTop>2); sc&&sc.addEventListener('scroll',f,{passive:true}); f(); } if(state.screen==='search'&&!state._sqf){ const i=document.getElementById('sq'); if(i){ i.focus(); state._sqf=true; } }
   const form=document.getElementById('composer');
@@ -2506,8 +2494,7 @@ document.getElementById('app').addEventListener('click',e=>{
     let t=TH.find(x=>x.k==='crew'&&x.show===c.s.artist&&((c.k===0&&XOV[c.s.artist])||x.title===c.name));
     if(!t){ const hi=PEOPLE.indexOf(c.host); t={id:'t'+(++TSEQ),k:'crew',show:c.s.artist,title:c.name,long:`${c.name} · ${c.s.artist}`,host:hi,who:Array.from({length:c.f},(_,m)=>(hi+m*3)%8),cap:c.n,un:0,ts:++TSEQ,plan:[c.time,c.spot],msgs:[{d:'sys',t:c.n-c.f===1?`You took the last spot · ${c.name} is now full, new people go to crew 2`:`You joined ${c.name} · ${c.f+1} of ${c.n}`},{d:'in',p:hi,t:`Welcome! We meet at ${c.spot}, ${c.time}. Say hi 👋`,time:nowT()}],replies:[[hi,'Glad you’re in!']]}; TH.unshift(t); }
     openThread(t); }
-  else if(a==='ncopen'){ if(document.getElementById('psheet')) closePlus(); state.nc={sid:id||null,j:t.dataset.j!=null?+t.dataset.j:0,cap:6,priv:false,meet:true,dep:false}; render(); }
-  else if(a==='ncshow'){ state.nc.sid=id; render(); const sh=document.querySelector('.ncs'); if(sh) sh.style.animation='none'; }
+  else if(a==='ncopen'){ closePlus&&document.getElementById('psheet')&&(state.psheet=false); state.nc={sid:id||(A('Harry Styles')||SHOWS[0]).id,j:t.dataset.j!=null?+t.dataset.j:0,cap:6,priv:false,meet:true,dep:false}; render(); }
   else if(a==='ncclose'){ state.nc=null; render(); }
   else if(a==='ncset'){ const k=t.dataset.k, n=+v; if(k==='vis') state.nc.priv=!n; else if(k==='meet'||k==='dep') state.nc[k]=!!n; else state.nc[k]=n; render(); }
   else if(a==='nccreate'){ const c=state.nc, s=byId[c.sid]; if(c.j===7&&ME.idv!==true){ toast('Women-only crews need a verified ID · verify it on your profile'); return; }
@@ -2520,7 +2507,7 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='wtag'){ state.wtag=v; const sc=document.querySelector('.scroll'), y=sc&&sc.scrollTop; render(); const n=document.querySelector('.scroll'); if(n) n.scrollTop=y; }
   else if(a==='wlike'){ state.wlk=state.wlk||{}; state.wlk[v]=!state.wlk[v]; const sc=document.querySelector('.scroll'), y=sc&&sc.scrollTop; render(); const n=document.querySelector('.scroll'); if(n) n.scrollTop=y; }
   else if(a==='wmc'){ toast(`We’ll let ${P0(+v)} know · you can chat only if they say yes`); }
-  else if(a==='lookon'){ ME.looking=!ME.looking; closePlus(); if(state.screen==='show') render(); toast(ME.looking?'You’re visible · crews for your saved shows can invite you':'Hidden · crews won’t see you as looking'); }
+  else if(a==='lookon'){ ME.looking=!ME.looking; state.psheet=false; render(); toast(ME.looking?'You’re visible · crews for your saved shows can invite you':'Hidden · crews won’t see you as looking'); }
   else if(a==='bjoin'){ const x=byId[id]||A('Gorillaz'), ps=v.split(',').map(Number); let tt=TH.find(q=>q.k==='crew'&&q.show===x.artist&&ps.every(k=>q.who.includes(k)));
     if(!tt){ tt={id:'t'+(++TSEQ),k:'crew',show:x.artist,title:'Buddies',long:`${x.artist} with ${P0(ps[0])} and ${P0(ps[1])}`,host:ps[0],who:ps.slice(),cap:6,un:0,ts:++TSEQ,plan:['6:30 PM',XSPOT[Math.abs(h(x.id))%XSPOT.length]],msgs:[{d:'in',p:ps[0],t:`Oh nice, you’re coming too? 🙌`,time:nowT()}],replies:[[ps[1],'Finally, the whole gang']]}; TH.unshift(tt); }
     tt.msgs.push({d:'sys',t:`You joined ${P0(ps[0])} and ${P0(ps[1])}`}); openThread(tt); }
@@ -2625,10 +2612,14 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='tpay'){ state.tstep='paying'; render(); setTimeout(()=>{ if(!state.tsheet) return; (state.claimed ||= {})[state.tsheet]=true; const spx=state.tspare||spareOf(byId[state.tsheet]).id; (state.claimedIds ||= {})[spx]=true; const th=threadFor(state.tsheet); if(!th.spare) th.msgs.push({d:'sys',t:'You claimed a spare ticket · seat next to the crew'}); th.ts=++TSEQ; state.tstep='done'; render(); requestAnimationFrame(()=>{ const f=document.querySelector('#tsheet .tflip'); f&&f.classList.add('go'); }); },1300); }
   else if(a==='tclose'){ closeTSheet(); }
   else if(a==='tgo'){ closeTSheet(()=>{ state.history=[]; state.screen='tickets'; render(true); }); }
+  else if(a==='splitop'){ state.splitOpen=!state.splitOpen; const sc=document.querySelector('.scroll'), y=sc&&sc.scrollTop, o=(document.getElementById('wal')||{}).dataset; const op=o&&o.open; render(); const n=document.querySelector('.scroll'); if(n) n.scrollTop=y; if(op!==''&&op!=null) layWallet(+op); }
+  else if(a==='wqr'){ const w=document.getElementById('wal'), c=w&&w.querySelector('.wc.op'); if(c) c.querySelector('.tflip').classList.toggle('on'); }
+  else if(a==='wchat'){ const w=document.getElementById('wal'), r=(window._wall||[])[+w.dataset.open]; if(r) openThread(threadFor(r[0].id)); }
+  else if(a==='wsell'){ const w=document.getElementById('wal'), r=(window._wall||[])[+w.dataset.open]; if(r&&MYTIX().some(x=>x[0]===r[0])){ state.sell={step:1,id:r[0].id,qty:1,why:'Can’t make it',crew:true}; go('sell'); } else toast('Only tickets in your name can be listed'); }
   else if(a==='wtap'){ const w=document.getElementById('wal'), i=+t.dataset.i, o=w.dataset.open; if(o===''||+o!==i) layWallet(i); else t.querySelector('.tflip').classList.toggle('on'); }
   else if(a==='wclose'){ layWallet(null); }
   else if(a==='tflip'){ t.querySelector('.tflip').classList.toggle('on'); }
-  else if(a==='plusmenu'){ if(state.psheet){ closePlus(); return; } state.psheet=true; const v=document.getElementById('view'); v.querySelectorAll('.pfbg,#psheet').forEach(x=>x.remove()); v.insertAdjacentHTML('beforeend',plusSheet()); plusAim(); const pb=document.querySelector('#navroot .bcir[data-act=plusmenu]'); pb&&pb.classList.add('open'); }
+  else if(a==='plusmenu'){ if(state.psheet){ closePlus(); return; } state.psheet=true; render(); const pb=document.querySelector('#navroot .bcir[data-act=plusmenu]'); pb&&pb.classList.add('open'); }
   else if(a==='plusclose'){ closePlus(); }
   else if(a==='sellstart'){ const pb=document.querySelector('#navroot .bcir[data-act=plusmenu]'); pb&&pb.classList.remove('open'); state.psheet=false; state.sell={step:1,id:null,qty:1,why:'Can’t make it',crew:true}; go('sell'); }
   else if(a==='sellpick'){ if(state.sell.step!==1) return; state.sell.id=id; document.querySelectorAll('.skc').forEach(c=>{ c.classList.toggle('sel',c.dataset.id===id); c.classList.toggle('dim',c.dataset.id!==id); }); const b=document.getElementById('sellnx'); b&&b.removeAttribute('disabled'); }
