@@ -32,7 +32,7 @@
 ```
 HANDOFF.md            ← 本文件
 CLAUDE.md             ← 给 Claude 的工作规则（精简版）
-demo/                 ← 主作品：单文件 HTML 交互 demo（当前 = M7 / 线上 v68）
+demo/                 ← 主作品：单文件 HTML 交互 demo（当前 = M8 / 线上 v69）
   demo2_tpl.html      模板源码（唯一需要改的文件）
   build.py            把数据注入模板 → dist/plusone-demo.html
   shows.js            纽约演出数据（Ticketmaster 抓取后的静态快照）
@@ -96,6 +96,7 @@ pip install playwright && python3 demo/tests/m7test.py   # 可选：批量截屏
 | M7 | v66 | 补齐研究发现的 8 个缺口 | 可退押金 hold + 到场签到；集合点投票；手环/安全面板（位置共享、结伴回家、紧急联系）；身份认证 + 女性专属 crew（需认证）；举报/拉黑；到场记录徽章；$2 固定手续费；艺人锁票演出只走官方 Face Value Exchange；分摊卡；Re-crew（同一队人再约下一场）；押金条固定在输入框上方 |
 | M7.1 | v67 | Explore 改为找 crew 优先 | 分段「Find a crew / Find a ticket」；按日期 → 演出分组；社交证明（本周多少人独自去）；Join 直接进入 crew 聊天 |
 | M7.2 | v68 | Explore UI 精修 | 吸顶控件；演出头 + crew 行；空位圆点；「Last spot」高亮；缩略图修复 |
+| M8 | v69 | 用户自建小队 + 信任轻量化 | 「Start a crew」流程（氛围、4–8 人上限、公开/仅邀请、可选集合点、可选 $5 押金；女性专属需认证），入口在演出页、Explore 每场演出、＋菜单；小队满员自动关闭并开 crew 2；演出页小队列表改为真实数据；押金只在发起人开启时出现，其余小队是一键「I’m here」签到（计入到场记录）；没设集合点可一键建议；暖场投票默认收起 |
 
 ## 6. 链接（原账号所有，新账号只能查看）
 
@@ -107,12 +108,19 @@ pip install playwright && python3 demo/tests/m7test.py   # 可选：批量截屏
   - M1–M5 为 390×844 截图
   - M6 分区 `1353:11953` 里有 19 个 393×852 空矩形（`1353:11959 … 1353:12013`），**截图还没传上去**（19 张截图就在 `iterations/shots/`，文件名与画框一一对应）
 
+## 定位共识（M8）
+
+- 找搭子和面值票单独都不是壁垒（Radiate、ConcertBuddy、Ticketmaster × CashorTrade 都在做）。
+- 差异化落在「一定会一起到场的小队」：持票身份、到场记录（会累积的数据）、小队而非配对、多余票优先给小队、小队可延续。
+- 原则：信任看得见但不强制。默认零门槛，押金/集合点都是可选项，只有女性专属必须认证。
+- 不做几百人的演出大群；每个小队有 4–8 人上限，满了自动开新队。
+
 ## 7. 待办
 
 1. **Figma**：把 M6 截图上传到 M6 分区的空矩形；新增 M7 分区并上传截图。
 2. **迭代对比页**：加入 M7（`iterations/` 下新增 `m7.html`，并更新 `index.html`）。
 3. **PPT**：M7 页（`deck/slides/m7.html`）可随后续迭代更新；fit 评分页（`fit`）在 M6 时是 7 个满足 / 4 个部分满足 / 3 个未满足，M7 之后可以重新打分。
-4. 可选方向：crew 创建流程（目前 Explore 空状态的「Start the first crew」只弹 toast）；Explore 中「Find a ticket」与 Tickets 页的 Spares 合并；把 demo 迁到 `app-expo/` 做成真实 App。
+4. 可选方向：＋菜单里建小队时可选演出（目前默认 Harry Styles）；Explore 中「Find a ticket」与 Tickets 页的 Spares 合并；把 demo 迁到 `app-expo/` 做成真实 App。
 
 ## 8. 安全与注意事项
 
