@@ -32,7 +32,7 @@
 ```
 HANDOFF.md            ← 本文件
 CLAUDE.md             ← 给 Claude 的工作规则（精简版）
-demo/                 ← 主作品：单文件 HTML 交互 demo（当前 = M11 / 线上 v75）
+demo/                 ← 主作品：单文件 HTML 交互 demo（当前 = M12 / 线上 v76）
   demo2_tpl.html      模板源码（唯一需要改的文件）
   build.py            把数据注入模板 → dist/plusone-demo.html
   shows.js            纽约演出数据（Ticketmaster 抓取后的静态快照）
@@ -102,6 +102,7 @@ pip install playwright && python3 demo/tests/m7test.py   # 可选：批量截屏
 | M11 | v72 | Explore 信息架构重整 | Explore 只做找小队：去掉「Find a ticket」模式（余票只在小队聊天、演出页、Tickets 页 Spares 出现）；标题 + 搜索入口 + 场景筛选整体固定在顶部，只有列表滚动；热搜移到二级「Search」页（点搜索框进入，也可从首页搜索图标进入）：最近搜索、Trending 榜、Browse by vibe，输入后实时分组结果（Shows / Crews / People），回车记入最近搜索 |
 | M11.1 | v74 | 首页 Upcoming 筛选修复（仅此一行） | 去掉「Soonest/Most going」切换（固定按日期）；筛选改为一整行带数量的 chip：时间（All / This week / This month）｜分隔线｜至少 2 场的类型（如 Rock 6）；0 场置灰，再点已选类型取消；无结果时「Clear filters」 |
 | M11.2 | v75 | Upcoming 无限滚动与动效 | 去掉「Show all」按钮，改为滑到底自动加载（IntersectionObserver，每批 6 场，加载时 3 行骨架屏微光，新行错峰淡入上移）；全部加载完显示「That’s every show in New York · 12 shows」；切换筛选时列表错峰重新进场；行按下缩放 + 缩略图轻微放大；支持 prefers-reduced-motion。相关函数：upTail / upMore / upWatch，状态 state.upN |
+| M12 | v76 | 首页 Upcoming 交互动效 | 从 Upcoming 行点进演出页为同元素过渡：缩略图放大成演出页大图（圆角 14→32），标题与内容随后淡入；返回时大图缩回原来那一行，并恢复首页滚动位置（showFly / showBack / flyBox）；跨月插入月份分隔（upRows）；首页下拉刷新（触摸或触控板上滑，ptrAttach）：旋转指示器 → 列表错峰重进场 → 顶部提示「Updated · 3 new crews…」，looking 数字随刷新增加；均支持 prefers-reduced-motion |
 
 ## 6. 链接（原账号所有，新账号只能查看）
 

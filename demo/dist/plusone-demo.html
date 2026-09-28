@@ -1446,6 +1446,18 @@ i.tw{font-style:normal;opacity:0}
 .uend{display:flex;align-items:center;justify-content:center;gap:6px;margin:6px 0 4px;padding:14px 0 10px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
 @media (prefers-reduced-motion:reduce){.uin,.usk i{animation:none}.urow:active{transform:none}}
 .ufl .gch em{letter-spacing:0;font-variant-numeric:normal}
+
+.umon{margin:0;padding:14px 2px 6px;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border-top:1px solid var(--line)}
+.umon+.urow{border-top:0}
+.flys{box-shadow:0 12px 30px rgba(0,0,0,.18);background:#111}
+.shEnter .hero .htext,.shEnter .hero .nav{animation:fadein .35s ease both .32s}
+.shEnter .pad{animation:sin .45s cubic-bezier(.2,.8,.2,1) both .18s}
+.uback{animation:none}
+.ptr{position:absolute;left:50%;top:calc(var(--st) + 6px);z-index:8;width:34px;height:34px;border-radius:50%;background:#fff;box-shadow:0 4px 14px rgba(0,0,0,.12);display:grid;place-items:center;opacity:0;transform:translate(-50%,-40px);pointer-events:none;color:#6B6B70}
+.ptr.ready{color:#0B0B0C}.ptr.spin{animation:ptrs .7s linear infinite;opacity:1!important}
+@keyframes ptrs{from{transform:translate(-50%,16px) rotate(0)}to{transform:translate(-50%,16px) rotate(360deg)}}
+.ptrb{position:absolute;left:50%;top:calc(var(--st) + 8px);z-index:8;margin:0;transform:translate(-50%,-12px);opacity:0;height:32px;padding:0 14px;border-radius:16px;background:#0B0B0C;color:#fff;font-size:12.5px;font-weight:600;display:flex;align-items:center;gap:6px;white-space:nowrap;pointer-events:none;transition:opacity .3s,transform .3s cubic-bezier(.2,.8,.2,1)}
+.ptrb.on{opacity:1;transform:translate(-50%,0)}
 </style>
 
 <div class="app framed" id="app">
@@ -1763,16 +1775,49 @@ function plusSheet(){ const o=[['🤝','Start a crew','Pick a show, up to 8 peop
   return `<div class="pfbg" data-act="plusclose"></div><div class="pfan" id="psheet" role="dialog" aria-label="Create"><p class="pfh">What are you up to?</p>
     ${o.map(([e,t,d,act,msg],k)=>`<button class="pfc p${k}" data-act="${act}" ${msg?`data-msg="${msg}"`:''}><i class="pfe">${e}</i><b>${t}</b><small>${d}</small><span class="pfgo">${ic('right',14)}</span></button>`).join('')}</div>`; }
 
+const MONF=['January','February','March','April','May','June','July','August','September','October','November','December'];
+function upRows(arr,prevM,anim,d0){ let out='', pm=prevM, k=0; arr.forEach(x=>{ const m=new Date(x.dates[0]+'T12:00:00Z').getUTCMonth(), st=anim?` style="animation-delay:${(d0||0)+(k++)*50}ms"`:'';
+    if(pm!=null&&m!==pm) out+=`<p class="umon${anim?' uin':''}"${st}>${MONF[m]}</p>`; pm=m;
+    let r=feedRow(x); if(anim) r=r.replace('class="urow"',`class="urow uin"${st}`); out+=r; }); return out; }
+const RM=()=>matchMedia('(prefers-reduced-motion: reduce)').matches;
+function flyBox(src,from,to,rf,rt,done){ const c=document.createElement('div'); c.className='flyc flys'; c.innerHTML=`<img alt="" src="${src}">`; document.body.appendChild(c);
+  const A=(r,rad)=>({left:r.left+'px',top:r.top+'px',width:r.width+'px',height:r.height+'px',borderRadius:rad+'px'});
+  Object.assign(c.style,A(to,rt)); const an=c.animate([A(from,rf),A(to,rt)],{duration:540,easing:'cubic-bezier(.2,.8,.2,1)',fill:'backwards'}); an.onfinish=()=>{ c.remove(); done&&done(); }; }
+function showFly(row,id){ const th=row.querySelector('.uthumb'), im=th&&th.querySelector('img'); if(!im||RM()){ go('show',id); return; }
+  const from=th.getBoundingClientRect(), sc=document.getElementById('sc'); state.homeScroll=[sc?sc.scrollTop:0,0];
+  state.history.push([state.screen,state.id]); state.screen='show'; state.id=id; state.showFly=id; render(false);
+  const hero=document.querySelector('.hero'), hi=hero&&hero.querySelector('img'); if(!hi) return;
+  const v=document.getElementById('view'); v.classList.add('shEnter'); hi.style.visibility='hidden';
+  flyBox(im.src,from,hero.getBoundingClientRect(),14,32,()=>{ hi.style.visibility=''; });
+  setTimeout(()=>v.classList.remove('shEnter'),900); }
+function showBack(){ const id=state.id, hero=document.querySelector('.hero'), hi=hero&&hero.querySelector('img'), sc0=document.querySelector('.scroll');
+  const from=hero&&hero.getBoundingClientRect(), src=hi&&hi.src, heroVis=from&&from.bottom>60;
+  const p=state.history.pop()||['home',null]; state.screen=p[0]; state.id=p[1]; render(false);
+  const sc=document.getElementById('sc'); if(sc&&state.homeScroll) sc.scrollTop=state.homeScroll[0];
+  const row=document.querySelector(`.urow[data-id="${id}"]`), th=row&&row.querySelector('.uthumb'), ti=th&&th.querySelector('img');
+  if(!ti||!heroVis||RM()) return; const to=th.getBoundingClientRect(); if(to.bottom<0||to.top>innerHeight) return;
+  ti.style.visibility='hidden'; row.classList.add('uback'); flyBox(src,from,to,32,14,()=>{ ti.style.visibility=''; row.classList.remove('uback'); }); }
+
+// ---- pull to refresh (home)
+function ptrAttach(){ const sc=document.getElementById('sc'); if(!sc||sc._ptr) return; sc._ptr=1; const inner=sc.firstElementChild, ind=document.getElementById('ptr'); let y0=null, dy=0, busy=false, wheel=0, wt;
+  const set=d=>{ dy=d; inner.style.transform=d?`translateY(${d}px)`:''; ind.style.opacity=Math.min(1,d/60); ind.style.transform=`translate(-50%,${Math.min(d,70)-40}px) rotate(${d*4}deg)`; ind.classList.toggle('ready',d>=64); };
+  const go=()=>{ busy=true; inner.style.transition='transform .25s'; set(56); ind.classList.add('spin');
+    setTimeout(()=>{ ind.classList.remove('spin','ready'); set(0); setTimeout(()=>{ inner.style.transition=''; },260); busy=false; state.rf=(state.rf||0)+1; state._ufAnim=true; const y=sc.scrollTop; render(); const n=document.getElementById('sc'); if(n) n.scrollTop=y;
+      const b=document.getElementById('ptrb'); if(b){ const nn=2+state.rf%3; b.innerHTML=`${ic('check',13)} Updated · ${nn} new crews and ${nn*4+3} more people looking`; b.classList.add('on'); setTimeout(()=>b.classList.remove('on'),2600); } },950); };
+  sc.addEventListener('touchstart',e=>{ if(sc.scrollTop<=0&&!busy) y0=e.touches[0].clientY; },{passive:true});
+  sc.addEventListener('touchmove',e=>{ if(y0==null) return; const d=e.touches[0].clientY-y0; if(d>0){ set(Math.min(110,d*.5)); } },{passive:true});
+  sc.addEventListener('touchend',()=>{ if(y0==null) return; y0=null; if(dy>=64) go(); else { inner.style.transition='transform .25s'; set(0); setTimeout(()=>inner.style.transition='',260); } });
+  sc.addEventListener('wheel',e=>{ if(busy||sc.scrollTop>0||e.deltaY>=0) return; wheel+=-e.deltaY; set(Math.min(110,wheel*.35)); clearTimeout(wt); wt=setTimeout(()=>{ if(dy>=64) go(); else { inner.style.transition='transform .25s'; set(0); setTimeout(()=>inner.style.transition='',260); } wheel=0; },160); },{passive:true}); }
 function upTail(feed){ return state.upN<feed.length?`<div class="usent" id="upsent" aria-hidden="true"></div>`:`<p class="uend">${ic('check',13)} That’s every show in ${state.city} · ${feed.length} ${feed.length===1?'show':'shows'}</p>`; }
 const USK=`<div class="usk"><i class="d"></i><i class="t"></i><span><i></i><i></i><i></i></span></div>`;
 function upMore(){ const sent=document.getElementById('upsent'), feed=window._upFeed||[]; if(!sent||state._upBusy||state.upN>=feed.length) return; state._upBusy=true; sent.innerHTML=USK+USK+USK;
   setTimeout(()=>{ const n0=state.upN, n1=Math.min(n0+6,feed.length), s2=document.getElementById('upsent'); state.upN=n1; state._upBusy=false; if(!s2) return;
-    s2.insertAdjacentHTML('beforebegin',feed.slice(n0,n1).map((x,i)=>feedRow(x).replace('class="urow"',`class="urow uin" style="animation-delay:${i*55}ms"`)).join(''));
+    const last=[...document.querySelectorAll('.ulist .urow')].pop(); s2.insertAdjacentHTML('beforebegin',upRows(feed.slice(n0,n1),last?+last.dataset.m:null,true,0));
     if(n1>=feed.length) s2.outerHTML=`<p class="uend uin" style="animation-delay:${(n1-n0)*55}ms">${ic('check',13)} That’s every show in ${state.city} · ${feed.length} shows</p>`; else { s2.innerHTML=''; upWatch(); } },520); }
 function upWatch(){ const sent=document.getElementById('upsent'), sc=document.getElementById('sc'); if(!sent||!sc) return; if(window._upIO) window._upIO.disconnect();
   window._upIO=new IntersectionObserver(es=>{ if(es.some(e=>e.isIntersecting)) upMore(); },{root:sc,rootMargin:'0px 0px 160px 0px'}); window._upIO.observe(sent); }
-function feedRow(s){ const sp=sparesFor(s).filter(x=>!(state.claimedIds||{})[x.id]).length, n=6+h(s.id)%60, d=new Date(s.dates[0]+'T12:00:00Z'), k=Math.abs(h(s.id));
-  return `<button class="urow" data-act="show" data-id="${s.id}"><span class="udate"><small>${MON[d.getUTCMonth()]}</small><b>${d.getUTCDate()}</b></span><span class="uthumb">${img(s)}</span>
+function feedRow(s){ const sp=sparesFor(s).filter(x=>!(state.claimedIds||{})[x.id]).length, n=6+h(s.id)%60+(state.rf||0)*(1+Math.abs(h(s.id))%3), d=new Date(s.dates[0]+'T12:00:00Z'), k=Math.abs(h(s.id));
+  return `<button class="urow" data-act="show" data-id="${s.id}" data-m="${d.getUTCMonth()}"><span class="udate"><small>${MON[d.getUTCMonth()]}</small><b>${d.getUTCDate()}</b></span><span class="uthumb">${img(s)}</span>
     <span class="ub"><b>${esc(s.artist)}</b><span class="um">${DOW[d.getUTCDay()]} · ${esc(VSH(s.venue))}${s.dates.length>1?' · '+s.dates.length+' nights':''}</span>
     <span class="ug"><span class="bgav">${[0,1,2].map(m=>`<span>${avi(PEOPLE[(k+m*3)%8][3])}</span>`).join('')}</span><span>${n} looking${sp?` · <b>${sp} spare${sp>1?'s':''}</b>`:''}</span></span></span></button>`;
 }
@@ -1828,7 +1873,7 @@ function home(){
   const commImgs = g => SHOWS.filter(s=>s.genre===g).slice(0,4);
   const short=v=>v.replace('Madison Square Garden','MSG').replace('Radio City Music Hall','Radio City');
   const looking=s=>6+h(s.id)%60;
-  return `<div class="scroll" id="sc"><div style="padding-bottom:110px">
+  return `<div class="ptr" id="ptr" aria-hidden="true">${ic('shuffle',16)}</div><p class="ptrb" id="ptrb" role="status"></p><div class="scroll" id="sc"><div style="padding-bottom:110px">
     <header class="whead">
       <button class="wicon" data-act="crews" aria-label="Crew requests, 1 new">${ic('bell',20)}<span class="wdot"></span></button>
       <div class="wtitle"><h1>Plus One</h1><button class="wcity" data-act="citysheet" aria-haspopup="dialog">${ic('pin',13)}${state.city} ${ic('chev',12)}</button></div>
@@ -1849,7 +1894,7 @@ function home(){
     <section class="sec pad hsec"><h2 class="h2">Upcoming in ${state.city} <span class="emo">${CITY_EMO[state.city]||'🎶'}</span></h2><p class="sub">${SHOWS.length-drops.length} more shows · find a buddy for any</p>
       <div class="wcard flush wup">
       <div class="ufl hs">${[['all','All'],['week','This week'],['month','This month']].map(([w,l])=>{ const n=wc(w); return `<button class="gch" data-act="when" data-v="${w}" aria-pressed="${W===w}" ${n?'':'disabled'}>${l} <em>${n}</em></button>`; }).join('')}<i class="udiv"></i>${GEN.map(g=>{ const n=GC[g]||0; return `<button class="gch" data-act="genre" data-v="${G===g?'All':g}" aria-pressed="${G===g}" ${n?'':'disabled'}>${GEMO[g]?GEMO[g]+' ':''}${g.replace('Hip-Hop/Rap','Hip-Hop')} <em>${n}</em></button>`; }).join('')}</div>
-      <div class="wlist ulist">${(window._upFeed=feed, state.upN=Math.min(state.upN||6,feed.length), feed.length)?feed.slice(0,state.upN).map((x,i)=>state._ufAnim?feedRow(x).replace('class="urow"',`class="urow uin" style="animation-delay:${i*45}ms"`):feedRow(x)).join('')+upTail(feed):`<p class="sub" style="text-align:center;padding:24px 0">No shows match. <button data-act="ufclear" style="font-weight:600;color:var(--text)">Clear filters</button></p>`}</div>
+      <div class="wlist ulist">${(window._upFeed=feed, state.upN=Math.min(state.upN||6,feed.length), feed.length)?upRows(feed.slice(0,state.upN),null,state._ufAnim,0)+upTail(feed):`<p class="sub" style="text-align:center;padding:24px 0">No shows match. <button data-act="ufclear" style="font-weight:600;color:var(--text)">Clear filters</button></p>`}</div>
     </div>
     </section>
     <p class="note" style="margin-top:22px">Shows and images from Ticketmaster (Sept 27 2026 snapshot).<br>Crews, people and chats are demo data. Profile photos from Unsplash.</p>
@@ -2272,7 +2317,7 @@ function render(anim){ window._dockActive=null; const _ap=document.getElementByI
   if(state.sheet) initCitySheet();
   if(document.getElementById('wal')) layWallet(null);
   syncNav(window._dockActive);
-  state._ufAnim=false; if(state.screen==='home') upWatch();
+  state._ufAnim=false; if(state.screen==='home'){ upWatch(); ptrAttach(); }
   const xs=document.querySelector('.xtop'); if(xs){ const sc=xs.closest('.scroll'), f=()=>xs.classList.toggle('stuck',sc.scrollTop>2); sc&&sc.addEventListener('scroll',f,{passive:true}); f(); } if(state.screen==='search'&&!state._sqf){ const i=document.getElementById('sq'); if(i){ i.focus(); state._sqf=true; } }
   const form=document.getElementById('composer');
   if(form) form.addEventListener('submit',e=>{ e.preventDefault(); const i=document.getElementById('msg'); const t=i.value.trim(); if(!t) return; sendMsg(t); const m2=document.getElementById('msg'); m2&&m2.focus(); });
@@ -2281,7 +2326,7 @@ function render(anim){ window._dockActive=null; const _ap=document.getElementByI
 document.getElementById('app').addEventListener('click',e=>{
   const t=e.target.closest('[data-act]'); if(!t) return;
   const a=t.dataset.act, id=t.dataset.id, v=t.dataset.v;
-  if(a==='show') go('show',id);
+  if(a==='show'){ if(t.classList.contains('urow')) showFly(t,id); else go('show',id); }
   else if(a==='xmode'){ state.xmode=v; state.q=''; render(); }
   else if(a==='xjoin'){ const c=xCrews()[+v]; if(c.mine){ openThread(thById(c.tid)); return; } if(c.wo&&ME.idv!==true){ toast('Women-only crews need a verified ID · verify it on your profile'); return; }
     let t=TH.find(x=>x.k==='crew'&&x.show===c.s.artist&&((c.k===0&&XOV[c.s.artist])||x.title===c.name));
@@ -2356,7 +2401,7 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='zfit'){ fitAll(700); }
   else if(a==='setcity'){ if(v===state.city) closeSheet(); else closeSheet(()=>setCity(v)); }
   else if(a==='person'){ state.pid=v!=null?+v:0; go('person'); }
-  else if(a==='back'){ const top=state.history[state.history.length-1]; if(state.screen==='scene'&&top&&top[0]==='home'&&document.getElementById('sfan')) sceneBack(); else back(); }
+  else if(a==='back'){ const top=state.history[state.history.length-1]; if(state.screen==='show'&&state.showFly===state.id&&top&&top[0]==='home'){ state.showFly=null; showBack(); } else if(state.screen==='scene'&&top&&top[0]==='home'&&document.getElementById('sfan')) sceneBack(); else back(); }
   else if(a==='home'){ state.history=[]; state.screen='home'; render(); }
   else if(a==='crews'){ state.history=[]; state.screen='crews'; render(); }
   else if(a==='explore'){ state.history=[]; state.screen='explore'; render(); }
