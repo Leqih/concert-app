@@ -113,6 +113,7 @@ pip install playwright && python3 demo/tests/m7test.py   # 可选：批量截屏
 
 ## 定位共识（M8）
 
+- **首页不大改**：主人对首页满意，只做被明确要求的小改动。
 - **Plus One 不卖票**：原价票跳 Ticketmaster（Buy tickets ↗）；只撮合粉丝间多余票按面值转让，小队优先，过户走官方渠道。
 
 - 找搭子和面值票单独都不是壁垒（Radiate、ConcertBuddy、Ticketmaster × CashorTrade 都在做）。

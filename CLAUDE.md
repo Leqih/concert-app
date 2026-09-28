@@ -8,3 +8,4 @@ Read `HANDOFF.md` first: product, research, architecture, history, links and to-
 - Check pages with Playwright screenshots (`demo/tests/`) before publishing.
 - Never put a Ticketmaster API key (or any key) in the repo or in a published page. Before publishing, `grep` the built file for keys.
 - The owner writes in Chinese; reply in Chinese, keep UI copy in English.
+- Home page: the owner is happy with it. Do not redesign it; only make small, requested changes.
