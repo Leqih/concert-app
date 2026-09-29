@@ -1415,6 +1415,8 @@ i.tw{font-style:normal;opacity:0}
 .xtop .xchips{margin-top:10px}
 .shd{padding-bottom:6px}.shrow{display:flex;align-items:center;gap:10px;padding:6px 16px 0}.shrow .sbar{flex:1;height:48px}
 .scan{font-size:15px;font-weight:600;color:var(--text);flex-shrink:0}
+.sghost{position:absolute;inset:0;z-index:38;pointer-events:none;background:var(--bg)}
+.smorph{position:absolute;z-index:39;pointer-events:none;overflow:hidden}.smorph svg{position:absolute;left:0;top:0}.smorph span{position:absolute;left:0;top:0;height:20px;line-height:20px;white-space:nowrap;font-size:16px;letter-spacing:-.02em;color:var(--muted)}
 .srh{display:flex;align-items:baseline;justify-content:space-between;margin:18px 20px 8px}.srh b{font-family:var(--display);font-size:17px;letter-spacing:-.03em}.srh button{font-size:13px;color:var(--muted);font-weight:600}
 .srec{display:flex;flex-wrap:wrap;gap:6px;padding:0 16px}.srec .gch{display:inline-flex;align-items:center;gap:5px}
 .svibe{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:0 12px}
@@ -2086,6 +2088,29 @@ function sceneFly(tile,v){
 const COMMUNITIES = [ ['Pop','Pop'], ['Rock','Rock'], ['R&B','R&B'], ['Hip-Hop','Hip-Hop/Rap'], ['Classical','Classical'] ];
 
 const state = { city:'New York', sheet:false, screen:'home', id:null, tab:'For You', genre:'All', sort:'date', q:'', drop:0, secs:6*3600+19*60+16, rsvp:{}, followed:false, history:[], msgs:{} };
+// Shared-element transition for search: the search button/bar the user tapped grows into the search page's input
+// (and shrinks back into it on Cancel). A clone morphs between the two rects; the real bar stays hidden until it lands.
+function sbSnap(el){ if(!el) return null; const A=document.getElementById('app').getBoundingClientRect(), r=el.getBoundingClientRect(), cs=getComputedStyle(el), sv=el.querySelector('svg'), tx=el.querySelector('input,span:not([hidden])');
+  const rel=b=>b&&({x:b.left-r.left,y:b.top-r.top,w:b.width,h:b.height});
+  return {x:r.left-A.left,y:r.top-A.top,w:r.width,h:r.height,rad:cs.borderRadius,bg:cs.backgroundColor,ico:rel(sv&&sv.getBoundingClientRect()),txt:rel(tx&&tx.getBoundingClientRect()),col:cs.color}; }
+// Freeze the outgoing page as a ghost (ids stripped, scroll kept) so it can fade out under the morph instead of vanishing
+function sbGhost(){ const v=document.getElementById('view'); if(!v) return null; const all=[...v.querySelectorAll('*')], sc=all.map(e=>e.scrollTop), g=v.cloneNode(true);
+  g.removeAttribute('id'); g.classList.remove('screen'); g.classList.add('sghost'); const ga=[...g.querySelectorAll('*')]; ga.forEach(e=>e.removeAttribute('id'));
+  return {g,sc,ga}; }
+function sbGhostFade(x){ if(!x) return; const app=document.getElementById('app'); app.appendChild(x.g); x.sc.forEach((t,i)=>{ if(t) x.ga[i].scrollTop=t; });
+  x.g.animate([{opacity:1},{opacity:0}],{duration:200,easing:'ease-out',fill:'forwards'}).onfinish=()=>x.g.remove(); }
+function sbMorph(from,toEl,opening){ const app=document.getElementById('app'); if(!from||!toEl||matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const to=sbSnap(toEl), D=440, E='cubic-bezier(.2,.8,.2,1)', g=document.createElement('div'), o={duration:D,easing:E,fill:'forwards'};
+  g.className='smorph'; g.innerHTML=ic('search',20)+'<span>Artists, clips, crews, people</span>'; app.appendChild(g); toEl.style.opacity='0';
+  const box=b=>({left:b.x+'px',top:b.y+'px',width:b.w+'px',height:b.h+'px',borderRadius:b.rad,backgroundColor:b.bg,color:b.col});
+  g.animate([box(from),box(to)],o);
+  const ico=g.firstElementChild, tx=g.lastElementChild, at=(b,d)=>b?`translate(${b.x}px,${b.y}px)`:`translate(${d.x}px,${d.y}px)`;
+  ico.animate([{transform:at(from.ico,{x:12,y:12})},{transform:at(to.ico,{x:12,y:12})}],o);
+  const t0=from.txt||to.txt, t1=to.txt||from.txt; // text is only on the bar side: fade it in (open) or out (close)
+  if(t0&&t1) tx.animate([{transform:`translate(${t0.x}px,${t0.y+(t0.h-20)/2}px)`,opacity:from.txt?1:0},{transform:`translate(${t1.x}px,${t1.y+(t1.h-20)/2}px)`,opacity:to.txt?1:0}],{...o,duration:from.txt&&to.txt?D:D*.7});
+  if(opening){ const sc=document.querySelector('.shrow .scan'); sc&&sc.animate([{opacity:0,transform:'translateX(24px)'},{opacity:1,transform:'none'}],{duration:D,delay:80,easing:E,fill:'backwards'});
+    [...document.querySelectorAll('.xpg>*:not(.xtop)')].slice(0,6).forEach((el,i)=>el.animate([{opacity:0,transform:'translateY(14px)'},{opacity:1,transform:'none'}],{duration:380,delay:140+i*45,easing:E,fill:'backwards'})); }
+  setTimeout(()=>{ toEl.style.opacity=''; g.animate([{opacity:1},{opacity:0}],{duration:90}).onfinish=()=>g.remove(); },D); }
 function go(screen,id){ state.history.push([state.screen,state.id]); state.screen=screen; state.id=id||null; render(true); }
 function back(){ const p=state.history.pop()||['home',null]; state.screen=p[0]; state.id=p[1]; render(true); }
 let tt; function toast(m){ const t=document.getElementById('toast'); t.textContent=m; t.hidden=false; clearTimeout(tt); tt=setTimeout(()=>t.hidden=true,2000); }
@@ -2924,7 +2949,7 @@ document.getElementById('app').addEventListener('click',e=>{
     if(!tt){ tt={id:'t'+(++TSEQ),k:'crew',show:x.artist,title:'Buddies',long:`${x.artist} with ${P0(ps[0])} and ${P0(ps[1])}`,host:ps[0],who:ps.slice(),cap:6,un:0,ts:++TSEQ,plan:['6:30 PM',XSPOT[Math.abs(h(x.id))%XSPOT.length]],msgs:[{d:'in',p:ps[0],t:`Oh nice, you’re coming too? 🙌`,time:nowT()}],replies:[[ps[1],'Finally, the whole gang']]}; TH.unshift(tt); }
     tt.msgs.push({d:'sys',t:`You joined ${P0(ps[0])} and ${P0(ps[1])}`}); openThread(tt); }
   else if(a==='upall'){ state.upAll=!state.upAll; const sc=document.getElementById('sc'), y=sc&&sc.scrollTop; render(); const n=document.getElementById('sc'); if(n) n.scrollTop=y; }
-  else if(a==='search'){ state.sq=''; state._sqf=false; go('search'); }
+  else if(a==='search'){ state.sq=''; state._sqf=false; const from=sbSnap(t.closest('[data-act=search]')), gh=sbGhost(); state.history.push([state.screen,state.id]); state.screen='search'; state.id=null; render(); sbGhostFade(gh); sbMorph(from,document.querySelector('.shrow .sbar'),true); }
   else if(a==='sfill'){ state.sq=v; render(); const i=document.getElementById('sq'); i&&i.focus(); }
   else if(a==='sclear'){ state.recent=[]; render(); }
   else if(a==='svibe'){ state.xtag=+v; state.history=[]; state.screen='explore'; render(); }
@@ -3016,6 +3041,7 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='zfit'){ fitAll(700); }
   else if(a==='setcity'){ if(v===state.city) closeSheet(); else closeSheet(()=>setCity(v)); }
   else if(a==='person'){ state.pid=v!=null?+v:0; go('person'); }
+  else if(a==='back'&&state.screen==='search'&&state.history.length){ const from=sbSnap(document.querySelector('.shrow .sbar')), gh=sbGhost(), top=state.history.pop(); state.screen=top[0]; state.id=top[1]; render(); sbGhostFade(gh); sbMorph(from,document.querySelector('[data-act=search]'),false); }
   else if(a==='back'){ const top=state.history[state.history.length-1]; if(state.screen==='show'&&state.showFly===state.id&&top&&top[0]==='home'){ state.showFly=null; showBack(); } else if(state.screen==='scene'&&top&&top[0]==='home'&&document.getElementById('sfan')) sceneBack(); else back(); }
   else if(a==='home'){ state.history=[]; state.screen='home'; render(); }
   else if(a==='crews'){ state.history=[]; state.screen='crews'; render(); }
