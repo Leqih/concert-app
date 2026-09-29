@@ -749,6 +749,12 @@ i.tw{font-style:normal;opacity:0}
 .scsp{display:flex;align-items:center;gap:3px;margin-top:6px}
 .scsp i{width:14px;height:4px;border-radius:2px;background:#E1E1E6}.scsp i.on{background:#0B0B0C}
 .scsp em{font-style:normal;font-size:11px;color:var(--muted);margin-left:6px}
+.screw{flex-wrap:wrap;padding:10px}.scmain{flex:1;min-width:0;display:flex;align-items:center;gap:12px;text-align:left;padding:0}
+.scyou{position:absolute;left:3px;right:3px;bottom:3px;font-style:normal;height:16px;border-radius:6px;background:rgba(11,11,12,.8);color:#fff;font-size:8.5px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:2px}.scyou svg{stroke:#fff}
+.sctr{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}.sctr em{font-style:normal;height:18px;padding:0 7px;border-radius:999px;background:var(--card2);font-size:10.5px;font-weight:600;color:#3A3A3F;display:inline-flex;align-items:center;gap:3px}
+.scfl{display:flex;gap:6px;overflow-x:auto;padding:0 12px 12px;scrollbar-width:none}.scfl::-webkit-scrollbar{display:none}.scfl .gch{flex-shrink:0}.scfl .gch em{font-style:normal;color:var(--muted);margin-left:2px}.scfl .gch[aria-pressed=true] em{color:rgba(255,255,255,.7)}
+.scspare{flex-basis:100%;display:flex;align-items:center;gap:10px;margin-top:10px;padding:8px 10px;border-radius:14px;background:var(--card2);text-align:left}.scspare>span:nth-child(2){flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}.scspare b{font-size:12.5px}.scspare small{font-size:11px;color:var(--muted)}
+.scst{width:40px;height:40px;border-radius:8px;background:#0B0B0C;color:#fff;display:flex!important;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;box-shadow:inset 0 0 0 2px #0B0B0C,inset 0 0 0 3px rgba(255,255,255,.35)}.scst b{font-family:var(--display);font-size:12px;letter-spacing:.02em}.scst small{font-size:9px;color:rgba(255,255,255,.7)!important}
 .scjoin{flex-shrink:0;height:32px;padding:0 14px;border-radius:10px;background:#0B0B0C;color:#fff;font-size:13px;font-weight:600;display:flex;align-items:center}
 .sshows{display:flex;gap:10px;overflow-x:auto;padding:0 16px 4px;scrollbar-width:none}.sshows::-webkit-scrollbar{display:none}
 .sshow{flex-shrink:0;width:118px;text-align:left}
@@ -2199,16 +2205,24 @@ const SCENE_LIST = [
   ['Sober','All of the music, none of the drinks.',['Sober and loud','Mocktails, then the pit','Zero-proof night out','Sober, singing every word'],33],
   ['Women only','Crews hosted by and for women.',['Women-only crew','Girls to the front','Women-only, meet at 7','Sister crew, pit edition'],95]
 ];
+// Scene crews. Your ticketed shows come first (one crew each), then the city's other shows. Every crew carries the trust
+// facts people want before joining strangers (verified members, host's show-up record, deposit, women-only) and, when a
+// member has an extra ticket, a face-value spare that crew-mates can claim first.
 function sceneCrews(i){
-  const names=SCENE_LIST[i][2]; const out=[];
-  for(let k=0;k<4;k++){ const s=SHOWS[(i*5+k*4+3)%SHOWS.length]; const hst=PEOPLE[(i+k*3)%PEOPLE.length]; const n=4+((i+k)%3), f=1+((i*2+k)%(n-1));
-    out.push({s,host:hst,name:names[k%names.length],f,n}); }
+  const names=SCENE_LIST[i][2], mine=MYTIX().map(r=>r[0]).filter(Boolean), out=[];
+  const mk=(s,k)=>{ const hi=(i+k*3)%PEOPLE.length, n=4+((i+k)%3), f=1+((i*2+k)%(n-1)), sp=sparesFor(s).filter(x=>!(state.claimedIds||{})[x.id]), rel=REL[hi];
+    return {s,host:PEOPLE[hi],hi,name:names[k%names.length],f,n,ver:Math.max(1,f-((i+k)%3===0?1:0)),rel,dep:(i+k)%3===1,wo:i===7,spare:(i+k)%2===0&&sp.length?sp[0]:null,mine:mine.includes(s)}; };
+  mine.forEach((s,k)=>out.push(mk(s,k+4)));
+  for(let k=0;k<4;k++){ const s=SHOWS[(i*5+k*4+3)%SHOWS.length]; if(!out.some(c=>c.s===s)) out.push(mk(s,k)); }
   return out;
 }
 function scene(){
-  const i=+state.id, sc=SCENE_LIST[i], L=sceneCrews(i), shows=[...new Set(L.map(c=>c.s))].concat(SHOWS.filter(x=>!L.some(c=>c.s===x))).slice(0,6);
+  const i=+state.id, sc=SCENE_LIST[i], all=sceneCrews(i), mine=all.filter(c=>c.mine), f=(state.scFor===i&&state.scF)||(mine.length?'mine':'all');
+  const L=f==='mine'?mine:f==='spare'?all.filter(c=>c.spare):f==='all'?all:all.filter(c=>c.s.id===f);
+  const shows=[...new Set(all.map(c=>c.s))].concat(SHOWS.filter(x=>!all.some(c=>c.s===x))).slice(0,6), nsp=all.filter(c=>c.spare).length;
   const members=[0,1,2,3,4,5].map(k=>PEOPLE[(i+k)%PEOPLE.length]);
   const short=v=>v.replace('Madison Square Garden','MSG').replace('Radio City Music Hall','Radio City');
+  const chips=[['mine','Your shows',mine.length]].filter(()=>mine.length).concat(mine.map(c=>[c.s.id,c.s.artist,null]),[['spare','With a spare',nsp],['all','All',all.length]]);
   return `<div class="scroll"><div style="padding-bottom:120px">
     <div class="shero">
       <div class="sback">${avi(SCENE_POOL[i*4+1])}</div>
@@ -2216,23 +2230,27 @@ function scene(){
       <div class="sfan" id="sfan">${[0,1,2,3].map(k=>`<span class="sf s${k}">${avi(SCENE_POOL[i*4+k])}</span>`).join('')}</div>
       <div class="stitle sin"><span class="skick">Scene · ${state.city}</span><h1>${sc[0]} <span class="emo">${SCENE_EMO[i]}</span></h1><p>${sc[1]}</p></div>
     </div>
-    <div class="sstats sin"><div><b>${sceneN(i)}</b><span>crews open</span></div><i></i><div><b>${sc[3]}</b><span>people</span></div><i></i><div><b>${shows.length}</b><span>shows</span></div></div>
+    <div class="sstats sin"><div><b>${f==='all'?sceneN(i):L.length}</b><span>${f==='all'?'crews open':f==='mine'?'for your shows':'crews here'}</span></div><i></i><div><b>${sc[3]}</b><span>people</span></div><i></i><div><b>${nsp}</b><span>face-value spares</span></div></div>
     <div class="smem sin"><span class="smav">${members.map(p=>`<span>${avi(p[3])}</span>`).join('')}</span><span class="smt"><b>${members[0][0].split(' ')[0]}, ${members[1][0].split(' ')[0]}</b> and ${sc[3]-2} others are in</span></div>
 
     <section class="ssec sin"><h2 class="h2 sec">Crews forming <span class="emo">🤝</span></h2>
-      ${L.map(c=>{ const left=c.n-c.f; return `<button class="screw" data-act="crew" data-id="${c.s.id}">
-        <span class="scimg">${img(c.s)}</span>
+      <div class="scfl">${chips.map(([k,l,n])=>`<button class="gch" data-act="scf" data-v="${k}" aria-pressed="${f===k}">${esc(l)}${n!=null?` <em>${n}</em>`:''}</button>`).join('')}</div>
+      ${L.map(c=>{ const left=c.n-c.f; return `<div class="screw">
+        <button class="scmain" data-act="crew" data-id="${c.s.id}"><span class="scimg">${img(c.s)}${c.mine?`<i class="scyou">${ic('ticket',10)} Going</i>`:''}</span>
         <span class="scb"><b>${esc(c.name)}</b><span class="scm">${esc(c.s.artist)} · ${sd(c.s.dates[0])} · ${esc(short(c.s.venue))}</span>
-          <span class="scf"><span class="schost">${avi(c.host[3])}</span><span>Hosted by ${c.host[0]}</span></span>
-          <span class="scsp">${Array.from({length:c.n},(_,k)=>`<i class="${k<c.f?'on':''}"></i>`).join('')}<em>${left} ${left===1?'spot':'spots'} left</em></span></span>
-        <span class="scjoin">Join</span></button>`; }).join('')}
+          <span class="scf"><span class="schost">${avi(c.host[3])}</span><span>${c.host[0]} · showed up ${c.rel[0]}/${c.rel[1]}</span></span>
+          <span class="sctr"><em>${ic('check',9)} ${c.ver}/${c.f} verified</em>${c.dep?'<em>$5 hold</em>':''}${c.wo?'<em>Women only</em>':''}</span>
+          <span class="scsp">${Array.from({length:c.n},(_,k)=>`<i class="${k<c.f?'on':''}"></i>`).join('')}<em>${left} ${left===1?'spot':'spots'} left</em></span></span></button>
+        <div class="scside"><button class="scjoin" data-act="crew" data-id="${c.s.id}">Join</button></div>
+        ${c.spare?`<button class="scspare" data-act="claimspare" data-v="${c.spare.id}"><span class="scst"><b>${/floor|ga/i.test(c.spare.sec)?'GA':/balc/i.test(c.spare.sec)?'BAL':esc(c.spare.sec.split(' ').pop().slice(0,4).toUpperCase())}</b><small>×${Math.max(1,Math.abs(c.spare.qty))}</small></span><span><b>${c.spare.seller[0].split(' ')[0]} has a spare · $${c.spare.face} face value</b><small>Crew-mates get first dibs · $2 fee · escrow until it lands</small></span>${ic('right',14)}</button>`:''}
+      </div>`; }).join('')||`<p class="mempty">No ${esc(sc[0].toLowerCase())} crews here yet · start one below</p>`}
     </section>
 
     <section class="ssec sin"><h2>Where this crowd is going <span class="emo">🎟️</span></h2>
       <div class="sshows">${shows.map(x=>`<button class="sshow" data-act="show" data-id="${x.id}"><span class="ssimg">${img(x)}</span><b>${esc(x.artist)}</b><span>${sd(x.dates[0])} · ${esc(short(x.venue))}</span></button>`).join('')}</div>
     </section>
   </div></div>
-  <div class="wbar"><button class="wpill big" data-act="ncopen" data-id="${shows[0].id}" data-j="${i}">${ic('plus',18)}&nbsp;Start a ${esc(sc[0])} crew</button></div>`;
+  <div class="wbar"><button class="wpill big" data-act="ncopen" data-id="${(L[0]||all[0]).s.id}" data-j="${i}">${ic('plus',18)}&nbsp;Start a ${esc(sc[0])} crew</button></div>`;
 }
 function sceneBack(){
   const i=state.id, src=[...document.querySelectorAll('#sfan .sf')].map((e,k)=>{ const r=e.getBoundingClientRect(); return {cx:r.left+r.width/2,cy:r.top+r.height/2,w:e.offsetWidth,h:e.offsetHeight,src:e.querySelector('img').src}; });
@@ -3455,6 +3473,7 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='nudge'){ toast(`Reminder sent to ${P0(6)} · due in 2 days`); }
   else if(a==='release'){ SPLIT.released=true; render(); toast('Seat listed · your crew gets 24h first'); }
   else if(a==='crew') go('crew',id);
+  else if(a==='scf'){ const sc=document.querySelector('.scroll'), y=sc?sc.scrollTop:0; state.scF=v; state.scFor=+state.id; render(); const n=document.querySelector('.scroll'); if(n) n.scrollTop=y; }
   else if(a==='mtab'){ state.mf=v; render(); }
   else if(a==='addbuddy'){ const p=+v; if(bState(p)!=='none'){ toast(bState(p)==='buddy'?'Already buddies':'Waiting for '+P0(p)); return; } addBuddy(p); render(); toast('Request sent · buddies are mutual, '+P0(p)+' has to add you back'); }
   else if(a==='mrqyes'){ const r=MREQ.splice(+v,1)[0]; const t={id:'t'+(++TSEQ),k:'dm',person:r.p,show:r.show,un:1,ts:++TSEQ,msgs:[{d:'sys',t:`You accepted ${P0(r.p)}’s message request`},{d:'in',p:r.p,t:r.t,time:r.time}],replies:[[r.p,'Amazing, see you there!']]}; TH.unshift(t); render(); toast('Moved to Direct'); }
