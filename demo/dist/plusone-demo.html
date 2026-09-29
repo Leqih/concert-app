@@ -1899,7 +1899,37 @@ i.tw{font-style:normal;opacity:0}
 /* 'Was there' = verified ticket holder: a solid pill, not a faint check */
 .cms .cmtag{font-style:normal;display:inline-flex;align-items:center;gap:3px;height:18px;padding:0 7px 0 6px;border-radius:var(--r-pill);background:#0B0B0C;color:#fff;font-size:10.5px;font-weight:700;letter-spacing:0;line-height:1;flex-shrink:0}
 .cms .cmtag svg{stroke:#fff;fill:none;stroke-width:2.2}
-.cmpost+.cgrab{margin:14px 16px 0;padding:14px 0 12px!important;border-top:1px solid var(--line)}.cmpost+.cgrab .cmx{top:8px;right:-6px}
+.cmpost+.cgrab{margin:14px 16px 0;padding:14px 0 12px!important;border-top:1px solid var(--line)}.cms .cmgr{margin:0 auto -4px}
+/* rich comments: mentions, stickers, photos */
+.cmat{font-weight:700;color:#0B0B0C;display:inline}
+.cmc{display:flex;flex-direction:column;align-items:flex-start;gap:6px}.cmt{font-size:15px;line-height:1.38;color:var(--text);word-break:break-word}
+.cmsk{padding:4px 2px 2px}.cmimg{width:132px;aspect-ratio:3/4;border-radius:14px;overflow:hidden;background:var(--card2);padding:0}.cmimg img{width:100%;height:100%;object-fit:cover;display:block}
+.stk{display:inline-flex;align-items:center;gap:5px;font-family:var(--display);font-weight:800;letter-spacing:-.01em;line-height:1;white-space:nowrap;transform:rotate(var(--r,0deg))}
+.stk.s-blk{background:#0B0B0C;color:#fff;padding:8px 13px;border-radius:12px;font-size:19px;box-shadow:0 4px 12px rgba(0,0,0,.18)}
+.stk.s-wht{background:#fff;color:#0B0B0C;padding:7px 12px;border-radius:12px;font-size:19px;box-shadow:inset 0 0 0 2.5px #0B0B0C,0 4px 12px rgba(0,0,0,.1)}
+.stk.s-pill{background:#0B0B0C;color:#fff;padding:8px 15px;border-radius:999px;font-size:14px}
+.stk.s-stub{background:#fff;color:#0B0B0C;padding:8px 12px;border-radius:6px;font-size:14px;outline:2px dashed #0B0B0C;outline-offset:-5px;box-shadow:0 4px 12px rgba(0,0,0,.12)}.stk.s-stub svg{stroke:#0B0B0C;fill:none}
+.stk.s-num{font-size:36px;color:#0B0B0C;text-decoration:underline;text-decoration-thickness:4px;text-underline-offset:5px}
+.stk.s-emo{font-size:48px}
+/* composer */
+.cmtools{display:flex;align-items:center;gap:0;margin-left:2px;flex-shrink:0}.cmtools button{width:32px;height:36px;display:grid;place-items:center;color:#55555A;border-radius:10px;transition:color .15s,background .15s}
+.cmtools button[aria-pressed=true]{color:#0B0B0C;background:rgba(11,11,12,.07)}.cmtat{font-size:19px;font-weight:600;font-family:var(--display);line-height:1}
+.cmin .cmsend{margin-left:4px}.cmin .cmsend:disabled{width:0;margin-left:0}.cmin{padding-right:4px}
+.cmats{display:flex;gap:6px;overflow-x:auto;padding:0 0 8px;scrollbar-width:none}.cmats::-webkit-scrollbar{display:none}
+.cmats button{flex-shrink:0;display:flex;align-items:center;gap:8px;height:44px;padding:0 12px 0 5px;border-radius:999px;background:var(--card2);text-align:left;animation:cmin .25s cubic-bezier(.2,.8,.2,1) both}
+.cmats .bgav span{width:34px;height:34px;border:0}.cmats b{display:block;font-size:13px}.cmats small{display:block;font-size:11px;color:var(--muted)}
+.cmnone{margin:0 0 10px;font-size:13px;color:var(--muted);text-align:center}
+.cmatt{padding:0 0 8px 42px}.cmatt span{position:relative;display:inline-block;width:56px;height:74px;border-radius:12px;overflow:hidden}.cmatt img{width:100%;height:100%;object-fit:cover}
+.cmatt button{position:absolute;right:4px;top:4px;width:20px;height:20px;border-radius:50%;background:rgba(11,11,12,.75);color:#fff;display:grid;place-items:center}.cmatt button svg{stroke:#fff}
+.cmpanel{height:232px;margin:10px -16px 0;border-top:1px solid var(--line);display:flex;flex-direction:column}
+.cmtabs{display:flex;gap:18px;padding:10px 16px 6px}.cmtabs button{font-size:13.5px;font-weight:700;color:var(--muted);padding:4px 0;position:relative}.cmtabs button[aria-pressed=true]{color:#0B0B0C}.cmtabs button[aria-pressed=true]::after{content:'';position:absolute;left:0;right:0;bottom:-2px;height:2px;border-radius:2px;background:#0B0B0C}
+.cmstg,.cmemg,.cmpg{flex:1;overflow-y:auto;padding:6px 16px 8px;scrollbar-width:none}.cmstg::-webkit-scrollbar,.cmemg::-webkit-scrollbar,.cmpg::-webkit-scrollbar{display:none}
+.cmstg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.cmstg button{height:76px;border-radius:16px;background:var(--card2);display:grid;place-items:center;overflow:hidden;transition:transform .15s}.cmstg button:active{transform:scale(.94)}.cmstg .stk{transform:rotate(var(--r)) scale(.64)}.cmstg .stk.s-emo{transform:scale(.8)}.cmstg .stk.s-num{transform:rotate(var(--r)) scale(.8)}
+.cmemg{display:grid;grid-template-columns:repeat(8,1fr);gap:2px}.cmemg button{font-size:25px;height:42px;border-radius:10px}.cmemg button:active{background:var(--card2)}
+.cmpg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:112px;gap:4px;align-content:start}.cmpg button{height:112px;width:100%;overflow:hidden;border-radius:8px;padding:0;position:relative;display:block;min-width:0}.cmpg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}.cmpg button[aria-pressed=true]{box-shadow:inset 0 0 0 3px #0B0B0C}
+.cmghc{position:absolute;z-index:5;pointer-events:none;transform-origin:0 0}
+.cmlb{position:absolute;inset:0;z-index:40;background:rgba(0,0,0,.92);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;animation:fadein .2s ease;transition:opacity .2s}.cmlb.out{opacity:0}
+.cmlb img{width:86%;max-height:74%;object-fit:cover;border-radius:16px}.cmlb p{margin:0;color:rgba(255,255,255,.6);font-size:12.5px}
 .cmx{position:absolute;right:10px;top:-2px;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:var(--muted);transition:background .15s}.cmx:active{background:var(--card2)}
 .cms .ufb{padding:6px 16px 10px;-webkit-mask:linear-gradient(180deg,transparent 0,#000 12px,#000 calc(100% - 16px),transparent);mask:linear-gradient(180deg,transparent 0,#000 12px,#000 calc(100% - 16px),transparent);overscroll-behavior:contain}
 .cms .cmr{border:0;border-radius:0;margin:0;width:auto;background:transparent;padding:9px 0;gap:12px;align-items:flex-start;font-weight:400;font-size:14px;color:var(--text)}.cms .cmr .bgav span{width:36px;height:36px}
@@ -1915,8 +1945,8 @@ i.tw{font-style:normal;opacity:0}
 .cmin{flex:1;min-width:0;display:flex;align-items:center;height:44px;padding:0 4px 0 16px;border-radius:var(--r-pill);background:var(--card2);transition:box-shadow .2s,background .2s}
 .cmin:focus-within{background:#fff;box-shadow:inset 0 0 0 1.5px #0B0B0C}
 .cmin input{flex:1;min-width:0;height:100%;border:0;background:transparent;font:inherit;font-size:15px;outline:none;color:var(--text)}
-.cmin button{flex-shrink:0;width:36px;height:36px;border-radius:50%;background:#0B0B0C;color:#fff;display:grid;place-items:center;transition:transform .22s cubic-bezier(.34,1.6,.5,1),opacity .18s}
-.cmin button svg{transform:rotate(-90deg)}.cmin button:disabled{opacity:0;transform:scale(.4);pointer-events:none}.cmin button.sent{opacity:1!important;transform:none;pointer-events:none}
+.cmin .cmsend{flex-shrink:0;width:36px;height:36px;border-radius:50%;background:#0B0B0C;color:#fff;display:grid;place-items:center;transition:transform .22s cubic-bezier(.34,1.6,.5,1),opacity .18s}
+.cmin .cmsend svg{transform:rotate(-90deg)}.cmin .cmsend:disabled{opacity:0;transform:scale(.4);pointer-events:none}.cmin .cmsend.sent{opacity:1!important;transform:none;pointer-events:none}
 .cmgh{position:absolute;z-index:5;pointer-events:none;padding:8px 14px;border-radius:18px;background:#0B0B0C;color:#fff;font-size:15px;line-height:20px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-shadow:0 8px 24px rgba(0,0,0,.18);transform-origin:0 50%}
 .cmfl{position:absolute;z-index:6;pointer-events:none;font-style:normal;font-size:24px;line-height:1}
 /* rail heart burst */
@@ -2547,47 +2577,88 @@ function clUpd(id,fx){ const b=document.querySelector(`.clp[data-id="${id}"] [da
   fxw.insertAdjacentHTML('beforeend','<b class="lkr"></b>'); fxw.lastChild.animate([{transform:'scale(.2)',opacity:1,borderWidth:'8px'},{transform:'scale(1)',opacity:0,borderWidth:'0px'}],{duration:420,easing:'ease-out',fill:'forwards'});
   for(let i=0;i<6;i++){ const a=i/6*Math.PI*2-Math.PI/2, d=24; fxw.insertAdjacentHTML('beforeend',`<b class="lkd${i%2?' w':''}"></b>`); fxw.lastChild.animate([{transform:'translate(0,0) scale(0)',opacity:1},{transform:`translate(${Math.cos(a)*d*.8}px,${Math.sin(a)*d*.8}px) scale(1)`,opacity:1,offset:.5},{transform:`translate(${Math.cos(a)*d}px,${Math.sin(a)*d}px) scale(0)`,opacity:0}],{duration:520,delay:90,easing:'cubic-bezier(.2,.8,.2,1)',fill:'both'}); }
   setTimeout(()=>fxw.remove(),700); }
-// Comments: opened, liked and posted in place (no full render), so the clip underneath keeps playing and the sheet never re-slides
+// Comments: opened, liked and posted in place (no full render), so the clip underneath keeps playing and the sheet never re-slides.
+// A comment can carry text (with @mentions), one sticker and one photo. Close = tap outside or drag the sheet down (no ✕).
+const CM_STK=[['encore','ENCORE!','blk',-4],['frontrow','FRONT ROW','wht',3],['seeyou','SEE YOU THERE','pill',-2],['louder','LOUDER 🔊','blk',2],['wasthere','I WAS THERE','stub',-3],['goat','GOAT 🐐','wht',-2],
+  ['ten','10/10','num',-5],['cry','CRYING RN 😭','pill',3],['fire','🔥','emo',0],['guitar','🎸','emo',-8],['mic','🎤','emo',6],['disco','🪩','emo',0]];
+const CM_EMO=['😂','🥹','😭','😍','🤯','🥳','😎','🫶','🙌','👏','🤘','🔥','✨','💯','🎶','🎸','🎤','🥁','🪩','💃','🕺','❤️','🖤','🤍','👀','🙏','🎟️','📸','⚡','🌙','🍻','🫠'];
+const CM_ICO={at:'<b class="cmtat">@</b>',stk:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="8.8"/><path d="M8.3 14.2c1 1.4 2.2 2 3.7 2s2.7-.6 3.7-2"/><circle cx="9" cy="10" r=".9" fill="currentColor" stroke="none"/><circle cx="15" cy="10" r=".9" fill="currentColor" stroke="none"/></svg>',
+  pic:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.2" y="4.8" width="17.6" height="14.4" rx="3.2"/><circle cx="9" cy="10" r="1.7"/><path d="M20.5 15.6l-4.6-4.6-8.6 8.2"/></svg>'};
+const cmStk=id=>{ const x=CM_STK.find(k=>k[0]===id); return x?`<span class="stk s-${x[2]}" style="--r:${x[3]}deg">${x[2]==='stub'?ic('ticket',14):''}${x[1]}</span>`:''; };
+function cmPics(){ return CLIPV.map(x=>x.p).concat(NYC_SHOWS.filter(x=>x.img.startsWith('data:')).slice(0,4).map(x=>x.img)); }
+function cmText(t){ let o=esc(t); PEOPLE.map(p=>p[0]).sort((a,b)=>b.length-a.length).forEach(n=>{ o=o.split('@'+esc(n)).join(`<span class="cmat">@${esc(n)}</span>`); }); return o; }
 function cmRow(r,c,lk,nw){ const p=r.me?MEP:PEOPLE[r.p], on=!!lk[r.id], nm=r.me?'You':p[0];
-  return `<div class="cmr${nw?' new':''}" data-id="${r.id}"><span class="bgav"><span>${avi(p[3])}</span></span><span class="cmb"><b>${nm}${(r.me?hasTix(c.s):r.was)?` <em class="cmtag">${ic('ticket',11)}Was there</em>`:''}</b><span>${esc(r.t)}</span><span class="cmm"><small>${r.ago==='now'?'Just now':r.ago}</small>${r.me?'':`<button data-act="cmreply" data-v="${esc(p[0])}">Reply</button>`}</span></span><button class="cml" data-act="cmlike" data-v="${r.id}" aria-pressed="${on}" aria-label="Like comment">${ic('heart',16)}<small>${r.l+(on?1:0)}</small></button></div>`; }
+  return `<div class="cmr${nw?' new':''}" data-id="${r.id}"><span class="bgav"><span>${avi(p[3])}</span></span><span class="cmb"><b>${nm}${(r.me?hasTix(c.s):r.was)?` <em class="cmtag">${ic('ticket',11)}Was there</em>`:''}</b><span class="cmc">${r.t?`<span class="cmt">${cmText(r.t)}</span>`:''}${r.stk?`<span class="cmsk">${cmStk(r.stk)}</span>`:''}${r.img?`<button class="cmimg" data-act="cmview" aria-label="Open photo"><img alt="" src="${r.img}"></button>`:''}</span><span class="cmm"><small>${r.ago==='now'?'Just now':r.ago}</small>${r.me?'':`<button data-act="cmreply" data-v="${esc(p[0])}">Reply</button>`}</span></span><button class="cml" data-act="cmlike" data-v="${r.id}" aria-pressed="${on}" aria-label="Like comment">${ic('heart',16)}<small>${r.l+(on?1:0)}</small></button></div>`; }
 function cmCount(c){ return c.com+((state.cmMine||{})[c.id]||[]).length; }
-function cmSheet(){ const c=clipAny(state.cmt.id); if(!c) return ''; const k=Math.abs(h(c.id+'m')), lk=state.cml||{};
-  const T=['That encore was insane','I was two rows behind you!!','The crowd sang louder than the band','Same crew next show?','Goosebumps rewatching this','Where were you standing?'];
-  const R=((state.cmMine||{})[c.id]||[]).slice().reverse().concat([0,1,2,3,4].map(i=>({id:c.id+'-'+i,p:(k+i*3)%8,t:T[(k+i)%T.length],l:3+((k>>>i)%60),ago:(i+1)*7+'m',was:(k+i)%3!==1})));
+function cmSeed(c){ const k=Math.abs(h(c.id+'m')), T=['That encore was insane','I was two rows behind you!!','The crowd sang louder than the band','Same crew next show?','Goosebumps rewatching this','Where were you standing?'];
+  return [0,1,2,3,4].map(i=>{ const r={id:c.id+'-'+i,p:(k+i*3)%8,t:T[(k+i)%T.length],l:3+((k>>>i)%60),ago:(i+1)*7+'m',was:(k+i)%3!==1};
+    if(i===1) r.t='@'+PEOPLE[k%8][0]+' '+r.t; if(i===2){ r.stk=['encore','goat','ten','frontrow'][k%4]; r.t=''; } if(i===3){ r.img=cmPics()[(k+3)%8]; r.t='My view from the floor'; } return r; }); }
+function cmPanel(){ const d=state.cmd||{}; if(d.panel==='stk') return `<div class="cmtabs"><button type="button" data-act="cmtab" data-v="stk" aria-pressed="${d.tab!=='emo'}">Stickers</button><button type="button" data-act="cmtab" data-v="emo" aria-pressed="${d.tab==='emo'}">Emoji</button></div>`+
+    (d.tab==='emo'?`<div class="cmemg">${CM_EMO.map(e=>`<button type="button" data-act="cmemo" data-v="${e}">${e}</button>`).join('')}</div>`:`<div class="cmstg">${CM_STK.map(x=>`<button type="button" data-act="cmsticker" data-v="${x[0]}" aria-label="Send sticker ${esc(x[1])}">${cmStk(x[0])}</button>`).join('')}</div>`);
+  if(d.panel==='pic') return `<div class="cmtabs"><button type="button" aria-pressed="true">Recent photos</button></div><div class="cmpg">${cmPics().map((u,i)=>`<button type="button" data-act="cmpick" data-v="${i}" aria-pressed="${d.img===u}"><img alt="" src="${u}"></button>`).join('')}</div>`; return ''; }
+function cmTop(){ const d=state.cmd||{}; if(d.panel&&d.panel!=='at'&&d.q==null) return ''; if(d.q!=null){ const q=d.q.toLowerCase(), c=clipAny(state.cmt.id), inTh=new Set(cmSeed(c).map(r=>r.p));
+    const L=PEOPLE.map((p,i)=>({p,i,b:!!BUD[i],t:inTh.has(i)})).filter(x=>x.p[0].toLowerCase().startsWith(q)||x.p[0].toLowerCase().includes(' '+q)).sort((a,b)=>(b.b-a.b)||(b.t-a.t));
+    return L.length?`<div class="cmats">${L.map(x=>`<button type="button" data-act="cmmention" data-v="${esc(x.p[0])}"><span class="bgav"><span>${avi(x.p[3])}</span></span><span><b>${esc(x.p[0])}</b><small>${x.b?'Buddy':x.t?'In this thread':'Going'}</small></span></button>`).join('')}</div>`:`<p class="cmnone">No one called “${esc(d.q)}”</p>`; }
+  return `<div class="cmemo">${['🔥','🙌','😭','🎶','❤️','👏','🤘'].map(e=>`<button type="button" data-act="cmemo" data-v="${e}" aria-label="Add ${e}">${e}</button>`).join('')}</div>`; }
+function cmAtt(){ const d=state.cmd||{}; return d.img?`<div class="cmatt"><span><img alt="" src="${d.img}"><button type="button" data-act="cmunpic" aria-label="Remove photo">${ic('x',12)}</button></span></div>`:''; }
+function cmSheet(){ const c=clipAny(state.cmt.id); if(!c) return ''; const lk=state.cml||{}, d=state.cmd=state.cmd||{};
+  const R=((state.cmMine||{})[c.id]||[]).slice().reverse().concat(cmSeed(c));
   const pw=c.me?MEP:PEOPLE[c.p], post=state.cmt.post?`<div class="cmpost"><div class="rvh"><span class="bgav"><span>${avi(pw[3])}</span></span><span class="rvw"><b>${c.me?'You':pw[0]} <em class="cmtag">${ic('ticket',11)}Was there</em></b><small>${c.ago==='now'?'Just now':c.ago+' ago'}${c.sec?' · '+esc(c.sec):''}</small></span>${c.rate?stars(c.rate,'sm'):''}</div><p>${esc(c.cap)}</p></div>`:'';
   const n=cmCount(c);
-  return `<div class="sheetbg" data-act="cmclose"></div><div class="sheet csheet cms" id="cmsh" role="dialog" aria-label="${state.cmt.post?'Review':'Comments'}">${post}<div class="cgrab"${post?' style="padding-top:0"':''}>${post?'':'<i class="grab"></i>'}<h3><span id="cmn">${fmtK(n)}</span> comment${n===1?'':'s'}</h3><button class="cmx" data-act="cmclose" aria-label="Close">${ic('x',18)}</button></div>
+  return `<div class="sheetbg" data-act="cmclose"></div><div class="sheet csheet cms" id="cmsh" role="dialog" aria-label="${state.cmt.post?'Review':'Comments'}">${post?`<i class="grab cmgr"></i>`:''}${post}<div class="cgrab"${post?' style="padding-top:0"':''}>${post?'':'<i class="grab"></i>'}<h3><span id="cmn">${fmtK(n)}</span> comment${n===1?'':'s'}</h3></div>
   <div class="ufb" id="cmlist">${R.map(r=>cmRow(r,c,lk)).join('')}</div>
-  <div class="cmf"><div class="cmemo">${['🔥','🙌','😭','🎶','❤️','👏','🤘'].map(e=>`<button type="button" data-act="cmemo" data-v="${e}" aria-label="Add ${e}">${e}</button>`).join('')}</div>
-  <form class="cmform" onsubmit="return cmPost(event,'${c.id}')"><span class="bgav"><span>${avi(MEP[3])}</span></span><label class="cmin"><span hidden>Comment</span><input id="cmin" placeholder="Add a comment…" autocomplete="off" maxlength="200" enterkeyhint="send" oninput="cmIn()"><button type="submit" disabled aria-label="Post comment">${ic('send',18)}</button></label></form></div></div>`; }
-function cmIn(){ const i=document.getElementById('cmin'), b=i&&i.parentElement.querySelector('button'); if(b) b.disabled=!i.value.trim(); }
-// Sending a comment: the arrow launches, the text lifts off the field as a dark bubble and flies into its new row at the top
-// (rows below slide down to make room), the avatar pops, the count rolls. Emojis in the comment float up out of the send button.
-function cmPost(e,id){ e&&e.preventDefault&&e.preventDefault(); const i=document.getElementById('cmin'); if(!i) return false; const v=i.value.trim(); if(!v) return false;
-  const c=clipAny(id), sh=document.getElementById('cmsh'), btn=i.parentElement.querySelector('button'), L=document.getElementById('cmlist'), E='cubic-bezier(.2,.8,.2,1)';
-  const r={id:id+'-me'+Date.now(),me:true,t:v,l:0,ago:'now'}; state.cmMine=state.cmMine||{}; (state.cmMine[id]=state.cmMine[id]||[]).push(r);
+  <div class="cmf"><div id="cmtop">${cmTop()}</div><div id="cmattw">${cmAtt()}</div>
+  <form class="cmform" onsubmit="return cmPost(event,'${c.id}')"><span class="bgav"><span>${avi(MEP[3])}</span></span><label class="cmin"><span hidden>Comment</span><input id="cmin" placeholder="Add a comment…" autocomplete="off" maxlength="200" enterkeyhint="send" oninput="cmIn()" onclick="cmIn()" onfocus="cmFocus()"><span class="cmtools">${['at','stk','pic'].map(k=>`<button type="button" data-act="cmtool" data-v="${k}" aria-label="${{at:'Mention someone',stk:'Stickers and emoji',pic:'Add a photo'}[k]}" aria-pressed="${d.panel===k}">${CM_ICO[k]}</button>`).join('')}</span><button type="submit" class="cmsend" disabled aria-label="Post comment">${ic('send',18)}</button></label></form>
+  <div class="cmpanel" id="cmpanel"${d.panel&&d.panel!=='at'?'':' hidden'}>${cmPanel()}</div></div></div>`; }
+// redraw only the composer bits (never the list, never the input: keeps focus and caret)
+function cmDraw(what){ const d=state.cmd||{}; if(what.includes('top')){ const t=document.getElementById('cmtop'); if(t) t.innerHTML=cmTop(); }
+  if(what.includes('att')){ const a=document.getElementById('cmattw'); if(a) a.innerHTML=cmAtt(); }
+  if(what.includes('panel')){ const p=document.getElementById('cmpanel'); if(p){ const was=!p.hidden; p.innerHTML=cmPanel(); p.hidden=!(d.panel&&d.panel!=='at'); if(!p.hidden&&!was) p.animate([{transform:'translateY(24px)',opacity:0},{transform:'none',opacity:1}],{duration:240,easing:'cubic-bezier(.2,.8,.2,1)'}); }
+    document.querySelectorAll('#cmsh [data-act=cmtool]').forEach(b=>b.setAttribute('aria-pressed',d.panel===b.dataset.v)); if(!what.includes('top')){ const t=document.getElementById('cmtop'); if(t) t.innerHTML=cmTop(); } } cmIn(true); }
+function cmFocus(){ const d=state.cmd||{}; if(d.panel&&d.panel!=='at'){ d.panel=null; cmDraw(['panel']); } }
+// input watcher: send button state + the @mention picker while the caret sits right after "@name"
+function cmIn(quiet){ const i=document.getElementById('cmin'); if(!i) return; const d=state.cmd=state.cmd||{}, b=document.querySelector('#cmsh .cmsend'); if(b) b.disabled=!(i.value.trim()||d.img);
+  if(quiet===true) return; const m=i.value.slice(0,i.selectionStart??i.value.length).match(/(?:^|\s)@([A-Za-z]{0,10}(?: [A-Za-z]?\.?)?)$/), q=m?m[1]:null;
+  if(q!==d.q){ d.q=q; cmDraw(['top']); } }
+function cmInsert(txt,replaceQ){ const i=document.getElementById('cmin'); if(!i) return; let p=i.selectionStart??i.value.length, a=i.value.slice(0,p), z=i.value.slice(p);
+  if(replaceQ!=null){ a=a.slice(0,a.length-replaceQ.length-1); } i.value=(a+txt+z).slice(0,200); const np=Math.min(200,a.length+txt.length); i.focus(); i.setSelectionRange(np,np); cmIn(); }
+// Sending: the arrow launches; text lifts off the field as a dark bubble (a sticker / photo flies as itself) into its new row at
+// the top while the rows below slide down; the avatar pops, the count rolls, emojis float up, mentioned people get a heads-up.
+function cmPost(e,id,stk){ e&&e.preventDefault&&e.preventDefault(); const i=document.getElementById('cmin'); if(!i) return false; const d=state.cmd=state.cmd||{}, v=i.value.trim(); if(!v&&!d.img&&!stk) return false;
+  const c=clipAny(id), sh=document.getElementById('cmsh'), btn=sh.querySelector('.cmsend'), L=document.getElementById('cmlist'), E='cubic-bezier(.2,.8,.2,1)';
+  const r={id:id+'-me'+Date.now(),me:true,t:v,img:d.img||null,stk:stk||null,l:0,ago:'now'}; state.cmMine=state.cmMine||{}; (state.cmMine[id]=state.cmMine[id]||[]).push(r);
   try{ navigator.vibrate&&navigator.vibrate(8); }catch(_){}
-  const sr=sh.getBoundingClientRect(), ir=i.getBoundingClientRect();
-  // send button: stays visible for its launch even though the field is now empty
+  const sr=sh.getBoundingClientRect(), ir=i.getBoundingClientRect(), from=stk?(sh.querySelector(`[data-act=cmsticker][data-v="${stk}"]`)||i).getBoundingClientRect():ir;
   btn.classList.add('sent'); btn.querySelector('svg').animate([{transform:'rotate(-90deg) translateX(0)',opacity:1},{transform:'rotate(-90deg) translateX(20px)',opacity:0,offset:.4},{transform:'rotate(-90deg) translateX(-12px)',opacity:0,offset:.41},{transform:'rotate(-90deg) translateX(0)',opacity:1}],{duration:560,easing:'cubic-bezier(.3,.7,.3,1)'});
-  btn.animate([{transform:'scale(1)'},{transform:'scale(.86)',offset:.25},{transform:'scale(1)'}],{duration:420,easing:E}); setTimeout(()=>{ btn.classList.remove('sent'); cmIn(); },600);
-  // FLIP: remember where the first rows sit, insert the new row, then slide them from there
+  btn.animate([{transform:'scale(1)'},{transform:'scale(.86)',offset:.25},{transform:'scale(1)'}],{duration:420,easing:E}); setTimeout(()=>{ btn.classList.remove('sent'); cmIn(true); },600);
   L.scrollTop=0; const old=[...L.querySelectorAll('.cmr')].slice(0,7), y0=old.map(x=>x.getBoundingClientRect().top);
-  L.insertAdjacentHTML('afterbegin',cmRow(r,c,state.cml||{},true)); const row=L.firstElementChild, tx=row.querySelector('.cmb>span:not(.cmm)'); row.style.animation='cmhl 1.8s ease .4s both';
-  old.forEach((x,k)=>{ const d=y0[k]-x.getBoundingClientRect().top; if(d) x.animate([{transform:`translateY(${d}px)`},{transform:'none'}],{duration:420,easing:E}); });
+  L.insertAdjacentHTML('afterbegin',cmRow(r,c,state.cml||{},true)); const row=L.firstElementChild, tx=row.querySelector('.cmc'); row.style.animation='cmhl 1.8s ease .4s both';
+  old.forEach((x,k)=>{ const dd=y0[k]-x.getBoundingClientRect().top; if(dd) x.animate([{transform:`translateY(${dd}px)`},{transform:'none'}],{duration:420,easing:E}); });
   tx.style.opacity='0'; row.querySelector('.bgav').animate([{transform:'scale(0)'},{transform:'scale(1.12)',offset:.7},{transform:'none'}],{duration:420,delay:260,easing:E,fill:'backwards'});
-  const tr=tx.getBoundingClientRect(), g=document.createElement('div'); g.className='cmgh'; g.textContent=v; sh.appendChild(g);
-  const gx=ir.left-sr.left-14, gy=ir.top-sr.top+(ir.height-36)/2, dx=tr.left-sr.left-gx-14, dy=tr.top-sr.top-gy-8;
-  g.style.cssText=`left:${gx}px;top:${gy}px;max-width:${Math.min(ir.width+20,tr.width+28)}px`;
-  g.animate([{transform:'translate(0,0) scale(1)',opacity:1,offset:0},{transform:`translate(${dx*.35}px,${dy*.55-26}px) scale(1.04)`,opacity:1,offset:.45},{transform:`translate(${dx}px,${dy}px) scale(.96)`,opacity:1,offset:.85},{transform:`translate(${dx}px,${dy}px) scale(.96)`,opacity:0}],{duration:560,easing:'cubic-bezier(.4,.1,.2,1)',fill:'forwards'});
-  setTimeout(()=>{ tx.style.opacity=''; tx.animate([{opacity:0},{opacity:1}],{duration:160}); },470); setTimeout(()=>g.remove(),600);
-  // emoji float
-  const em=(v.match(/\p{Extended_Pictographic}/gu)||[]).slice(0,6), br=btn.getBoundingClientRect();
-  em.forEach((x,k)=>{ const d=document.createElement('i'); d.className='cmfl'; d.textContent=x; d.style.cssText=`left:${br.left-sr.left+8}px;top:${br.top-sr.top}px`; sh.appendChild(d);
-    const dx2=-20-Math.random()*90, rot=(Math.random()-.5)*50; d.animate([{transform:'translate(0,0) scale(.4)',opacity:0},{transform:`translate(${dx2*.4}px,-50px) scale(1.2)`,opacity:1,offset:.3},{transform:`translate(${dx2}px,-${170+Math.random()*90}px) rotate(${rot}deg) scale(.9)`,opacity:0}],{duration:1100+Math.random()*300,delay:k*90,easing:'cubic-bezier(.2,.7,.4,1)',fill:'both'}); setTimeout(()=>d.remove(),1700); });
+  const tr=tx.getBoundingClientRect(); let g;
+  if(v&&!r.img&&!stk){ g=document.createElement('div'); g.className='cmgh'; g.textContent=v; sh.appendChild(g);
+    const gx=ir.left-sr.left-14, gy=ir.top-sr.top+(ir.height-36)/2, dx=tr.left-sr.left-gx-14, dy=tr.top-sr.top-gy-8; g.style.cssText=`left:${gx}px;top:${gy}px;max-width:${Math.min(ir.width+20,tr.width+28)}px`;
+    g.animate([{transform:'translate(0,0) scale(1)',opacity:1},{transform:`translate(${dx*.35}px,${dy*.55-26}px) scale(1.04)`,opacity:1,offset:.45},{transform:`translate(${dx}px,${dy}px) scale(.96)`,opacity:1,offset:.85},{transform:`translate(${dx}px,${dy}px) scale(.96)`,opacity:0}],{duration:560,easing:'cubic-bezier(.4,.1,.2,1)',fill:'forwards'}); }
+  else { g=tx.cloneNode(true); g.classList.add('cmghc'); g.style.cssText=`left:${tr.left-sr.left}px;top:${tr.top-sr.top}px;width:${tr.width}px;opacity:1`; sh.appendChild(g);
+    const k0=Math.min(1,from.width/Math.max(tr.width,1)), dx=from.left-tr.left, dy=from.top-tr.top;
+    g.animate([{transform:`translate(${dx}px,${dy}px) scale(${Math.max(.4,k0)})`,opacity:.9},{transform:`translate(${dx*.4}px,${dy*.45-30}px) scale(1.08) rotate(-3deg)`,opacity:1,offset:.5},{transform:'none',opacity:1,offset:.88},{transform:'none',opacity:0}],{duration:600,easing:'cubic-bezier(.4,.1,.2,1)',fill:'forwards'}); }
+  setTimeout(()=>{ tx.style.opacity=''; tx.animate([{opacity:0},{opacity:1}],{duration:140}); },520); setTimeout(()=>g.remove(),640);
+  const em=(v.match(/\p{Extended_Pictographic}/gu)||[]).concat(stk&&CM_STK.find(x=>x[0]===stk)[2]==='emo'?[CM_STK.find(x=>x[0]===stk)[1]]:[]).slice(0,6), br=btn.getBoundingClientRect();
+  em.forEach((x,k)=>{ const f=document.createElement('i'); f.className='cmfl'; f.textContent=x; f.style.cssText=`left:${br.left-sr.left+8}px;top:${br.top-sr.top}px`; sh.appendChild(f);
+    const dx2=-20-Math.random()*90, rot=(Math.random()-.5)*50; f.animate([{transform:'translate(0,0) scale(.4)',opacity:0},{transform:`translate(${dx2*.4}px,-50px) scale(1.2)`,opacity:1,offset:.3},{transform:`translate(${dx2}px,-${170+Math.random()*90}px) rotate(${rot}deg) scale(.9)`,opacity:0}],{duration:1100+Math.random()*300,delay:k*90,easing:'cubic-bezier(.2,.7,.4,1)',fill:'both'}); setTimeout(()=>f.remove(),1700); });
   const n=document.getElementById('cmn'); if(n){ n.textContent=fmtK(cmCount(c)); n.animate([{transform:'translateY(8px)',opacity:0},{transform:'none',opacity:1}],{duration:300,easing:E}); }
   const rc=document.querySelector(`.clp[data-id="${id}"] [data-act=clcom] small`); if(rc) rc.textContent=fmtK(cmCount(c));
-  i.value=''; i.focus(); return false; }
+  const at=PEOPLE.map(p=>p[0]).filter(nm=>v.includes('@'+nm)); if(at.length) setTimeout(()=>toast(at.length===1?at[0]+' will get a heads-up':at.length+' people will get a heads-up'),450);
+  i.value=''; d.img=null; d.q=null; d.panel=d.panel==='pic'?null:d.panel; cmDraw(['top','att','panel']); if(!d.panel) i.focus(); return false; }
+function cmView(src,from){ const o=document.createElement('div'); o.className='cmlb'; o.innerHTML=`<img alt="" src="${src}"><p>Tap to close</p>`; document.getElementById('view').appendChild(o);
+  const im=o.querySelector('img'), f=from.getBoundingClientRect(), t=im.getBoundingClientRect(); im.animate([{transform:`translate(${f.left+f.width/2-(t.left+t.width/2)}px,${f.top+f.height/2-(t.top+t.height/2)}px) scale(${f.width/t.width})`,borderRadius:'24px'},{transform:'none',borderRadius:'16px'}],{duration:380,easing:'cubic-bezier(.2,.8,.2,1)'});
+  o.addEventListener('click',()=>{ o.classList.add('out'); setTimeout(()=>o.remove(),220); }); }
+// drag the comments sheet down to close it (grab handle or header)
+document.addEventListener('pointerdown',e=>{ const g=e.target.closest&&e.target.closest('#cmsh .cgrab,#cmsh .cmgr,#cmsh .cmpost'); if(!g) return; const sh=document.getElementById('cmsh'), y0=e.clientY; let dy=0; sh.style.transition='none';
+  const mv=ev=>{ dy=Math.max(0,ev.clientY-y0); sh.style.transform=`translateY(${dy}px)`; const bg=sh.previousElementSibling; if(bg&&bg.classList.contains('sheetbg')) bg.style.opacity=String(Math.max(0,1-dy/400)); },
+    up=()=>{ removeEventListener('pointermove',mv); removeEventListener('pointerup',up); removeEventListener('pointercancel',up); sh.style.transition='';
+      if(dy>90){ state.cmt=null; state.cmd=null; sheetDrop(sh); } else { sh.style.transform=''; const bg=sh.previousElementSibling; if(bg) bg.style.opacity=''; } };
+  addEventListener('pointermove',mv); addEventListener('pointerup',up); addEventListener('pointercancel',up); });
 function sheetDrop(sh,after){ const bg=sh&&sh.previousElementSibling; if(!sh){ after&&after(); return; } sh.classList.add('out'); bg&&bg.classList.contains('sheetbg')&&bg.classList.add('out'); setTimeout(()=>{ sh.remove(); bg&&bg.classList.contains('sheetbg')&&bg.remove(); after&&after(); },260); }
 function sheetMount(html){ document.getElementById('view').insertAdjacentHTML('beforeend',html); }
 const CSVID=[{geo:'Radio City Music Hall',d:'2026-09-29',vid:4},{geo:'Radio City Music Hall',d:'2026-09-29',vid:5},{geo:null,d:null,vid:6}];
@@ -3298,10 +3369,19 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='wrep'){ state.wopen=state.wopen||{}; state.wopen[v]=!state.wopen[v]; const sc=scEl(), y=sc&&sc.scrollTop; render(); const n=scEl(); if(n) n.scrollTop=y; }
   else if(a==='cltap'){ const sec=t.closest('.clp'); sec.classList.toggle('paused'); clPlay(sec); }
   else if(a==='cllike'){ state.clk=state.clk||{}; state.clk[v]=!state.clk[v]; clUpd(v,true); }
-  else if(a==='clcom'){ if(document.getElementById('cmsh')) return; state.cmt={id:v}; sheetMount(cmSheet()); }
-  else if(a==='cmclose'){ state.cmt=null; const i=document.getElementById('cmin'); i&&i.blur(); sheetDrop(document.getElementById('cmsh')); }
-  else if(a==='cmreply'){ const i=document.getElementById('cmin'); if(i){ i.value='@'+v+' '; cmIn(); i.focus(); i.setSelectionRange(i.value.length,i.value.length); } }
-  else if(a==='cmemo'){ const i=document.getElementById('cmin'); if(i){ const p=i.selectionStart??i.value.length; i.value=i.value.slice(0,p)+v+i.value.slice(p); cmIn(); i.focus(); i.setSelectionRange(p+v.length,p+v.length); } t.animate([{transform:'scale(1)'},{transform:'scale(1.35) translateY(-4px)'},{transform:'scale(1)'}],{duration:320,easing:'cubic-bezier(.34,1.6,.5,1)'}); }
+  else if(a==='clcom'){ if(document.getElementById('cmsh')) return; state.cmt={id:v}; state.cmd={}; sheetMount(cmSheet()); }
+  else if(a==='cmclose'){ state.cmt=null; state.cmd=null; const i=document.getElementById('cmin'); i&&i.blur(); sheetDrop(document.getElementById('cmsh')); }
+  else if(a==='cmreply'){ const i=document.getElementById('cmin'); if(i){ i.value='@'+v+' '; state.cmd.q=null; cmDraw(['top']); i.focus(); i.setSelectionRange(i.value.length,i.value.length); } }
+  else if(a==='cmemo'){ cmInsert(v); t.animate([{transform:'scale(1)'},{transform:'scale(1.35) translateY(-4px)'},{transform:'scale(1)'}],{duration:320,easing:'cubic-bezier(.34,1.6,.5,1)'}); }
+  else if(a==='cmtool'){ const d=state.cmd=state.cmd||{};
+    if(v==='at'){ d.panel=null; cmDraw(['panel']); const i=document.getElementById('cmin'), p=i.selectionStart??i.value.length, pre=i.value.slice(0,p); cmInsert((pre&&!/\s$/.test(pre)?' ':'')+'@'); }
+    else { d.panel=d.panel===v?null:v; if(d.panel){ const i=document.getElementById('cmin'); i&&i.blur(); } cmDraw(['panel']); if(!d.panel) document.getElementById('cmin').focus(); } }
+  else if(a==='cmtab'){ state.cmd.tab=v; cmDraw(['panel']); }
+  else if(a==='cmmention'){ const q=state.cmd.q; state.cmd.q=null; cmInsert('@'+v+' ',q); cmDraw(['top']); }
+  else if(a==='cmsticker'){ t.animate([{transform:'scale(1)'},{transform:'scale(.9)'},{transform:'scale(1)'}],{duration:200}); cmPost(null,state.cmt.id,v); }
+  else if(a==='cmpick'){ const d=state.cmd; d.img=cmPics()[+v]; d.panel=null; cmDraw(['att','panel']); const x=document.querySelector('#cmattw .cmatt span'); x&&x.animate([{transform:'scale(.6)',opacity:0},{transform:'none',opacity:1}],{duration:260,easing:'cubic-bezier(.34,1.5,.5,1)'}); document.getElementById('cmin').focus(); }
+  else if(a==='cmunpic'){ state.cmd.img=null; cmDraw(['att']); }
+  else if(a==='cmview'){ cmView(t.querySelector('img').src,t); }
   else if(a==='cmlike'){ state.cml=state.cml||{}; const on=state.cml[v]=!state.cml[v], n=t.querySelector('small'); t.setAttribute('aria-pressed',on); n.textContent=(+n.textContent)+(on?1:-1); t.classList.remove('pop'); void t.offsetWidth; on&&t.classList.add('pop'); }
   else if(a==='clmute'){ state.clMute=state.clMute===false; const b=t; b.innerHTML=ic(state.clMute!==false?'mute':'sound',20); b.setAttribute('aria-label',state.clMute!==false?'Unmute':'Mute'); document.querySelectorAll('.clp video').forEach(x=>{ x.muted=state.clMute!==false; }); toast(state.clMute!==false?'Muted':(CL_FB?'No sound in this preview':'Sound on')); }
   else if(a==='clfeed'){ state.clFeed=v; state.clY=0; render(); }
@@ -3379,7 +3459,7 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='info'){ state.info=v; render(); }
   else if(a==='infoclose'){ state.info=null; render(); }
   else if(a==='rvlike'){ state.clk=state.clk||{}; state.clk[v]=!state.clk[v]; const b=t.closest('button'); const r=clipAny(v); b.setAttribute('aria-pressed',!!state.clk[v]); b.querySelector('span').textContent=fmtK((r.likes||0)+(state.clk[v]?1:0)); b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); }
-  else if(a==='rvopen'){ state.cmt={id,post:true}; render(); }
+  else if(a==='rvopen'){ state.cmt={id,post:true}; state.cmd={}; render(); }
   else if(a==='rvmore'){ (state.rvMore ||= {})[id]=true; render(); }
   else if(a==='rvnew'){ const sh=byId[id]; state.cs={v:-1,loc:sh.venue,src:'show',sid:sh.id,fromShow:true,rate:0}; render(); setTimeout(()=>{ const c=document.getElementById('cscap'); c&&c.focus(); },300); }
   else if(a==='csrate'){ csStash(); const r=state.cs.rate=state.cs.rate===+v?0:+v, w=t.parentElement; w.querySelectorAll('button').forEach((b,j)=>{ const was=b.getAttribute('aria-pressed')==='true', on=j<r; b.setAttribute('aria-pressed',on); if(on&&!was) b.animate([{transform:'scale(.5) rotate(-20deg)'},{transform:'scale(1.3) rotate(8deg)',offset:.6},{transform:'none'}],{duration:380,delay:j*35,easing:'cubic-bezier(.2,.8,.2,1)',fill:'backwards'}); }); w.querySelector('span').textContent=['Tap to rate','Not great','It was okay','Good night','Great night','Unforgettable'][r]; }
