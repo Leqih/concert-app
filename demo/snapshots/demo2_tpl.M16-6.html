@@ -1713,48 +1713,6 @@ i.tw{font-style:normal;opacity:0}
 .pk.sh.dealt:active{animation:shfloat 6s ease-in-out infinite}
 .pk.sh.st{pointer-events:none}.pk.sh.st svg path{pointer-events:auto}
 .pk.sh.st .shl{pointer-events:none}
-
-/* ---------- Clips */
-.clips{position:absolute;inset:0;overflow-y:auto;scroll-snap-type:y mandatory;background:#000;scrollbar-width:none}.clips::-webkit-scrollbar{display:none}
-.clp{position:relative;height:100%;scroll-snap-align:start;scroll-snap-stop:always;overflow:hidden;color:#fff;background:#000}
-.clm{position:absolute;inset:0;overflow:hidden}
-.clm img.cover{position:absolute;inset:-6%;width:112%;height:112%;object-fit:cover;animation:kb 14s ease-in-out infinite alternate;animation-play-state:paused}
-.clp.act .clm img.cover{animation-play-state:running}.clp.paused .clm img.cover{animation-play-state:paused}
-@keyframes kb{0%{transform:scale(1) translate(0,0)}100%{transform:scale(1.14) translate(-3%,-2%)}}
-.clsh{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.5) 0%,rgba(0,0,0,0) 22%,rgba(0,0,0,0) 48%,rgba(0,0,0,.82) 100%)}
-.clgr{position:absolute;inset:0;pointer-events:none;opacity:.12;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E")}
-.clbig{position:absolute;left:50%;top:46%;width:84px;height:84px;margin:-42px 0 0 -42px;border-radius:50%;background:rgba(0,0,0,.35);backdrop-filter:blur(8px);display:grid;place-items:center;opacity:0;transform:scale(.8);transition:opacity .2s,transform .25s;pointer-events:none}
-.clbig svg{fill:#fff;stroke:none;margin-left:4px}.clp.paused .clbig{opacity:1;transform:none}
-.clheart{position:absolute;left:50%;top:44%;margin:-48px 0 0 -48px;pointer-events:none;opacity:0}.clheart svg{fill:#fff;stroke:none}
-.clheart.go{animation:hburst .8s cubic-bezier(.2,.8,.2,1)}@keyframes hburst{0%{opacity:0;transform:scale(.3) rotate(-12deg)}25%{opacity:1;transform:scale(1.1) rotate(4deg)}60%{opacity:1;transform:scale(1)}100%{opacity:0;transform:translateY(-60px) scale(.9)}}
-.clrail{position:absolute;right:10px;bottom:calc(118px + var(--sb));display:flex;flex-direction:column;align-items:center;gap:16px;z-index:2}
-.clrail button{display:flex;flex-direction:column;align-items:center;gap:3px;color:#fff;filter:drop-shadow(0 1px 6px rgba(0,0,0,.4))}.clrail small{font-size:11.5px;font-weight:600}
-.clrail button[aria-pressed=true] svg{fill:#fff}
-.clrail button.pop svg{animation:hpop .35s cubic-bezier(.34,1.6,.5,1)}@keyframes hpop{0%{transform:scale(.6)}100%{transform:scale(1)}}
-.clav{position:relative;margin-bottom:4px}.clav>span{display:block;width:44px;height:44px;border-radius:50%;overflow:hidden;border:2px solid #fff;position:relative}.clav img{width:100%;height:100%;object-fit:cover}
-.clav i{position:absolute;left:50%;bottom:-8px;margin-left:-9px;width:18px;height:18px;border-radius:50%;background:#fff;color:#0B0B0C;display:grid;place-items:center}
-.clinfo{position:absolute;left:14px;right:78px;bottom:calc(96px + var(--sb));z-index:2;display:flex;flex-direction:column;gap:6px}
-.clwho{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13px}.clwho b{font-size:15px;letter-spacing:-.02em}.clwho em{font-style:normal;height:20px;padding:0 8px;border-radius:var(--r-pill);background:rgba(255,255,255,.18);backdrop-filter:blur(8px);font-size:11px;font-weight:600;display:inline-flex;align-items:center;gap:3px}.clwho>span{opacity:.6}
-.clinfo p{margin:0;font-size:15px;line-height:1.35;letter-spacing:-.01em}
-.clsong{font-size:12.5px;opacity:.8}
-.clshow{display:flex;align-items:center;gap:10px;margin-top:6px;padding:6px 6px 6px 6px;border-radius:var(--r-lg);background:rgba(255,255,255,.14);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:#fff;text-align:left}
-.clshow .xth{width:40px;height:40px;border-radius:12px;position:relative}.clshow>span:nth-child(2){flex:1;min-width:0;display:flex;flex-direction:column}.clshow b{font-size:14px}.clshow small{font-size:11.5px;opacity:.7;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.clshow em{font-style:normal;flex-shrink:0;height:32px;padding:0 12px;border-radius:var(--r-pill);background:#fff;color:#0B0B0C;font-size:12.5px;font-weight:700;display:inline-flex;align-items:center}
-.clbar{position:absolute;left:14px;right:14px;bottom:calc(82px + var(--sb));height:2px;border-radius:2px;background:rgba(255,255,255,.25);overflow:hidden;z-index:2}.clbar i{display:block;height:100%;width:0;background:#fff}
-.clp.act .clbar i{animation:clprog 14s linear infinite}.clp.paused .clbar i{animation-play-state:paused}@keyframes clprog{to{width:100%}}
-.clhd{position:absolute;left:0;right:0;top:0;padding:calc(var(--st) + 6px) 14px 0;display:grid;grid-template-columns:44px 1fr 44px;align-items:center;z-index:4;pointer-events:none}
-.clhd>*{pointer-events:auto}
-.clseg{justify-self:center;display:flex;gap:18px}.clseg button{font-family:var(--display);font-size:17px;font-weight:700;letter-spacing:-.02em;color:rgba(255,255,255,.55);padding:6px 0;position:relative}
-.clseg button[aria-pressed=true]{color:#fff}.clseg button[aria-pressed=true]::after{content:'';position:absolute;left:30%;right:30%;bottom:0;height:2px;border-radius:2px;background:#fff}
-.clmute{width:40px;height:40px;border-radius:50%;background:rgba(0,0,0,.28);backdrop-filter:blur(10px);color:#fff;display:grid;place-items:center}
-.clpost{position:absolute;left:14px;top:calc(var(--st) + 6px);width:40px;height:40px;border-radius:50%;background:rgba(0,0,0,.28);backdrop-filter:blur(10px);color:#fff;display:grid;place-items:center;z-index:5}
-.csvid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.csvid button{position:relative;aspect-ratio:9/14;border-radius:var(--r-md);overflow:hidden;box-shadow:0 0 0 0 #0B0B0C;transition:box-shadow .2s}
-.csvid button span{position:absolute;inset:0}.csvid button em{position:absolute;right:6px;bottom:6px;font-style:normal;font-size:11px;font-weight:600;color:#fff;background:rgba(0,0,0,.5);padding:1px 6px;border-radius:var(--r-pill)}
-.csvid button[aria-pressed=true]{box-shadow:0 0 0 3px #0B0B0C}
-.bcap .nit{padding:0 10px}
-
-.pk.sh.sp{--r:9deg;width:156px;height:58px;right:22px;bottom:410px;border-radius:var(--r-pill);background:#fff;box-shadow:inset 0 0 0 2px #0B0B0C;z-index:2}
-.pk.sh.sp b{font-size:19px}
 </style>
 
 <div class="app framed" id="app">
@@ -1882,7 +1840,7 @@ const I = {
   user:'<circle cx="12" cy="8" r="3.8"/><path d="M5 20a7 7 0 0 1 14 0"/>', users:'<circle cx="9" cy="8.5" r="3.2"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><path d="M15.5 5.5a3 3 0 0 1 0 6M17.5 19a5 5 0 0 0-2-4"/>',
   mic:'<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/>', cal:'<rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/>',
   pin:'<path d="M12 21s-6.5-5.8-6.5-11A6.5 6.5 0 0 1 18.5 10c0 5.2-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/>', clip:'<path d="M20 11.5l-7.8 7.8a5 5 0 0 1-7-7l8.2-8.3a3.3 3.3 0 0 1 4.7 4.7l-8.1 8.1a1.7 1.7 0 0 1-2.4-2.4l7.4-7.4"/>',
-  send:'<path d="M5 12h13M12 6l6 6-6 6"/>', share:'<path d="M12 3v12M7 8l5-5 5 5M5 14v6h14v-6"/>', bell:'<path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 21h4"/>', compass:'<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>', ticket:'<path d="M3 7h18v3a2 2 0 0 0 0 4v3H3v-3a2 2 0 0 0 0-4z"/><path d="M14 7v10"/>', play:'<path d="M8 5.5v13l10.5-6.5z"/>', clip:'<rect x="4" y="4" width="16" height="16" rx="4"/><path d="M10 9v6l5-3z"/>', heart:'<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>', sound:'<path d="M5 10v4h3l4 3.5v-11L8 10z"/><path d="M16 9.5a3.5 3.5 0 0 1 0 5"/>', mute:'<path d="M5 10v4h3l4 3.5v-11L8 10z"/><path d="M16 10l4 4M20 10l-4 4"/>', camera:'<path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>', shuffle:'<path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/>', bolt:'<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>', chev:'<path d="M6 9l6 6 6-6"/>', check:'<path d="M5 12l4 4 10-10"/>', x:'<path d="M6 6l12 12M18 6L6 18"/>', clock:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>', sliders:'<path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/>', shield:'<path d="M12 3l7.5 3v6c0 4.7-3.2 7.7-7.5 9-4.3-1.3-7.5-4.3-7.5-9V6z"/>',
+  send:'<path d="M5 12h13M12 6l6 6-6 6"/>', share:'<path d="M12 3v12M7 8l5-5 5 5M5 14v6h14v-6"/>', bell:'<path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 21h4"/>', compass:'<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>', ticket:'<path d="M3 7h18v3a2 2 0 0 0 0 4v3H3v-3a2 2 0 0 0 0-4z"/><path d="M14 7v10"/>', camera:'<path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>', shuffle:'<path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/>', bolt:'<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>', chev:'<path d="M6 9l6 6 6-6"/>', check:'<path d="M5 12l4 4 10-10"/>', x:'<path d="M6 6l12 12M18 6L6 18"/>', clock:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>', sliders:'<path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/>', shield:'<path d="M12 3l7.5 3v6c0 4.7-3.2 7.7-7.5 9-4.3-1.3-7.5-4.3-7.5-9V6z"/>',
 };
 const ic = (n,sz=22) => `<svg class="icon" viewBox="0 0 24 24" style="width:${sz}px;height:${sz}px" aria-hidden="true">${I[n]}</svg>`;
 const AV=/*AVATARS*/;
@@ -2044,7 +2002,7 @@ let tt; function toast(m){ const t=document.getElementById('toast'); t.textConte
 function dock(active){ window._dockActive=active; return ''; }
 function navMarkup(){
   const it=(k,label,icon)=>`<button class="nit" data-act="${k}" data-k="${k}" aria-label="${label}"><span class="nic">${ic(icon,19)}${k==='crews'?'<i class="nb2"></i>':''}</span><span class="nlb"><span>${label}</span></span></button>`;
-  return `<div class="bcap" id="fcap"><span class="find" id="find"></span>${it('home','Home','home')}${it('explore','Explore','compass')}${it('clips','Clips','clip')}${it('crews','Chats','chat')}${it('tickets','Tickets','ticket')}</div>
+  return `<div class="bcap" id="fcap"><span class="find" id="find"></span>${it('home','Home','home')}${it('explore','Explore','compass')}${it('crews','Chats','chat')}${it('tickets','Tickets','ticket')}</div>
     <button class="bcir" data-act="plusmenu" aria-label="Create">${ic('plus',20)}</button>
     <button class="bcir me" data-act="me" aria-label="Me">${avi(10)}</button>`;
 }
@@ -2055,7 +2013,7 @@ function syncNav(active){
   const cap=nav.querySelector('#fcap'), ind=nav.querySelector('#find'), items=[...cap.querySelectorAll('.nit')];
   nav.querySelector('.bcir.me').classList.toggle('on',active==='me');
   nav.querySelector('.nb2').style.display=unreadTotal()?'':'none';
-  const tab=['home','explore','clips','crews','tickets'].includes(active)?active:null;
+  const tab=['home','explore','crews','tickets'].includes(active)?active:null;
   const prev=nav.dataset.tab||'';
   if(!tab){ items.forEach(i=>{ i.classList.remove('on'); i.removeAttribute('aria-current'); }); ind.style.opacity='0'; nav.dataset.tab=''; return; }
   if(prev===tab){ return; }
@@ -2073,7 +2031,6 @@ function closePlusOld(after){ const f=document.getElementById('psheet'), bg=docu
 function plusCards(){ const on=!!ME.looking, my=MYTIX()[0], hot=DROPS()[0], nc=xCrews().filter(c=>c.s===hot).length+(hot.dates.length>1?6:2);
   return `<button class="pk sh sc" data-act="ncopen"><span class="shl"><b>Start a crew</b><small>${nc} crews forming · 4–8 people</small></span></button>
   <button class="pk sh sq" data-act="sellstart"><span class="shl"><b>List a spare</b><small>${esc(my[1])} · ${sd(my[0].dates[0])}</small></span></button>
-  <button class="pk sh sp" data-act="clshare"><span class="shl"><b>Share a clip</b></span></button>
   <button class="pk sh st${on?' on':''}" data-act="lookon" role="switch" aria-checked="${on}"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M50 2 C56 2 58 12 64 14 C70 16 78 9 83 13 C88 18 81 26 83 32 C85 38 96 40 97 46 C98 52 88 56 87 62 C86 68 94 76 90 81 C85 86 77 79 71 81 C65 83 62 94 56 96 C50 98 46 88 40 87 C34 86 26 94 21 90 C16 85 23 77 21 71 C19 65 8 62 7 56 C6 50 16 46 17 40 C18 34 10 26 14 21 C19 16 27 23 33 21 C39 19 44 2 50 2Z"/></svg><span class="shl"><b>Find a +1</b><small>${on?'Visible':'Hidden'}</small></span></button>`; }
 function plusSheet(){ return `<div class="pfbg" data-act="plusclose"></div><div class="pfan pfan4" id="psheet" role="dialog" aria-label="Create"><h2 class="p4h"><b>What are you</b><i>up to</i><b>tonight?</b></h2><div class="pkd3">${plusCards()}</div><p class="p4n">Picked your<br>next show?</p></div>`; }
 function plusAim(){ const pb=document.querySelector('#navroot .bcir[data-act=plusmenu]'); if(!pb) return; const r=pb.getBoundingClientRect(), cx=r.left+r.width/2, cy=r.top+r.height/2;
@@ -2082,7 +2039,7 @@ function plusAim(){ const pb=document.querySelector('#navroot .bcir[data-act=plu
 // free-fall entrance: gravity + bouncy landing + rotation settling
 function shDrop(){ const L=[...document.querySelectorAll('#psheet .pk.sh')]; if(!L.length) return;
   if(matchMedia('(prefers-reduced-motion: reduce)').matches){ L.forEach(c=>c.classList.add('dealt')); return; }
-  const order=['sc','sq','st','sp'], G=4200, REST=.36;
+  const order=['sc','sq','st'], G=4200, REST=.36;
   const bodies=order.map((k,i)=>{ const c=L.find(x=>x.classList.contains(k)); if(!c) return null; const r=c.getBoundingClientRect(), tgt=parseFloat(getComputedStyle(c).getPropertyValue('--r'))||0;
     const spin=(i%2?1:-1)*(28+Math.random()*30);
     return {c,y:-(r.bottom+60+Math.random()*80),vy:0,rot:tgt+spin,tgt,delay:i*110,t:0,done:false,sq:0}; }).filter(Boolean);
@@ -2204,35 +2161,6 @@ function wallThread(o,x,me){ const k=Math.abs(h(o.id)), R=[[(k+2)%8,['Same! See 
   return `<div class="wth">${R.map(([p,t])=>`<div class="wtr"><span class="bgav"><span>${avi(p==='me'?MEP[3]:PEOPLE[p][3])}</span></span><span><b>${p==='me'?'You':PEOPLE[p][0]}</b> ${esc(t)}</span></div>`).join('')}
     ${me?`<form class="wtf" onsubmit="return wallReply(event,'${o.id}')"><label hidden for="wr-${o.id}">Reply</label><input id="wr-${o.id}" placeholder="Reply to ${o.me?'your post':P0(o.p)}" autocomplete="off"><button type="submit">Reply</button></form>`:`<p class="note" style="margin:6px 0 0;text-align:left">Add your ticket to reply</p>`}</div>`; }
 function wallReply(e,id){ e.preventDefault(); const i=document.getElementById('wr-'+id), v=i.value.trim(); if(!v) return false; state.wrp=state.wrp||{}; (state.wrp[id]=state.wrp[id]||[]).push(v); const sc=document.querySelector('.scroll'), y=sc&&sc.scrollTop; render(); const n=document.querySelector('.scroll'); if(n) n.scrollTop=y; return false; }
-// ---------- Clips: concert moments from verified ticket holders
-const CAPS=['The lights dropped and the whole floor lost it','Front row, no regrets','Screamed every word with strangers who are now my crew','That encore though','Came alone, left with three new friends','Best crowd I’ve ever been in','Goosebumps from the first note','Our crew’s view from Section 105'];
-function clipList(){ const base=NYC_SHOWS.filter(x=>x.img.startsWith('data:')).slice(0,8).map((x,i)=>{ const k=Math.abs(h(x.id)), p=(k+i)%8, song=songsFor(x.artist)[k%3];
-    return {id:'c'+i,s:x,p,cap:CAPS[(k+i)%CAPS.length],song,likes:180+k%4200,com:12+k%260,ago:[2,5,9,14,20,26,30,41][i]+'h',sec:['Floor GA','Section 105','Balcony','Pit'][k%4]}; });
-  return (state.myClips||[]).concat(base); }
-const fmtK=n=>n>=1000?(n/1000).toFixed(n>=10000?0:1)+'k':''+n;
-function clips(){ const L=clipList(), lk=state.clk||{}, mute=state.clMute!==false;
-  return `<div class="clips" id="clv">${L.map((c,i)=>{ const p=c.me?MEP:PEOPLE[c.p], on=!!lk[c.id];
-    return `<section class="clp${i===0?' act':''}" data-i="${i}" data-id="${c.id}"><div class="clm" data-act="cltap" data-v="${c.id}">${img(c.s)}</div><span class="clsh"></span><span class="clgr"></span><i class="clbig">${ic('play',40)}</i><i class="clheart">${ic('heart',96)}</i>
-      <div class="clrail"><button class="clav" ${c.me?'':`data-act="person" data-v="${c.p}"`} aria-label="${p[0]}"><span>${avi(p[3])}</span>${c.me?'':`<i>${ic('plus',10)}</i>`}</button>
-        <button data-act="cllike" data-v="${c.id}" aria-pressed="${on}" aria-label="Like">${ic('heart',26)}<small>${fmtK(c.likes+(on?1:0))}</small></button>
-        <button data-act="clcom" data-v="${c.id}" aria-label="Comments">${ic('chat',26)}<small>${fmtK(c.com)}</small></button>
-        <button data-act="toast" data-msg="Link copied" aria-label="Share">${ic('share',24)}<small>Share</small></button></div>
-      <div class="clinfo"><span class="clwho"><b>${c.me?'You':p[0]}</b><em>${ic('check',10)} Was there · ${c.sec}</em><span>${c.ago}</span></span>
-        <p>${esc(c.cap)}</p><span class="clsong">♪ ${esc(c.song)} · ${esc(c.s.artist)}</span>
-        <button class="clshow" data-act="show" data-id="${c.s.id}"><span class="xth">${img(c.s)}</span><span><b>${esc(c.s.artist)}</b><small>${xDays(c.s.dates[0])<0?'Last night':sd(c.s.dates[0])} · ${esc(VSH(c.s.venue))}</small></span><em>Find a crew</em></button></div>
-      <span class="clbar"><i></i></span></section>`; }).join('')}</div>
-    <header class="clhd"><span></span><div class="clseg"><button data-act="clfeed" data-v="fy" aria-pressed="${(state.clFeed||'fy')==='fy'}">For you</button><button data-act="clfeed" data-v="fo" aria-pressed="${state.clFeed==='fo'}">Following</button></div><button class="clmute" data-act="clmute" aria-label="${mute?'Unmute':'Mute'}">${ic(mute?'mute':'sound',20)}</button></header>
-    <button class="clpost" data-act="clshare" aria-label="Share a clip">${ic('camera',20)}</button>${dock('clips')}`; }
-function clWatch(){ const v=document.getElementById('clv'); if(!v||v._w) return; v._w=1;
-  const io=new IntersectionObserver(es=>es.forEach(e=>{ e.target.classList.toggle('act',e.intersectionRatio>.6); }),{root:v,threshold:[.6]}); v.querySelectorAll('.clp').forEach(x=>io.observe(x));
-  let lt=0; v.addEventListener('click',e=>{ const m=e.target.closest('.clm'); if(!m) return; const now=Date.now(); if(now-lt<280){ const id=m.dataset.v; state.clk=state.clk||{}; if(!state.clk[id]) { state.clk[id]=true; clUpd(id); } m.parentElement.classList.remove('paused'); const hs=m.parentElement.querySelector('.clheart'); hs.classList.remove('go'); void hs.offsetWidth; hs.classList.add('go'); lt=0; e.stopPropagation(); return; } lt=now; },true); }
-function clUpd(id){ const b=document.querySelector(`.clp[data-id="${id}"] [data-act=cllike]`); if(!b) return; const c=clipList().find(x=>x.id===id), on=!!(state.clk||{})[id]; b.setAttribute('aria-pressed',on); b.querySelector('small').textContent=fmtK(c.likes+(on?1:0)); b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); }
-function csSheet(){ const k=state.cs, past=A(KIT.show);
-  const head=`<div class="sheetbg" data-act="csclose"></div><div class="sheet csheet" role="dialog" aria-label="Share a clip"><div class="cgrab"><i class="grab"></i><h3>Share a clip</h3><p>From a show you were at · only ticket holders can post</p></div><div class="ufb">`;
-  let b=`<p class="ncl">Show</p><div class="itrow" style="border:0"><span class="uthumb">${img(past)}</span><span class="ub"><b>${esc(past.artist)}</b><span class="um">Last night · ${esc(VSH(past.venue))} · ticket verified ✓</span></span></div>
-    <p class="ncl">Pick a video</p><div class="csvid">${[0,1,2].map(i=>`<button data-act="cspick" data-v="${i}" aria-pressed="${k.v===i}"><span>${img(past)}</span><em>0:${['14','22','09'][i]}</em></button>`).join('')}</div>
-    <p class="ncl">Caption</p><input id="cscap" class="eptx" style="height:46px" maxlength="80" placeholder="What was the moment?" value="${esc(k.cap||'')}">`;
-  return head+b+`</div><div class="uff"><button class="ufx" data-act="csclose">Cancel</button><button class="cgo new" data-act="cspost">Post clip</button></div></div>`; }
 function upSwap(anim){ const old=document.querySelector('#sc .wup'); if(!old){ render(); return; } state._ufAnim=anim; const tmp=document.createElement('div'); tmp.innerHTML=home(); state._ufAnim=false; window._dockActive='home';
   const nw=tmp.querySelector('.wup'); if(!nw){ render(); return; } const sl=(old.querySelector('.ufl')||{}).scrollLeft||0; old.replaceWith(nw); const f=nw.querySelector('.ufl'); if(f) f.scrollLeft=sl; upWatch(); }
 function upTail(feed){ return state.upN<feed.length?`<div class="usent" id="upsent" aria-hidden="true"></div>`:`<p class="uend">${ic('check',13)} That’s every show in ${state.city} · ${feed.length} ${feed.length===1?'show':'shows'}</p>`; }
@@ -2736,10 +2664,10 @@ function profileView(mine){
 function me(){ return profileView(true); }
 function person(){ return profileView(false); }
 
-function render(anim){ window._dockActive=null; const _ap=document.getElementById('app'); _ap.classList.toggle('dk',['crew','me','person','clips'].includes(state.screen)); _ap.classList.toggle('framed',!(matchMedia('(pointer:coarse)').matches&&innerWidth<500));
+function render(anim){ window._dockActive=null; const _ap=document.getElementById('app'); _ap.classList.toggle('dk',['crew','me','person'].includes(state.screen)); _ap.classList.toggle('framed',!(matchMedia('(pointer:coarse)').matches&&innerWidth<500));
   const v=document.getElementById('view');
   const prev=document.getElementById('sc'); const keep=prev&&state.screen==='home'&&state._last==='home'?prev.scrollTop:0; state._last=state.screen;
-  v.innerHTML={home,show,crew,crews,me,person,explore,tickets,scene,sell,search,clips}[state.screen]()+(state.sheet?citySheet():'')+(state.tsheet?ticketSheet():'')+(state.psheet?plusSheet():'')+(state.kit?kitSheet():'')+(state.safe?safetySheet():'')+(state.nc?ncSheet():'')+(state.ufo?ufSheet():'')+(state.itk?itSheet():'')+(state.ep?epSheet():'')+(state.secO?secSheet():'')+(state.cs?csSheet():'');
+  v.innerHTML={home,show,crew,crews,me,person,explore,tickets,scene,sell,search}[state.screen]()+(state.sheet?citySheet():'')+(state.tsheet?ticketSheet():'')+(state.psheet?plusSheet():'')+(state.kit?kitSheet():'')+(state.safe?safetySheet():'')+(state.nc?ncSheet():'')+(state.ufo?ufSheet():'')+(state.itk?itSheet():'')+(state.ep?epSheet():'')+(state.secO?secSheet():'');
   const nsc=document.getElementById('sc'); if(nsc&&keep) nsc.scrollTop=keep;
   if(anim){ v.classList.remove('screen'); void v.offsetWidth; v.classList.add('screen'); }
   const ci=document.getElementById('ci'); if(ci) ci.scrollTop=ci.scrollHeight;
@@ -2747,7 +2675,6 @@ function render(anim){ window._dockActive=null; const _ap=document.getElementByI
   if(document.getElementById('wal')) layWallet(null);
   syncNav(window._dockActive);
   if(state.psheet) plusAim();
-  if(state.screen==='clips') clWatch();
   state._ufAnim=false; if(state.screen==='home'){ upWatch(); ptrAttach(); }
   const xs=document.querySelector('.xtop'); if(xs){ const sc=xs.closest('.scroll'), f=()=>xs.classList.toggle('stuck',sc.scrollTop>2); sc&&sc.addEventListener('scroll',f,{passive:true}); f(); } if(state.screen==='search'&&!state._sqf){ const i=document.getElementById('sq'); if(i){ i.focus(); state._sqf=true; } }
   const form=document.getElementById('composer');
@@ -2814,15 +2741,6 @@ document.getElementById('app').addEventListener('click',e=>{
     else { if(!t.plan){ render(); toast('Set a meetup first'); return; } t.msgs.push({d:'out',t:`📍 I’m at ${t.plan[1]}`,time:nowT()}); }
     t.ts=++TSEQ; render(); }
   else if(a==='wrep'){ state.wopen=state.wopen||{}; state.wopen[v]=!state.wopen[v]; const sc=document.querySelector('.scroll'), y=sc&&sc.scrollTop; render(); const n=document.querySelector('.scroll'); if(n) n.scrollTop=y; }
-  else if(a==='cltap'){ const sec=t.closest('.clp'); sec.classList.toggle('paused'); }
-  else if(a==='cllike'){ state.clk=state.clk||{}; state.clk[v]=!state.clk[v]; clUpd(v); }
-  else if(a==='clcom'){ toast('Comments open to people who were at this show'); }
-  else if(a==='clmute'){ state.clMute=state.clMute===false; const b=t; b.innerHTML=ic(state.clMute!==false?'mute':'sound',20); toast(state.clMute!==false?'Muted':'Sound on'); }
-  else if(a==='clfeed'){ state.clFeed=v; document.querySelectorAll('.clseg button').forEach(x=>x.setAttribute('aria-pressed',x.dataset.v===v)); const cv=document.getElementById('clv'); if(cv) cv.scrollTo({top:0,behavior:'smooth'}); if(v==='fo') toast('Clips from your buddies and crews'); }
-  else if(a==='clshare'){ if(document.getElementById('psheet')) closePlus(); state.cs={v:0}; render(); }
-  else if(a==='csclose'){ state.cs=null; render(); }
-  else if(a==='cspick'){ const c=document.getElementById('cscap'); state.cs.cap=c?c.value:''; state.cs.v=+v; render(); }
-  else if(a==='cspost'){ const c=document.getElementById('cscap'), past=A(KIT.show); state.myClips=[{id:'m'+Date.now(),me:true,p:null,s:past,cap:(c&&c.value.trim())||'Last night was unreal',song:songsFor(past.artist)[0],likes:0,com:0,ago:'now',sec:'Floor GA'}].concat(state.myClips||[]); state.cs=null; state.history=[]; state.screen='clips'; render(); toast('Clip posted · your crew gets a ping'); }
   else if(a==='xtag'){ state.xtag=+v<0?null:+v; render(); }
   else if(a==='hold'){ const t=thById(state.tid); t.hold='held'; render(); toast('$5 held · it comes back when you check in'); }
   else if(a==='checkin'&&!thById(state.tid).dep){ const t=thById(state.tid); t.hold='in'; t.msgs.push({d:'sys',t:`You’re at ${t.plan[1]}`}); t.ts=++TSEQ; render(); toast('Nice · this counts toward your show-up record'); }
@@ -2874,7 +2792,6 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='home'){ state.history=[]; state.screen='home'; render(); }
   else if(a==='crews'){ state.history=[]; state.screen='crews'; render(); }
   else if(a==='explore'){ state.history=[]; state.screen='explore'; render(); }
-  else if(a==='clips'){ state.history=[]; state.screen='clips'; render(); }
   else if(a==='tickets'){ state.history=[]; state.screen='tickets'; render(); }
   else if(a==='shuffle'){ state.drop++; render(); }
   else if(a==='dropto'){ const nv=+v, dir=nv===(state.drop+1)%3?1:-1; state.drop=nv; paintDrop(dir); armDrop(); }
