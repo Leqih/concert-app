@@ -293,7 +293,19 @@ h1,h2,h3{margin:0;letter-spacing:-.045em;font-weight:700;line-height:1.02}
 .aiasp{display:grid;grid-template-columns:1fr 1fr;gap:10px 16px;margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}.aiasp span{display:grid;grid-template-columns:52px 1fr 26px;align-items:center;gap:8px}
 .aiasp small{font-size:12px;color:var(--muted)}.aiasp i{height:4px;border-radius:2px;background:var(--card2);overflow:hidden}.aiasp i b{display:block;height:100%;background:#0B0B0C;border-radius:2px}.aiasp em{font-style:normal;font-size:12px;font-weight:600;text-align:right;font-variant-numeric:tabular-nums}
 .rvnew{display:flex;align-items:center;gap:10px;width:100%;height:56px;padding:0 16px 0 10px;border-radius:var(--r-lg);background:var(--card);text-align:left}.rvnew .rvq{flex:1;font-size:15px;color:var(--muted)}.rvnew .st{font-size:16px}
-.rvl{display:flex;flex-direction:column;gap:10px}
+.rvg{display:grid;grid-template-columns:1fr 1fr;gap:8px;align-items:start}.rvg>div{display:flex;flex-direction:column;gap:8px;min-width:0}
+.rvk{background:var(--card);border-radius:var(--r-md);overflow:hidden;animation:sin .4s cubic-bezier(.2,.8,.2,1) both}
+.rvo{display:block;width:100%;text-align:left}.rvo:active .rvc{opacity:.85}
+.rvc{position:relative;display:block;overflow:hidden}.rvc.v{aspect-ratio:3/4;background:#0B0B0C}.rvc.v img.cover{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.rvc.v i{position:absolute;right:8px;top:8px;width:26px;height:26px;border-radius:50%;background:rgba(0,0,0,.35);backdrop-filter:blur(6px);display:grid;place-items:center;color:#fff}.rvc.v i svg{fill:#fff;stroke:none;margin-left:2px}
+.rvc.v em{position:absolute;left:8px;bottom:8px;font-style:normal;font-size:11px;font-weight:600;color:#fff;background:rgba(0,0,0,.45);padding:1px 7px;border-radius:var(--r-pill)}
+.rvc.t{display:flex;flex-direction:column;gap:8px;padding:16px 14px 18px;background:var(--card2);min-height:120px}
+.rvc.t q{quotes:'“' '”';font-family:var(--display);font-size:17px;font-weight:700;letter-spacing:-.025em;line-height:1.22;color:var(--text)}
+.rvcap{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin:9px 10px 0;font-size:13.5px;font-weight:600;line-height:1.3;letter-spacing:-.01em}
+.rvm{display:flex;align-items:center;gap:6px;padding:8px 6px 8px 10px}.rvm .bgav{width:20px;height:20px;flex-shrink:0}.rvn{flex:1;min-width:0;font-size:12px;color:#55555A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rvm button{display:inline-flex;align-items:center;gap:3px;height:26px;padding:0 6px;border-radius:13px;font-size:12px;color:var(--muted)}
+.rvm button[aria-pressed=true]{color:var(--like)}.rvm button[aria-pressed=true] svg{fill:var(--like);stroke:var(--like)}.rvm button.pop svg{animation:hpop .35s cubic-bezier(.34,1.6,.5,1)}
+.cmpost{padding:18px 16px 6px}.cmpost p{margin:10px 0 0;font-size:16px;line-height:1.45;letter-spacing:-.01em}
 .rv{background:var(--card);border-radius:var(--r-lg);padding:14px 14px 10px}.rvh{display:flex;align-items:center;gap:10px}.rvw{flex:1;min-width:0;display:flex;flex-direction:column}.rvw b{font-size:14.5px;letter-spacing:-.02em;display:flex;align-items:center;gap:6px}
 .rvw b em{font-style:normal;font-size:10.5px;font-weight:600;color:var(--muted);display:inline-flex;align-items:center;gap:2px}.rvw small{font-size:12px;color:var(--muted)}
 .rvt{margin:10px 0 0;font-size:15px;line-height:1.45;letter-spacing:-.01em}
@@ -2439,8 +2451,9 @@ function clBurst(sec,e){ const r=sec.getBoundingClientRect(), x=(e.clientX||r.le
 function clUpd(id){ const b=document.querySelector(`.clp[data-id="${id}"] [data-act=cllike]`); if(!b) return; const c=clipList().find(x=>x.id===id), on=!!(state.clk||{})[id]; b.setAttribute('aria-pressed',on); b.querySelector('small').textContent=fmtK(c.likes+(on?1:0)); b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); }
 function cmSheet(){ const c=clipAny(state.cmt.id); if(!c) return ''; const k=Math.abs(h(c.id+'m')), lk=state.cml||{};
   const T=['That encore was insane','I was two rows behind you!!','The crowd sang louder than the band','Same crew next show?','Goosebumps rewatching this','Where were you standing?'];
-  const R=[0,1,2,3,4].map(i=>({id:c.id+'-'+i,p:(k+i*3)%8,t:T[(k+i)%T.length],l:3+((k>>i)%60),ago:(i+1)*7+'m',was:(k+i)%3!==1})).concat((state.cmMine||{})[c.id]||[]);
-  return `<div class="sheetbg" data-act="cmclose"></div><div class="sheet csheet cms" role="dialog" aria-label="Comments"><div class="cgrab"><i class="grab"></i><h3>${c.com+((state.cmMine||{})[c.id]||[]).length} comments</h3><p>${ic('check',10)} marks people who were at ${esc(c.s.artist)}</p></div>
+  const R=[0,1,2,3,4].map(i=>({id:c.id+'-'+i,p:(k+i*3)%8,t:T[(k+i)%T.length],l:3+((k>>>i)%60),ago:(i+1)*7+'m',was:(k+i)%3!==1})).concat((state.cmMine||{})[c.id]||[]);
+  const pw=c.me?MEP:PEOPLE[c.p], post=state.cmt.post?`<div class="cmpost"><div class="rvh"><span class="bgav"><span>${avi(pw[3])}</span></span><span class="rvw"><b>${c.me?'You':pw[0]} <em>${ic('check',9)} Was there</em></b><small>${c.ago==='now'?'Just now':c.ago+' ago'}${c.sec?' · '+esc(c.sec):''}</small></span>${c.rate?stars(c.rate,'sm'):''}</div><p>${esc(c.cap)}</p></div>`:'';
+  return `<div class="sheetbg" data-act="cmclose"></div><div class="sheet csheet cms" role="dialog" aria-label="${state.cmt.post?'Review':'Comments'}">${post}<div class="cgrab"${post?' style="padding-top:0"':''}>${post?'':'<i class="grab"></i>'}<h3>${c.com+((state.cmMine||{})[c.id]||[]).length} comments</h3><p>${ic('check',10)} marks people who were at ${esc(c.s.artist)}</p></div>
   <div class="ufb">${R.map(r=>{ const p=r.me?MEP:PEOPLE[r.p], on=!!lk[r.id]; return `<div class="cmr"><span class="bgav"><span>${avi(p[3])}</span></span><span class="cmb"><b>${r.me?'You':p[0]}${(r.me?hasTix(c.s):r.was)?` <em>${ic('check',9)} Was there</em>`:''}</b><span>${esc(r.t)}</span><small>${r.ago}</small></span><button class="cml" data-act="cmlike" data-v="${r.id}" aria-pressed="${on}">${ic('heart',16)}<small>${r.l+(on?1:0)}</small></button></div>`; }).join('')}</div>
   <form class="wtf cmf" onsubmit="return cmPost(event,'${c.id}')"><span class="bgav"><span>${avi(MEP[3])}</span></span><label hidden for="cmin">Comment</label><input id="cmin" placeholder="Add a comment" autocomplete="off"><button type="submit">Post</button></form></div>`; }
 function cmPost(e,id){ e.preventDefault(); const i=document.getElementById('cmin'), v=i.value.trim(); if(!v) return false; state.cmMine=state.cmMine||{}; (state.cmMine[id]=state.cmMine[id]||[]).push({id:id+'-me'+Date.now(),me:true,t:v,l:0,ago:'now'}); render(); const b=document.querySelector('.cms .ufb'); if(b) b.scrollTop=b.scrollHeight; return false; }
@@ -2733,24 +2746,37 @@ const RV_T=[[5,'Screamed every word. The encore alone was worth the ticket.'],[4
 const stars=(v,cls='')=>`<span class="st ${cls}" style="--v:${Math.max(0,Math.min(5,v))/5*100}%" role="img" aria-label="${(+v).toFixed(1).replace('.0','')} out of 5 stars">★★★★★</span>`;
 function reviewsFor(s){ const k=Math.abs(h(s.id));
   const vids=clipList().filter(c=>c.s===s).map(c=>({...c,rate:c.rate!=null?c.rate:[5,4,5,5,4][Math.abs(h(c.id))%5]}));
-  const txt=[0,1,2,3,4].map(i=>{ const t=RV_T[(k+i)%RV_T.length]; return {id:'r-'+s.id+'-'+i,s,p:(k+i*5)%8,cap:t[1],rate:t[0],likes:8+((k>>i)%300),com:1+((k>>(i+1))%40),ago:[1,4,6,9,13][i]+'h',sec:SECS[(k+i)%SECS.length]}; });
+  const txt=[0,1,2,3,4].map(i=>{ const t=RV_T[(k+i)%RV_T.length]; return {id:'r-'+s.id+'-'+i,s,p:(k+i*5)%8,cap:t[1],rate:t[0],likes:8+((k>>>i)%300),com:1+((k>>>(i+1))%40),ago:[1,4,6,9,13][i]+'h',sec:SECS[(k+i)%SECS.length]}; });
   const mine=vids.filter(c=>c.me), rest=vids.filter(c=>!c.me), out=[...mine];
   for(let i=0;i<Math.max(rest.length,txt.length);i++){ if(txt[i]) out.push(txt[i]); if(rest[i]) out.push(rest[i]); } return out; }
 function clipAny(id){ const c=clipList().find(x=>x.id===id); if(c) return c; if(id.startsWith('r-')){ const sid=id.slice(2,id.lastIndexOf('-')); return byId[sid]?reviewsFor(byId[sid]).find(x=>x.id===id):null; } return null; }
+// Xiaohongshu-style two-column waterfall: video posts show their cover, text posts become a quote card.
+// Each card goes into whichever column is shorter so far (by estimated height), so the columns stay level.
+function rvCard(r,o){ const who=r.me?MEP:PEOPLE[r.p], cv=r.vid!=null?CLIPV[r.vid]:null, on=!!(state.clk||{})[r.id];
+  const cover=cv?`<span class="rvc v"><img class="cover" alt="" src="${cv.p}"><i>${ic('play',14)}</i><em>${mmss(cv.d)}</em></span>`
+    :`<span class="rvc t">${r.rate?stars(r.rate,'sm'):''}<q>${esc(r.cap)}</q></span>`;
+  return `<article class="rvk" data-o="${o}"><button class="rvo" data-act="${cv?'clopen':'rvopen'}" data-id="${r.id}" aria-label="${cv?'Play clip':'Open review'} by ${r.me?'you':who[0]}">${cover}${cv&&r.cap?`<b class="rvcap">${esc(r.cap)}</b>`:''}</button>
+    <div class="rvm"><span class="bgav"><span>${avi(who[3])}</span></span><span class="rvn">${r.me?'You':who[0]}</span><button data-act="rvlike" data-v="${r.id}" aria-pressed="${on}" aria-label="Like">${ic('heart',14)}<span>${fmtK((r.likes||0)+(on?1:0))}</span></button></div></article>`; }
+function rvMasonry(L){ const col=[[],[]], hh=[0,0]; L=L.map((r,o)=>({...r,_o:o}));
+  // heights in px for a ~170px-wide card: video = 3:4 cover + 2-line caption; text = stars + quote lines (~15 chars/line at 17px)
+  L.forEach(r=>{ const e=r.vid!=null?226+(r.cap?48:0):58+Math.ceil((r.cap||'').length/15)*21, c=hh[0]<=hh[1]?0:1; col[c].push(r); hh[c]+=e+44; });
+  return `<div class="rvg">${col.map(c=>`<div>${c.map(r=>rvCard(r,r._o)).join('')}</div>`).join('')}</div>`; }
+// after layout: re-deal cards by their real heights (in feed order) so both columns end level
+function rvBalance(){ document.querySelectorAll('.rvg').forEach(g=>{ const cols=[...g.children]; if(cols.length<2) return;
+  const cards=[...g.querySelectorAll('.rvk')].sort((a,b)=>a.dataset.o-b.dataset.o), n=cards.length, hs=cards.map(c=>c.offsetHeight+8);
+  let pick=null; if(n<=12){ // small feeds: best split into two level columns; first card always starts the left column
+    let best=1e9; for(let m=0;m<1<<n;m++){ if(m&1) continue; let a=0,b=0; for(let i=0;i<n;i++) (m>>i&1)?(b+=hs[i]):(a+=hs[i]); const d=Math.abs(a-b)+(a<b?1:0); if(d<best){ best=d; pick=m; } } }
+  const hh=[0,0]; cards.forEach((c,i)=>{ const k=pick!=null?(pick>>i&1):(hh[0]<=hh[1]?0:1); cols[k].appendChild(c); hh[k]+=hs[i]; }); }); }
 function reviewsView(s){ const R=reviewsFor(s), rated=R.filter(r=>r.rate), k=Math.abs(h(s.id)), n=rated.length+36+k%180, avg=rated.reduce((a,r)=>a+r.rate,0)/Math.max(1,rated.length), song=songsFor(s.artist)[k%3];
   const asp=[['Setlist',4.5+(k%5)/10],['Crowd',4.4+(k%6)/10],['Sound',3.8+(k%7)/10],['Venue',3.5+(k%8)/10]].map(([a,v])=>[a,Math.min(5,v)]);
-  const shown=(state.rvMore||{})[s.id]?R:R.slice(0,4), lk=state.clk||{};
+  const shown=(state.rvMore||{})[s.id]?R:R.slice(0,6);
   return `<h2 class="h2 sec">Clips${infoB('clips','About clips and reviews')}</h2><p class="sub" style="margin:6px 0 4px">What fans thought of the night</p>
   <div class="aisum"><div class="aitop"><b>${avg.toFixed(1)}</b><span>${stars(avg)}<small>${n} reviews</small></span></div>
     <p class="aitx"><em>${ic('spark',13)} AI summary</em>Fans say ${esc(s.artist)} was ${avg>=4.4?'unforgettable':'a strong night'} at ${esc(VSH(s.venue))}. The encore and “${esc(song)}” come up again and again, and solo-goers mention finding a crew fast. Common gripes: long merch lines and patchy sound in the upper levels.</p>
     <div class="aiasp">${asp.map(([a,v])=>`<span><small>${a}</small><i><b style="width:${v/5*100}%"></b></i><em>${v.toFixed(1)}</em></span>`).join('')}</div></div>
   <button class="rvnew" data-act="rvnew" data-id="${s.id}"><span class="bgav"><span>${avi(MEP[3])}</span></span><span class="rvq">How was it?</span>${stars(0,'sm')}</button>
-  <div class="rvl">${shown.map(r=>{ const who=r.me?MEP:PEOPLE[r.p], cv=r.vid!=null?CLIPV[r.vid]:null, on=!!lk[r.id];
-    return `<article class="rv"><div class="rvh"><span class="bgav"><span>${avi(who[3])}</span></span><span class="rvw"><b>${r.me?'You':who[0]}${r.me||h(r.id)%3?` <em>${ic('check',9)} Was there</em>`:''}</b><small>${r.ago==='now'?'Just now':r.ago+' ago'}${r.sec?' · '+esc(r.sec):''}</small></span>${r.rate?stars(r.rate,'sm'):''}</div>
-      ${r.cap?`<p class="rvt">${esc(r.cap)}</p>`:''}
-      ${cv?`<button class="rvv" data-act="clopen" data-id="${r.id}" aria-label="Play clip, ${mmss(cv.d)}"><img class="cover" alt="" src="${cv.p}"><i>${ic('play',22)}</i><em>${mmss(cv.d)}</em></button>`:''}
-      <div class="rvf"><button data-act="rvlike" data-v="${r.id}" aria-pressed="${on}" aria-label="Like">${ic('heart',16)}<span>${fmtK((r.likes||0)+(on?1:0))}</span></button><button data-act="clcom" data-v="${r.id}" aria-label="Comments">${ic('chat',16)}<span>${fmtK((r.com||0)+((state.cmMine||{})[r.id]||[]).length)}</span></button></div></article>`; }).join('')}</div>
-  ${R.length>4&&!(state.rvMore||{})[s.id]?`<button class="rvmore" data-act="rvmore" data-id="${s.id}">Show all ${R.length} reviews</button>`:''}`; }
+  ${rvMasonry(shown)}
+  ${R.length>6&&!(state.rvMore||{})[s.id]?`<button class="rvmore" data-act="rvmore" data-id="${s.id}">Show all ${R.length} reviews</button>`:''}`; }
 function show(){
   const s=byId[state.id];
   const cs=xCrews().filter(c=>c.s===s);
@@ -3018,7 +3044,7 @@ function render(anim){ window._dockActive=null; const _ap=document.getElementByI
   syncNav(window._dockActive);
   if(state.psheet) plusAim();
   if(state.screen==='clips'){ clWatch(); }
-  if(state.screen==='show'){ shWatch(); }
+  if(state.screen==='show'){ rvBalance(); shWatch(); }
   state._ufAnim=false; if(state.screen==='home'){ upWatch(); ptrAttach(); }
   const xs=document.querySelector('.xtop'); if(xs){ const sc=xs.closest('.scroll'), f=()=>xs.classList.toggle('stuck',sc.scrollTop>2); sc&&sc.addEventListener('scroll',f,{passive:true}); f(); } if(state.screen==='search'&&!state._sqf){ const i=document.getElementById('sq'); if(i){ i.focus(); state._sqf=true; } }
   const form=document.getElementById('composer');
@@ -3160,6 +3186,7 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='info'){ state.info=v; render(); }
   else if(a==='infoclose'){ state.info=null; render(); }
   else if(a==='rvlike'){ state.clk=state.clk||{}; state.clk[v]=!state.clk[v]; const b=t.closest('button'); const r=clipAny(v); b.setAttribute('aria-pressed',!!state.clk[v]); b.querySelector('span').textContent=fmtK((r.likes||0)+(state.clk[v]?1:0)); b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); }
+  else if(a==='rvopen'){ state.cmt={id,post:true}; render(); }
   else if(a==='rvmore'){ (state.rvMore ||= {})[id]=true; render(); }
   else if(a==='rvnew'){ const sh=byId[id]; state.cs={v:-1,loc:sh.venue,src:'show',sid:sh.id,fromShow:true,rate:0}; render(); setTimeout(()=>{ const c=document.getElementById('cscap'); c&&c.focus(); },300); }
   else if(a==='csrate'){ const c=document.getElementById('cscap'); state.cs.cap=c?c.value:''; state.cs.rate=state.cs.rate===+v?0:+v; render(); }
