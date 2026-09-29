@@ -32,7 +32,7 @@
 ```
 HANDOFF.md            ← 本文件
 CLAUDE.md             ← 给 Claude 的工作规则（精简版）
-demo/                 ← 主作品：单文件 HTML 交互 demo（当前 = M17.5 / 线上 v97）
+demo/                 ← 主作品：单文件 HTML 交互 demo（当前 = M19.3 / 线上 v109）
   demo2_tpl.html      模板源码（唯一需要改的文件）
   build.py            把数据注入模板 → dist/plusone-demo.html
   clips/              Clips 用的 8 段演唱会视频 + 封面（Pexels，CREDITS.md）
@@ -133,6 +133,8 @@ pip install playwright && python3 demo/tests/m7test.py   # 可选：批量截屏
 | M18.3 | v105 | Show wall 独立成页 | 主人决定：Show wall 做成单独页面，入口放在 Clips 前面。演出页顺序 Tickets → Crews → Show wall 预览卡 → Clips，标签也改为 Tickets / Crews / Wall / Clips。预览卡：头像叠放 + 帖子总数 + 最近一小时新帖数、最新 2 条（标签 + 名字 + 两行正文）、底部话题标签 +「Open wall ›」。点开进入 Show wall 页（sticky 头部：返回、Show wall、艺人 · 日期 · 场馆、分享；下面是原来的话题筛选、发帖框、帖子和回复）；发帖后回到顶部；返回演出页时恢复原来的滚动位置。首页 Trending 里的 wallgo 也改为直接打开 Show wall 页 |
 | M19 | v106 | 大群 → 小队 → 私聊 | 主人提出：每场演出一个大群，大家可以从里面建小群（小队）或私聊。实现：Show wall 升级成 **Show chat**（大群，谁都能进、谁都能发，名字旁标 Ticket holder）：聊天气泡形式（别人白色靠左、自己黑色靠右，最新在底部），原话题标签变成 # 频道（All / # Getting there / # Outfits / # Setlist / # Missed connections），每条可点赞、展开回复；顶部置顶卡「Want a smaller group? Start a crew」；点头像或名字弹出卡片：Say hi（私聊）/ Invite to a crew / Profile。演出页顺序改为 Tickets → Show chat 预览卡（going 人数、在线人数、最新 2 条、# 频道、Join/Open chat）→ Crews going（副标题 Small groups from the chat · up to 8）→ Clips；标签 Tickets / Chat / Crews / Clips。底部主按钮从 Join a crew 改为「Join the show chat」，加入后变「Open show chat」，解决和小队列表的重复。Chats 页会显示你加入的大群（持票的演出自动在群里，如 Gorillaz、Doja Cat），刚加入的排最前 |
 | M19.1 | v107 | Show chat 用回小队聊天的视觉 | 主人：逻辑不变，但聊天页要用之前小队聊天的背景和 UI；顶部 # 频道标签保留。Show chat 改为和 crew() 同一套：演出大图模糊背景 + 暗色渐变 + 颗粒、玻璃质感灰色气泡（别人）/ 白色气泡（自己）、气泡下方头像 + 名字 + ✓ + # 频道 + 时间 + 点赞 / 回复、大标题「艺人 · Show chat」、底部圆角玻璃输入框（未加入时是白色「Join the show chat」）。# 频道标签固定在返回键下方。注意 class 冲突：新增的 `.chnm`、`.scpic` 是为避开旧的 `.chn`、`.scimg` |
+| M19.2 | v108 | Clips 评论框、点赞特效、发帖优化 | 主人：评论框右侧不要出现滚动条；优化点赞特效、发帖和 UI。评论框：所有 sheet 隐藏滚动条（上下渐隐提示可滚动）；评论和分享 sheet 改为原地挂载 / 局部更新，不再整页 render，所以视频不中断、sheet 不会重新滑入；修了 `.cmr` 与旧 crew 组件的 class 冲突（之前每行有奇怪的圆角描边和缩进）；标题「41 comments」+ 右上关闭；行内 Reply（自动填 @名字）；评论点赞变红并弹跳；表情快捷栏 🔥🙌😭🎶❤️👏🤘；输入框聚焦变白底黑边，有字才出现圆形发送键；发出的评论插到最上面并高亮渐隐，标题和右侧栏的评论数同步 +1。点赞：双击 = 渐变光泽大心（随机倾斜）+ 白色细波纹 + 7 颗小心向上飘散，连击时心逐渐变大；右侧栏红心有弹跳 + 圆环 + 6 个小点爆开，取消时轻微收缩，数字滚动。发帖：星级原地点亮逐颗弹出；标题旁有字数统计；选中的视频加白色内描边；「Post clip」按钮先显示上传进度填充 → ✓ Posted → sheet 下滑 → 新帖以缩放淡入落在 Clips 顶部，名字旁有「✓ Posted」标记 |
+| M19.3 | v109 | 评论能发了 + 发送动效 | 主人：评论发不出去。原因：Claude 预览面板是沙盒 iframe（没有 allow-forms），原生表单提交根本不会触发，onsubmit 不执行（Show chat、小队聊天的输入框同理）。修复：全局接管——在 input 里按 Enter（中文输入法组字中不算）或点 submit 按钮时，取消原生提交，手动派发 submit 事件，所有表单在任何环境都能用。发送动效：发送键箭头向右上飞出再从左侧回来并轻微按压；文字变成黑色气泡从输入框沿弧线飞到列表顶部的新评论位置后淡入成正文；下面的评论用 FLIP 平滑下移让位；新头像弹出；标题评论数滚动 +1；评论里的 emoji 从发送键向上飘散；手机上轻震 |
 
 ## 6. 链接（原账号所有，新账号只能查看）
 
