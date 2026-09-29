@@ -1421,6 +1421,14 @@ i.tw{font-style:normal;opacity:0}
 .svibe button{height:76px;border-radius:18px;background:var(--card);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:var(--text)}
 .svibe i{font-style:normal;font-size:22px}.svibe span{font-size:11.5px;font-weight:600;letter-spacing:-.01em}
 .ssec2{margin:0 12px;padding:2px 12px}
+.sclips{display:flex;gap:8px;overflow-x:auto;padding:0 12px 2px;scroll-snap-type:x mandatory;scroll-padding:0 12px;scrollbar-width:none}.sclips::-webkit-scrollbar{display:none}
+.sclip{position:relative;flex:0 0 118px;aspect-ratio:9/16;border-radius:var(--r-md);overflow:hidden;background:#0B0B0C;color:#fff;text-align:left;scroll-snap-align:start}
+.sclip img.cover{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.sclip::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 45%,rgba(0,0,0,.75))}
+.sclip em{position:absolute;right:6px;top:6px;z-index:1;font-style:normal;font-size:11px;font-weight:600;padding:1px 6px;border-radius:var(--r-pill);background:rgba(0,0,0,.45);backdrop-filter:blur(6px)}
+.sclip>span{position:absolute;left:8px;right:8px;bottom:8px;z-index:1;display:flex;flex-direction:column;gap:1px}
+.sclip b{font-size:13px;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.sclip small{font-size:11px;opacity:.85;display:flex;align-items:center;gap:3px;white-space:nowrap;overflow:hidden}
+.sclip small svg{fill:#fff;stroke:none}
 .spp{display:flex;align-items:center;gap:12px;width:100%;padding:10px 0;text-align:left;color:var(--text)}.spp+.spp{border-top:1px solid var(--line)}
 .spp .bgav span{width:40px;height:40px;border:0}.spp>span:nth-child(2){flex:1;display:flex;flex-direction:column}.spp b{font-size:15px}.spp small{font-size:12.5px;color:var(--muted)}.spp>svg{color:var(--dim)}
 .xtop+.xsolo2{margin-top:10px}
@@ -2311,7 +2319,7 @@ function clPlay(sec){ const vd=clVid(sec); if(!vd) return; vd.muted=state.clMute
     pr&&pr.catch(err=>{ if(!err||err.name==='AbortError') return; if(err.name==='NotAllowedError'&&!vd.muted){ vd.muted=true; state.clMute=true; const m=document.querySelector('.clmute'); m&&(m.innerHTML=ic('mute',20)); clPlay(sec); return; } clGoFrames(); });
     if(isV) setTimeout(()=>{ if(!CL_FB&&vd.isConnected&&sec.classList.contains('act')&&!sec.classList.contains('paused')&&document.visibilityState==='visible'&&vd.currentTime<.05) clGoFrames(); },2200); }
   else vd.pause(); }
-function clWatch(){ const v=document.getElementById('clv'); if(!v||v._w) return; v._w=1; if(state.clY) v.scrollTop=state.clY; v.addEventListener('scroll',()=>{ state.clY=v.scrollTop; },{passive:true});
+function clWatch(){ const v=document.getElementById('clv'); if(!v||v._w) return; v._w=1; if(state.clJump){ const j=v.querySelector(`.clp[data-id="${state.clJump}"]`); state.clJump=null; if(j){ v.scrollTop=j.offsetTop; state.clY=v.scrollTop; v.querySelectorAll('.clp').forEach(x=>x.classList.toggle('act',x===j)); } } else if(state.clY) v.scrollTop=state.clY; v.addEventListener('scroll',()=>{ state.clY=v.scrollTop; },{passive:true});
   const io=new IntersectionObserver(es=>es.forEach(e=>{ const sec=e.target, on=e.intersectionRatio>.6; sec.classList.toggle('act',on);
       if(!on){ sec.classList.remove('paused'); const vd=clVid(sec,false); if(vd&&vd.destroy){ vd.destroy(); vd.g.clearRect(0,0,vd.c.width,vd.c.height); sec._fp=null; } else if(vd){ vd.pause(); try{ vd.currentTime=0; }catch(_){} } } else clPlay(sec); }),{root:v,threshold:[.6]}); v.querySelectorAll('.clp').forEach(x=>io.observe(x));
   // Taps on the video: one tap pauses/plays after a short wait; a second tap inside that wait cancels it and likes instead,
@@ -2492,7 +2500,7 @@ function explore(){
   const L=all.filter(c=>tag<0||c.j===tag);
   const solo=all.filter(c=>xDays(c.s.dates[0])<=7).reduce((n,c)=>n+c.solo,0)||23;
   const top=`<div class="xtop"><header class="xhd"><h1 class="sh1">Explore <span class="emo">🧭</span></h1><span class="wcity">${L.length} crews forming in ${state.city}</span></header>
-    <div class="pad"><button class="sbar sfake" data-act="search" aria-label="Search">${ic('search',20)}<span>Artists, crews, or people</span><i class="shot">🔥 Trending</i></button></div>
+    <div class="pad"><button class="sbar sfake" data-act="search" aria-label="Search">${ic('search',20)}<span>Artists, clips, crews, people</span><i class="shot">🔥 Trending</i></button></div>
     <div class="hs xchips"><button class="gch" data-act="xtag" data-v="-1" aria-pressed="${tag<0}">All</button>${order.map(j=>`<button class="gch" data-act="xtag" data-v="${j}" aria-pressed="${tag===j}">${SCENE_EMO[j]} ${SCENE_LIST[j][0]}</button>`).join('')}</div></div>`;
   const proof=`<div class="xsolo2"><span class="xav">${[3,5,7].map(k=>`<span>${avi(PEOPLE[k][3])}</span>`).join('')}</span><span><b>${solo} people</b> are going solo this week · every crew is ID + ticket verified</span></div>`;
   const groups=XB.map(bk=>{ const cs=L.filter(c=>xBucket(c.s.dates[0])===bk); const by=[]; cs.forEach(c=>{ let g=by.find(x=>x[0].s===c.s); if(!g){ g=[]; by.push(g); } g.push(c); }); return [bk,by]; }).filter(g=>g[1].length);
@@ -2507,12 +2515,15 @@ function search(){ const q=(state.sq||'').trim().toLowerCase(), rec=state.recent
   if(!q){ body=`${rec.length?`<div class="srh"><b>Recent</b><button data-act="sclear">Clear</button></div><div class="srec">${rec.map(r=>`<button class="gch" data-act="sfill" data-v="${esc(r)}">${ic('clock',13)} ${esc(r)}</button>`).join('')}</div>`:''}
     ${trendCard()}
     <div class="srh"><b>Browse by vibe</b></div><div class="svibe">${[0,1,2,4,6,7,3,5].map(j=>`<button data-act="svibe" data-v="${j}"><i>${SCENE_EMO[j]}</i><span>${SCENE_LIST[j][0]}</span></button>`).join('')}</div>`; }
-  else { const S=SHOWS.filter(x=>m(x.artist+' '+x.venue)).slice(0,4), C=xCrews().filter(c=>!c.full&&m(c.name+' '+c.s.artist+' '+c.spot)).slice(0,4), Pp=PEOPLE.map((p,i)=>[p,i]).filter(([p])=>m(p[0])).slice(0,4);
+  else { const S=SHOWS.filter(x=>m(x.artist+' '+x.venue)).slice(0,4), C=xCrews().filter(c=>!c.full&&m(c.name+' '+c.s.artist+' '+c.spot)).slice(0,4), Pp=PEOPLE.map((p,i)=>[p,i]).filter(([p])=>m(p[0])).slice(0,4),
+      Cl=clipList().filter(c=>m([c.s.artist,c.s.venue,VSH(c.loc||c.s.venue),c.cap,c.song,c.me?'You':PEOPLE[c.p][0]].join(' '))).slice(0,8);
     body=(S.length?`<div class="srh"><b>Shows</b></div><div class="wcard flush ssec2">${S.map(feedRow).join('')}</div>`:'')
+      +(Cl.length?`<div class="srh"><b>Clips</b></div><div class="sclips">${Cl.map(c=>{ const cv=c.vid!=null?CLIPV[c.vid]:null, on=!!(state.clk||{})[c.id];
+          return `<button class="sclip" data-act="clopen" data-id="${c.id}" aria-label="Clip of ${esc(c.s.artist)} by ${c.me?'you':PEOPLE[c.p][0]}">${cv?`<img class="cover" alt="" src="${cv.p}">`:img(c.s)}<em>${cv?mmss(cv.d):'0:14'}</em><span><b>${esc(c.s.artist)}</b><small>${ic('heart',11)} ${fmtK(c.likes+(on?1:0))} · ${esc(VSH(c.loc||c.s.venue))}</small></span></button>`; }).join('')}</div>`:'')
       +(C.length?`<div class="srh"><b>Crews</b></div><div class="xgrp xgs">${C.map(c=>xRow(c).replace('<span class="xmt">📍 ',`<span class="xmt">${esc(c.s.artist)} · `)).join('')}</div>`:'')
       +(Pp.length?`<div class="srh"><b>People</b></div><div class="wcard flush ssec2">${Pp.map(([p,i])=>`<button class="spp" data-act="person" data-v="${i}"><span class="bgav"><span>${avi(p[3])}</span></span><span><b>${p[0]}</b><small>${BUD[i]?'Buddy · ':''}${REL[i][0]} of ${REL[i][1]} shows showed up</small></span>${ic('right',16)}</button>`).join('')}</div>`:'')
       ||`<div class="xempty"><b>No results for “${esc(state.sq)}”</b><span>Try an artist, a venue, or a vibe like “pit crew”.</span></div>`; }
-  return `<div class="scroll"><div class="xpg" style="padding-bottom:60px"><div class="xtop shd"><div class="shrow"><label class="sbar"><span hidden>Search</span>${ic('search',20)}<input id="sq" value="${esc(state.sq||'')}" placeholder="Artists, crews, or people" autocomplete="off" data-live2="1"></label><button class="scan" data-act="back">Cancel</button></div></div>${body}</div></div>`;
+  return `<div class="scroll"><div class="xpg" style="padding-bottom:60px"><div class="xtop shd"><div class="shrow"><label class="sbar"><span hidden>Search</span>${ic('search',20)}<input id="sq" value="${esc(state.sq||'')}" placeholder="Artists, clips, crews, people" autocomplete="off" data-live2="1"></label><button class="scan" data-act="back">Cancel</button></div></div>${body}</div></div>`;
 }
 
 const MYTIX=()=>[[A('Gorillaz'),'Floor GA','General admission',2],[A('Doja Cat'),'Section 105','Row 12 · Seats 8–9',2]].concat((state.extraTix||[]).map(t=>[t[0],t[1],t[2],t[3]]));
@@ -3010,6 +3021,7 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='crews'){ state.history=[]; state.screen='crews'; render(); }
   else if(a==='explore'){ state.history=[]; state.screen='explore'; render(); }
   else if(a==='clips'){ state.history=[]; state.screen='clips'; render(); }
+  else if(a==='clopen'){ state.history=[]; state.screen='clips'; state.clFeed='fy'; state.clJump=t.dataset.id; state.clY=0; render(); }
   else if(a==='tickets'){ state.history=[]; state.screen='tickets'; render(); }
   else if(a==='shuffle'){ state.drop++; render(); }
   else if(a==='dropto'){ const nv=+v, dir=nv===(state.drop+1)%3?1:-1; state.drop=nv; paintDrop(dir); armDrop(); }
