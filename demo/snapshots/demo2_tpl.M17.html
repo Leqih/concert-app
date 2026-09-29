@@ -1755,11 +1755,6 @@ i.tw{font-style:normal;opacity:0}
 
 .pk.sh.sp{--r:9deg;width:156px;height:58px;right:22px;bottom:410px;border-radius:var(--r-pill);background:#fff;box-shadow:inset 0 0 0 2px #0B0B0C;z-index:2}
 .pk.sh.sp b{font-size:19px}
-
-.whead.hh{grid-template-columns:88px 1fr 88px}
-.wme{justify-self:start;width:40px;height:40px;border-radius:50%;overflow:hidden;padding:0;box-shadow:0 0 0 2px var(--bg),0 0 0 3.5px #0B0B0C;transition:transform .2s}
-.wme:active{transform:scale(.94)}.wme .avimg{width:100%;height:100%;object-fit:cover;display:block}
-.whr{justify-self:end;display:flex;gap:8px}
 </style>
 
 <div class="app framed" id="app">
@@ -2051,14 +2046,14 @@ function navMarkup(){
   const it=(k,label,icon)=>`<button class="nit" data-act="${k}" data-k="${k}" aria-label="${label}"><span class="nic">${ic(icon,19)}${k==='crews'?'<i class="nb2"></i>':''}</span><span class="nlb"><span>${label}</span></span></button>`;
   return `<div class="bcap" id="fcap"><span class="find" id="find"></span>${it('home','Home','home')}${it('explore','Explore','compass')}${it('clips','Clips','clip')}${it('crews','Chats','chat')}${it('tickets','Tickets','ticket')}</div>
     <button class="bcir" data-act="plusmenu" aria-label="Create">${ic('plus',20)}</button>
-`;
+    <button class="bcir me" data-act="me" aria-label="Me">${avi(10)}</button>`;
 }
 function syncNav(active){
   const app=document.getElementById('app'); let nav=document.getElementById('navroot');
   if(!nav){ nav=document.createElement('nav'); nav.id='navroot'; nav.className='bnav'; nav.setAttribute('aria-label','Main'); nav.innerHTML=navMarkup(); app.appendChild(nav); }
   nav.classList.toggle('hide',!active);
   const cap=nav.querySelector('#fcap'), ind=nav.querySelector('#find'), items=[...cap.querySelectorAll('.nit')];
-  
+  nav.querySelector('.bcir.me').classList.toggle('on',active==='me');
   nav.querySelector('.nb2').style.display=unreadTotal()?'':'none';
   const tab=['home','explore','clips','crews','tickets'].includes(active)?active:null;
   const prev=nav.dataset.tab||'';
@@ -2304,10 +2299,10 @@ function home(){
   const short=v=>v.replace('Madison Square Garden','MSG').replace('Radio City Music Hall','Radio City');
   const looking=s=>6+h(s.id)%60;
   return `<div class="ptr" id="ptr" aria-hidden="true">${ic('shuffle',16)}</div><p class="ptrb" id="ptrb" role="status"></p><div class="scroll" id="sc"><div style="padding-bottom:110px">
-    <header class="whead hh">
-      <button class="wme" data-act="me" aria-label="Your profile">${avi(10)}</button>
+    <header class="whead">
+      <button class="wicon" data-act="crews" aria-label="Crew requests, 1 new">${ic('bell',20)}<span class="wdot"></span></button>
       <div class="wtitle"><h1>Plus One</h1><button class="wcity" data-act="citysheet" aria-haspopup="dialog">${ic('pin',13)}${state.city} ${ic('chev',12)}</button></div>
-      <span class="whr"><button class="wicon" data-act="search" aria-label="Search">${ic('search',20)}</button><button class="wicon" data-act="crews" aria-label="Crew requests, 1 new">${ic('bell',20)}<span class="wdot"></span></button></span>
+      <button class="wicon" data-act="search" aria-label="Search">${ic('search',20)}</button>
     </header>
 
     <section class="sec pad hsec" style="margin-top:18px"><h2 class="h2">This week's drop <span class="emo">🔥</span></h2><p class="sub">Most-wanted shows in ${state.city}</p>
@@ -2726,7 +2721,7 @@ function profileView(mine){
   if(mine&&state.prof){ P.bio=esc(state.prof.bio||'')+(state.prof.spot?`<br>Usually by the ${esc(state.prof.spot.toLowerCase())}.`:''); P.tags=state.prof.tags.map(t=>'#'+t); }
   return `<div class="scroll"><div style="padding-bottom:${mine?120:110}px">
     <div class="phero"><div class="cover" style="background:radial-gradient(120% 90% at 20% 20%,#5A5A5F 0%,rgba(90,90,95,0) 55%),radial-gradient(110% 90% at 85% 60%,#B4B4B9 0%,rgba(180,180,185,0) 55%),#1a1a1d"></div><span class="av ${P.ph!=null?'ph':P.cls}" style="position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);width:150px;height:150px;font-size:54px;border:4px solid rgba(255,255,255,.85);z-index:1">${P.ph!=null?avi(P.ph):P.ini}</span>
-      <div class="nav"><button class="nb" data-act="back" aria-label="Back">${ic('back')}</button>${mine?`<button class="nb" data-act="epopen" aria-label="Edit profile" style="width:auto;padding:0 16px;font-size:14px;font-weight:600;color:#fff">Edit</button>`:''}</div></div>
+      <div class="nav">${mine?'<span></span>':`<button class="nb" data-act="back" aria-label="Back">${ic('back')}</button>`}${mine?`<button class="nb" data-act="epopen" aria-label="Edit profile" style="width:auto;padding:0 16px;font-size:14px;font-weight:600;color:#fff">Edit</button>`:''}</div></div>
     <div class="pad" style="margin-top:-86px;position:relative">
       <div class="pname">${P.name}</div><div style="font-size:15px;margin-top:6px;color:var(--muted)">${P.handle}</div>${mine?vCard():vBadges(state.pid||0)}
       <div class="pstats">${P.stats.map(([n,l])=>`<div><b>${n}</b><small>${l}</small></div>`).join('')}</div>
@@ -2885,7 +2880,7 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='dropto'){ const nv=+v, dir=nv===(state.drop+1)%3?1:-1; state.drop=nv; paintDrop(dir); armDrop(); }
   else if(a==='sort'){ state.sort=v; render(); }
   else if(a==='when'||a==='ufclear'){ if(a==='when') state.when=v; else { state.when='all'; state.uf=null; } state.upN=6; upSwap(true); }
-  else if(a==='me'){ go('me'); }
+  else if(a==='me'){ state.history=[]; state.screen='me'; render(); }
   else if(a==='tab'){ state.tab=v; render(); }
   else if(a==='rsvp'){ state.rsvp[id]= state.rsvp[id]===v ? '' : v; render(); toast(state.rsvp[id]? (v==='Going'?'You’re going. Pick a crew to head in together.':v==='Maybe'?'Marked as maybe':'Got it, not going') : 'RSVP cleared'); }
   else if(a==='follow'){ state.followed=!state.followed; render(); toast(state.followed?'Following Maya':'Unfollowed'); }

@@ -32,7 +32,7 @@
 ```
 HANDOFF.md            ← 本文件
 CLAUDE.md             ← 给 Claude 的工作规则（精简版）
-demo/                 ← 主作品：单文件 HTML 交互 demo（当前 = M17 / 线上 v92）
+demo/                 ← 主作品：单文件 HTML 交互 demo（当前 = M17.1 / 线上 v93）
   demo2_tpl.html      模板源码（唯一需要改的文件）
   build.py            把数据注入模板 → dist/plusone-demo.html
   shows.js            纽约演出数据（Ticketmaster 抓取后的静态快照）
@@ -117,6 +117,7 @@ pip install playwright && python3 demo/tests/m7test.py   # 可选：批量截屏
 | M16.5 | v90 | ＋ 菜单自由落体 | 打开时三个图形从屏幕上方依次（间隔 110ms）受重力下落（shDrop：g=4200px/s²，回弹系数 0.36，落地压扁、旋转逐渐回正），停稳后进入漂浮；关闭时图形带旋转掉出屏幕底部（shFallOut）；尊重 prefers-reduced-motion |
 | M16.6 | v91 | ＋ 菜单悬停修正 | 悬停只放大 1.05 + 柔和投影（用独立 scale 属性，漂浮动画不中断、角度不变），不再跳位/改角度/抢层级；星星只在星形本身范围内触发 |
 | M17 | v92 | Clips 社区（演唱会片段） | 底部导航新增 Clips 标签（Home / Explore / Clips / Chats / Tickets）；全屏竖滑一条一条看（scroll-snap），画面用演出图 + 慢推镜头模拟视频、进度条、点一下暂停、双击点赞爱心动画；右侧头像/点赞/评论/分享；左下「Was there · 座位」持票徽章、文案、歌名，以及演出卡片 +「Find a crew」直达该演出；顶部 For you / Following、静音；左上相机或 ＋ 菜单新增的「Share a clip」胶囊 → 发布面板（只能发自己去过的演出、选视频、写文案）→ 发布后出现在第一条 |
+| M17.1 | v93 | 头像移出底部导航 | 主人选择：个人头像放首页左上角（黑色细圈），原左上铃铛移到右上与搜索并排；底部导航只剩 5 个标签 + ＋；个人页左上角加返回 |
 
 ## 6. 链接（原账号所有，新账号只能查看）
 
