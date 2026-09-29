@@ -283,6 +283,33 @@ h1,h2,h3{margin:0;letter-spacing:-.045em;font-weight:700;line-height:1.02}
 .wbar{position:absolute;left:12px;right:12px;bottom:calc(14px + var(--sb));display:flex;gap:8px;z-index:5}
 .shtabs{display:flex;gap:6px;margin:2px 0 4px}.shtabs .gch{flex:1;justify-content:center;padding:0 8px}
 .shanchor{display:block;height:0}
+.infob{display:inline-grid;place-items:center;width:30px;height:30px;margin-left:4px;vertical-align:3px;border-radius:50%;color:var(--muted)}.infob:active{background:var(--card2)}
+.ifb{padding:4px 16px 14px;display:flex;flex-direction:column;gap:14px}.ifr{display:flex;gap:12px;align-items:flex-start}.ifr>i{font-style:normal;width:40px;height:40px;border-radius:12px;background:var(--card2);display:grid;place-items:center;font-size:18px;flex-shrink:0}
+.ifr>span{display:flex;flex-direction:column;gap:2px}.ifr b{font-size:15px;letter-spacing:-.02em}.ifr small{font-size:13.5px;line-height:1.4;color:var(--muted)}
+.st{position:relative;display:inline-block;color:#D6D6DB;letter-spacing:1px;line-height:1;font-size:16px;white-space:nowrap}.st::before{content:'★★★★★';position:absolute;left:0;top:0;width:var(--v);overflow:hidden;color:#0B0B0C}.st.sm{font-size:12.5px}
+.aisum{background:var(--card);border-radius:var(--r-lg);padding:16px}
+.aitop{display:flex;align-items:center;gap:12px}.aitop>b{font-family:var(--display);font-size:44px;font-weight:800;letter-spacing:-.05em;line-height:1}.aitop>span{display:flex;flex-direction:column;gap:4px}.aitop .st{font-size:18px}.aitop small{font-size:12.5px;color:var(--muted)}
+.aitx{margin:14px 0 0;font-size:14.5px;line-height:1.45;letter-spacing:-.01em}.aitx em{display:flex;align-items:center;gap:5px;font-style:normal;font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px}.aitx em svg{fill:currentColor;stroke:none}
+.aiasp{display:grid;grid-template-columns:1fr 1fr;gap:10px 16px;margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}.aiasp span{display:grid;grid-template-columns:52px 1fr 26px;align-items:center;gap:8px}
+.aiasp small{font-size:12px;color:var(--muted)}.aiasp i{height:4px;border-radius:2px;background:var(--card2);overflow:hidden}.aiasp i b{display:block;height:100%;background:#0B0B0C;border-radius:2px}.aiasp em{font-style:normal;font-size:12px;font-weight:600;text-align:right;font-variant-numeric:tabular-nums}
+.rvnew{display:flex;align-items:center;gap:10px;width:100%;height:56px;padding:0 16px 0 10px;border-radius:var(--r-lg);background:var(--card);text-align:left}.rvnew .rvq{flex:1;font-size:15px;color:var(--muted)}.rvnew .st{font-size:16px}
+.rvl{display:flex;flex-direction:column;gap:10px}
+.rv{background:var(--card);border-radius:var(--r-lg);padding:14px 14px 10px}.rvh{display:flex;align-items:center;gap:10px}.rvw{flex:1;min-width:0;display:flex;flex-direction:column}.rvw b{font-size:14.5px;letter-spacing:-.02em;display:flex;align-items:center;gap:6px}
+.rvw b em{font-style:normal;font-size:10.5px;font-weight:600;color:var(--muted);display:inline-flex;align-items:center;gap:2px}.rvw small{font-size:12px;color:var(--muted)}
+.rvt{margin:10px 0 0;font-size:15px;line-height:1.45;letter-spacing:-.01em}
+.rvv{position:relative;display:block;width:160px;aspect-ratio:9/14;margin-top:10px;border-radius:var(--r-md);overflow:hidden;background:#0B0B0C}.rvv img.cover{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .35s}.rvv:active img.cover{transform:scale(1.04)}
+.rvv i{position:absolute;left:50%;top:50%;width:48px;height:48px;margin:-24px 0 0 -24px;border-radius:50%;background:rgba(0,0,0,.35);backdrop-filter:blur(8px);display:grid;place-items:center;color:#fff}.rvv i svg{fill:#fff;stroke:none;margin-left:3px}
+.rvv em{position:absolute;right:8px;bottom:8px;font-style:normal;font-size:11px;font-weight:600;color:#fff;background:rgba(0,0,0,.5);padding:1px 7px;border-radius:var(--r-pill)}
+.rvf{display:flex;gap:4px;margin-top:8px}.rvf button{display:inline-flex;align-items:center;gap:5px;height:32px;padding:0 10px;border-radius:16px;font-size:13px;font-weight:600;color:var(--muted)}.rvf button:active{background:var(--card2)}
+.rvf button[aria-pressed=true]{color:var(--like)}.rvf button[aria-pressed=true] svg{fill:var(--like);stroke:var(--like)}.rvf button.pop svg{animation:hpop .35s cubic-bezier(.34,1.6,.5,1)}
+.rvmore{height:46px;border-radius:var(--r-md);background:var(--card2);font-weight:600;font-size:14.5px}
+.csrate{display:flex;align-items:center;gap:2px}.csrate button{font-size:30px;line-height:1;width:40px;height:40px;color:#D6D6DB;transition:transform .15s,color .15s}.csrate button[aria-pressed=true]{color:#0B0B0C}.csrate button:active{transform:scale(.85)}.csrate span{margin-left:8px;font-size:13px;color:var(--muted)}
+.csopt{font-style:normal;margin-left:6px;font-weight:500;text-transform:none;letter-spacing:0;color:var(--muted);opacity:.8}
+.cstxt{display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:var(--card2);color:var(--text)}.cstxt b{font-family:var(--display);font-size:26px;letter-spacing:-.03em}.cstxt small{font-size:11px;font-weight:600;color:var(--muted)}
+.cltx{position:absolute;inset:0;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:0 34px;background:rgba(0,0,0,.45);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);text-align:center;pointer-events:none}
+.clp.tx .clinfo>p{display:none}
+.csvid{grid-template-columns:repeat(4,1fr)!important}
+.cltx p{margin:0;font-family:var(--display);font-size:28px;font-weight:700;letter-spacing:-.03em;line-height:1.15}.cltx .st{color:rgba(255,255,255,.3)}.cltx .st::before{color:#fff}
 #wall .wtg{margin-bottom:8px}
 .shbar{position:absolute;left:0;right:0;top:0;z-index:7;padding:calc(var(--st) + 2px) 14px 10px;background:rgba(242,242,244,.82);backdrop-filter:saturate(1.6) blur(20px);-webkit-backdrop-filter:saturate(1.6) blur(20px);box-shadow:0 1px 0 var(--line);opacity:0;transform:translateY(-10px);pointer-events:none;transition:opacity .22s,transform .22s cubic-bezier(.2,.8,.2,1)}
 .shbar.on{opacity:1;transform:none;pointer-events:auto}
@@ -1949,7 +1976,7 @@ const I = {
   home:'<path d="M4 11l8-6.5 8 6.5v8.5H14v-5h-4v5H4z"/>', chat:'<path d="M5 18.5V6.5A2.5 2.5 0 0 1 7.5 4h9A2.5 2.5 0 0 1 19 6.5v7a2.5 2.5 0 0 1-2.5 2.5H9z"/>',
   user:'<circle cx="12" cy="8" r="3.8"/><path d="M5 20a7 7 0 0 1 14 0"/>', users:'<circle cx="9" cy="8.5" r="3.2"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><path d="M15.5 5.5a3 3 0 0 1 0 6M17.5 19a5 5 0 0 0-2-4"/>',
   mic:'<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/>', cal:'<rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/>',
-  pin:'<path d="M12 21s-6.5-5.8-6.5-11A6.5 6.5 0 0 1 18.5 10c0 5.2-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/>', clip:'<path d="M20 11.5l-7.8 7.8a5 5 0 0 1-7-7l8.2-8.3a3.3 3.3 0 0 1 4.7 4.7l-8.1 8.1a1.7 1.7 0 0 1-2.4-2.4l7.4-7.4"/>',
+  pin:'<path d="M12 21s-6.5-5.8-6.5-11A6.5 6.5 0 0 1 18.5 10c0 5.2-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/>', info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.2"/>', spark:'<path d="M12 3l1.8 5.4L19 10l-5.2 1.6L12 17l-1.8-5.4L5 10l5.2-1.6z"/><path d="M19 16l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"/>', clip:'<path d="M20 11.5l-7.8 7.8a5 5 0 0 1-7-7l8.2-8.3a3.3 3.3 0 0 1 4.7 4.7l-8.1 8.1a1.7 1.7 0 0 1-2.4-2.4l7.4-7.4"/>',
   send:'<path d="M5 12h13M12 6l6 6-6 6"/>', share:'<path d="M12 3v12M7 8l5-5 5 5M5 14v6h14v-6"/>', bell:'<path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 21h4"/>', compass:'<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>', ticket:'<path d="M3 7h18v3a2 2 0 0 0 0 4v3H3v-3a2 2 0 0 0 0-4z"/><path d="M14 7v10"/>', play:'<path d="M8 5.5v13l10.5-6.5z"/>', clip:'<rect x="4" y="4" width="16" height="16" rx="4"/><path d="M10 9v6l5-3z"/>', heart:'<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>', sound:'<path d="M5 10v4h3l4 3.5v-11L8 10z"/><path d="M16 9.5a3.5 3.5 0 0 1 0 5"/>', mute:'<path d="M5 10v4h3l4 3.5v-11L8 10z"/><path d="M16 10l4 4M20 10l-4 4"/>', camera:'<path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>', shuffle:'<path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/>', bolt:'<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>', chev:'<path d="M6 9l6 6 6-6"/>', check:'<path d="M5 12l4 4 10-10"/>', x:'<path d="M6 6l12 12M18 6L6 18"/>', clock:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>', sliders:'<path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/>', shield:'<path d="M12 3l7.5 3v6c0 4.7-3.2 7.7-7.5 9-4.3-1.3-7.5-4.3-7.5-9V6z"/>',
 };
 const ic = (n,sz=22) => `<svg class="icon" viewBox="0 0 24 24" style="width:${sz}px;height:${sz}px" aria-hidden="true">${I[n]}</svg>`;
@@ -2320,7 +2347,7 @@ function clipList(){ const base=NYC_SHOWS.filter(x=>x.img.startsWith('data:')).s
 const fmtK=n=>n>=1000?(n/1000).toFixed(n>=10000?0:1)+'k':''+n;
 function clips(){ const L0=clipList(), L=state.clFeed==='fo'?L0.filter(c=>c.me||BUD[c.p]||[1,3,4,7].includes(c.p)):L0, lk=state.clk||{}, mute=state.clMute!==false;
   return `<div class="clips" id="clv">${L.map((c,i)=>{ const p=c.me?MEP:PEOPLE[c.p], on=!!lk[c.id], cv=c.vid!=null?CLIPV[c.vid]:null;
-    return `<section class="clp${i===0?' act':''}${cv?' hv':''}" data-i="${i}" data-id="${c.id}"><div class="clm" data-act="cltap" data-v="${c.id}">${cv?CL_FB?`<canvas width="720" height="1280" data-k="${c.vid}" style="background:#000 url(${cv.p}) center/cover" aria-label="Clip of ${esc(c.s.artist)}"></canvas>`:`<video src="${cv.u}" data-k="${c.vid}" poster="${cv.p}" muted playsinline webkit-playsinline ${i===0?'autoplay ':''}loop preload="${i<2?'auto':'metadata'}" aria-label="Clip of ${esc(c.s.artist)}"></video>`:img(c.s)}</div><span class="clsh"></span><span class="clgr"></span><i class="clbig">${ic('play',40)}</i>
+    return `<section class="clp${i===0?' act':''}${cv?' hv':' tx'}" data-i="${i}" data-id="${c.id}"><div class="clm" data-act="cltap" data-v="${c.id}">${!cv&&c.cap?`<div class="cltx"><p>“${esc(c.cap)}”</p>${c.rate?stars(c.rate):''}</div>`:''}${cv?CL_FB?`<canvas width="720" height="1280" data-k="${c.vid}" style="background:#000 url(${cv.p}) center/cover" aria-label="Clip of ${esc(c.s.artist)}"></canvas>`:`<video src="${cv.u}" data-k="${c.vid}" poster="${cv.p}" muted playsinline webkit-playsinline ${i===0?'autoplay ':''}loop preload="${i<2?'auto':'metadata'}" aria-label="Clip of ${esc(c.s.artist)}"></video>`:img(c.s)}</div><span class="clsh"></span><span class="clgr"></span><i class="clbig">${ic('play',40)}</i>
       <div class="clrail"><button class="clav" ${c.me?'':`data-act="person" data-v="${c.p}"`} aria-label="${p[0]}"><span>${avi(p[3])}</span>${c.me?'':`<i>${ic('plus',10)}</i>`}</button>
         <button data-act="cllike" data-v="${c.id}" aria-pressed="${on}" aria-label="Like">${ic('heart',26)}<small>${fmtK(c.likes+(on?1:0))}</small></button>
         <button data-act="clcom" data-v="${c.id}" aria-label="Comments">${ic('chat',26)}<small>${fmtK(c.com)}</small></button>
@@ -2410,7 +2437,7 @@ function clBurst(sec,e){ const r=sec.getBoundingClientRect(), x=(e.clientX||r.le
   put(clHeartSvg(96),96,96,'clfh').animate([{transform:`rotate(${rot}deg) scale(0)`,opacity:1,easing:po},{transform:`rotate(${rot}deg) scale(1.28)`,offset:.18,easing:'ease-in-out'},{transform:`rotate(${rot}deg) scale(.92)`,offset:.3,easing:'ease-out'},{transform:`rotate(${rot}deg) scale(1)`,opacity:1,offset:.42},{transform:`rotate(${rot}deg) scale(1)`,opacity:1,offset:.68,easing:'ease-in'},{transform:`rotate(${rot}deg) translateY(-44px) scale(1.1)`,opacity:0}],{duration:1000,easing:'linear',fill:'forwards'});
   setTimeout(()=>made.forEach(m=>m.remove()),1250); }
 function clUpd(id){ const b=document.querySelector(`.clp[data-id="${id}"] [data-act=cllike]`); if(!b) return; const c=clipList().find(x=>x.id===id), on=!!(state.clk||{})[id]; b.setAttribute('aria-pressed',on); b.querySelector('small').textContent=fmtK(c.likes+(on?1:0)); b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); }
-function cmSheet(){ const c=clipList().find(x=>x.id===state.cmt.id); if(!c) return ''; const k=Math.abs(h(c.id+'m')), lk=state.cml||{};
+function cmSheet(){ const c=clipAny(state.cmt.id); if(!c) return ''; const k=Math.abs(h(c.id+'m')), lk=state.cml||{};
   const T=['That encore was insane','I was two rows behind you!!','The crowd sang louder than the band','Same crew next show?','Goosebumps rewatching this','Where were you standing?'];
   const R=[0,1,2,3,4].map(i=>({id:c.id+'-'+i,p:(k+i*3)%8,t:T[(k+i)%T.length],l:3+((k>>i)%60),ago:(i+1)*7+'m',was:(k+i)%3!==1})).concat((state.cmMine||{})[c.id]||[]);
   return `<div class="sheetbg" data-act="cmclose"></div><div class="sheet csheet cms" role="dialog" aria-label="Comments"><div class="cgrab"><i class="grab"></i><h3>${c.com+((state.cmMine||{})[c.id]||[]).length} comments</h3><p>${ic('check',10)} marks people who were at ${esc(c.s.artist)}</p></div>
@@ -2420,17 +2447,19 @@ function cmPost(e,id){ e.preventDefault(); const i=document.getElementById('cmin
 const CSVID=[{geo:'Radio City Music Hall',d:'2026-09-29',vid:4},{geo:'Radio City Music Hall',d:'2026-09-29',vid:5},{geo:null,d:null,vid:6}];
 const VENUES=()=>[...new Set(SHOWS.map(x=>x.venue))].slice(0,8);
 function csShows(v){ return SHOWS.filter(x=>x.venue===v).sort((a,b)=>Math.abs(xDays(a.dates[0])+1)-Math.abs(xDays(b.dates[0])+1)); }
-function csSheet(){ const k=state.cs, vid=CSVID[k.v], loc=k.loc, sh=loc?csShows(loc):[], sel=k.sid?byId[k.sid]:sh[0], thumb=A(KIT.show);
-  const head=`<div class="sheetbg" data-act="csclose"></div><div class="sheet csheet ufs" role="dialog" aria-label="Share a clip"><div class="cgrab"><i class="grab"></i><h3>Share a clip</h3><p>Every clip carries the venue it was filmed at</p></div><div class="ufb">`;
-  let b=`<p class="ncl">Pick a video</p><div class="csvid">${CSVID.map((x,i)=>`<button data-act="cspick" data-v="${i}" aria-pressed="${k.v===i}"><span><img class="cover" alt="" src="${CLIPV[x.vid].p}"></span>${x.geo?`<i class="csgeo">${ic('pin',10)}</i>`:''}<em>${mmss(CLIPV[x.vid].d)}</em></button>`).join('')}</div>
-    <p class="ncl">Location <em class="csreq">Required</em></p>`;
-  if(k.pickLoc) b+=`<div class="cslocs">${VENUES().map(v=>`<button class="itrow" data-act="csloc" data-v="${esc(v)}">${ic('pin',16)}<span class="ub"><b>${esc(VSH(v))}</b><span class="um">${esc(v)}</span></span>${ic('right',14)}</button>`).join('')}</div>`;
-  else if(loc) b+=`<div class="csloc on">${ic('pin',18)}<span class="ub"><b>${esc(VSH(loc))}</b><span class="um">${k.src==='geo'?'From your video’s location · On-site':'Tagged by you'}</span></span><button class="ufx" data-act="csedit">Change</button></div>`;
-  else b+=`<button class="csloc" data-act="csedit">${ic('pin',18)}<span class="ub"><b>Add the venue</b><span class="um">This video has no location · pick where you filmed it</span></span>${ic('right',14)}</button>`;
-  if(loc&&!k.pickLoc&&sh.length) b+=`<p class="ncl">Show</p>${sh.length>1?`<div class="ncv">${sh.slice(0,4).map(x=>`<button class="gch" data-act="csshow" data-id="${x.id}" aria-pressed="${sel===x}">${esc(x.artist)} · ${sd(x.dates[0])}</button>`).join('')}</div>`:`<div class="itrow" style="border:0"><span class="uthumb">${img(sel)}</span><span class="ub"><b>${esc(sel.artist)}</b><span class="um">${sd(sel.dates[0])} · matched by venue and date</span></span></div>`}`;
-  b+=`<p class="ncl">Caption</p><input id="cscap" class="eptx" style="height:46px" maxlength="80" placeholder="What was the moment?" value="${esc(k.cap||'')}">`;
+function csSheet(){ const k=state.cs, loc=k.loc, sh=loc?csShows(loc):[], sel=k.sid?byId[k.sid]:sh[0], txt=k.v===-1;
+  const head=`<div class="sheetbg" data-act="csclose"></div><div class="sheet csheet ufs" role="dialog" aria-label="${k.fromShow?'Review this show':'Share a clip'}"><div class="cgrab"><i class="grab"></i><h3>${k.fromShow?'How was '+esc(sel.artist)+'?':'Share a clip'}</h3><p>${k.fromShow?'Rate it, add a clip, or just a few words':'Every clip carries the venue it was filmed at'}</p></div><div class="ufb">`;
+  let b=`<p class="ncl">Your rating <em class="csopt">Optional</em></p><div class="csrate">${[1,2,3,4,5].map(n=>`<button data-act="csrate" data-v="${n}" aria-pressed="${n<=(k.rate||0)}" aria-label="${n} star${n>1?'s':''}">★</button>`).join('')}<span>${['Tap to rate','Not great','It was okay','Good night','Great night','Unforgettable'][k.rate||0]}</span></div>
+    <p class="ncl">${txt?'Your take':'Caption'}</p>${txt?`<textarea id="cscap" class="eptx" rows="3" maxlength="280" placeholder="What made the night? Setlist, sound, the crowd…">${esc(k.cap||'')}</textarea>`:`<input id="cscap" class="eptx" style="height:46px" maxlength="80" placeholder="What was the moment?" value="${esc(k.cap||'')}">`}
+    <p class="ncl">Add a clip <em class="csopt">${k.fromShow?'Optional':''}</em></p><div class="csvid"><button data-act="cspick" data-v="-1" aria-pressed="${txt}"><span class="cstxt"><b>Aa</b><small>Text only</small></span></button>${CSVID.map((x,i)=>`<button data-act="cspick" data-v="${i}" aria-pressed="${k.v===i}"><span><img class="cover" alt="" src="${CLIPV[x.vid].p}"></span>${x.geo?`<i class="csgeo">${ic('pin',10)}</i>`:''}<em>${mmss(CLIPV[x.vid].d)}</em></button>`).join('')}</div>`;
+  if(k.fromShow) b+=`<p class="ncl">Show</p><div class="itrow" style="border:0"><span class="uthumb">${img(sel)}</span><span class="ub"><b>${esc(sel.artist)}</b><span class="um">${sd(sel.dates[0])} · ${esc(VSH(sel.venue))} · Tagged</span></span></div>`;
+  else { b+=`<p class="ncl">Location <em class="csreq">Required</em></p>`;
+    if(k.pickLoc) b+=`<div class="cslocs">${VENUES().map(v=>`<button class="itrow" data-act="csloc" data-v="${esc(v)}">${ic('pin',16)}<span class="ub"><b>${esc(VSH(v))}</b><span class="um">${esc(v)}</span></span>${ic('right',14)}</button>`).join('')}</div>`;
+    else if(loc) b+=`<div class="csloc on">${ic('pin',18)}<span class="ub"><b>${esc(VSH(loc))}</b><span class="um">${k.src==='geo'?'From your video’s location · On-site':'Tagged by you'}</span></span><button class="ufx" data-act="csedit">Change</button></div>`;
+    else b+=`<button class="csloc" data-act="csedit">${ic('pin',18)}<span class="ub"><b>Add the venue</b><span class="um">${txt?'Where was the show? Pick the venue':'This video has no location · pick where you filmed it'}</span></span>${ic('right',14)}</button>`;
+    if(loc&&!k.pickLoc&&sh.length) b+=`<p class="ncl">Show</p>${sh.length>1?`<div class="ncv">${sh.slice(0,4).map(x=>`<button class="gch" data-act="csshow" data-id="${x.id}" aria-pressed="${sel===x}">${esc(x.artist)} · ${sd(x.dates[0])}</button>`).join('')}</div>`:`<div class="itrow" style="border:0"><span class="uthumb">${img(sel)}</span><span class="ub"><b>${esc(sel.artist)}</b><span class="um">${sd(sel.dates[0])} · matched by venue and date</span></span></div>`}`; }
   const ok=!!loc&&!k.pickLoc;
-  return head+b+`</div><div class="uff"><button class="ufx" data-act="csclose">Cancel</button><button class="cgo new" data-act="cspost" ${ok?'':'disabled'}>${ok?'Post clip':'Add a location to post'}</button></div></div>`; }
+  return head+b+`</div><div class="uff"><button class="ufx" data-act="csclose">Cancel</button><button class="cgo new" data-act="cspost" ${ok?'':'disabled'}>${ok?(txt?'Post review':'Post clip'):'Add a location to post'}</button></div></div>`; }
 function upSwap(anim){ const old=document.querySelector('#sc .wup'); if(!old){ render(); return; } state._ufAnim=anim; const tmp=document.createElement('div'); tmp.innerHTML=home(); state._ufAnim=false; window._dockActive='home';
   const nw=tmp.querySelector('.wup'); if(!nw){ render(); return; } const sl=(old.querySelector('.ufl')||{}).scrollLeft||0; old.replaceWith(nw); const f=nw.querySelector('.ufl'); if(f) f.scrollLeft=sl; upWatch(); }
 function upTail(feed){ return state.upN<feed.length?`<div class="usent" id="upsent" aria-hidden="true"></div>`:`<p class="uend">${ic('check',13)} That’s every show in ${state.city} · ${feed.length} ${feed.length===1?'show':'shows'}</p>`; }
@@ -2692,10 +2721,40 @@ function layWallet(open){ const w=document.getElementById('wal'); if(!w) return;
   if(open==null){ cs.forEach((c,i)=>{ c.style.transform=`translateY(${i*76}px)`; c.style.zIndex=i+1; c.classList.remove('op','bk'); c.querySelector('.tflip').classList.remove('on'); }); w.style.height=(76*(n-1)+214)+'px'; return; }
   let j=0; cs.forEach((c,i)=>{ if(i===open){ c.style.transform='translateY(0)'; c.style.zIndex=50; c.classList.add('op'); c.classList.remove('bk'); } else { c.style.transform=`translateY(${232+j*14}px) scale(${1-(n-1-j)*.035})`; c.style.zIndex=j+1; c.classList.remove('op'); c.classList.add('bk'); c.querySelector('.tflip').classList.remove('on'); j++; } });
   w.style.height=(232+(n-2)*14+214)+'px'; }
+const infoB=(k,label)=>`<button class="infob" data-act="info" data-v="${k}" aria-label="${label}">${ic('info',18)}</button>`;
+const INFO={tickets:['How spare tickets work',[['💵','Face value, always','Sellers can’t mark up. You pay face value plus a flat $2 fee.'],['🔒','Held until it lands','Your money sits in escrow and only reaches the seller once the ticket is in your account.'],['👯','You join their crew','Buying a spare adds you to the seller’s crew for this show, so you won’t be going alone.'],['⏱️','Crews get first dibs','Some spares are crew-only for 24 hours before anyone can claim them.']]],
+  crews:['How crews work',[['👥','Up to 8 people','Small enough to actually find each other at the venue.'],['➕','Full? We open the next','When a crew fills up, a new one opens with the same plan.'],['📍','One place to meet','Every crew has a time and a spot to meet before doors.'],['✅','Show-up score','Showing up keeps your score high. No-shows are visible to other crews.']]],
+  clips:['About clips & reviews',[['✦','AI summary','Written from every review of this show and refreshed as new ones come in.'],['★','Ratings','Anyone tagged at the venue can rate the night. Text-only reviews count too.'],['🎬','Clips','Short videos from the crowd. Tap one to watch it full screen.']]]};
+function infoSheet(){ const x=INFO[state.info]; if(!x) return '';
+  return `<div class="sheetbg" data-act="infoclose"></div><div class="sheet csheet infos" role="dialog" aria-label="${x[0]}"><div class="cgrab"><i class="grab"></i><h3>${x[0]}</h3></div>
+  <div class="ifb">${x[1].map(r=>`<div class="ifr"><i>${r[0]}</i><span><b>${r[1]}</b><small>${r[2]}</small></span></div>`).join('')}</div><div class="uff"><button class="cgo new" data-act="infoclose">Got it</button></div></div>`; }
+// Clips on the show page = fans' reviews of the night: video clips and text-only posts, each with an optional 1–5 rating
+const RV_T=[[5,'Screamed every word. The encore alone was worth the ticket.'],[4,'Sound was huge on the floor, a little muddy up in the 200s.'],[5,'Came solo, left with a crew of four. Best night of my year.'],[3,'Great set, but the merch line ate the whole opener.'],[5,'They played the deep cut I was praying for. Still shaking.'],[4,'Such a kind crowd. Someone was handing out water in the GA line.'],[4,'Visuals were unreal. Get there early if you want the rail.']];
+const stars=(v,cls='')=>`<span class="st ${cls}" style="--v:${Math.max(0,Math.min(5,v))/5*100}%" role="img" aria-label="${(+v).toFixed(1).replace('.0','')} out of 5 stars">★★★★★</span>`;
+function reviewsFor(s){ const k=Math.abs(h(s.id));
+  const vids=clipList().filter(c=>c.s===s).map(c=>({...c,rate:c.rate!=null?c.rate:[5,4,5,5,4][Math.abs(h(c.id))%5]}));
+  const txt=[0,1,2,3,4].map(i=>{ const t=RV_T[(k+i)%RV_T.length]; return {id:'r-'+s.id+'-'+i,s,p:(k+i*5)%8,cap:t[1],rate:t[0],likes:8+((k>>i)%300),com:1+((k>>(i+1))%40),ago:[1,4,6,9,13][i]+'h',sec:SECS[(k+i)%SECS.length]}; });
+  const mine=vids.filter(c=>c.me), rest=vids.filter(c=>!c.me), out=[...mine];
+  for(let i=0;i<Math.max(rest.length,txt.length);i++){ if(txt[i]) out.push(txt[i]); if(rest[i]) out.push(rest[i]); } return out; }
+function clipAny(id){ const c=clipList().find(x=>x.id===id); if(c) return c; if(id.startsWith('r-')){ const sid=id.slice(2,id.lastIndexOf('-')); return byId[sid]?reviewsFor(byId[sid]).find(x=>x.id===id):null; } return null; }
+function reviewsView(s){ const R=reviewsFor(s), rated=R.filter(r=>r.rate), k=Math.abs(h(s.id)), n=rated.length+36+k%180, avg=rated.reduce((a,r)=>a+r.rate,0)/Math.max(1,rated.length), song=songsFor(s.artist)[k%3];
+  const asp=[['Setlist',4.5+(k%5)/10],['Crowd',4.4+(k%6)/10],['Sound',3.8+(k%7)/10],['Venue',3.5+(k%8)/10]].map(([a,v])=>[a,Math.min(5,v)]);
+  const shown=(state.rvMore||{})[s.id]?R:R.slice(0,4), lk=state.clk||{};
+  return `<h2 class="h2 sec">Clips${infoB('clips','About clips and reviews')}</h2><p class="sub" style="margin:6px 0 4px">What fans thought of the night</p>
+  <div class="aisum"><div class="aitop"><b>${avg.toFixed(1)}</b><span>${stars(avg)}<small>${n} reviews</small></span></div>
+    <p class="aitx"><em>${ic('spark',13)} AI summary</em>Fans say ${esc(s.artist)} was ${avg>=4.4?'unforgettable':'a strong night'} at ${esc(VSH(s.venue))}. The encore and “${esc(song)}” come up again and again, and solo-goers mention finding a crew fast. Common gripes: long merch lines and patchy sound in the upper levels.</p>
+    <div class="aiasp">${asp.map(([a,v])=>`<span><small>${a}</small><i><b style="width:${v/5*100}%"></b></i><em>${v.toFixed(1)}</em></span>`).join('')}</div></div>
+  <button class="rvnew" data-act="rvnew" data-id="${s.id}"><span class="bgav"><span>${avi(MEP[3])}</span></span><span class="rvq">How was it?</span>${stars(0,'sm')}</button>
+  <div class="rvl">${shown.map(r=>{ const who=r.me?MEP:PEOPLE[r.p], cv=r.vid!=null?CLIPV[r.vid]:null, on=!!lk[r.id];
+    return `<article class="rv"><div class="rvh"><span class="bgav"><span>${avi(who[3])}</span></span><span class="rvw"><b>${r.me?'You':who[0]}${r.me||h(r.id)%3?` <em>${ic('check',9)} Was there</em>`:''}</b><small>${r.ago==='now'?'Just now':r.ago+' ago'}${r.sec?' · '+esc(r.sec):''}</small></span>${r.rate?stars(r.rate,'sm'):''}</div>
+      ${r.cap?`<p class="rvt">${esc(r.cap)}</p>`:''}
+      ${cv?`<button class="rvv" data-act="clopen" data-id="${r.id}" aria-label="Play clip, ${mmss(cv.d)}"><img class="cover" alt="" src="${cv.p}"><i>${ic('play',22)}</i><em>${mmss(cv.d)}</em></button>`:''}
+      <div class="rvf"><button data-act="rvlike" data-v="${r.id}" aria-pressed="${on}" aria-label="Like">${ic('heart',16)}<span>${fmtK((r.likes||0)+(on?1:0))}</span></button><button data-act="clcom" data-v="${r.id}" aria-label="Comments">${ic('chat',16)}<span>${fmtK((r.com||0)+((state.cmMine||{})[r.id]||[]).length)}</span></button></div></article>`; }).join('')}</div>
+  ${R.length>4&&!(state.rvMore||{})[s.id]?`<button class="rvmore" data-act="rvmore" data-id="${s.id}">Show all ${R.length} reviews</button>`:''}`; }
 function show(){
   const s=byId[state.id];
-  const cs=xCrews().filter(c=>c.s===s), cl=clipList().filter(c=>c.s===s);
-  const tabs=[['tickets','Tickets'],['crews','Crews']].concat(cl.length?[['clips','Clips']]:[]).concat([['wall','Wall']]);
+  const cs=xCrews().filter(c=>c.s===s);
+  const tabs=[['tickets','Tickets'],['crews','Crews'],['clips','Clips'],['wall','Wall']];
   const tabRow=top=>`<div class="shtabs${top?' top':''}">${tabs.map(([k,l],i)=>`<button class="gch" data-act="shtab" data-v="${k}" aria-pressed="${i===0}">${l}</button>`).join('')}</div>`;
   return `<div class="scroll" id="shsc"><div style="padding-bottom:110px">
     <div class="hero">${img(s)}
@@ -2710,13 +2769,12 @@ function show(){
       <p style="margin:0 0 8px;font-size:16px;line-height:1.45;color:var(--muted);letter-spacing:-.01em">${esc(cleanTitle(s))}. ${s.dates.length>1?s.dates.length+' nights':'One night'} at ${esc(s.venue)}.</p>
       ${tabRow(false)}
       <span id="shs-tickets" class="shanchor"></span>${LOCKED(s)?lockedCard(s):(()=>{ const L=sparesFor(s).filter(x=>!(state.claimedIds||{})[x.id]); const on=(state.notify||{})[s.id];
-        return `<h2 class="h2 sec">Spare tickets <span class="emo">🎟️</span></h2>`+(L.length?L.map(x=>spareCard(x,true)).join('')+`<p class="note" style="margin:0">Face value only · you’ll join the seller’s crew</p>`
+        return `<h2 class="h2 sec">Spare tickets <span class="emo">🎟️</span>${infoB('tickets','How spare tickets work')}</h2>`+(L.length?L.map(x=>spareCard(x,true)).join('')
         :`<div class="spnone"><b>No spares for this show yet</b><span>${4+h(s.id)%30} people are on the waitlist. We’ll ping you the moment one drops.</span><button class="${on?'on':''}" data-act="notify" data-id="${s.id}">${on?ic('check',14)+' You’re on the list':'🔔 Notify me'}</button></div>`); })()}
-      <span id="shs-crews" class="shanchor"></span><h2 class="h2 sec">Crews going ${ic('right',16)}</h2>
+      <span id="shs-crews" class="shanchor"></span><h2 class="h2 sec">Crews going${infoB('crews','How crews work')}</h2>
       <div class="xgrp xgs">${cs.map(xRow).join('')}</div>
       <button class="crewrow newcrew" data-act="ncopen" data-id="${s.id}">${ic('plus',20)}<span style="flex:1;font-weight:600;letter-spacing:-.02em">Start your own crew</span></button>
-      <p class="note" style="margin:0">Crews cap at 8 · when one fills, we open the next</p>
-      ${cl.length?`<span id="shs-clips" class="shanchor"></span><h2 class="h2 sec">Clips from this show</h2><p class="sub" style="margin:6px 0 4px">Filmed at ${esc(VSH(s.venue))} by fans who were there</p><div class="shclips">${clipThumbs(cl,true)}</div>`:''}
+      <span id="shs-clips" class="shanchor"></span>${reviewsView(s)}
       <span id="shs-wall" class="shanchor"></span>${wallView(s)}
     </div></div></div>
     <div class="shbar" id="shbar" aria-hidden="true"><div class="shbr"><button class="nb lt" data-act="back" aria-label="Back" tabindex="-1">${ic('back')}</button><span class="shbt"><b>${esc(s.artist)}</b><small>${sd(s.dates[0])} · ${esc(VSH(s.venue))}</small></span><button class="nb lt" data-act="toast" data-msg="Link copied" aria-label="Share" tabindex="-1">${ic('share',20)}</button></div>${tabRow(true)}</div>
@@ -2948,9 +3006,11 @@ function person(){ return profileView(false); }
 
 function render(anim){ window._dockActive=null; const _ap=document.getElementById('app'); _ap.classList.toggle('dk',['crew','me','person','clips'].includes(state.screen)); _ap.classList.toggle('framed',!(matchMedia('(pointer:coarse)').matches&&innerWidth<500));
   const v=document.getElementById('view');
+  const shPrev=document.getElementById('shsc'), shKeep=shPrev&&!anim&&state.screen==='show'&&state._last==='show'&&state.id===state._lastId?shPrev.scrollTop:0; state._lastId=state.id;
   const prev=document.getElementById('sc'); const keep=prev&&state.screen==='home'&&state._last==='home'?prev.scrollTop:0; state._last=state.screen;
-  v.innerHTML={home,show,crew,crews,me,person,explore,tickets,scene,sell,search,clips}[state.screen]()+(state.sheet?citySheet():'')+(state.tsheet?ticketSheet():'')+(state.psheet?plusSheet():'')+(state.kit?kitSheet():'')+(state.safe?safetySheet():'')+(state.nc?ncSheet():'')+(state.ufo?ufSheet():'')+(state.itk?itSheet():'')+(state.ep?epSheet():'')+(state.secO?secSheet():'')+(state.cs?csSheet():'')+(state.cmt?cmSheet():'');
+  v.innerHTML={home,show,crew,crews,me,person,explore,tickets,scene,sell,search,clips}[state.screen]()+(state.sheet?citySheet():'')+(state.tsheet?ticketSheet():'')+(state.psheet?plusSheet():'')+(state.kit?kitSheet():'')+(state.safe?safetySheet():'')+(state.nc?ncSheet():'')+(state.ufo?ufSheet():'')+(state.itk?itSheet():'')+(state.ep?epSheet():'')+(state.secO?secSheet():'')+(state.cs?csSheet():'')+(state.cmt?cmSheet():'')+(state.info?infoSheet():'');
   const nsc=document.getElementById('sc'); if(nsc&&keep) nsc.scrollTop=keep;
+  const nsh=document.getElementById('shsc'); if(nsh&&shKeep) nsh.scrollTop=shKeep;
   if(anim){ v.classList.remove('screen'); void v.offsetWidth; v.classList.add('screen'); }
   const ci=document.getElementById('ci'); if(ci) ci.scrollTop=ci.scrollHeight;
   if(state.sheet) initCitySheet();
@@ -3034,11 +3094,15 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='clfeed'){ state.clFeed=v; state.clY=0; render(); }
   else if(a==='clshare'){ if(document.getElementById('psheet')) closePlus(); state.cs={v:0,loc:CSVID[0].geo,src:'geo'}; render(); }
   else if(a==='csclose'){ state.cs=null; render(); }
-  else if(a==='cspick'){ const c=document.getElementById('cscap'), vd=CSVID[+v]; state.cs={v:+v,cap:c?c.value:'',loc:vd.geo,src:vd.geo?'geo':null}; render(); }
+  else if(a==='cspick'){ const c=document.getElementById('cscap'), vd=CSVID[+v], k=state.cs; state.cs=k.fromShow?{...k,v:+v,cap:c?c.value:''}:{v:+v,cap:c?c.value:'',rate:k.rate||0,loc:vd?vd.geo:null,src:vd&&vd.geo?'geo':null}; render(); }
   else if(a==='csedit'){ const c=document.getElementById('cscap'); state.cs.cap=c?c.value:''; state.cs.pickLoc=true; render(); }
   else if(a==='csloc'){ state.cs.loc=v; state.cs.src='manual'; state.cs.pickLoc=false; state.cs.sid=null; render(); }
   else if(a==='csshow'){ const c=document.getElementById('cscap'); state.cs.cap=c?c.value:''; state.cs.sid=id; render(); }
-  else if(a==='cspost'){ const k=state.cs; if(!k.loc) return; const c=document.getElementById('cscap'), sh=csShows(k.loc), sel=k.sid?byId[k.sid]:(sh[0]||A(KIT.show)); state.myClips=[{id:'m'+Date.now(),me:true,p:null,vid:CSVID[k.v||0].vid,s:sel,cap:(c&&c.value.trim())||'What a night',song:songsFor(sel.artist)[0],likes:0,com:0,ago:'now',loc:k.loc,onsite:k.src==='geo'}].concat(state.myClips||[]); state.cs=null; state.history=[]; state.screen='clips'; state.clY=0; render(); toast('Clip posted · tagged at '+VSH(k.loc)); }
+  else if(a==='cspost'){ const k=state.cs; if(!k.loc) return; const c=document.getElementById('cscap'), txt=c?c.value.trim():'', sh=csShows(k.loc), sel=k.sid?byId[k.sid]:(sh[0]||A(KIT.show));
+    if(k.v===-1&&!txt){ toast('Write a few words first'); c&&c.focus(); return; }
+    state.myClips=[{id:'m'+Date.now(),me:true,p:null,vid:k.v===-1?null:CSVID[k.v].vid,rate:k.rate||0,s:sel,cap:txt||'What a night',song:songsFor(sel.artist)[0],likes:0,com:0,ago:'now',loc:k.loc,onsite:k.src==='geo'}].concat(state.myClips||[]); state.cs=null;
+    if(k.fromShow){ render(); toast(k.v===-1?'Review posted':'Clip posted'); setTimeout(()=>shGo('clips'),60); }
+    else { state.history=[]; state.screen='clips'; state.clY=0; render(); toast('Clip posted · tagged at '+VSH(k.loc)); } }
   else if(a==='xtag'){ state.xtag=+v<0?null:+v; render(); }
   else if(a==='hold'){ const t=thById(state.tid); t.hold='held'; render(); toast('$5 held · it comes back when you check in'); }
   else if(a==='checkin'&&!thById(state.tid).dep){ const t=thById(state.tid); t.hold='in'; t.msgs.push({d:'sys',t:`You’re at ${t.plan[1]}`}); t.ts=++TSEQ; render(); toast('Nice · this counts toward your show-up record'); }
@@ -3093,6 +3157,12 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='explore'){ state.history=[]; state.screen='explore'; render(); }
   else if(a==='clips'){ state.history=[]; state.screen='clips'; render(); }
   else if(a==='shtab'){ shGo(v); }
+  else if(a==='info'){ state.info=v; render(); }
+  else if(a==='infoclose'){ state.info=null; render(); }
+  else if(a==='rvlike'){ state.clk=state.clk||{}; state.clk[v]=!state.clk[v]; const b=t.closest('button'); const r=clipAny(v); b.setAttribute('aria-pressed',!!state.clk[v]); b.querySelector('span').textContent=fmtK((r.likes||0)+(state.clk[v]?1:0)); b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); }
+  else if(a==='rvmore'){ (state.rvMore ||= {})[id]=true; render(); }
+  else if(a==='rvnew'){ const sh=byId[id]; state.cs={v:-1,loc:sh.venue,src:'show',sid:sh.id,fromShow:true,rate:0}; render(); setTimeout(()=>{ const c=document.getElementById('cscap'); c&&c.focus(); },300); }
+  else if(a==='csrate'){ const c=document.getElementById('cscap'); state.cs.cap=c?c.value:''; state.cs.rate=state.cs.rate===+v?0:+v; render(); }
   else if(a==='clopen'){ state.history=[]; state.screen='clips'; state.clFeed='fy'; state.clJump=t.dataset.id; state.clY=0; render(); }
   else if(a==='tickets'){ state.history=[]; state.screen='tickets'; render(); }
   else if(a==='shuffle'){ state.drop++; render(); }
