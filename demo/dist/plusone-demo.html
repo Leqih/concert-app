@@ -283,6 +283,13 @@ h1,h2,h3{margin:0;letter-spacing:-.045em;font-weight:700;line-height:1.02}
 .wbar{position:absolute;left:12px;right:12px;bottom:calc(14px + var(--sb));display:flex;gap:8px;z-index:5}
 .shtabs{display:flex;gap:6px;margin:2px 0 4px}.shtabs .gch{flex:1;justify-content:center;padding:0 8px}
 .shanchor{display:block;height:0}
+.went{display:flex;flex-direction:column;gap:10px;width:100%;padding:14px;border-radius:var(--r-lg);background:var(--card);text-align:left;transition:transform .15s}.went:active{transform:scale(.985)}
+.wenh{display:flex;align-items:center;gap:10px}.wenh .cstrip{margin:0}.wenh .cstrip span{border-color:var(--card)}.wenh b{font-size:15px;letter-spacing:-.02em}.wenh small{margin-left:auto;font-size:12px;color:var(--muted)}
+.wenr{display:flex;align-items:baseline;gap:8px;padding-top:10px;border-top:1px solid var(--line);min-width:0}.wenr .wpt{flex-shrink:0}.wenr>span{font-size:14px;line-height:1.35;color:#3C3C40;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.wenr>span b{color:var(--text)}
+.wenf{display:flex;align-items:center;gap:8px;padding-top:10px;border-top:1px solid var(--line)}.wenf>span{flex:1;min-width:0;display:flex;gap:4px;overflow:hidden;-webkit-mask:linear-gradient(90deg,#000 80%,transparent);mask:linear-gradient(90deg,#000 80%,transparent)}
+.wenf em{font-style:normal;flex-shrink:0;height:24px;padding:0 9px;border-radius:12px;background:var(--card2);font-size:11.5px;font-weight:600;display:inline-flex;align-items:center;color:#55555A}.wenf>b{display:inline-flex;align-items:center;gap:2px;font-size:13.5px;flex-shrink:0}
+.wphd{padding:calc(var(--st) + 2px) 14px 10px}.wphr{display:grid;grid-template-columns:40px 1fr 40px;align-items:center}
+#wpsc #wall .wtg{margin-top:4px}
 .infob{display:inline-grid;place-items:center;width:30px;height:30px;margin-left:4px;vertical-align:3px;border-radius:50%;color:var(--muted)}.infob:active{background:var(--card2)}
 .ifb{padding:4px 16px 14px;display:flex;flex-direction:column;gap:14px}.ifr{display:flex;gap:12px;align-items:flex-start}.ifr>i{font-style:normal;width:40px;height:40px;border-radius:12px;background:var(--card2);display:grid;place-items:center;font-size:18px;flex-shrink:0}
 .ifr>span{display:flex;flex-direction:column;gap:2px}.ifr b{font-size:15px;letter-spacing:-.02em}.ifr small{font-size:13.5px;line-height:1.4;color:var(--muted)}
@@ -2518,8 +2525,18 @@ function wallPosts(x){ const k=Math.abs(h(x.id)), S=songsFor(x.artist), v=VSH(x.
     {p:P(4),tag:'Getting there',t:`Bag policy is clear bags only, small clutch is fine. Learned that the hard way last time.`,m:140,l:203,r:19}];
   return (state.wall&&state.wall[x.id]||[]).concat(base).map((o,i)=>({...o,id:x.id+'-w'+i})); }
 function hasTix(x){ return MYTIX().some(r=>r[0]===x)||!!(state.claimed&&state.claimed[x.id]); }
+// Show wall lives on its own page now; the show page only carries a preview card that opens it (placed before Clips)
+function wallEntry(x){ const L=wallPosts(x).filter(o=>!(o.p!=null&&(state.blocked||{})[o.p])), k=Math.abs(h(x.id)), n=L.length+24+k%90, fresh=L.filter(o=>o.m<60).length+k%6;
+  return `<h2 class="h2 sec">Show wall <span class="emo">🧱</span></h2><p class="sub" style="margin:6px 0 4px">Plans, fits and setlist talk before the show</p>
+  <button class="went" data-act="wallopen" data-id="${x.id}" aria-label="Open the ${esc(x.artist)} show wall, ${n} posts">
+    <span class="wenh"><span class="cstrip">${L.slice(0,4).map(o=>`<span>${avi((o.me?MEP:PEOPLE[o.p])[3])}</span>`).join('')}</span><b>${n} posts</b><small>${fresh} new in the last hour</small></span>
+    ${L.slice(0,2).map(o=>{ const p=o.me?MEP:PEOPLE[o.p]; return `<span class="wenr"><i class="wpt">${o.tag}</i><span><b>${o.me?'You':p[0]}</b> ${esc(o.t)}</span></span>`; }).join('')}
+    <span class="wenf"><span>${WTAGS.slice(1).map(t=>`<em>${t}</em>`).join('')}</span><b>Open wall ${ic('right',14)}</b></span></button>`; }
+function wallPage(){ const x=byId[state.id];
+  return `<div class="scroll" id="wpsc"><div class="xtop wphd"><div class="wphr"><button class="nb lt" data-act="back" aria-label="Back">${ic('back')}</button><span class="shbt"><b>Show wall</b><small>${esc(x.artist)} · ${sd(x.dates[0])} · ${esc(VSH(x.venue))}</small></span><button class="nb lt" data-act="toast" data-msg="Link copied" aria-label="Share">${ic('share',20)}</button></div></div>
+    <div class="pad" style="padding-bottom:40px">${wallView(x)}</div></div>`; }
 function wallView(x){ const tag=state.wtag||'All', L=wallPosts(x).filter(o=>(tag==='All'||o.tag===tag)&&!(o.p!=null&&(state.blocked||{})[o.p])), lk=state.wlk||{}, me=hasTix(x);
-  return `<div id="wall"><h2 class="h2 sec" style="margin-top:14px">Show wall <span class="emo">🧱</span></h2><p class="sub" style="margin:6px 0 14px">Plans, fits and setlist talk for this show</p>
+  return `<div id="wall">
     <div class="hs wtg">${WTAGS.map(t=>`<button class="gch" data-act="wtag" data-v="${t}" aria-pressed="${tag===t}">${t}</button>`).join('')}</div>
     ${true?`<form class="wcomp2" onsubmit="return wallPost(event,'${x.id}')"><span class="bgav"><span>${avi(MEP[3])}</span></span><label for="wq" hidden>Post</label><input id="wq" placeholder="Post to the ${esc(x.artist)} wall" autocomplete="off"><button type="submit">Post</button></form>`
       :`<div class="wlock"><span>🎟️</span><span><b>Read-only for now</b><small>Claim a spare or import your ticket to post</small></span><button data-act="itopen">Add ticket</button></div>`}
@@ -2527,7 +2544,7 @@ function wallView(x){ const tag=state.wtag||'All', L=wallPosts(x).filter(o=>(tag
       return `<article class="wp"><div class="wph"><button class="bgav" ${o.me?'':`data-act="person" data-v="${o.p}"`} aria-label="${p[0]}"><span>${avi(p[3])}</span></button><span class="wpn"><b>${o.me?'You':p[0]}</b><small>${ic('check',10)} Ticket holder · ${o.m<60?o.m+' min':Math.round(o.m/60)+' h'} ago</small></span><i class="wpt">${o.tag}</i></div>
         <p>${esc(o.t)}</p>${o.img?`<span class="wpi">${img(x)}</span>`:''}
         <div class="wpf"><button data-act="wlike" data-v="${o.id}" aria-pressed="${liked}">${liked?'♥':'♡'} ${o.l+(liked?1:0)}</button><button data-act="wrep" data-v="${o.id}" aria-expanded="${!!(state.wopen||{})[o.id]}">💬 ${o.r+((state.wrp||{})[o.id]||[]).length}</button>${o.me?'':o.mc?`<button class="wme" data-act="wmc" data-v="${o.p}">That’s me 👋</button>`:`<button class="wme" data-act="dm" data-v="${o.p}">Say hi</button>`}</div>${(state.wopen||{})[o.id]?wallThread(o,x,me):''}</article>`; }).join('')||`<p class="note">Nothing here yet. Be the first to post.</p>`}</div>`; }
-function wallPost(e,sid){ e.preventDefault(); const i=document.getElementById('wq'), v=i.value.trim(); if(!v) return false; state.wall=state.wall||{}; (state.wall[sid]=state.wall[sid]||[]).unshift({me:true,p:null,tag:state.wtag&&state.wtag!=='All'?state.wtag:'Getting there',t:v,m:0,l:0,r:0}); render(); toast('Posted to the wall'); setTimeout(()=>{ const w=document.getElementById('wall'); w&&(w.scrollIntoView({block:'start'}),document.querySelector('.scroll').scrollBy(0,-64)); },30); return false; }
+function wallPost(e,sid){ e.preventDefault(); const i=document.getElementById('wq'), v=i.value.trim(); if(!v) return false; state.wall=state.wall||{}; (state.wall[sid]=state.wall[sid]||[]).unshift({me:true,p:null,tag:state.wtag&&state.wtag!=='All'?state.wtag:'Getting there',t:v,m:0,l:0,r:0}); render(); toast('Posted to the wall'); const sc=document.getElementById('wpsc'); sc&&sc.scrollTo({top:0,behavior:'smooth'}); return false; }
 function home(){
   const drops=DROPS();
   const k=state.drop%drops.length, d=drops[k];
@@ -2780,7 +2797,7 @@ function reviewsView(s){ const R=reviewsFor(s), rated=R.filter(r=>r.rate), k=Mat
 function show(){
   const s=byId[state.id];
   const cs=xCrews().filter(c=>c.s===s);
-  const tabs=[['tickets','Tickets'],['crews','Crews'],['clips','Clips'],['wall','Wall']];
+  const tabs=[['tickets','Tickets'],['crews','Crews'],['wall','Wall'],['clips','Clips']];
   const tabRow=top=>`<div class="shtabs${top?' top':''}">${tabs.map(([k,l],i)=>`<button class="gch" data-act="shtab" data-v="${k}" aria-pressed="${i===0}">${l}</button>`).join('')}</div>`;
   return `<div class="scroll" id="shsc"><div style="padding-bottom:110px">
     <div class="hero">${img(s)}
@@ -2800,8 +2817,8 @@ function show(){
       <span id="shs-crews" class="shanchor"></span><h2 class="h2 sec">Crews going${infoB('crews','How crews work')}</h2>
       <div class="xgrp xgs">${cs.map(xRow).join('')}</div>
       <button class="crewrow newcrew" data-act="ncopen" data-id="${s.id}">${ic('plus',20)}<span style="flex:1;font-weight:600;letter-spacing:-.02em">Start your own crew</span></button>
+      <span id="shs-wall" class="shanchor"></span>${wallEntry(s)}
       <span id="shs-clips" class="shanchor"></span>${reviewsView(s)}
-      <span id="shs-wall" class="shanchor"></span>${wallView(s)}
     </div></div></div>
     <div class="shbar" id="shbar" aria-hidden="true"><div class="shbr"><button class="nb lt" data-act="back" aria-label="Back" tabindex="-1">${ic('back')}</button><span class="shbt"><b>${esc(s.artist)}</b><small>${sd(s.dates[0])} · ${esc(VSH(s.venue))}</small></span><button class="nb lt" data-act="toast" data-msg="Link copied" aria-label="Share" tabindex="-1">${ic('share',20)}</button></div>${tabRow(true)}</div>
     <div class="wbar"><button class="wpill big" data-act="crew" data-id="${s.id}">Join a crew</button>${s.url?`<a class="wpill big ghost" href="${esc(s.url)}" target="_blank" rel="noopener">Buy tickets ↗</a>`:''}</div>`;
@@ -3032,11 +3049,12 @@ function person(){ return profileView(false); }
 
 function render(anim){ window._dockActive=null; const _ap=document.getElementById('app'); _ap.classList.toggle('dk',['crew','me','person','clips'].includes(state.screen)); _ap.classList.toggle('framed',!(matchMedia('(pointer:coarse)').matches&&innerWidth<500));
   const v=document.getElementById('view');
-  const shPrev=document.getElementById('shsc'), shKeep=shPrev&&!anim&&state.screen==='show'&&state._last==='show'&&state.id===state._lastId?shPrev.scrollTop:0; state._lastId=state.id;
+  const shPrev=document.getElementById('shsc'), shKeep=shPrev&&!anim&&state.screen==='show'&&state._last==='show'&&state.id===state._lastId?shPrev.scrollTop:0; state._prevScreen=state._last; state._lastId=state.id;
   const prev=document.getElementById('sc'); const keep=prev&&state.screen==='home'&&state._last==='home'?prev.scrollTop:0; state._last=state.screen;
-  v.innerHTML={home,show,crew,crews,me,person,explore,tickets,scene,sell,search,clips}[state.screen]()+(state.sheet?citySheet():'')+(state.tsheet?ticketSheet():'')+(state.psheet?plusSheet():'')+(state.kit?kitSheet():'')+(state.safe?safetySheet():'')+(state.nc?ncSheet():'')+(state.ufo?ufSheet():'')+(state.itk?itSheet():'')+(state.ep?epSheet():'')+(state.secO?secSheet():'')+(state.cs?csSheet():'')+(state.cmt?cmSheet():'')+(state.info?infoSheet():'');
+  v.innerHTML={home,show,crew,crews,me,person,explore,tickets,scene,sell,search,clips,wall:wallPage}[state.screen]()+(state.sheet?citySheet():'')+(state.tsheet?ticketSheet():'')+(state.psheet?plusSheet():'')+(state.kit?kitSheet():'')+(state.safe?safetySheet():'')+(state.nc?ncSheet():'')+(state.ufo?ufSheet():'')+(state.itk?itSheet():'')+(state.ep?epSheet():'')+(state.secO?secSheet():'')+(state.cs?csSheet():'')+(state.cmt?cmSheet():'')+(state.info?infoSheet():'');
   const nsc=document.getElementById('sc'); if(nsc&&keep) nsc.scrollTop=keep;
   const nsh=document.getElementById('shsc'); if(nsh&&shKeep) nsh.scrollTop=shKeep;
+  if(nsh&&!shKeep&&state._prevScreen==='wall'&&(state.shY||{})[state.id]) nsh.scrollTop=state.shY[state.id];
   if(anim){ v.classList.remove('screen'); void v.offsetWidth; v.classList.add('screen'); }
   const ci=document.getElementById('ci'); if(ci) ci.scrollTop=ci.scrollHeight;
   if(state.sheet) initCitySheet();
@@ -3071,7 +3089,8 @@ document.getElementById('app').addEventListener('click',e=>{
       msgs:[{d:'sys',t:`You started ${name} · 1 of ${c.cap}`}].concat(c.priv?[{d:'sys',t:'Invite only · share the link with friends'}]:[]),replies:[[p,'Sounds good!']]};
     TH.unshift(t); MINE.push({tid:t.id,s,j:c.j,name}); state.nc=null; openThread(t); toast(c.priv?'Crew created · invite link ready':'Crew created · it’s now listed on Explore');
     setTimeout(()=>{ t.who.push(p); t.msgs.push({d:'sys',t:`${P0(p)} joined${c.priv?' via your link':''} · ${t.who.length+1} of ${t.cap}`}); t.msgs.push({d:'in',p,t:`Hey! First time seeing ${s.artist} live 🙌`,time:nowT()}); t.ts=++TSEQ; if(state.screen==='crew'&&state.tid===t.id) render(); else t.un++; },2600); }
-  else if(a==='wallgo'){ go('show',id); setTimeout(()=>{ const w=document.getElementById('wall'); w&&(w.scrollIntoView({block:'start'}),document.querySelector('.scroll').scrollBy(0,-64)); },280); }
+  else if(a==='wallgo'){ state.wtag='All'; go('wall',id); }
+  else if(a==='wallopen'){ const sc=document.getElementById('shsc'); (state.shY ||= {})[id]=sc?sc.scrollTop:0; state.wtag='All'; go('wall',id); }
   else if(a==='wtag'){ state.wtag=v; const sc=document.querySelector('.scroll'), y=sc&&sc.scrollTop; render(); const n=document.querySelector('.scroll'); if(n) n.scrollTop=y; }
   else if(a==='wlike'){ state.wlk=state.wlk||{}; state.wlk[v]=!state.wlk[v]; const sc=document.querySelector('.scroll'), y=sc&&sc.scrollTop; render(); const n=document.querySelector('.scroll'); if(n) n.scrollTop=y; }
   else if(a==='wmc'){ toast(`We’ll let ${P0(+v)} know · you can chat only if they say yes`); }
