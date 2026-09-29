@@ -32,9 +32,10 @@
 ```
 HANDOFF.md            ← 本文件
 CLAUDE.md             ← 给 Claude 的工作规则（精简版）
-demo/                 ← 主作品：单文件 HTML 交互 demo（当前 = M17.4 / 线上 v96）
+demo/                 ← 主作品：单文件 HTML 交互 demo（当前 = M17.5 / 线上 v97）
   demo2_tpl.html      模板源码（唯一需要改的文件）
   build.py            把数据注入模板 → dist/plusone-demo.html
+  clips/              Clips 用的 8 段演唱会视频 + 封面（Pexels，CREDITS.md）
   shows.js            纽约演出数据（Ticketmaster 抓取后的静态快照）
   cities.json         其他 4 个城市的演出数据（Los Angeles / Chicago / London / Toronto；纽约在 shows.js）
   avatars.json        头像图（base64）
@@ -56,7 +57,7 @@ docs/milestones.md    ← 迭代里程碑表
 ## 4. Demo 架构（demo/demo2_tpl.html）
 
 - **单文件原生 JS**，无框架、无构建依赖（只需 Python 跑 build.py）。
-- 模板里有 4 个占位符，由 `build.py` 替换：`/*SHOWS*/`、`/*AVATARS*/`、`/*CITIES*/`、`/*MAP*/`。
+- 模板里有 5 个占位符，由 `build.py` 替换：`/*SHOWS*/`、`/*AVATARS*/`、`/*CITIES*/`、`/*MAP*/`、`/*CLIPV*/`（`demo/clips/` 里的视频 + 封面，base64 内联）。
 - **状态**：全局 `state` 对象（第 ~1619 行）
   `{ city, screen, id, tab, genre, sort, q, drop, rsvp, history, msgs, ... }`，另有 `xmode / xtag`（Explore）、`sheet / tsheet / psheet / kit / safe`（各种底部弹层）。
 - **渲染**：`render()` 按 `state.screen` 调用对应页面函数，返回 HTML 字符串写进 `#view`，再叠加打开的弹层。
@@ -121,6 +122,17 @@ pip install playwright && python3 demo/tests/m7test.py   # 可选：批量截屏
 | M17.2 | v94 | Clips v2 | ＋ 菜单：星星改为 Share a clip（From last night），去掉单独胶囊；Find a +1 开关移到个人页右上（Open to invites）。Clips：真实评论面板（只有去过的人可评论、Was there 标记、评论点赞、发评论）；Following 只看 buddy/小队成员；右下转动唱片 + 歌名滚动；首次打开 Swipe up 提示；暂停时进度条加粗并显示时长；切换 tab 保留滚动位置 |
 | M17.3 | v95 | 评论对所有人开放 | 主人要求：任何人都能评论 Clips、回复演出墙；去过/持票的人只是名字旁多一个「Was there」/「Going」标记。发片段、在演出墙发帖仍需持票 |
 | M17.4 | v96 | 片段必须带位置标签 | 主人要求：发片段不再要求持票，改为硬性要求场馆位置标签——视频带定位则自动识别（On-site），没有定位必须手动选场馆（Tagged），不选位置无法发布；按场馆+日期自动匹配演出，同场馆多场可切换；片段上显示「📍 场馆 · On-site/Tagged」；演出墙发帖也对所有人开放 |
+| M17.5 | v97 | Clips 播放真视频 | 7 段 Pexels 免费演唱会竖屏视频（1080p 原片 → 720×1280 H.264，CRF 30、无 B 帧、1 秒一个关键帧，8–10 s，见 `demo/clips/CREDITS.md`），构建时内联；滑到哪条播哪条，离开即暂停；点一下暂停/播放，双击点赞也会恢复播放；进度条和「0:03 / 0:10」跟真实播放走；进度条可拖动（拖动时隐藏文案/右栏，居中大号时间）；静音按钮控制真实声音（3 段有现场声）；发布面板缩略图换成视频封面，发布的片段也带视频。**Claude 预览面板播不了 `<video>`**（实测：canPlayType 说支持，但 data:/blob: 的 mp4、webm 全部 NotSupportedError），所以那里自动改用 **WebCodecs** 解码同一份 mp4 画到 canvas：`clips/make_index.py` 生成 `index.json`（avcC + 每帧偏移/大小/关键帧），`CodecPlayer` 模拟 video 接口，只给当前这条开解码器，滑走即释放；该模式无声（静音按钮提示 No sound in this preview）。时钟按真实时间走（rAF + 30ms 定时器双驱动），解码没跟上就跳帧而不是等帧——之前等帧会在预览面板里变成慢放。改视频后要重跑 `make_index.py` |
+| M17.6 | v98 | 双击点赞红心 | 主人要求：双击不再暂停。单击等 250ms 才暂停/播放，期间第二下就取消暂停、改为点赞，并在点击位置触发「Confetti drop」动效（主人从 4 个方案 A Plus One / B Confetti drop / C Bass thump / D Spotlight 里选了 B）：白色冲击波圆环扩散 + 红心弹出（1.28→0.92→1，随机倾斜）停留后上飘消失 + 14 片小红心/红白彩纸条/白点向四周喷出再下落，像返场彩纸炮；红心出现后 450ms 内继续点会连续冒心。已点赞的右栏爱心也变红。红色是唯一的彩色例外，token `--like #FE2C55`（DESIGN.md 已注明） |
+| M17.7 | v99 | 去掉 Swipe up 提示 | 主人要求：Clips 首次打开的「Swipe up」箭头和文字提示删除（连同 clSeen 状态） |
+| M17.8 | v100 | 搜索能搜到 Clips | 主人同意：搜索结果在 Shows 后面新增 Clips 分组（竖版缩略图横滑，封面 + 时长 + 艺人 + ♥ 点赞数 · 场馆），按艺人、场馆、文案、歌名、发布者匹配，最多 8 条；点缩略图跳到 Clips（For you）并直接定位到那一条播放。搜索框占位改为「Artists, clips, crews, people」 |
+| M17.9 | v101 | 搜索同元素过渡 | 主人要求：点首页右上搜索按钮（或 Explore 的搜索条）时，按钮本身变形成搜索页顶部输入框（位置、尺寸、圆角、底色、放大镜图标一起过渡，0.44s），占位文字淡入，Cancel 从右滑入，下面的 Recent / Trending 等依次上浮淡入；原页面冻结成一层快照淡出。点 Cancel 反向：输入框缩回原来的按钮。实现：`sbSnap` 记录起点、`sbMorph` 克隆变形、`sbGhost` 旧页面快照；系统开启减少动态时直接切换 |
+| M18 | v102 | 演出详情页优化 | 修 bug：Show wall 标题和副标题重叠；墙上「Say hi / That’s me」被首页头像的 `.wme` 样式压成 40px 圆（改为单行胶囊）；底部 Join a crew / Buy tickets 下加渐变底，内容不再从按钮之间透出来。主人选了全部 4 项优化：① 余票卡左侧重复的演出照片换成黑色票根（FLOOR **GA** / BALCONY **BAL** / SECTION **105** + 张数，带齿孔虚线），右侧标题改为区域全名；② 新增「Clips from this show」横滑竖版缩略图（显示发布者和时间），点开进 Clips 定位播放；clipList 给热门演出多加 8 条片段（Harry Styles 共 4 条），Clips feed 也随之变长；③ 大图下方加 Tickets / Crews / Clips / Wall 分段标签（没有片段的演出不显示 Clips），点一下平滑滚到对应区域；④ 滚过标签后顶部出现毛玻璃迷你标题栏（返回、艺人名、日期 · 场馆、分享 + 同一组标签），滚动时标签自动高亮当前区域 |
+| M18.1 | v103 | 说明改 ⓘ 弹窗 · Clips = 演出评价 feed | 主人要求：删掉「Face value only…」「Crews cap at 8…」两行小字，改为标题旁 ⓘ，点开底部弹窗解释（余票：面值+$2、托管、加入卖家小队、小队优先 24h；小队：最多 8 人、满了开新队、集合点、到场分）。主人定义：Clip 就是用户对演唱会的评价 → **只改演出页**（Clips 标签页保持全屏）：Clips 区改为竖向评价 feed，顶部是 AI 总结卡（平均分大字 + 星级 + 评价数、AI 生成的一段总结、Setlist / Crowd / Sound / Venue 分项条），下面「How was it?」发帖入口和帖子流（文字帖、带视频的帖子混排，星级、Was there 标记、点赞/评论，默认 4 条可展开全部）；Clips 区也有 ⓘ 解释 AI 总结和打分。发帖面板支持 1–5 星（可选）、**纯文字帖**（Aa Text only）、从演出页进入时自动标记该演出；纯文字帖在 Clips 标签页显示为模糊背景上的大字引语 + 星级。Show wall 保留 |
+| M18.2 | v104 | 评价改为小红书双列瀑布流 | 主人要求：Clips 评价 feed 改成小红书式左右两列瀑布流。视频帖 = 3:4 封面（右上播放标、左下时长）+ 两行文案；文字帖 = 灰底大字引语卡（上方星级）；卡片底部头像、名字、❤ 点赞。按真实高度分配到两列（≤12 条时穷举找最平的分法，列内保持原顺序）。视频卡点开进全屏 Clips，文字卡点开底部详情（作者、星级、全文 + 评论）。默认 6 条，可展开全部。顺手修了评论点赞数偶尔出现负数的 bug |
+| M18.3 | v105 | Show wall 独立成页 | 主人决定：Show wall 做成单独页面，入口放在 Clips 前面。演出页顺序 Tickets → Crews → Show wall 预览卡 → Clips，标签也改为 Tickets / Crews / Wall / Clips。预览卡：头像叠放 + 帖子总数 + 最近一小时新帖数、最新 2 条（标签 + 名字 + 两行正文）、底部话题标签 +「Open wall ›」。点开进入 Show wall 页（sticky 头部：返回、Show wall、艺人 · 日期 · 场馆、分享；下面是原来的话题筛选、发帖框、帖子和回复）；发帖后回到顶部；返回演出页时恢复原来的滚动位置。首页 Trending 里的 wallgo 也改为直接打开 Show wall 页 |
+| M19 | v106 | 大群 → 小队 → 私聊 | 主人提出：每场演出一个大群，大家可以从里面建小群（小队）或私聊。实现：Show wall 升级成 **Show chat**（大群，谁都能进、谁都能发，名字旁标 Ticket holder）：聊天气泡形式（别人白色靠左、自己黑色靠右，最新在底部），原话题标签变成 # 频道（All / # Getting there / # Outfits / # Setlist / # Missed connections），每条可点赞、展开回复；顶部置顶卡「Want a smaller group? Start a crew」；点头像或名字弹出卡片：Say hi（私聊）/ Invite to a crew / Profile。演出页顺序改为 Tickets → Show chat 预览卡（going 人数、在线人数、最新 2 条、# 频道、Join/Open chat）→ Crews going（副标题 Small groups from the chat · up to 8）→ Clips；标签 Tickets / Chat / Crews / Clips。底部主按钮从 Join a crew 改为「Join the show chat」，加入后变「Open show chat」，解决和小队列表的重复。Chats 页会显示你加入的大群（持票的演出自动在群里，如 Gorillaz、Doja Cat），刚加入的排最前 |
+| M19.1 | v107 | Show chat 用回小队聊天的视觉 | 主人：逻辑不变，但聊天页要用之前小队聊天的背景和 UI；顶部 # 频道标签保留。Show chat 改为和 crew() 同一套：演出大图模糊背景 + 暗色渐变 + 颗粒、玻璃质感灰色气泡（别人）/ 白色气泡（自己）、气泡下方头像 + 名字 + ✓ + # 频道 + 时间 + 点赞 / 回复、大标题「艺人 · Show chat」、底部圆角玻璃输入框（未加入时是白色「Join the show chat」）。# 频道标签固定在返回键下方。注意 class 冲突：新增的 `.chnm`、`.scpic` 是为避开旧的 `.chn`、`.scimg` |
 
 ## 6. 链接（原账号所有，新账号只能查看）
 
