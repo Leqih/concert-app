@@ -32,7 +32,7 @@
 ```
 HANDOFF.md            ← 本文件
 CLAUDE.md             ← 给 Claude 的工作规则（精简版）
-demo/                 ← 主作品：单文件 HTML 交互 demo（当前 = M16.3 / 线上 v88）
+demo/                 ← 主作品：单文件 HTML 交互 demo（当前 = M16.4 / 线上 v89）
   demo2_tpl.html      模板源码（唯一需要改的文件）
   build.py            把数据注入模板 → dist/plusone-demo.html
   shows.js            纽约演出数据（Ticketmaster 抓取后的静态快照）
@@ -113,6 +113,7 @@ pip install playwright && python3 demo/tests/m7test.py   # 可选：批量截屏
 | M16.1 | v86 | ＋ 菜单 v3 | 扇形改为三行整宽卡片，从 ＋ 按钮位置依次弹出（最下方黑底 Start a crew 为主操作，离拇指最近）；Find a plus one 直接做成开关，在菜单内切换不关闭；点背景 / × / Esc / 下滑关闭，收起时反序缩回 ＋ |
 | M16.2 | v87 | ＋ 菜单 v4（取代 v3 列表） | 主人觉得整行列表没有设计感，改为「一手牌」：三张竖卡扇形展开（中间黑卡 Start a crew，左 List a spare 票券插画，右 Find a plus one 雷达插画 + ON/OFF），从 ＋ 按钮发牌入场；按住 ＋ 上滑到卡片松手即选（pointer 事件，pkHot/pkPick），直接点也可；选中的卡放大居中、其余落下后进入对应流程；Find a plus one 为开关，开启后雷达脉冲 |
 | M16.3 | v88 | ＋ 菜单 v5：照片卡 | 主人觉得插画卡有 AI 感，改为摄影卡：Start a crew 用本周最热演出照片 + 真实头像，List a spare 用自己下一场票面照片 + 票券缺口和撕口虚线，Find a plus one 用本人照片（关闭时黑白、开启彩色 + Visible 胶囊）；统一暗色渐变 + 颗粒 + 特粗白字，去掉编号/小箭头/手绘图形；右卡镜像右对齐；交互（发牌、按住上滑选卡）保留 |
+| M16.4 | v89 | ＋ 菜单 v6：趣味图形 | 按主人给的参考图：大标题粗体 + 细斜体混排（What are you / up to / tonight?，左对齐）；三个选项变成三种图形——黑色大圆 Start a crew、转角圆方块 List a spare、自转波浪星 Find a +1（开启后变黑）；文字随图形斜排；图形从 ＋ 弹出后轻轻漂浮；按住上滑选择、选中放大仍保留。另写好一套彩色版 CSS（.pfan4.pastel，参考图的粉/黄/蓝 + 米色底），未启用，等主人决定 |
 
 ## 6. 链接（原账号所有，新账号只能查看）
 
