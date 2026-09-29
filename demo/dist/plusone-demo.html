@@ -1912,7 +1912,9 @@ i.tw{font-style:normal;opacity:0}
 .cmin:focus-within{background:#fff;box-shadow:inset 0 0 0 1.5px #0B0B0C}
 .cmin input{flex:1;min-width:0;height:100%;border:0;background:transparent;font:inherit;font-size:15px;outline:none;color:var(--text)}
 .cmin button{flex-shrink:0;width:36px;height:36px;border-radius:50%;background:#0B0B0C;color:#fff;display:grid;place-items:center;transition:transform .22s cubic-bezier(.34,1.6,.5,1),opacity .18s}
-.cmin button svg{transform:rotate(-90deg)}.cmin button:disabled{opacity:0;transform:scale(.4);pointer-events:none}
+.cmin button svg{transform:rotate(-90deg)}.cmin button:disabled{opacity:0;transform:scale(.4);pointer-events:none}.cmin button.sent{opacity:1!important;transform:none;pointer-events:none}
+.cmgh{position:absolute;z-index:5;pointer-events:none;padding:8px 14px;border-radius:18px;background:#0B0B0C;color:#fff;font-size:15px;line-height:20px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-shadow:0 8px 24px rgba(0,0,0,.18);transform-origin:0 50%}
+.cmfl{position:absolute;z-index:6;pointer-events:none;font-style:normal;font-size:24px;line-height:1}
 /* rail heart burst */
 .clrail button[data-act=cllike]{position:relative}.clrail button[data-act=cllike] svg{transform-origin:50% 55%}
 .lkfx{position:absolute;left:50%;top:13px;width:0;height:0;pointer-events:none}
@@ -2553,14 +2555,35 @@ function cmSheet(){ const c=clipAny(state.cmt.id); if(!c) return ''; const k=Mat
   return `<div class="sheetbg" data-act="cmclose"></div><div class="sheet csheet cms" id="cmsh" role="dialog" aria-label="${state.cmt.post?'Review':'Comments'}">${post}<div class="cgrab"${post?' style="padding-top:0"':''}>${post?'':'<i class="grab"></i>'}<h3><span id="cmn">${fmtK(n)}</span> comment${n===1?'':'s'}</h3><p>${ic('check',10)} marks people who were at ${esc(c.s.artist)}</p><button class="cmx" data-act="cmclose" aria-label="Close">${ic('x',18)}</button></div>
   <div class="ufb" id="cmlist">${R.map(r=>cmRow(r,c,lk)).join('')}</div>
   <div class="cmf"><div class="cmemo">${['🔥','🙌','😭','🎶','❤️','👏','🤘'].map(e=>`<button type="button" data-act="cmemo" data-v="${e}" aria-label="Add ${e}">${e}</button>`).join('')}</div>
-  <form class="cmform" onsubmit="return cmPost(event,'${c.id}')"><span class="bgav"><span>${avi(MEP[3])}</span></span><label class="cmin"><span hidden>Comment</span><input id="cmin" placeholder="Add a comment…" autocomplete="off" maxlength="200" oninput="cmIn()"><button type="submit" disabled aria-label="Post comment">${ic('send',18)}</button></label></form></div></div>`; }
+  <form class="cmform" onsubmit="return cmPost(event,'${c.id}')"><span class="bgav"><span>${avi(MEP[3])}</span></span><label class="cmin"><span hidden>Comment</span><input id="cmin" placeholder="Add a comment…" autocomplete="off" maxlength="200" enterkeyhint="send" oninput="cmIn()"><button type="submit" disabled aria-label="Post comment">${ic('send',18)}</button></label></form></div></div>`; }
 function cmIn(){ const i=document.getElementById('cmin'), b=i&&i.parentElement.querySelector('button'); if(b) b.disabled=!i.value.trim(); }
-function cmPost(e,id){ e.preventDefault(); const i=document.getElementById('cmin'), v=i.value.trim(); if(!v) return false; const c=clipAny(id);
+// Sending a comment: the arrow launches, the text lifts off the field as a dark bubble and flies into its new row at the top
+// (rows below slide down to make room), the avatar pops, the count rolls. Emojis in the comment float up out of the send button.
+function cmPost(e,id){ e&&e.preventDefault&&e.preventDefault(); const i=document.getElementById('cmin'); if(!i) return false; const v=i.value.trim(); if(!v) return false;
+  const c=clipAny(id), sh=document.getElementById('cmsh'), btn=i.parentElement.querySelector('button'), L=document.getElementById('cmlist'), E='cubic-bezier(.2,.8,.2,1)';
   const r={id:id+'-me'+Date.now(),me:true,t:v,l:0,ago:'now'}; state.cmMine=state.cmMine||{}; (state.cmMine[id]=state.cmMine[id]||[]).push(r);
-  const L=document.getElementById('cmlist'); if(L){ L.insertAdjacentHTML('afterbegin',cmRow(r,c,state.cml||{},true)); L.scrollTo({top:0,behavior:'smooth'}); }
-  const n=document.getElementById('cmn'); if(n){ n.textContent=fmtK(cmCount(c)); n.animate([{transform:'translateY(6px)',opacity:0},{transform:'none',opacity:1}],{duration:260,easing:'cubic-bezier(.2,.8,.2,1)'}); }
+  try{ navigator.vibrate&&navigator.vibrate(8); }catch(_){}
+  const sr=sh.getBoundingClientRect(), ir=i.getBoundingClientRect();
+  // send button: stays visible for its launch even though the field is now empty
+  btn.classList.add('sent'); btn.querySelector('svg').animate([{transform:'rotate(-90deg) translateX(0)',opacity:1},{transform:'rotate(-90deg) translateX(20px)',opacity:0,offset:.4},{transform:'rotate(-90deg) translateX(-12px)',opacity:0,offset:.41},{transform:'rotate(-90deg) translateX(0)',opacity:1}],{duration:560,easing:'cubic-bezier(.3,.7,.3,1)'});
+  btn.animate([{transform:'scale(1)'},{transform:'scale(.86)',offset:.25},{transform:'scale(1)'}],{duration:420,easing:E}); setTimeout(()=>{ btn.classList.remove('sent'); cmIn(); },600);
+  // FLIP: remember where the first rows sit, insert the new row, then slide them from there
+  L.scrollTop=0; const old=[...L.querySelectorAll('.cmr')].slice(0,7), y0=old.map(x=>x.getBoundingClientRect().top);
+  L.insertAdjacentHTML('afterbegin',cmRow(r,c,state.cml||{},true)); const row=L.firstElementChild, tx=row.querySelector('.cmb>span:not(.cmm)'); row.style.animation='cmhl 1.8s ease .4s both';
+  old.forEach((x,k)=>{ const d=y0[k]-x.getBoundingClientRect().top; if(d) x.animate([{transform:`translateY(${d}px)`},{transform:'none'}],{duration:420,easing:E}); });
+  tx.style.opacity='0'; row.querySelector('.bgav').animate([{transform:'scale(0)'},{transform:'scale(1.12)',offset:.7},{transform:'none'}],{duration:420,delay:260,easing:E,fill:'backwards'});
+  const tr=tx.getBoundingClientRect(), g=document.createElement('div'); g.className='cmgh'; g.textContent=v; sh.appendChild(g);
+  const gx=ir.left-sr.left-14, gy=ir.top-sr.top+(ir.height-36)/2, dx=tr.left-sr.left-gx-14, dy=tr.top-sr.top-gy-8;
+  g.style.cssText=`left:${gx}px;top:${gy}px;max-width:${Math.min(ir.width+20,tr.width+28)}px`;
+  g.animate([{transform:'translate(0,0) scale(1)',opacity:1,offset:0},{transform:`translate(${dx*.35}px,${dy*.55-26}px) scale(1.04)`,opacity:1,offset:.45},{transform:`translate(${dx}px,${dy}px) scale(.96)`,opacity:1,offset:.85},{transform:`translate(${dx}px,${dy}px) scale(.96)`,opacity:0}],{duration:560,easing:'cubic-bezier(.4,.1,.2,1)',fill:'forwards'});
+  setTimeout(()=>{ tx.style.opacity=''; tx.animate([{opacity:0},{opacity:1}],{duration:160}); },470); setTimeout(()=>g.remove(),600);
+  // emoji float
+  const em=(v.match(/\p{Extended_Pictographic}/gu)||[]).slice(0,6), br=btn.getBoundingClientRect();
+  em.forEach((x,k)=>{ const d=document.createElement('i'); d.className='cmfl'; d.textContent=x; d.style.cssText=`left:${br.left-sr.left+8}px;top:${br.top-sr.top}px`; sh.appendChild(d);
+    const dx2=-20-Math.random()*90, rot=(Math.random()-.5)*50; d.animate([{transform:'translate(0,0) scale(.4)',opacity:0},{transform:`translate(${dx2*.4}px,-50px) scale(1.2)`,opacity:1,offset:.3},{transform:`translate(${dx2}px,-${170+Math.random()*90}px) rotate(${rot}deg) scale(.9)`,opacity:0}],{duration:1100+Math.random()*300,delay:k*90,easing:'cubic-bezier(.2,.7,.4,1)',fill:'both'}); setTimeout(()=>d.remove(),1700); });
+  const n=document.getElementById('cmn'); if(n){ n.textContent=fmtK(cmCount(c)); n.animate([{transform:'translateY(8px)',opacity:0},{transform:'none',opacity:1}],{duration:300,easing:E}); }
   const rc=document.querySelector(`.clp[data-id="${id}"] [data-act=clcom] small`); if(rc) rc.textContent=fmtK(cmCount(c));
-  i.value=''; cmIn(); i.focus(); return false; }
+  i.value=''; i.focus(); return false; }
 function sheetDrop(sh,after){ const bg=sh&&sh.previousElementSibling; if(!sh){ after&&after(); return; } sh.classList.add('out'); bg&&bg.classList.contains('sheetbg')&&bg.classList.add('out'); setTimeout(()=>{ sh.remove(); bg&&bg.classList.contains('sheetbg')&&bg.remove(); after&&after(); },260); }
 function sheetMount(html){ document.getElementById('view').insertAdjacentHTML('beforeend',html); }
 const CSVID=[{geo:'Radio City Music Hall',d:'2026-09-29',vid:4},{geo:'Radio City Music Hall',d:'2026-09-29',vid:5},{geo:null,d:null,vid:6}];
@@ -3199,6 +3222,11 @@ function render(anim){ window._dockActive=null; const _ap=document.getElementByI
   if(form) form.addEventListener('submit',e=>{ e.preventDefault(); const i=document.getElementById('msg'); const t=i.value.trim(); if(!t) return; sendMsg(t); const m2=document.getElementById('msg'); m2&&m2.focus(); });
   const mq=document.getElementById('mq'); if(mq){ mq.addEventListener('input',()=>{ state.mq=mq.value; const pos=mq.selectionStart; render(); const n=document.getElementById('mq'); n.focus(); n.setSelectionRange(pos,pos); }); if(state.msFocus){ mq.focus(); state.msFocus=false; } }
 }
+// Sandboxed previews (e.g. Claude's panel, no allow-forms) never fire native form submission, so every form here is submitted
+// by hand: Enter in a text field or a click on a submit button dispatches a synthetic submit event (native one is cancelled).
+function formSubmit(f){ f.dispatchEvent(new Event('submit',{cancelable:true,bubbles:true})); }
+document.addEventListener('click',e=>{ const b=e.target.closest&&e.target.closest('button'); if(!b||b.type!=='submit'||!b.form) return; e.preventDefault(); if(!b.disabled) formSubmit(b.form); },true);
+document.addEventListener('keydown',e=>{ if(e.key!=='Enter'||e.isComposing||e.keyCode===229||e.shiftKey) return; const x=e.target; if(!x||x.tagName!=='INPUT'||!x.form) return; e.preventDefault(); formSubmit(x.form); },true);
 document.getElementById('app').addEventListener('click',e=>{
   const t=e.target.closest('[data-act]'); if(!t) return;
   const a=t.dataset.act, id=t.dataset.id, v=t.dataset.v;
