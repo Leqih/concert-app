@@ -2136,7 +2136,7 @@ const I = {
 const ic = (n,sz=22) => `<svg class="icon" viewBox="0 0 24 24" style="width:${sz}px;height:${sz}px" aria-hidden="true">${I[n]}</svg>`;
 const AV=/*AVATARS*/;
 // Clip videos: inlined as data URIs at build time, turned into blob URLs once so each re-render reuses them
-const CLIPV=/*CLIPV*/; CLIPV.forEach(x=>{ try{ const b=atob(x.v.slice(x.v.indexOf(',')+1)), u=new Uint8Array(b.length); for(let i=0;i<b.length;i++) u[i]=b.charCodeAt(i); x.b=u; x.u=URL.createObjectURL(new Blob([u],{type:'video/mp4'})); }catch(_){ x.u=x.v; } });
+const CLIPV=/*CLIPV*/; CLIPV.forEach(x=>{ if(!x.v){ x.u=x.src; return; } /* web build: clips are separate files */ try{ const b=atob(x.v.slice(x.v.indexOf(',')+1)), u=new Uint8Array(b.length); for(let i=0;i<b.length;i++) u[i]=b.charCodeAt(i); x.b=u; x.u=URL.createObjectURL(new Blob([u],{type:'video/mp4'})); }catch(_){ x.u=x.v; } });
 const mmss=t=>{ t=Math.max(0,Math.floor(t||0)); return Math.floor(t/60)+':'+String(t%60).padStart(2,'0'); };
 const avi=(n,x='')=>`<img class="avimg" alt="" decoding="sync" src="${AV[n%AV.length]}" ${x}>`;
 const PEOPLE = [['Maya R.','MR','a1',0],['Sam O.','SO','a2',1],['Ana K.','AK','a3',2],['Priya K.','PK','a4',13],['Theo L.','TL','a5',4],['Dev M.','DM','a6',5],['Jules W.','JW','a2',6],['Ines B.','IB','a1',7]];
@@ -2578,7 +2578,9 @@ class CodecPlayer{
   addEventListener(){} }
 function clFrames(sec,el,mk=true){ const x=CLIPV[+el.dataset.k]; if(!CL_WC||!x.k) return null; let c=el;
   if(el.tagName==='VIDEO'){ c=document.createElement('canvas'); c.width=720; c.height=1280; c.dataset.k=el.dataset.k; c.style.background='#000 url('+x.p+') center/cover'; c.setAttribute('aria-label',el.getAttribute('aria-label')||''); el.pause(); el.removeAttribute('src'); try{ el.load(); }catch(_){} el.replaceWith(c); }
-  if(!mk) return null; try{ sec._fp=new CodecPlayer(c,x); }catch(_){ return null; } return sec._fp; }
+  if(!mk) return null;
+  if(!x.b){ if(!x._ld) x._ld=fetch(x.src).then(r=>r.arrayBuffer()).then(a=>{ x.b=new Uint8Array(a); const a2=document.querySelector('.clp.act.hv'); a2&&clPlay(a2); }).catch(()=>{}); return null; } // web build: fetch the clip bytes first
+  try{ sec._fp=new CodecPlayer(c,x); }catch(_){ return null; } return sec._fp; }
 function clGoFrames(){ if(CL_FB) return; CL_FB=true; document.querySelectorAll('.clp.hv').forEach(sec=>{ const v=sec.querySelector('.clm video'); v&&clFrames(sec,v,false); }); const a=document.querySelector('.clp.act.hv'); a&&clPlay(a); }
 // mk=false: only return a player that already exists (don't spin up decoders for clips that are off screen)
 const clVid=(sec,mk=true)=>{ if(!sec) return null; if(sec._fp&&!sec._fp.dead&&sec._fp.c.isConnected) return sec._fp; const el=sec.querySelector('.clm video,.clm canvas'); if(!el) return null;
@@ -2586,7 +2588,7 @@ const clVid=(sec,mk=true)=>{ if(!sec) return null; if(sec._fp&&!sec._fp.dead&&se
 // Play the clip in view. Blob URL refused -> retry with the inline data URI -> still nothing -> frame fallback.
 function clPlay(sec){ const vd=clVid(sec); if(!vd) return; vd.muted=state.clMute!==false; vd.defaultMuted=vd.muted;
   const isV=vd.tagName==='VIDEO';
-  if(isV&&!vd._fb){ vd._fb=1; vd.addEventListener('error',()=>{ const x=CLIPV[+vd.dataset.k]; if(x&&vd.src!==x.v&&!vd._dt){ vd._dt=1; vd.src=x.v; clPlay(vd.closest('.clp')); } else clGoFrames(); }); }
+  if(isV&&!vd._fb){ vd._fb=1; vd.addEventListener('error',()=>{ const x=CLIPV[+vd.dataset.k]; if(x&&x.v&&vd.src!==x.v&&!vd._dt){ vd._dt=1; vd.src=x.v; clPlay(vd.closest('.clp')); } else clGoFrames(); }); }
   if(sec.classList.contains('act')&&!sec.classList.contains('paused')){ const pr=vd.play();
     pr&&pr.catch(err=>{ if(!err||err.name==='AbortError') return; if(err.name==='NotAllowedError'&&!vd.muted){ vd.muted=true; state.clMute=true; const m=document.querySelector('.clmute'); m&&(m.innerHTML=ic('mute',20)); clPlay(sec); return; } clGoFrames(); });
     if(isV) setTimeout(()=>{ if(!CL_FB&&vd.isConnected&&sec.classList.contains('act')&&!sec.classList.contains('paused')&&document.visibilityState==='visible'&&vd.currentTime<.05) clGoFrames(); },2200); }

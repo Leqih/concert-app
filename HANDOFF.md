@@ -76,7 +76,8 @@ docs/milestones.md    ← 迭代里程碑表
 ### 开发流程
 
 ```bash
-python3 demo/build.py                 # 生成 demo/dist/plusone-demo.html
+python3 demo/build.py                 # 生成 demo/dist/plusone-demo.html（单文件）
+python3 demo/build.py --web           # 生成 demo/dist-web/（网页版：轻页面 + clips/ 视频文件，发布 artifact 用）
 open demo/dist/plusone-demo.html      # 直接浏览器打开
 pip install playwright && python3 demo/tests/m7test.py   # 可选：批量截屏检查
 ```
@@ -141,6 +142,7 @@ pip install playwright && python3 demo/tests/m7test.py   # 可选：批量截屏
 | M19.7 | v113 | 私信请求的门槛 | 主人确认：私信要有门槛、防搭讪。已有：非好友/非同小队的第一条私信作为请求发出，对方接受前不能再发。新增：① 必须有共同演出才能发请求（`sharedShow`：从 Show chat 发起 = 该场；从主页发起 = 双方 Going to 的交集；Ines 与你无交集 → 主页按钮显示「No shared show」，点击提示）；系统消息改为「You’re both going to X · your first message is sent as a request」；② 每天最多 10 个请求（`DM_LIMIT`、`state.dmSent`），发送前提示「N of 10 requests left today」，超出提示明天再试；③ 发出后输入框锁定「Waiting for Sam to accept」，说明 7 天未回复自动过期；④ Requests 页：顶部「Only verified people」开关（隐藏未核验账号的请求并显示被隐藏数量），每条显示 Verified / Not verified、「Both going to X」、剩余有效天数，按钮 Report（举报并拉黑，对方不能再发）/ Delete / Accept，删除和举报都不通知对方。他人主页的 Going to 改为按人区分（`PGO`）。注意：demo 里对方仍会在 2 秒后自动接受，用于演示流程 |
 | M19.8 | v114 | Scene 页：你的场次、信任信号、原价余票 | 主人选了优化建议 1、3、5。① Crews forming 上方加筛选 chip：Your shows（默认，你有票的场次，如 Gorillaz、Doja Cat）/ 各场演出 / With a spare / All，按场景分别记住（`state.scF` + `state.scFor`）；你的场次在缩略图上标「🎫 Going」；统计第一格随筛选变为「for your shows / crews here」，第三格改为 face-value spares 数。② 小队卡片加信任信号：发起人名字后「showed up 12/12」（REL）、「✓ 3/4 verified」、「$5 hold」（发起人开了押金）、「Women only」（Women only 场景）。③ 队里有人多一张票时，卡片底部出现余票条：黑色票根（GA / BAL / 区号 + 张数）+「Ines has a spare · $152 face value」+「Crew-mates get first dibs · $2 fee · escrow until it lands」，点击直接进认领面板（复用 claimspare）。`sceneCrews` 先为你的每个场次生成一个小队，再补城市里其他演出；卡片外层改为 div，内部分为主体按钮、Join、余票条，避免按钮嵌套。修正：Your shows 改为「你想去的场次」（Harry Styles、Gorillaz、Doja Cat、Steve Lacy），有票标「🎫 Going」、没票标「Want to go」；没票的场次优先展示余票（如 Harry Styles 的 Priya 余票），因为已经有票的场次不需要余票 |
 | M19.9 | v115 | Scene 页改版 | 主人要求改版（上一轮建议 1、2、4、5）。目标：小队在首屏可见。① 头部压缩：照片扇形缩小为 58×72（保留首页飞入过渡，`.sh2`），描述改为每个场景专属文案 `SC_DESC`（Going solo：「22 people are going solo this week. Meet before doors, split after the encore — or don’t.」，按研究改掉 never on your own 的孤独框架）；② 去掉统计卡和重复的成员行，合并为一行「头像 + 86 in this scene · 11 crews open」，余票数和场次数放在筛选 chip 上；③ 筛选栏吸顶（`.scbar` sticky，滚过后加毛玻璃背景 + 返回键 + 迷你标题），切换筛选时保持位置并把选中 chip 滚到可见；④ 点小队或 Join 先弹出预览面板 `scPrev`：成员（Host 标签、ID 核验、到场记录，可点进主页）、The plan 三步时间线（`SC_PLAN`，每个场景不同）、Good to know（押金 / 女性专属 / 公共场所 + 位置共享 / 随时可退）、没票时的余票条，底部 Not now / Join（开押金则显示 Join · $5 hold）；⑤ 底部「Where this crowd is going」换成「Clips from this scene」（这些演出的 Clips，显示发布者）。只有发起人一人时显示「Host verified」 |
+| M19.10 | v116 | 网页版改为「轻页面 + 独立视频文件」 | 10.7MB 的单文件在 claude.ai 网页版一直转圈加载。新增 `python3 demo/build.py --web` → `demo/dist-web/index.html`（约 2.3MB）+ `dist-web/clips/*.mp4/jpg`，视频按需加载；预览面板里的 WebCodecs 兜底会先 fetch 视频字节再解码。发布 artifact 时用 dist-web（页面 + clips 作为 files 一起发布）；`dist/plusone-demo.html` 仍是完整单文件，用于离线/侧边栏。dist-web 不进 git（.gitignore） |
 
 ## 6. 链接（原账号所有，新账号只能查看）
 
