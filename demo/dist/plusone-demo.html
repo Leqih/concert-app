@@ -750,7 +750,7 @@ i.tw{font-style:normal;opacity:0}
 .scsp i{width:14px;height:4px;border-radius:2px;background:#E1E1E6}.scsp i.on{background:#0B0B0C}
 .scsp em{font-style:normal;font-size:11px;color:var(--muted);margin-left:6px}
 .screw{flex-wrap:wrap;padding:10px}.scmain{flex:1;min-width:0;display:flex;align-items:center;gap:12px;text-align:left;padding:0}
-.scyou{position:absolute;left:3px;right:3px;bottom:3px;font-style:normal;height:16px;border-radius:6px;background:rgba(11,11,12,.8);color:#fff;font-size:8.5px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:2px}.scyou svg{stroke:#fff}
+.scyou{position:absolute;left:3px;right:3px;bottom:3px;font-style:normal;height:16px;border-radius:6px;background:rgba(11,11,12,.8);color:#fff;font-size:8.5px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:2px}.scyou svg{stroke:#fff}.scyou.want{background:rgba(255,255,255,.92);color:#0B0B0C}
 .sctr{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}.sctr em{font-style:normal;height:18px;padding:0 7px;border-radius:999px;background:var(--card2);font-size:10.5px;font-weight:600;color:#3A3A3F;display:inline-flex;align-items:center;gap:3px}
 .scfl{display:flex;gap:6px;overflow-x:auto;padding:0 12px 12px;scrollbar-width:none}.scfl::-webkit-scrollbar{display:none}.scfl .gch{flex-shrink:0}.scfl .gch em{font-style:normal;color:var(--muted);margin-left:2px}.scfl .gch[aria-pressed=true] em{color:rgba(255,255,255,.7)}
 .scspare{flex-basis:100%;display:flex;align-items:center;gap:10px;margin-top:10px;padding:8px 10px;border-radius:14px;background:var(--card2);text-align:left}.scspare>span:nth-child(2){flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}.scspare b{font-size:12.5px}.scspare small{font-size:11px;color:var(--muted)}
@@ -2209,9 +2209,9 @@ const SCENE_LIST = [
 // facts people want before joining strangers (verified members, host's show-up record, deposit, women-only) and, when a
 // member has an extra ticket, a face-value spare that crew-mates can claim first.
 function sceneCrews(i){
-  const names=SCENE_LIST[i][2], mine=MYTIX().map(r=>r[0]).filter(Boolean), out=[];
+  const names=SCENE_LIST[i][2], mine=['Harry Styles','Gorillaz','Doja Cat','Steve Lacy'].map(A).filter(Boolean), out=[];
   const mk=(s,k)=>{ const hi=(i+k*3)%PEOPLE.length, n=4+((i+k)%3), f=1+((i*2+k)%(n-1)), sp=sparesFor(s).filter(x=>!(state.claimedIds||{})[x.id]), rel=REL[hi];
-    return {s,host:PEOPLE[hi],hi,name:names[k%names.length],f,n,ver:Math.max(1,f-((i+k)%3===0?1:0)),rel,dep:(i+k)%3===1,wo:i===7,spare:(i+k)%2===0&&sp.length?sp[0]:null,mine:mine.includes(s)}; };
+    return {s,host:PEOPLE[hi],hi,name:names[k%names.length],f,n,ver:Math.max(1,f-((i+k)%3===0?1:0)),rel,dep:(i+k)%3===1,wo:i===7,spare:sp.length&&(!hasTix(s)&&mine.includes(s)||(i+k)%2===0)?sp[0]:null,mine:mine.includes(s),tix:hasTix(s)}; };
   mine.forEach((s,k)=>out.push(mk(s,k+4)));
   for(let k=0;k<4;k++){ const s=SHOWS[(i*5+k*4+3)%SHOWS.length]; if(!out.some(c=>c.s===s)) out.push(mk(s,k)); }
   return out;
@@ -2236,7 +2236,7 @@ function scene(){
     <section class="ssec sin"><h2 class="h2 sec">Crews forming <span class="emo">🤝</span></h2>
       <div class="scfl">${chips.map(([k,l,n])=>`<button class="gch" data-act="scf" data-v="${k}" aria-pressed="${f===k}">${esc(l)}${n!=null?` <em>${n}</em>`:''}</button>`).join('')}</div>
       ${L.map(c=>{ const left=c.n-c.f; return `<div class="screw">
-        <button class="scmain" data-act="crew" data-id="${c.s.id}"><span class="scimg">${img(c.s)}${c.mine?`<i class="scyou">${ic('ticket',10)} Going</i>`:''}</span>
+        <button class="scmain" data-act="crew" data-id="${c.s.id}"><span class="scimg">${img(c.s)}${c.mine?`<i class="scyou${c.tix?'':' want'}">${c.tix?ic('ticket',10)+' Going':'Want to go'}</i>`:''}</span>
         <span class="scb"><b>${esc(c.name)}</b><span class="scm">${esc(c.s.artist)} · ${sd(c.s.dates[0])} · ${esc(short(c.s.venue))}</span>
           <span class="scf"><span class="schost">${avi(c.host[3])}</span><span>${c.host[0]} · showed up ${c.rel[0]}/${c.rel[1]}</span></span>
           <span class="sctr"><em>${ic('check',9)} ${c.ver}/${c.f} verified</em>${c.dep?'<em>$5 hold</em>':''}${c.wo?'<em>Women only</em>':''}</span>
