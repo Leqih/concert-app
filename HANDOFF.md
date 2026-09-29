@@ -127,6 +127,7 @@ pip install playwright && python3 demo/tests/m7test.py   # 可选：批量截屏
 | M17.7 | v99 | 去掉 Swipe up 提示 | 主人要求：Clips 首次打开的「Swipe up」箭头和文字提示删除（连同 clSeen 状态） |
 | M17.8 | v100 | 搜索能搜到 Clips | 主人同意：搜索结果在 Shows 后面新增 Clips 分组（竖版缩略图横滑，封面 + 时长 + 艺人 + ♥ 点赞数 · 场馆），按艺人、场馆、文案、歌名、发布者匹配，最多 8 条；点缩略图跳到 Clips（For you）并直接定位到那一条播放。搜索框占位改为「Artists, clips, crews, people」 |
 | M17.9 | v101 | 搜索同元素过渡 | 主人要求：点首页右上搜索按钮（或 Explore 的搜索条）时，按钮本身变形成搜索页顶部输入框（位置、尺寸、圆角、底色、放大镜图标一起过渡，0.44s），占位文字淡入，Cancel 从右滑入，下面的 Recent / Trending 等依次上浮淡入；原页面冻结成一层快照淡出。点 Cancel 反向：输入框缩回原来的按钮。实现：`sbSnap` 记录起点、`sbMorph` 克隆变形、`sbGhost` 旧页面快照；系统开启减少动态时直接切换 |
+| M18 | v102 | 演出详情页优化 | 修 bug：Show wall 标题和副标题重叠；墙上「Say hi / That’s me」被首页头像的 `.wme` 样式压成 40px 圆（改为单行胶囊）；底部 Join a crew / Buy tickets 下加渐变底，内容不再从按钮之间透出来。主人选了全部 4 项优化：① 余票卡左侧重复的演出照片换成黑色票根（FLOOR **GA** / BALCONY **BAL** / SECTION **105** + 张数，带齿孔虚线），右侧标题改为区域全名；② 新增「Clips from this show」横滑竖版缩略图（显示发布者和时间），点开进 Clips 定位播放；clipList 给热门演出多加 8 条片段（Harry Styles 共 4 条），Clips feed 也随之变长；③ 大图下方加 Tickets / Crews / Clips / Wall 分段标签（没有片段的演出不显示 Clips），点一下平滑滚到对应区域；④ 滚过标签后顶部出现毛玻璃迷你标题栏（返回、艺人名、日期 · 场馆、分享 + 同一组标签），滚动时标签自动高亮当前区域 |
 
 ## 6. 链接（原账号所有，新账号只能查看）
 

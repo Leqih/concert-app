@@ -281,6 +281,16 @@ h1,h2,h3{margin:0;letter-spacing:-.045em;font-weight:700;line-height:1.02}
 .wpill.big{flex:1;height:52px;border-radius:14px;font-size:16px}
 .wpill.ghost{background:#fff;color:#0B0B0C;box-shadow:inset 0 0 0 1.5px #0B0B0C}
 .wbar{position:absolute;left:12px;right:12px;bottom:calc(14px + var(--sb));display:flex;gap:8px;z-index:5}
+.shtabs{display:flex;gap:6px;margin:2px 0 4px}.shtabs .gch{flex:1;justify-content:center;padding:0 8px}
+.shanchor{display:block;height:0}
+#wall .wtg{margin-bottom:8px}
+.shbar{position:absolute;left:0;right:0;top:0;z-index:7;padding:calc(var(--st) + 2px) 14px 10px;background:rgba(242,242,244,.82);backdrop-filter:saturate(1.6) blur(20px);-webkit-backdrop-filter:saturate(1.6) blur(20px);box-shadow:0 1px 0 var(--line);opacity:0;transform:translateY(-10px);pointer-events:none;transition:opacity .22s,transform .22s cubic-bezier(.2,.8,.2,1)}
+.shbar.on{opacity:1;transform:none;pointer-events:auto}
+.shbr{display:grid;grid-template-columns:40px 1fr 40px;align-items:center;margin-bottom:8px}
+.nb.lt{width:40px;height:40px;background:var(--card);color:var(--text);backdrop-filter:none}
+.shbt{display:flex;flex-direction:column;align-items:center;min-width:0;text-align:center}.shbt b{font-family:var(--display);font-size:17px;font-weight:700;letter-spacing:-.03em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}.shbt small{font-size:12px;color:var(--muted)}
+.shbar .shtabs{margin:0}
+.shclips{margin:4px -20px 0}.shclips .sclips{padding:0 20px}
 /* backdrop so page content fades out under the sticky CTAs instead of showing between them */
 .wbar::before{content:'';position:absolute;left:-12px;right:-12px;top:-36px;bottom:calc(-14px - var(--sb));background:linear-gradient(180deg,rgba(242,242,244,0) 0%,var(--bg) 42%);z-index:-1;pointer-events:none}
 .wbar .wpill.ghost{background:var(--card)}
@@ -1134,7 +1144,12 @@ i.tw{font-style:normal;opacity:0}
 .spkn{position:absolute;left:94px;width:14px;height:14px;border-radius:50%;background:var(--bg)}
 .spkn.t{top:-7px}.spkn.b{bottom:-7px}
 .spk::after{content:"";position:absolute;left:100px;top:9px;bottom:9px;border-left:1.5px dashed #DCDCE1}
-.spk.cmp .spkn,.spk.cmp::after{display:none}
+.spk.cmp .spkb{padding-left:10px;justify-content:center}
+.spstub{width:74px;min-height:96px;flex-shrink:0;border-radius:var(--r-sm);background:#0B0B0C;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-align:center;position:relative;overflow:hidden}
+.spstub::before{content:'';position:absolute;inset:6px;border-radius:9px;border:1px solid rgba(255,255,255,.14)}
+.spstub b{font-family:var(--display);font-size:26px;font-weight:800;letter-spacing:-.04em;line-height:1}
+.spstub small{font-size:9.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;opacity:.6}
+.spkt{font-family:var(--display);font-size:16px;font-weight:700;letter-spacing:-.025em}
 .spkb{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px;padding-left:0}
 .spk:not(.cmp) .spkb{padding-left:10px}
 .spkb>b{font-family:var(--display);font-size:16px;font-weight:700;letter-spacing:-.025em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -2116,6 +2131,17 @@ function sbMorph(from,toEl,opening){ const app=document.getElementById('app'); i
   if(opening){ const sc=document.querySelector('.shrow .scan'); sc&&sc.animate([{opacity:0,transform:'translateX(24px)'},{opacity:1,transform:'none'}],{duration:D,delay:80,easing:E,fill:'backwards'});
     [...document.querySelectorAll('.xpg>*:not(.xtop)')].slice(0,6).forEach((el,i)=>el.animate([{opacity:0,transform:'translateY(14px)'},{opacity:1,transform:'none'}],{duration:380,delay:140+i*45,easing:E,fill:'backwards'})); }
   setTimeout(()=>{ toEl.style.opacity=''; g.animate([{opacity:1},{opacity:0}],{duration:90}).onfinish=()=>g.remove(); },D); }
+// Show page: mini header appears once the in-flow tabs scroll under it; tabs follow the section in view
+function shOff(sc,el){ return el.getBoundingClientRect().top-sc.getBoundingClientRect().top+sc.scrollTop; }
+function shGo(k){ const sc=document.getElementById('shsc'), el=document.getElementById('shs-'+k), bar=document.getElementById('shbar'); if(!sc||!el) return;
+  sc.scrollTo({top:Math.max(0,shOff(sc,el)-(bar?bar.offsetHeight:0)+18),behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'}); }
+function shWatch(){ const sc=document.getElementById('shsc'), bar=document.getElementById('shbar'), t0=document.querySelector('.shtabs:not(.top)'); if(!sc||!bar||!t0||sc._w) return; sc._w=1;
+  const keys=[...bar.querySelectorAll('.shtabs button')].map(b=>b.dataset.v);
+  const f=()=>{ const H=bar.offsetHeight, on=sc.scrollTop>shOff(sc,t0)-H+t0.offsetHeight; bar.classList.toggle('on',on); bar.setAttribute('aria-hidden',!on); bar.querySelectorAll('button').forEach(b=>b.tabIndex=on?0:-1);
+    let cur=keys[0]; keys.forEach(k=>{ const el=document.getElementById('shs-'+k); if(el&&shOff(sc,el)-H-40<=sc.scrollTop) cur=k; });
+    if(sc.scrollTop+sc.clientHeight>=sc.scrollHeight-4) cur=keys[keys.length-1];
+    document.querySelectorAll('.shtabs button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===cur)); };
+  sc.addEventListener('scroll',f,{passive:true}); f(); }
 function go(screen,id){ state.history.push([state.screen,state.id]); state.screen=screen; state.id=id||null; render(true); }
 function back(){ const p=state.history.pop()||['home',null]; state.screen=p[0]; state.id=p[1]; render(true); }
 let tt; function toast(m){ const t=document.getElementById('toast'); t.textContent=m; t.hidden=false; clearTimeout(tt); tt=setTimeout(()=>t.hidden=true,2000); }
@@ -2286,7 +2312,11 @@ function wallReply(e,id){ e.preventDefault(); const i=document.getElementById('w
 const CAPS=['The lights dropped and the whole floor lost it','Front row, no regrets','Screamed every word with strangers who are now my crew','That encore though','Came alone, left with three new friends','Best crowd I’ve ever been in','Goosebumps from the first note','Our crew’s view from Section 105'];
 function clipList(){ const base=NYC_SHOWS.filter(x=>x.img.startsWith('data:')).slice(0,8).map((x,i)=>{ const k=Math.abs(h(x.id)), p=(k+i)%8, song=songsFor(x.artist)[k%3];
     return {id:'c'+i,vid:i%CLIPV.length,s:x,p,cap:CAPS[(k+i)%CAPS.length],song,likes:180+k%4200,com:12+k%260,ago:[2,5,9,14,20,26,30,41][i]+'h',sec:['Floor GA','Section 105','Balcony','Pit'][k%4]}; });
-  return (state.myClips||[]).concat(base); }
+  // a few more clips for the busiest shows, so a show page has a row worth swiping (they also join the feed, after the first pass)
+  const src=NYC_SHOWS.filter(x=>x.img.startsWith('data:')).slice(0,8), EX=[[1,0],[1,1],[1,2],[0,0],[0,1],[2,0],[3,0],[5,0]];
+  const extra=EX.map(([si,j],i)=>{ const x=src[si]; if(!x) return null; const k=Math.abs(h(x.id+'x'+j));
+    return {id:'x'+i,vid:(si+j*2+3)%CLIPV.length,s:x,p:(k+i*3)%8,cap:CAPS[(k+j+3)%CAPS.length],song:songsFor(x.artist)[(k+j+1)%3],likes:60+k%2400,com:4+k%120,ago:[3,7,11,16,22,28,35,47][i]+'h',sec:['Floor GA','Section 105','Balcony','Pit'][(k+j)%4]}; }).filter(Boolean);
+  return (state.myClips||[]).concat(base,extra); }
 const fmtK=n=>n>=1000?(n/1000).toFixed(n>=10000?0:1)+'k':''+n;
 function clips(){ const L0=clipList(), L=state.clFeed==='fo'?L0.filter(c=>c.me||BUD[c.p]||[1,3,4,7].includes(c.p)):L0, lk=state.clk||{}, mute=state.clMute!==false;
   return `<div class="clips" id="clv">${L.map((c,i)=>{ const p=c.me?MEP:PEOPLE[c.p], on=!!lk[c.id], cv=c.vid!=null?CLIPV[c.vid]:null;
@@ -2540,6 +2570,9 @@ function explore(){
   return `<div class="scroll"><div class="xpg" style="padding-bottom:130px">${top}${body}</div></div>${dock('explore')}`;
 }
 const RECENT0=['Harry Styles','Pit crew','MSG'];
+// Vertical clip thumbnails (search results, show page). byWho: label with the poster instead of the artist
+function clipThumbs(L,byWho){ return `<div class="sclips">${L.map(c=>{ const cv=c.vid!=null?CLIPV[c.vid]:null, on=!!(state.clk||{})[c.id], who=c.me?'You':PEOPLE[c.p][0];
+    return `<button class="sclip" data-act="clopen" data-id="${c.id}" aria-label="Clip of ${esc(c.s.artist)} by ${c.me?'you':who}">${cv?`<img class="cover" alt="" src="${cv.p}">`:img(c.s)}<em>${cv?mmss(cv.d):'0:14'}</em><span><b>${esc(byWho?who:c.s.artist)}</b><small>${ic('heart',11)} ${fmtK(c.likes+(on?1:0))} · ${esc(byWho?c.ago:VSH(c.loc||c.s.venue))}</small></span></button>`; }).join('')}</div>`; }
 function search(){ const q=(state.sq||'').trim().toLowerCase(), rec=state.recent||RECENT0, m=t=>t.toLowerCase().includes(q);
   let body='';
   if(!q){ body=`${rec.length?`<div class="srh"><b>Recent</b><button data-act="sclear">Clear</button></div><div class="srec">${rec.map(r=>`<button class="gch" data-act="sfill" data-v="${esc(r)}">${ic('clock',13)} ${esc(r)}</button>`).join('')}</div>`:''}
@@ -2548,8 +2581,7 @@ function search(){ const q=(state.sq||'').trim().toLowerCase(), rec=state.recent
   else { const S=SHOWS.filter(x=>m(x.artist+' '+x.venue)).slice(0,4), C=xCrews().filter(c=>!c.full&&m(c.name+' '+c.s.artist+' '+c.spot)).slice(0,4), Pp=PEOPLE.map((p,i)=>[p,i]).filter(([p])=>m(p[0])).slice(0,4),
       Cl=clipList().filter(c=>m([c.s.artist,c.s.venue,VSH(c.loc||c.s.venue),c.cap,c.song,c.me?'You':PEOPLE[c.p][0]].join(' '))).slice(0,8);
     body=(S.length?`<div class="srh"><b>Shows</b></div><div class="wcard flush ssec2">${S.map(feedRow).join('')}</div>`:'')
-      +(Cl.length?`<div class="srh"><b>Clips</b></div><div class="sclips">${Cl.map(c=>{ const cv=c.vid!=null?CLIPV[c.vid]:null, on=!!(state.clk||{})[c.id];
-          return `<button class="sclip" data-act="clopen" data-id="${c.id}" aria-label="Clip of ${esc(c.s.artist)} by ${c.me?'you':PEOPLE[c.p][0]}">${cv?`<img class="cover" alt="" src="${cv.p}">`:img(c.s)}<em>${cv?mmss(cv.d):'0:14'}</em><span><b>${esc(c.s.artist)}</b><small>${ic('heart',11)} ${fmtK(c.likes+(on?1:0))} · ${esc(VSH(c.loc||c.s.venue))}</small></span></button>`; }).join('')}</div>`:'')
+      +(Cl.length?`<div class="srh"><b>Clips</b></div>${clipThumbs(Cl)}`:'')
       +(C.length?`<div class="srh"><b>Crews</b></div><div class="xgrp xgs">${C.map(c=>xRow(c).replace('<span class="xmt">📍 ',`<span class="xmt">${esc(c.s.artist)} · `)).join('')}</div>`:'')
       +(Pp.length?`<div class="srh"><b>People</b></div><div class="wcard flush ssec2">${Pp.map(([p,i])=>`<button class="spp" data-act="person" data-v="${i}"><span class="bgav"><span>${avi(p[3])}</span></span><span><b>${p[0]}</b><small>${BUD[i]?'Buddy · ':''}${REL[i][0]} of ${REL[i][1]} shows showed up</small></span>${ic('right',16)}</button>`).join('')}</div>`:'')
       ||`<div class="xempty"><b>No results for “${esc(state.sq)}”</b><span>Try an artist, a venue, or a vibe like “pit crew”.</span></div>`; }
@@ -2662,8 +2694,10 @@ function layWallet(open){ const w=document.getElementById('wal'); if(!w) return;
   w.style.height=(232+(n-2)*14+214)+'px'; }
 function show(){
   const s=byId[state.id];
-  const cs=xCrews().filter(c=>c.s===s);
-  return `<div class="scroll"><div style="padding-bottom:110px">
+  const cs=xCrews().filter(c=>c.s===s), cl=clipList().filter(c=>c.s===s);
+  const tabs=[['tickets','Tickets'],['crews','Crews']].concat(cl.length?[['clips','Clips']]:[]).concat([['wall','Wall']]);
+  const tabRow=top=>`<div class="shtabs${top?' top':''}">${tabs.map(([k,l],i)=>`<button class="gch" data-act="shtab" data-v="${k}" aria-pressed="${i===0}">${l}</button>`).join('')}</div>`;
+  return `<div class="scroll" id="shsc"><div style="padding-bottom:110px">
     <div class="hero">${img(s)}
       <div class="nav"><button class="nb" data-act="back" aria-label="Back">${ic('back')}</button><button class="nb" data-act="toast" data-msg="Link copied" aria-label="Share">${ic('share',20)}</button></div>
       <div class="htext">
@@ -2674,15 +2708,18 @@ function show(){
     </div>
     <div class="pad" style="display:flex;flex-direction:column;gap:10px;margin-top:18px">
       <p style="margin:0 0 8px;font-size:16px;line-height:1.45;color:var(--muted);letter-spacing:-.01em">${esc(cleanTitle(s))}. ${s.dates.length>1?s.dates.length+' nights':'One night'} at ${esc(s.venue)}.</p>
-      ${LOCKED(s)?lockedCard(s):(()=>{ const L=sparesFor(s).filter(x=>!(state.claimedIds||{})[x.id]); const on=(state.notify||{})[s.id];
+      ${tabRow(false)}
+      <span id="shs-tickets" class="shanchor"></span>${LOCKED(s)?lockedCard(s):(()=>{ const L=sparesFor(s).filter(x=>!(state.claimedIds||{})[x.id]); const on=(state.notify||{})[s.id];
         return `<h2 class="h2 sec">Spare tickets <span class="emo">🎟️</span></h2>`+(L.length?L.map(x=>spareCard(x,true)).join('')+`<p class="note" style="margin:0">Face value only · you’ll join the seller’s crew</p>`
         :`<div class="spnone"><b>No spares for this show yet</b><span>${4+h(s.id)%30} people are on the waitlist. We’ll ping you the moment one drops.</span><button class="${on?'on':''}" data-act="notify" data-id="${s.id}">${on?ic('check',14)+' You’re on the list':'🔔 Notify me'}</button></div>`); })()}
-      <h2 class="h2 sec">Crews going ${ic('right',16)}</h2>
+      <span id="shs-crews" class="shanchor"></span><h2 class="h2 sec">Crews going ${ic('right',16)}</h2>
       <div class="xgrp xgs">${cs.map(xRow).join('')}</div>
       <button class="crewrow newcrew" data-act="ncopen" data-id="${s.id}">${ic('plus',20)}<span style="flex:1;font-weight:600;letter-spacing:-.02em">Start your own crew</span></button>
       <p class="note" style="margin:0">Crews cap at 8 · when one fills, we open the next</p>
-      ${wallView(s)}
+      ${cl.length?`<span id="shs-clips" class="shanchor"></span><h2 class="h2 sec">Clips from this show</h2><p class="sub" style="margin:6px 0 4px">Filmed at ${esc(VSH(s.venue))} by fans who were there</p><div class="shclips">${clipThumbs(cl,true)}</div>`:''}
+      <span id="shs-wall" class="shanchor"></span>${wallView(s)}
     </div></div></div>
+    <div class="shbar" id="shbar" aria-hidden="true"><div class="shbr"><button class="nb lt" data-act="back" aria-label="Back" tabindex="-1">${ic('back')}</button><span class="shbt"><b>${esc(s.artist)}</b><small>${sd(s.dates[0])} · ${esc(VSH(s.venue))}</small></span><button class="nb lt" data-act="toast" data-msg="Link copied" aria-label="Share" tabindex="-1">${ic('share',20)}</button></div>${tabRow(true)}</div>
     <div class="wbar"><button class="wpill big" data-act="crew" data-id="${s.id}">Join a crew</button>${s.url?`<a class="wpill big ghost" href="${esc(s.url)}" target="_blank" rel="noopener">Buy tickets ↗</a>`:''}</div>`;
 }
 
@@ -2693,10 +2730,12 @@ function sparesFor(s){ if(!s||LOCKED(s)) return []; const k=h(s.id); const n=s.a
 const allSpares=()=>SHOWS.flatMap(sparesFor).filter(x=>!(state.claimedIds||{})[x.id]&&!(state.listed||{})[x.sid]);
 const spareOf=s=>{ const sp=sparesFor(s)[0]; return sp?{seller:sp.seller,face:sp.face,sec:sp.sec,id:sp.id}:{seller:PEOPLE[3],face:79+h(s.id)%140,sec:'Floor GA'}; };
 const ago=m=>m<60?m+' min ago':Math.round(m/60)+' h ago';
-function spareCard(x,compact){ const s=byId[x.sid];
-  return `<div class="spk ${compact?'cmp':''}"><button class="spkimg" data-act="show" data-id="${s.id}" aria-label="${esc(s.artist)}">${img(s)}</button><i class="spkn t"></i><i class="spkn b"></i>
+// Show page: every spare is for the same show, so the photo is replaced by a black ticket stub that says where you'd stand
+const secCode=sec=>/GA/.test(sec)?['Floor','GA']:/Balcony/i.test(sec)?['Balcony','BAL']:/Mezz/i.test(sec)?['Mezzanine','MEZ']:/Pit/i.test(sec)?['Floor','PIT']:(m=>m?[sec.replace(/\s*\d+.*/,''),m[1]]:['Seat',sec.slice(0,3).toUpperCase()])(sec.match(/(\d+)/));
+function spareCard(x,compact){ const s=byId[x.sid], sc=secCode(x.sec);
+  return `<div class="spk ${compact?'cmp':''}">${compact?`<span class="spstub" aria-label="${esc(x.sec)}, ${x.qty} ticket${x.qty>1?'s':''}"><small>${esc(sc[0])}</small><b>${esc(sc[1])}</b><small>${x.qty>1?x.qty+' tickets':'1 ticket'}</small></span>`:`<button class="spkimg" data-act="show" data-id="${s.id}" aria-label="${esc(s.artist)}">${img(s)}</button>`}<i class="spkn t"></i><i class="spkn b"></i>
     <span class="spkb">${compact?'':`<b>${esc(s.artist)}</b><span class="spkm">${sd(s.dates[0])} · ${esc(s.venue.replace('Madison Square Garden','MSG').replace('Radio City Music Hall','Radio City'))}</span>`}
-      <span class="spks"><em>${x.sec}</em>${x.qty>1?`<em>${x.qty} tickets</em>`:''}</span>
+      ${compact?`<b class="spkt">${esc(x.sec)}</b>`:`<span class="spks"><em>${x.sec}</em>${x.qty>1?`<em>${x.qty} tickets</em>`:''}</span>`}
       <span class="spkw"><span class="spkav">${avi(x.seller[3])}<i>${ic('check',8)}</i></span>${x.seller[0]} · ${ago(x.mins)}</span>
       ${x.crewFirst?`<span class="spkc">🔒 Crews only · ${24-Math.round(x.mins/60)}h left</span>`:`<span class="spkc">👯 ${x.crews} crew${x.crews>1?'s':''} going</span>`}</span>
     <span class="spkr"><b>$${x.face+FEE}</b><small>$${x.face} + $${FEE} fee</small>${x.crewFirst?`<button class="ghost" data-act="toast" data-msg="Join a crew for this show to claim it early">Crew first</button>`:`<button data-act="claimspare" data-v="${x.id}">Claim</button>`}</span></div>`; }
@@ -2919,6 +2958,7 @@ function render(anim){ window._dockActive=null; const _ap=document.getElementByI
   syncNav(window._dockActive);
   if(state.psheet) plusAim();
   if(state.screen==='clips'){ clWatch(); }
+  if(state.screen==='show'){ shWatch(); }
   state._ufAnim=false; if(state.screen==='home'){ upWatch(); ptrAttach(); }
   const xs=document.querySelector('.xtop'); if(xs){ const sc=xs.closest('.scroll'), f=()=>xs.classList.toggle('stuck',sc.scrollTop>2); sc&&sc.addEventListener('scroll',f,{passive:true}); f(); } if(state.screen==='search'&&!state._sqf){ const i=document.getElementById('sq'); if(i){ i.focus(); state._sqf=true; } }
   const form=document.getElementById('composer');
@@ -3052,6 +3092,7 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='crews'){ state.history=[]; state.screen='crews'; render(); }
   else if(a==='explore'){ state.history=[]; state.screen='explore'; render(); }
   else if(a==='clips'){ state.history=[]; state.screen='clips'; render(); }
+  else if(a==='shtab'){ shGo(v); }
   else if(a==='clopen'){ state.history=[]; state.screen='clips'; state.clFeed='fy'; state.clJump=t.dataset.id; state.clY=0; render(); }
   else if(a==='tickets'){ state.history=[]; state.screen='tickets'; render(); }
   else if(a==='shuffle'){ state.drop++; render(); }
