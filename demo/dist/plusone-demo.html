@@ -1732,9 +1732,7 @@ i.tw{font-style:normal;opacity:0}
 .clrail{position:absolute;right:10px;bottom:calc(118px + var(--sb));display:flex;flex-direction:column;align-items:center;gap:16px;z-index:2}
 .clrail button{display:flex;flex-direction:column;align-items:center;gap:3px;color:#fff;filter:drop-shadow(0 1px 6px rgba(0,0,0,.4))}.clrail small{font-size:11.5px;font-weight:600}
 .clrail button[aria-pressed=true] svg{fill:var(--like);stroke:var(--like)}
-.clhrt{position:absolute;width:96px;height:96px;margin:-60px 0 0 -48px;pointer-events:none;z-index:3;transform:rotate(var(--rot));animation:hburst2 .85s cubic-bezier(.2,.8,.2,1) forwards}
-.clhrt svg{fill:var(--like);stroke:none;filter:drop-shadow(0 4px 14px rgba(0,0,0,.35))}
-@keyframes hburst2{0%{opacity:0;transform:rotate(var(--rot)) scale(.2)}20%{opacity:1;transform:rotate(var(--rot)) scale(1.15)}35%{transform:rotate(var(--rot)) scale(.95)}55%{opacity:1;transform:rotate(var(--rot)) scale(1)}100%{opacity:0;transform:rotate(var(--rot)) translateY(-90px) scale(1.25)}}
+.clfx{position:absolute;pointer-events:none;z-index:3;display:grid;place-items:center}.clfx svg{display:block;overflow:visible}.clfh svg{filter:drop-shadow(0 6px 16px rgba(0,0,0,.35))}
 .clrail button.pop svg{animation:hpop .35s cubic-bezier(.34,1.6,.5,1)}@keyframes hpop{0%{transform:scale(.6)}100%{transform:scale(1)}}
 .clav{position:relative;margin-bottom:4px}.clav>span{display:block;width:44px;height:44px;border-radius:50%;overflow:hidden;border:2px solid #fff;position:relative}.clav img{width:100%;height:100%;object-fit:cover}
 .clav i{position:absolute;left:50%;bottom:-8px;margin-left:-9px;width:18px;height:18px;border-radius:50%;background:#fff;color:#0B0B0C;display:grid;place-items:center}
@@ -2332,9 +2330,19 @@ function clWatch(){ const v=document.getElementById('clv'); if(!v||v._w) return;
     const seek=x=>{ const r=bar.getBoundingClientRect(), f=Math.min(1,Math.max(0,(x-r.left)/r.width)); vd.currentTime=f*vd.duration; bar.querySelector('i').style.width=(f*100)+'%'; sec.querySelector('.cldur').textContent=mmss(f*vd.duration)+' / '+mmss(vd.duration); };
     seek(e.clientX); const mv=ev=>seek(ev.clientX), up=()=>{ sec.classList.remove('scrub'); clPlay(sec); removeEventListener('pointermove',mv); removeEventListener('pointerup',up); removeEventListener('pointercancel',up); };
     addEventListener('pointermove',mv); addEventListener('pointerup',up); addEventListener('pointercancel',up); }); }
-function clBurst(sec,e){ const r=sec.getBoundingClientRect(), h=document.createElement('i'); h.className='clhrt'; h.innerHTML=ic('heart',96);
-  h.style.left=((e.clientX||r.left+r.width/2)-r.left)+'px'; h.style.top=((e.clientY||r.top+r.height*.45)-r.top)+'px'; h.style.setProperty('--rot',(Math.random()*36-18).toFixed(0)+'deg');
-  sec.appendChild(h); setTimeout(()=>h.remove(),900); }
+// Double-tap like, "Confetti drop": the heart pops with a shockwave ring and sprays tiny hearts + confetti bits, like the encore cannon
+const CLHP='M12 20.5s-7.5-4.6-7.5-10.4A4.3 4.3 0 0 1 12 7.4a4.3 4.3 0 0 1 7.5 2.7c0 5.8-7.5 10.4-7.5 10.4z';
+const clHeartSvg=(sz,fill='var(--like)')=>`<svg width="${sz}" height="${sz}" viewBox="0 0 24 24" aria-hidden="true"><path d="${CLHP}" fill="${fill}"/></svg>`;
+function clBurst(sec,e){ const r=sec.getBoundingClientRect(), x=(e.clientX||r.left+r.width/2)-r.left, y=(e.clientY||r.top+r.height*.45)-r.top, rnd=(a,b)=>a+Math.random()*(b-a), rot=rnd(-12,12), made=[];
+  const put=(html,w,h,cls='')=>{ const d=document.createElement('i'); d.className='clfx '+cls; d.style.cssText=`left:${x-w/2}px;top:${y-h/2}px;width:${w}px;height:${h}px`; d.innerHTML=html; sec.appendChild(d); made.push(d); return d; };
+  put('<svg width="160" height="160" viewBox="0 0 160 160"><circle cx="80" cy="80" r="60" fill="none" stroke="#fff" stroke-width="3"/></svg>',160,160)
+    .animate([{transform:'scale(.25)',opacity:.9},{transform:'scale(1.25)',opacity:0}],{duration:600,easing:'cubic-bezier(.1,.7,.3,1)',fill:'forwards'});
+  for(let i=0;i<14;i++){ const a=i/14*Math.PI*2+rnd(-.2,.2), d=rnd(60,115), k=i%3;
+    const html=k===0?clHeartSvg(rnd(14,20)):k===1?`<b style="display:block;width:6px;height:12px;border-radius:2px;background:${i%2?'#fff':'var(--like)'}"></b>`:'<b style="display:block;width:7px;height:7px;border-radius:50%;background:#fff"></b>';
+    put(html,20,20).animate([{transform:'translate(0,0) scale(.4)',opacity:0,easing:'cubic-bezier(.1,.8,.3,1)'},{transform:`translate(${Math.cos(a)*d}px,${Math.sin(a)*d}px) rotate(${rnd(-120,120)}deg) scale(1)`,opacity:1,offset:.45,easing:'ease-in'},{transform:`translate(${Math.cos(a)*d*1.1}px,${Math.sin(a)*d+60}px) rotate(${rnd(-260,260)}deg) scale(.7)`,opacity:0}],{duration:rnd(900,1150),delay:40,easing:'linear',fill:'both'}); }
+  const po='cubic-bezier(.2,.9,.3,1.2)'; // easing per keyframe (not on the whole timeline) so the heart holds, then leaves
+  put(clHeartSvg(96),96,96,'clfh').animate([{transform:`rotate(${rot}deg) scale(0)`,opacity:1,easing:po},{transform:`rotate(${rot}deg) scale(1.28)`,offset:.18,easing:'ease-in-out'},{transform:`rotate(${rot}deg) scale(.92)`,offset:.3,easing:'ease-out'},{transform:`rotate(${rot}deg) scale(1)`,opacity:1,offset:.42},{transform:`rotate(${rot}deg) scale(1)`,opacity:1,offset:.68,easing:'ease-in'},{transform:`rotate(${rot}deg) translateY(-44px) scale(1.1)`,opacity:0}],{duration:1000,easing:'linear',fill:'forwards'});
+  setTimeout(()=>made.forEach(m=>m.remove()),1250); }
 function clUpd(id){ const b=document.querySelector(`.clp[data-id="${id}"] [data-act=cllike]`); if(!b) return; const c=clipList().find(x=>x.id===id), on=!!(state.clk||{})[id]; b.setAttribute('aria-pressed',on); b.querySelector('small').textContent=fmtK(c.likes+(on?1:0)); b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); }
 function cmSheet(){ const c=clipList().find(x=>x.id===state.cmt.id); if(!c) return ''; const k=Math.abs(h(c.id+'m')), lk=state.cml||{};
   const T=['That encore was insane','I was two rows behind you!!','The crowd sang louder than the band','Same crew next show?','Goosebumps rewatching this','Where were you standing?'];
