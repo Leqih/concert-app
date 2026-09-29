@@ -1719,6 +1719,7 @@ i.tw{font-style:normal;opacity:0}
 .clp{position:relative;height:100%;scroll-snap-align:start;scroll-snap-stop:always;overflow:hidden;color:#fff;background:#000}
 .clm{position:absolute;inset:0;overflow:hidden}
 .clm img.cover{position:absolute;inset:-6%;width:112%;height:112%;object-fit:cover;animation:kb 14s ease-in-out infinite alternate;animation-play-state:paused}
+.clm video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#000}.clp.hv .clgr{opacity:.05}.clp.hv .clbar i{animation:none}
 .clp.act .clm img.cover{animation-play-state:running}.clp.paused .clm img.cover{animation-play-state:paused}
 @keyframes kb{0%{transform:scale(1) translate(0,0)}100%{transform:scale(1.14) translate(-3%,-2%)}}
 .clsh{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.5) 0%,rgba(0,0,0,0) 22%,rgba(0,0,0,0) 48%,rgba(0,0,0,.82) 100%)}
@@ -1768,8 +1769,11 @@ i.tw{font-style:normal;opacity:0}
 .cldisc::after{content:'';position:absolute;left:50%;top:50%;width:8px;height:8px;margin:-4px;border-radius:50%;background:#141416}
 .clp.act .cldisc{animation-play-state:running}.clp.paused .cldisc{animation-play-state:paused}
 .clrail{bottom:calc(160px + var(--sb))}
-.clbar{transition:height .2s}.clp.paused .clbar{height:4px}
-.cldur{position:absolute;right:14px;bottom:calc(88px + var(--sb));font-size:11px;font-weight:600;opacity:0;transition:opacity .2s;z-index:2}.clp.paused .cldur{opacity:.85}
+.clbar{transition:height .2s;touch-action:none;overflow:visible}.clbar::before{content:'';position:absolute;left:0;right:0;top:-12px;bottom:-12px}.clbar i{position:relative;border-radius:2px}
+.clp.paused .clbar,.clp.scrub .clbar{height:4px}.clp.hv.paused .clbar i::after,.clp.scrub .clbar i::after{content:'';position:absolute;right:-6px;top:50%;width:12px;height:12px;margin-top:-6px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.4)}
+.cldur{position:absolute;left:14px;bottom:calc(64px + var(--sb));font-size:11px;font-weight:600;font-variant-numeric:tabular-nums;opacity:0;transition:opacity .2s;z-index:2;pointer-events:none}
+.clinfo,.clrail,.cldisc{transition:opacity .2s}.clp.scrub .clinfo,.clp.scrub .clrail,.clp.clp.scrub .cldisc,.clp.scrub .clbig{opacity:0}
+.clp.scrub .cldur{left:50%;bottom:calc(150px + var(--sb));transform:translateX(-50%);font-family:var(--display);font-size:30px;font-weight:700;letter-spacing:-.02em;opacity:1;text-shadow:0 2px 12px rgba(0,0,0,.5)}.clp.paused .cldur,.clp.scrub .cldur{opacity:.85}
 .clp.paused .cldisc{opacity:.9}
 .clhint{position:absolute;left:50%;bottom:calc(150px + var(--sb));transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:2px;color:#fff;font-size:12px;font-weight:600;z-index:3;pointer-events:none;animation:hint 1.6s ease-in-out 3;opacity:.9;text-shadow:0 1px 6px rgba(0,0,0,.4)}
 .clhint svg{transform:rotate(180deg)}@keyframes hint{50%{transform:translate(-50%,-10px)}}
@@ -1920,6 +1924,9 @@ const I = {
 };
 const ic = (n,sz=22) => `<svg class="icon" viewBox="0 0 24 24" style="width:${sz}px;height:${sz}px" aria-hidden="true">${I[n]}</svg>`;
 const AV=/*AVATARS*/;
+// Clip videos: inlined as data URIs at build time, turned into blob URLs once so each re-render reuses them
+const CLIPV=/*CLIPV*/; CLIPV.forEach(x=>{ try{ const b=atob(x.v.slice(x.v.indexOf(',')+1)), u=new Uint8Array(b.length); for(let i=0;i<b.length;i++) u[i]=b.charCodeAt(i); x.u=URL.createObjectURL(new Blob([u],{type:'video/mp4'})); }catch(_){ x.u=x.v; } });
+const mmss=t=>{ t=Math.max(0,Math.floor(t||0)); return Math.floor(t/60)+':'+String(t%60).padStart(2,'0'); };
 const avi=(n,x='')=>`<img class="avimg" alt="" decoding="sync" src="${AV[n%AV.length]}" ${x}>`;
 const PEOPLE = [['Maya R.','MR','a1',0],['Sam O.','SO','a2',1],['Ana K.','AK','a3',2],['Priya K.','PK','a4',13],['Theo L.','TL','a5',4],['Dev M.','DM','a6',5],['Jules W.','JW','a2',6],['Ines B.','IB','a1',7]];
 const av = (p,extra='') => p[3]!=null ? `<span class="av ph" ${extra}>${avi(p[3])}</span>` : `<span class="av ${p[2]}" ${extra}>${p[1]}</span>`;
@@ -2240,12 +2247,12 @@ function wallReply(e,id){ e.preventDefault(); const i=document.getElementById('w
 // ---------- Clips: concert moments from verified ticket holders
 const CAPS=['The lights dropped and the whole floor lost it','Front row, no regrets','Screamed every word with strangers who are now my crew','That encore though','Came alone, left with three new friends','Best crowd I’ve ever been in','Goosebumps from the first note','Our crew’s view from Section 105'];
 function clipList(){ const base=NYC_SHOWS.filter(x=>x.img.startsWith('data:')).slice(0,8).map((x,i)=>{ const k=Math.abs(h(x.id)), p=(k+i)%8, song=songsFor(x.artist)[k%3];
-    return {id:'c'+i,s:x,p,cap:CAPS[(k+i)%CAPS.length],song,likes:180+k%4200,com:12+k%260,ago:[2,5,9,14,20,26,30,41][i]+'h',sec:['Floor GA','Section 105','Balcony','Pit'][k%4]}; });
+    return {id:'c'+i,vid:i%CLIPV.length,s:x,p,cap:CAPS[(k+i)%CAPS.length],song,likes:180+k%4200,com:12+k%260,ago:[2,5,9,14,20,26,30,41][i]+'h',sec:['Floor GA','Section 105','Balcony','Pit'][k%4]}; });
   return (state.myClips||[]).concat(base); }
 const fmtK=n=>n>=1000?(n/1000).toFixed(n>=10000?0:1)+'k':''+n;
 function clips(){ const L0=clipList(), L=state.clFeed==='fo'?L0.filter(c=>c.me||BUD[c.p]||[1,3,4,7].includes(c.p)):L0, lk=state.clk||{}, mute=state.clMute!==false;
-  return `<div class="clips" id="clv">${L.map((c,i)=>{ const p=c.me?MEP:PEOPLE[c.p], on=!!lk[c.id];
-    return `<section class="clp${i===0?' act':''}" data-i="${i}" data-id="${c.id}"><div class="clm" data-act="cltap" data-v="${c.id}">${img(c.s)}</div><span class="clsh"></span><span class="clgr"></span><i class="clbig">${ic('play',40)}</i><i class="clheart">${ic('heart',96)}</i>
+  return `<div class="clips" id="clv">${L.map((c,i)=>{ const p=c.me?MEP:PEOPLE[c.p], on=!!lk[c.id], cv=c.vid!=null?CLIPV[c.vid]:null;
+    return `<section class="clp${i===0?' act':''}${cv?' hv':''}" data-i="${i}" data-id="${c.id}"><div class="clm" data-act="cltap" data-v="${c.id}">${cv?`<video src="${cv.u}" poster="${cv.p}" muted playsinline loop preload="${i<2?'auto':'metadata'}" aria-label="Clip of ${esc(c.s.artist)}"></video>`:img(c.s)}</div><span class="clsh"></span><span class="clgr"></span><i class="clbig">${ic('play',40)}</i><i class="clheart">${ic('heart',96)}</i>
       <div class="clrail"><button class="clav" ${c.me?'':`data-act="person" data-v="${c.p}"`} aria-label="${p[0]}"><span>${avi(p[3])}</span>${c.me?'':`<i>${ic('plus',10)}</i>`}</button>
         <button data-act="cllike" data-v="${c.id}" aria-pressed="${on}" aria-label="Like">${ic('heart',26)}<small>${fmtK(c.likes+(on?1:0))}</small></button>
         <button data-act="clcom" data-v="${c.id}" aria-label="Comments">${ic('chat',26)}<small>${fmtK(c.com)}</small></button>
@@ -2253,12 +2260,24 @@ function clips(){ const L0=clipList(), L=state.clFeed==='fo'?L0.filter(c=>c.me||
       <div class="clinfo"><span class="clwho"><b>${c.me?'You':p[0]}</b><em class="clloc">${ic('pin',10)} ${esc(VSH(c.loc||c.s.venue))}${(c.onsite!==false)?' · On-site':' · Tagged'}</em><span>${c.ago}</span></span>
         <p>${esc(c.cap)}</p><span class="clsong"><span class="clmq"><i>♪ ${esc(c.song)} · ${esc(c.s.artist)}&nbsp;&nbsp;&nbsp;♪ ${esc(c.song)} · ${esc(c.s.artist)}&nbsp;&nbsp;&nbsp;</i></span></span>
         <button class="clshow" data-act="show" data-id="${c.s.id}"><span class="xth">${img(c.s)}</span><span><b>${esc(c.s.artist)}</b><small>${xDays(c.s.dates[0])<0?'Last night':sd(c.s.dates[0])} · ${esc(VSH(c.s.venue))}</small></span><em>Find a crew</em></button></div>
-      <span class="clbar"><i></i></span><span class="cldisc">${img(c.s)}</span><span class="cldur">0:${['14','22','31','09','18','26','12','40'][i%8]}</span></section>`; }).join('')}${state.clSeen?'':`<div class="clhint">${ic('chev',18)}<span>Swipe up</span></div>`}</div>
+      <span class="clbar" role="slider" aria-label="Seek" aria-valuemin="0" aria-valuemax="${cv?cv.d:14}" aria-valuenow="0"><i></i></span><span class="cldisc">${img(c.s)}</span><span class="cldur">${cv?'0:00 / '+mmss(cv.d):'0:'+['14','22','31','09','18','26','12','40'][i%8]}</span></section>`; }).join('')}${state.clSeen?'':`<div class="clhint">${ic('chev',18)}<span>Swipe up</span></div>`}</div>
     <header class="clhd"><span></span><div class="clseg"><button data-act="clfeed" data-v="fy" aria-pressed="${(state.clFeed||'fy')==='fy'}">For you</button><button data-act="clfeed" data-v="fo" aria-pressed="${state.clFeed==='fo'}">Following</button></div><button class="clmute" data-act="clmute" aria-label="${mute?'Unmute':'Mute'}">${ic(mute?'mute':'sound',20)}</button></header>
     <button class="clpost" data-act="clshare" aria-label="Share a clip">${ic('camera',20)}</button>${dock('clips')}`; }
+const clVid=sec=>sec&&sec.querySelector('.clm video');
+function clPlay(sec){ const vd=clVid(sec); if(!vd) return; vd.muted=state.clMute!==false; if(sec.classList.contains('act')&&!sec.classList.contains('paused')){ const pr=vd.play(); pr&&pr.catch(()=>{}); } else vd.pause(); }
 function clWatch(){ const v=document.getElementById('clv'); if(!v||v._w) return; v._w=1; if(state.clY) v.scrollTop=state.clY; v.addEventListener('scroll',()=>{ state.clY=v.scrollTop; },{passive:true});
-  const io=new IntersectionObserver(es=>es.forEach(e=>{ e.target.classList.toggle('act',e.intersectionRatio>.6); }),{root:v,threshold:[.6]}); v.querySelectorAll('.clp').forEach(x=>io.observe(x));
-  let lt=0; v.addEventListener('click',e=>{ const m=e.target.closest('.clm'); if(!m) return; const now=Date.now(); if(now-lt<280){ const id=m.dataset.v; state.clk=state.clk||{}; if(!state.clk[id]) { state.clk[id]=true; clUpd(id); } m.parentElement.classList.remove('paused'); const hs=m.parentElement.querySelector('.clheart'); hs.classList.remove('go'); void hs.offsetWidth; hs.classList.add('go'); lt=0; e.stopPropagation(); return; } lt=now; },true); }
+  const io=new IntersectionObserver(es=>es.forEach(e=>{ const sec=e.target, on=e.intersectionRatio>.6; sec.classList.toggle('act',on);
+      if(!on){ sec.classList.remove('paused'); const vd=clVid(sec); if(vd){ vd.pause(); try{ vd.currentTime=0; }catch(_){} } } else clPlay(sec); }),{root:v,threshold:[.6]}); v.querySelectorAll('.clp').forEach(x=>io.observe(x));
+  let lt=0; v.addEventListener('click',e=>{ const m=e.target.closest('.clm'); if(!m) return; const now=Date.now(); if(now-lt<280){ const id=m.dataset.v; state.clk=state.clk||{}; if(!state.clk[id]) { state.clk[id]=true; clUpd(id); } m.parentElement.classList.remove('paused'); clPlay(m.parentElement); const hs=m.parentElement.querySelector('.clheart'); hs.classList.remove('go'); void hs.offsetWidth; hs.classList.add('go'); lt=0; e.stopPropagation(); return; } lt=now; },true);
+  // progress bar + time follow the real video
+  const tick=()=>{ if(!v.isConnected) return; const sec=v.querySelector('.clp.act.hv'), vd=clVid(sec);
+    if(vd&&vd.duration&&!sec.classList.contains('scrub')){ const f=vd.currentTime/vd.duration; sec.querySelector('.clbar i').style.width=(f*100)+'%'; const t=mmss(vd.currentTime)+' / '+mmss(vd.duration), d=sec.querySelector('.cldur'); if(d.textContent!==t){ d.textContent=t; sec.querySelector('.clbar').setAttribute('aria-valuenow',Math.floor(vd.currentTime)); } }
+    requestAnimationFrame(tick); }; requestAnimationFrame(tick);
+  // drag the bar to scrub
+  v.addEventListener('pointerdown',e=>{ const bar=e.target.closest('.clbar'); if(!bar) return; const sec=bar.closest('.clp'), vd=clVid(sec); if(!vd||!vd.duration) return; e.preventDefault(); sec.classList.add('scrub'); vd.pause();
+    const seek=x=>{ const r=bar.getBoundingClientRect(), f=Math.min(1,Math.max(0,(x-r.left)/r.width)); vd.currentTime=f*vd.duration; bar.querySelector('i').style.width=(f*100)+'%'; sec.querySelector('.cldur').textContent=mmss(f*vd.duration)+' / '+mmss(vd.duration); };
+    seek(e.clientX); const mv=ev=>seek(ev.clientX), up=()=>{ sec.classList.remove('scrub'); clPlay(sec); removeEventListener('pointermove',mv); removeEventListener('pointerup',up); removeEventListener('pointercancel',up); };
+    addEventListener('pointermove',mv); addEventListener('pointerup',up); addEventListener('pointercancel',up); }); }
 function clUpd(id){ const b=document.querySelector(`.clp[data-id="${id}"] [data-act=cllike]`); if(!b) return; const c=clipList().find(x=>x.id===id), on=!!(state.clk||{})[id]; b.setAttribute('aria-pressed',on); b.querySelector('small').textContent=fmtK(c.likes+(on?1:0)); b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); }
 function cmSheet(){ const c=clipList().find(x=>x.id===state.cmt.id); if(!c) return ''; const k=Math.abs(h(c.id+'m')), lk=state.cml||{};
   const T=['That encore was insane','I was two rows behind you!!','The crowd sang louder than the band','Same crew next show?','Goosebumps rewatching this','Where were you standing?'];
@@ -2267,12 +2286,12 @@ function cmSheet(){ const c=clipList().find(x=>x.id===state.cmt.id); if(!c) retu
   <div class="ufb">${R.map(r=>{ const p=r.me?MEP:PEOPLE[r.p], on=!!lk[r.id]; return `<div class="cmr"><span class="bgav"><span>${avi(p[3])}</span></span><span class="cmb"><b>${r.me?'You':p[0]}${(r.me?hasTix(c.s):r.was)?` <em>${ic('check',9)} Was there</em>`:''}</b><span>${esc(r.t)}</span><small>${r.ago}</small></span><button class="cml" data-act="cmlike" data-v="${r.id}" aria-pressed="${on}">${ic('heart',16)}<small>${r.l+(on?1:0)}</small></button></div>`; }).join('')}</div>
   <form class="wtf cmf" onsubmit="return cmPost(event,'${c.id}')"><span class="bgav"><span>${avi(MEP[3])}</span></span><label hidden for="cmin">Comment</label><input id="cmin" placeholder="Add a comment" autocomplete="off"><button type="submit">Post</button></form></div>`; }
 function cmPost(e,id){ e.preventDefault(); const i=document.getElementById('cmin'), v=i.value.trim(); if(!v) return false; state.cmMine=state.cmMine||{}; (state.cmMine[id]=state.cmMine[id]||[]).push({id:id+'-me'+Date.now(),me:true,t:v,l:0,ago:'now'}); render(); const b=document.querySelector('.cms .ufb'); if(b) b.scrollTop=b.scrollHeight; return false; }
-const CSVID=[{geo:'Radio City Music Hall',d:'2026-09-29',len:'0:14'},{geo:'Radio City Music Hall',d:'2026-09-29',len:'0:22'},{geo:null,d:null,len:'0:09'}];
+const CSVID=[{geo:'Radio City Music Hall',d:'2026-09-29',vid:5},{geo:'Radio City Music Hall',d:'2026-09-29',vid:6},{geo:null,d:null,vid:7}];
 const VENUES=()=>[...new Set(SHOWS.map(x=>x.venue))].slice(0,8);
 function csShows(v){ return SHOWS.filter(x=>x.venue===v).sort((a,b)=>Math.abs(xDays(a.dates[0])+1)-Math.abs(xDays(b.dates[0])+1)); }
 function csSheet(){ const k=state.cs, vid=CSVID[k.v], loc=k.loc, sh=loc?csShows(loc):[], sel=k.sid?byId[k.sid]:sh[0], thumb=A(KIT.show);
   const head=`<div class="sheetbg" data-act="csclose"></div><div class="sheet csheet ufs" role="dialog" aria-label="Share a clip"><div class="cgrab"><i class="grab"></i><h3>Share a clip</h3><p>Every clip carries the venue it was filmed at</p></div><div class="ufb">`;
-  let b=`<p class="ncl">Pick a video</p><div class="csvid">${CSVID.map((x,i)=>`<button data-act="cspick" data-v="${i}" aria-pressed="${k.v===i}"><span>${img(thumb)}</span>${x.geo?`<i class="csgeo">${ic('pin',10)}</i>`:''}<em>${x.len}</em></button>`).join('')}</div>
+  let b=`<p class="ncl">Pick a video</p><div class="csvid">${CSVID.map((x,i)=>`<button data-act="cspick" data-v="${i}" aria-pressed="${k.v===i}"><span><img class="cover" alt="" src="${CLIPV[x.vid].p}"></span>${x.geo?`<i class="csgeo">${ic('pin',10)}</i>`:''}<em>${mmss(CLIPV[x.vid].d)}</em></button>`).join('')}</div>
     <p class="ncl">Location <em class="csreq">Required</em></p>`;
   if(k.pickLoc) b+=`<div class="cslocs">${VENUES().map(v=>`<button class="itrow" data-act="csloc" data-v="${esc(v)}">${ic('pin',16)}<span class="ub"><b>${esc(VSH(v))}</b><span class="um">${esc(v)}</span></span>${ic('right',14)}</button>`).join('')}</div>`;
   else if(loc) b+=`<div class="csloc on">${ic('pin',18)}<span class="ub"><b>${esc(VSH(loc))}</b><span class="um">${k.src==='geo'?'From your video’s location · On-site':'Tagged by you'}</span></span><button class="ufx" data-act="csedit">Change</button></div>`;
@@ -2862,12 +2881,12 @@ document.getElementById('app').addEventListener('click',e=>{
     else { if(!t.plan){ render(); toast('Set a meetup first'); return; } t.msgs.push({d:'out',t:`📍 I’m at ${t.plan[1]}`,time:nowT()}); }
     t.ts=++TSEQ; render(); }
   else if(a==='wrep'){ state.wopen=state.wopen||{}; state.wopen[v]=!state.wopen[v]; const sc=document.querySelector('.scroll'), y=sc&&sc.scrollTop; render(); const n=document.querySelector('.scroll'); if(n) n.scrollTop=y; }
-  else if(a==='cltap'){ const sec=t.closest('.clp'); sec.classList.toggle('paused'); }
+  else if(a==='cltap'){ const sec=t.closest('.clp'); sec.classList.toggle('paused'); clPlay(sec); }
   else if(a==='cllike'){ state.clk=state.clk||{}; state.clk[v]=!state.clk[v]; clUpd(v); }
   else if(a==='clcom'){ state.cmt={id:v}; render(); }
   else if(a==='cmclose'){ state.cmt=null; render(); }
   else if(a==='cmlike'){ state.cml=state.cml||{}; state.cml[v]=!state.cml[v]; render(); }
-  else if(a==='clmute'){ state.clMute=state.clMute===false; const b=t; b.innerHTML=ic(state.clMute!==false?'mute':'sound',20); toast(state.clMute!==false?'Muted':'Sound on'); }
+  else if(a==='clmute'){ state.clMute=state.clMute===false; const b=t; b.innerHTML=ic(state.clMute!==false?'mute':'sound',20); b.setAttribute('aria-label',state.clMute!==false?'Unmute':'Mute'); document.querySelectorAll('.clp video').forEach(x=>{ x.muted=state.clMute!==false; }); toast(state.clMute!==false?'Muted':'Sound on'); }
   else if(a==='clfeed'){ state.clFeed=v; state.clY=0; state.clSeen=true; render(); }
   else if(a==='clshare'){ if(document.getElementById('psheet')) closePlus(); state.cs={v:0,loc:CSVID[0].geo,src:'geo'}; render(); }
   else if(a==='csclose'){ state.cs=null; render(); }
@@ -2875,7 +2894,7 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='csedit'){ const c=document.getElementById('cscap'); state.cs.cap=c?c.value:''; state.cs.pickLoc=true; render(); }
   else if(a==='csloc'){ state.cs.loc=v; state.cs.src='manual'; state.cs.pickLoc=false; state.cs.sid=null; render(); }
   else if(a==='csshow'){ const c=document.getElementById('cscap'); state.cs.cap=c?c.value:''; state.cs.sid=id; render(); }
-  else if(a==='cspost'){ const k=state.cs; if(!k.loc) return; const c=document.getElementById('cscap'), sh=csShows(k.loc), sel=k.sid?byId[k.sid]:(sh[0]||A(KIT.show)); state.myClips=[{id:'m'+Date.now(),me:true,p:null,s:sel,cap:(c&&c.value.trim())||'What a night',song:songsFor(sel.artist)[0],likes:0,com:0,ago:'now',loc:k.loc,onsite:k.src==='geo'}].concat(state.myClips||[]); state.cs=null; state.history=[]; state.screen='clips'; state.clY=0; render(); toast('Clip posted · tagged at '+VSH(k.loc)); }
+  else if(a==='cspost'){ const k=state.cs; if(!k.loc) return; const c=document.getElementById('cscap'), sh=csShows(k.loc), sel=k.sid?byId[k.sid]:(sh[0]||A(KIT.show)); state.myClips=[{id:'m'+Date.now(),me:true,p:null,vid:CSVID[k.v||0].vid,s:sel,cap:(c&&c.value.trim())||'What a night',song:songsFor(sel.artist)[0],likes:0,com:0,ago:'now',loc:k.loc,onsite:k.src==='geo'}].concat(state.myClips||[]); state.cs=null; state.history=[]; state.screen='clips'; state.clY=0; render(); toast('Clip posted · tagged at '+VSH(k.loc)); }
   else if(a==='xtag'){ state.xtag=+v<0?null:+v; render(); }
   else if(a==='hold'){ const t=thById(state.tid); t.hold='held'; render(); toast('$5 held · it comes back when you check in'); }
   else if(a==='checkin'&&!thById(state.tid).dep){ const t=thById(state.tid); t.hold='in'; t.msgs.push({d:'sys',t:`You’re at ${t.plan[1]}`}); t.ts=++TSEQ; render(); toast('Nice · this counts toward your show-up record'); }

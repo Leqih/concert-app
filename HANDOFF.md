@@ -32,9 +32,10 @@
 ```
 HANDOFF.md            ← 本文件
 CLAUDE.md             ← 给 Claude 的工作规则（精简版）
-demo/                 ← 主作品：单文件 HTML 交互 demo（当前 = M17.4 / 线上 v96）
+demo/                 ← 主作品：单文件 HTML 交互 demo（当前 = M17.5 / 线上 v97）
   demo2_tpl.html      模板源码（唯一需要改的文件）
   build.py            把数据注入模板 → dist/plusone-demo.html
+  clips/              Clips 用的 8 段演唱会视频 + 封面（Pexels，CREDITS.md）
   shows.js            纽约演出数据（Ticketmaster 抓取后的静态快照）
   cities.json         其他 4 个城市的演出数据（Los Angeles / Chicago / London / Toronto；纽约在 shows.js）
   avatars.json        头像图（base64）
@@ -56,7 +57,7 @@ docs/milestones.md    ← 迭代里程碑表
 ## 4. Demo 架构（demo/demo2_tpl.html）
 
 - **单文件原生 JS**，无框架、无构建依赖（只需 Python 跑 build.py）。
-- 模板里有 4 个占位符，由 `build.py` 替换：`/*SHOWS*/`、`/*AVATARS*/`、`/*CITIES*/`、`/*MAP*/`。
+- 模板里有 5 个占位符，由 `build.py` 替换：`/*SHOWS*/`、`/*AVATARS*/`、`/*CITIES*/`、`/*MAP*/`、`/*CLIPV*/`（`demo/clips/` 里的视频 + 封面，base64 内联）。
 - **状态**：全局 `state` 对象（第 ~1619 行）
   `{ city, screen, id, tab, genre, sort, q, drop, rsvp, history, msgs, ... }`，另有 `xmode / xtag`（Explore）、`sheet / tsheet / psheet / kit / safe`（各种底部弹层）。
 - **渲染**：`render()` 按 `state.screen` 调用对应页面函数，返回 HTML 字符串写进 `#view`，再叠加打开的弹层。
@@ -121,6 +122,7 @@ pip install playwright && python3 demo/tests/m7test.py   # 可选：批量截屏
 | M17.2 | v94 | Clips v2 | ＋ 菜单：星星改为 Share a clip（From last night），去掉单独胶囊；Find a +1 开关移到个人页右上（Open to invites）。Clips：真实评论面板（只有去过的人可评论、Was there 标记、评论点赞、发评论）；Following 只看 buddy/小队成员；右下转动唱片 + 歌名滚动；首次打开 Swipe up 提示；暂停时进度条加粗并显示时长；切换 tab 保留滚动位置 |
 | M17.3 | v95 | 评论对所有人开放 | 主人要求：任何人都能评论 Clips、回复演出墙；去过/持票的人只是名字旁多一个「Was there」/「Going」标记。发片段、在演出墙发帖仍需持票 |
 | M17.4 | v96 | 片段必须带位置标签 | 主人要求：发片段不再要求持票，改为硬性要求场馆位置标签——视频带定位则自动识别（On-site），没有定位必须手动选场馆（Tagged），不选位置无法发布；按场馆+日期自动匹配演出，同场馆多场可切换；片段上显示「📍 场馆 · On-site/Tagged」；演出墙发帖也对所有人开放 |
+| M17.5 | v97 | Clips 播放真视频 | 8 段 Pexels 免费演唱会竖屏视频（360×640 H.264，8–12.5 s，见 `demo/clips/CREDITS.md`），构建时内联、运行时转 blob URL；滑到哪条播哪条，离开即暂停归零；点一下暂停/播放，双击点赞也会恢复播放；进度条和「0:03 / 0:10」时间跟真实播放走；进度条可拖动快进（拖动时隐藏文案/右栏，居中显示大号时间）；静音按钮真正控制声音（3 段有现场声）；发布面板的视频缩略图换成真实视频封面，发布的片段也带视频 |
 
 ## 6. 链接（原账号所有，新账号只能查看）
 
