@@ -2273,22 +2273,28 @@ class CodecPlayer{
     this.paused=true; this.muted=true; this.readyState=4; this.q=[]; this.cur=null; this.T=0; this.next=0; this.loop=0; this.minTs=-1;
     this.bytes=x.b; this.cfg={codec:k.c,optimizeForLatency:true}; if(k.dsc) this.cfg.description=Uint8Array.from(atob(k.dsc),ch=>ch.charCodeAt(0));
     this.dec=new VideoDecoder({output:f=>this.onFrame(f),error:()=>{ this.dead=true; }}); this.dec.configure(this.cfg); this.feed(); }
-  onFrame(f){ if(f.timestamp<this.minTs||!this.c.isConnected){ f.close(); return; } this.q.push(f); if(!this.cur||this.paused) this.show(); }
-  feed(){ const pk=this.x.k.pk; while(!this.dead&&this.dec.state==='configured'&&this.dec.decodeQueueSize<4&&this.q.length<6){
+  onFrame(f){ if(f.timestamp<this.minTs||!this.c.isConnected){ f.close(); this.feed(); return; } this.q.push(f); if(!this.cur||this.paused) this.show(); else this.feed(); }
+  feed(){ const pk=this.x.k.pk; while(!this.dead&&this.dec.state==='configured'&&this.dec.decodeQueueSize<4&&this.q.length<8){
       const i=this.next, e=pk[i]; this.dec.decode(new EncodedVideoChunk({type:e[2]?'key':'delta',timestamp:Math.round((this.loop*this.n+i)*this.fd),data:this.bytes.subarray(e[0],e[0]+e[1])}));
       if(++this.next>=this.n){ this.next=0; this.loop++; } } }
   show(){ let pick=null; while(this.q.length&&(this.q[0].timestamp<=this.T+1||(!this.cur&&!pick))){ if(pick) pick.close(); pick=this.q.shift(); }
-    if(pick){ if(this.cur) this.cur.close(); this.cur=pick; this.g.drawImage(pick,0,0,this.c.width,this.c.height); } this.feed(); }
+    if(pick){ if(this.cur) this.cur.close(); this.cur=pick; this.g.drawImage(pick,0,0,this.c.width,this.c.height); }
+    if(!this.paused&&this.cur&&!this.q.length&&this.T-this.cur.timestamp>1e6){ this.currentTime=(this.T/1e6)%this.duration; return; } // fell >1 s behind (tab was hidden): jump
+    this.feed(); }
   get currentTime(){ return (this.T/1e6)%this.duration; }
   set currentTime(t){ // seek: restart decoding from the keyframe at or before t, drop frames before t
     if(this.dead) return; t=Math.max(0,Math.min(t,this.duration-1/this.fps)); const pk=this.x.k.pk, i=Math.floor(t*this.fps); let kf=i; while(kf>0&&!pk[kf][2]) kf--;
     try{ this.dec.reset(); this.dec.configure(this.cfg); }catch(_){ this.dead=true; return; }
     this.q.forEach(f=>f.close()); this.q=[]; if(this.cur){ this.cur.close(); this.cur=null; } this.loop=0; this.next=kf; this.T=Math.round(i*this.fd); this.minTs=this.T; this.feed(); }
-  play(){ if(this.paused&&!this.dead){ this.paused=false; let lt=performance.now(); const f=n=>{ if(this.paused) return; if(!this.c.isConnected){ this.destroy(); return; }
-      this.T+=(n-lt)*1000; lt=n; if(this.cur&&!this.q.length&&this.T>this.cur.timestamp+2*this.fd) this.T=this.cur.timestamp+this.fd; this.minTs=-1; this.show(); requestAnimationFrame(f); }; requestAnimationFrame(f); }
+  // The clock runs in real time from performance.now(): a frame that isn't decoded in time is skipped, never waited
+  // for (waiting stretched time = slow motion). Ticks come from rAF plus a timer, since embedded previews can throttle rAF.
+  play(){ if(this.paused&&!this.dead){ this.paused=false; this.lt=performance.now(); const tick=()=>{ if(this.paused) return; if(!this.c.isConnected){ this.destroy(); return; }
+        const n=performance.now(); this.T+=(n-this.lt)*1000; this.lt=n; if(this.T>this.minTs) this.minTs=-1; this.show(); };
+      const raf=()=>{ if(this.paused||this.dead) return; tick(); requestAnimationFrame(raf); }; requestAnimationFrame(raf);
+      clearInterval(this.iv); this.iv=setInterval(()=>{ if(this.paused||this.dead) clearInterval(this.iv); else tick(); },30); }
     return this.dead?Promise.reject(new Error('decode')):Promise.resolve(); }
-  pause(){ this.paused=true; }
-  destroy(){ this.paused=true; this.q.forEach(f=>f.close()); this.q=[]; if(this.cur){ this.cur.close(); this.cur=null; } try{ this.dec.close(); }catch(_){} this.dead=true; }
+  pause(){ this.paused=true; clearInterval(this.iv); }
+  destroy(){ this.paused=true; clearInterval(this.iv); this.q.forEach(f=>f.close()); this.q=[]; if(this.cur){ this.cur.close(); this.cur=null; } try{ this.dec.close(); }catch(_){} this.dead=true; }
   addEventListener(){} }
 function clFrames(sec,el,mk=true){ const x=CLIPV[+el.dataset.k]; if(!CL_WC||!x.k) return null; let c=el;
   if(el.tagName==='VIDEO'){ c=document.createElement('canvas'); c.width=720; c.height=1280; c.dataset.k=el.dataset.k; c.style.background='#000 url('+x.p+') center/cover'; c.setAttribute('aria-label',el.getAttribute('aria-label')||''); el.pause(); el.removeAttribute('src'); try{ el.load(); }catch(_){} el.replaceWith(c); }
