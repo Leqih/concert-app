@@ -755,6 +755,19 @@ i.tw{font-style:normal;opacity:0}
 .scfl{display:flex;gap:6px;overflow-x:auto;padding:0 12px 12px;scrollbar-width:none}.scfl::-webkit-scrollbar{display:none}.scfl .gch{flex-shrink:0}.scfl .gch em{font-style:normal;color:var(--muted);margin-left:2px}.scfl .gch[aria-pressed=true] em{color:rgba(255,255,255,.7)}
 .scspare{flex-basis:100%;display:flex;align-items:center;gap:10px;margin-top:10px;padding:8px 10px;border-radius:14px;background:var(--card2);text-align:left}.scspare>span:nth-child(2){flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}.scspare b{font-size:12.5px}.scspare small{font-size:11px;color:var(--muted)}
 .scst{width:40px;height:40px;border-radius:8px;background:#0B0B0C;color:#fff;display:flex!important;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;box-shadow:inset 0 0 0 2px #0B0B0C,inset 0 0 0 3px rgba(255,255,255,.35)}.scst b{font-family:var(--display);font-size:12px;letter-spacing:.02em}.scst small{font-size:9px;color:rgba(255,255,255,.7)!important}
+.sh2 .sfan{height:108px}.sh2 .sf{width:58px;height:72px;margin-left:-29px;top:6px;border-radius:10px}
+.sh2 .sf.s0{transform:translate(-64px,12px) rotate(-14deg)}.sh2 .sf.s1{transform:translate(-22px,2px) rotate(-5deg)}.sh2 .sf.s2{transform:translate(22px,2px) rotate(5deg)}.sh2 .sf.s3{transform:translate(64px,12px) rotate(14deg)}
+.sh2 .stitle p{max-width:300px}.sh2 .smem{margin:12px 0 4px}
+.scbar{position:sticky;top:0;z-index:6;margin-top:6px;padding:8px 0 10px;transition:background .2s,box-shadow .2s}
+.scbar .scmini{display:none;grid-template-columns:40px 1fr 40px;align-items:center;padding:0 12px 8px}.scbar .scmini b{text-align:center;font-family:var(--display);font-size:17px;font-weight:700;letter-spacing:-.03em}.scbar .scmini .wicon{width:36px;height:36px}
+.scbar.stuck{background:rgba(242,242,244,.88);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);box-shadow:0 1px 0 var(--line);padding-top:calc(var(--st) + 2px)}.scbar.stuck .scmini{display:grid;animation:cmin .25s ease both}
+.scbar .scfl{padding-bottom:0}.sc2list{margin-top:8px}
+.scp{max-height:84%;display:flex;flex-direction:column}.scp .ufb{flex:1;overflow-y:auto;scrollbar-width:none}.scp .ufb::-webkit-scrollbar{display:none}
+.scpm{display:flex;align-items:center;gap:10px;width:100%;padding:8px 0;text-align:left}.scpm .bgav span{width:36px;height:36px;border:0}.scpm .ub{flex:1;min-width:0}.scpm b{font-size:14px}.scpm b em{font-style:normal;font-size:10.5px;font-weight:700;background:#0B0B0C;color:#fff;border-radius:999px;padding:1px 6px;margin-left:4px}.scpm .um{font-size:12px;color:var(--muted)}
+.scpl{display:flex;flex-direction:column;gap:0;position:relative;padding-left:4px}.scpl div{display:grid;grid-template-columns:62px 1fr;gap:10px;align-items:baseline;padding:7px 0;position:relative}.scpl b{font-family:var(--display);font-size:14px;font-weight:700}.scpl span{font-size:14px;color:#3A3A3F}
+.scpl div+div{border-top:1px dashed var(--line)}
+.scp .scspare{width:100%}
+.scpr{margin:0;padding:0 0 0 18px;font-size:13.5px;color:#3A3A3F;line-height:1.7}
 .scjoin{flex-shrink:0;height:32px;padding:0 14px;border-radius:10px;background:#0B0B0C;color:#fff;font-size:13px;font-weight:600;display:flex;align-items:center}
 .sshows{display:flex;gap:10px;overflow-x:auto;padding:0 16px 4px;scrollbar-width:none}.sshows::-webkit-scrollbar{display:none}
 .sshow{flex-shrink:0;width:118px;text-align:left}
@@ -2216,42 +2229,60 @@ function sceneCrews(i){
   for(let k=0;k<4;k++){ const s=SHOWS[(i*5+k*4+3)%SHOWS.length]; if(!out.some(c=>c.s===s)) out.push(mk(s,k)); }
   return out;
 }
+// Scene page v2: compact hero (the photo fan stays for the fly-in from Home), one social-proof line instead of a stats card,
+// a sticky filter bar (mini title + back when stuck) so crews sit on the first screen, a join preview, and clips instead of
+// a second list of shows.
+const SC_DESC=[n=>`${n} people are going solo this week. Meet before doors, split after the encore — or don’t.`,()=>'Early line, rail spots, every word. Meet at the GA line.',()=>'Eat near the venue, then walk over together.',()=>'New to the city or the venue? Go with people who know the way in.',()=>'Good seats, good sound, phones down.',()=>'The show ends at the encore. The night doesn’t.',()=>'All of the music, none of the drinks.',()=>'Hosted by and for women. Verified members, public meetups.'];
+const SC_PLAN=[[['6:30','Meet at the bar by the main entrance'],['7:00','Doors · walk in together'],['After','Split at the encore, or stay for a drink']],
+  [['5:30','Line up together at the GA entrance'],['7:00','Doors · hold the rail as a crew'],['After','Late food nearby']],
+  [['6:00','Dinner near the venue'],['7:15','Walk over together'],['After','Everyone heads home']],
+  [['6:45','Meet at the main entrance'],['7:00','Host shows the way in, merch, bars, exits'],['After','Walk to the subway together']],
+  [['7:15','Meet in the lobby'],['7:30','Find seats · phones down'],['After','Everyone heads home']],
+  [['7:00','Doors · watch the show'],['Encore','Regroup by the soundboard'],['11:00','Afterparty spot, decided in chat']],
+  [['6:30','Coffee or mocktails nearby'],['7:00','Doors · walk in together'],['After','Late diner, optional']],
+  [['6:30','Meet in a public lobby'],['7:00','Doors · location sharing on'],['After','Walk to the train together']]];
 function scene(){
   const i=+state.id, sc=SCENE_LIST[i], all=sceneCrews(i), mine=all.filter(c=>c.mine), f=(state.scFor===i&&state.scF)||(mine.length?'mine':'all');
-  const L=f==='mine'?mine:f==='spare'?all.filter(c=>c.spare):f==='all'?all:all.filter(c=>c.s.id===f);
-  const shows=[...new Set(all.map(c=>c.s))].concat(SHOWS.filter(x=>!all.some(c=>c.s===x))).slice(0,6), nsp=all.filter(c=>c.spare).length;
-  const members=[0,1,2,3,4,5].map(k=>PEOPLE[(i+k)%PEOPLE.length]);
+  const L=f==='mine'?mine:f==='spare'?all.filter(c=>c.spare):f==='all'?all:all.filter(c=>c.s.id===f); window._scCrews=all;
+  const nsp=all.filter(c=>c.spare).length, tonight=Math.max(6,Math.round(sc[3]/4));
+  const members=[0,1,2,3,4].map(k=>PEOPLE[(i+k)%PEOPLE.length]);
   const short=v=>v.replace('Madison Square Garden','MSG').replace('Radio City Music Hall','Radio City');
-  const chips=[['mine','Your shows',mine.length]].filter(()=>mine.length).concat(mine.map(c=>[c.s.id,c.s.artist,null]),[['spare','With a spare',nsp],['all','All',all.length]]);
-  return `<div class="scroll"><div style="padding-bottom:120px">
-    <div class="shero">
+  const chips=[['mine','Your shows',mine.length]].filter(()=>mine.length).concat(mine.map(c=>[c.s.id,c.s.artist,null]),[['spare','With a spare',nsp],['all','All crews',all.length]]);
+  const shs=new Set(all.map(c=>c.s)), cl=clipList().filter(c=>shs.has(c.s)).slice(0,8);
+  return `<div class="scroll" id="scsc"><div style="padding-bottom:120px">
+    <div class="shero sh2">
       <div class="sback">${avi(SCENE_POOL[i*4+1])}</div>
       <header class="whead"><button class="wicon glass" data-act="back" aria-label="Back">${ic('back',20)}</button><span></span><button class="wicon glass" data-act="toast" data-msg="Link copied" aria-label="Share">${ic('share',18)}</button></header>
       <div class="sfan" id="sfan">${[0,1,2,3].map(k=>`<span class="sf s${k}">${avi(SCENE_POOL[i*4+k])}</span>`).join('')}</div>
-      <div class="stitle sin"><span class="skick">Scene · ${state.city}</span><h1>${sc[0]} <span class="emo">${SCENE_EMO[i]}</span></h1><p>${sc[1]}</p></div>
+      <div class="stitle sin"><span class="skick">Scene · ${state.city}</span><h1>${sc[0]} <span class="emo">${SCENE_EMO[i]}</span></h1><p>${SC_DESC[i](tonight)}</p></div>
+      <div class="smem sin"><span class="smav">${members.map(p=>`<span>${avi(p[3])}</span>`).join('')}</span><span class="smt"><b>${sc[3]} in this scene</b> · ${sceneN(i)} crews open</span></div>
     </div>
-    <div class="sstats sin"><div><b>${f==='all'?sceneN(i):L.length}</b><span>${f==='all'?'crews open':f==='mine'?'for your shows':'crews here'}</span></div><i></i><div><b>${sc[3]}</b><span>people</span></div><i></i><div><b>${nsp}</b><span>face-value spares</span></div></div>
-    <div class="smem sin"><span class="smav">${members.map(p=>`<span>${avi(p[3])}</span>`).join('')}</span><span class="smt"><b>${members[0][0].split(' ')[0]}, ${members[1][0].split(' ')[0]}</b> and ${sc[3]-2} others are in</span></div>
-
-    <section class="ssec sin"><h2 class="h2 sec">Crews forming <span class="emo">🤝</span></h2>
-      <div class="scfl">${chips.map(([k,l,n])=>`<button class="gch" data-act="scf" data-v="${k}" aria-pressed="${f===k}">${esc(l)}${n!=null?` <em>${n}</em>`:''}</button>`).join('')}</div>
-      ${L.map(c=>{ const left=c.n-c.f; return `<div class="screw">
-        <button class="scmain" data-act="crew" data-id="${c.s.id}"><span class="scimg">${img(c.s)}${c.mine?`<i class="scyou${c.tix?'':' want'}">${c.tix?ic('ticket',10)+' Going':'Want to go'}</i>`:''}</span>
+    <div class="scbar" id="scbar"><div class="scmini"><button class="wicon" data-act="back" aria-label="Back">${ic('back',18)}</button><b>${sc[0]} <span class="emo">${SCENE_EMO[i]}</span></b><span></span></div>
+      <div class="scfl">${chips.map(([k,l,n])=>`<button class="gch" data-act="scf" data-v="${k}" aria-pressed="${f===k}">${esc(l)}${n!=null?` <em>${n}</em>`:''}</button>`).join('')}</div></div>
+    <section class="ssec sc2list">
+      ${L.map(c=>{ const left=c.n-c.f, ix=all.indexOf(c); return `<div class="screw">
+        <button class="scmain" data-act="scprev" data-v="${ix}"><span class="scimg">${img(c.s)}${c.mine?`<i class="scyou${c.tix?'':' want'}">${c.tix?ic('ticket',10)+' Going':'Want to go'}</i>`:''}</span>
         <span class="scb"><b>${esc(c.name)}</b><span class="scm">${esc(c.s.artist)} · ${sd(c.s.dates[0])} · ${esc(short(c.s.venue))}</span>
           <span class="scf"><span class="schost">${avi(c.host[3])}</span><span>${c.host[0]} · showed up ${c.rel[0]}/${c.rel[1]}</span></span>
-          <span class="sctr"><em>${ic('check',9)} ${c.ver}/${c.f} verified</em>${c.dep?'<em>$5 hold</em>':''}${c.wo?'<em>Women only</em>':''}</span>
+          <span class="sctr"><em>${ic('check',9)} ${c.f===1?'Host verified':c.ver+'/'+c.f+' verified'}</em>${c.dep?'<em>$5 hold</em>':''}${c.wo?'<em>Women only</em>':''}</span>
           <span class="scsp">${Array.from({length:c.n},(_,k)=>`<i class="${k<c.f?'on':''}"></i>`).join('')}<em>${left} ${left===1?'spot':'spots'} left</em></span></span></button>
-        <div class="scside"><button class="scjoin" data-act="crew" data-id="${c.s.id}">Join</button></div>
+        <div class="scside"><button class="scjoin" data-act="scprev" data-v="${ix}">Join</button></div>
         ${c.spare?`<button class="scspare" data-act="claimspare" data-v="${c.spare.id}"><span class="scst"><b>${/floor|ga/i.test(c.spare.sec)?'GA':/balc/i.test(c.spare.sec)?'BAL':esc(c.spare.sec.split(' ').pop().slice(0,4).toUpperCase())}</b><small>×${Math.max(1,Math.abs(c.spare.qty))}</small></span><span><b>${c.spare.seller[0].split(' ')[0]} has a spare · $${c.spare.face} face value</b><small>Crew-mates get first dibs · $2 fee · escrow until it lands</small></span>${ic('right',14)}</button>`:''}
       </div>`; }).join('')||`<p class="mempty">No ${esc(sc[0].toLowerCase())} crews here yet · start one below</p>`}
     </section>
-
-    <section class="ssec sin"><h2>Where this crowd is going <span class="emo">🎟️</span></h2>
-      <div class="sshows">${shows.map(x=>`<button class="sshow" data-act="show" data-id="${x.id}"><span class="ssimg">${img(x)}</span><b>${esc(x.artist)}</b><span>${sd(x.dates[0])} · ${esc(short(x.venue))}</span></button>`).join('')}</div>
-    </section>
+    ${cl.length?`<section class="ssec"><h2>Clips from this scene <span class="emo">🎬</span></h2><p class="sub" style="text-align:center;margin:-6px 0 12px">From people who were at these shows</p>${clipThumbs(cl,true)}</section>`:''}
   </div></div>
   <div class="wbar"><button class="wpill big" data-act="ncopen" data-id="${(L[0]||all[0]).s.id}" data-j="${i}">${ic('plus',18)}&nbsp;Start a ${esc(sc[0])} crew</button></div>`;
 }
+// Join preview: who's in (verified, show-up record), the plan for the night, the rules, and a spare if there is one
+function scPrev(c){ const i=+state.id, others=[1,2,3,4,5,6].map(k=>(c.hi+k)%PEOPLE.length).slice(0,c.f-1), ppl=[c.hi].concat(others), left=c.n-c.f;
+  return `<div class="sheetbg" data-act="scpclose"></div><div class="sheet csheet scp" id="scpsh" role="dialog" aria-label="${esc(c.name)}"><div class="cgrab"><i class="grab"></i><h3>${esc(c.name)}</h3><p>${esc(c.s.artist)} · ${sd(c.s.dates[0])} · ${esc(VSH(c.s.venue))}</p></div><div class="ufb">
+    <p class="ncl">Who’s in <em class="csopt">${c.f} of ${c.n} · ${left} ${left===1?'spot':'spots'} left</em></p>
+    ${ppl.map((p,k)=>{ const r=REL[p], v=k<c.ver; return `<button class="scpm" data-act="person" data-v="${p}"><span class="bgav"><span>${avi(PEOPLE[p][3])}</span></span><span class="ub"><b>${PEOPLE[p][0]}${k===0?' <em>Host</em>':''}</b><span class="um">${v?'✓ ID verified':'Not verified yet'} · showed up ${r[0]}/${r[1]}</span></span>${ic('right',14)}</button>`; }).join('')}
+    <p class="ncl">The plan</p><div class="scpl">${SC_PLAN[i].map(x=>`<div><b>${x[0]}</b><span>${x[1]}</span></div>`).join('')}</div>
+    <p class="ncl">Good to know</p><ul class="scpr">${c.dep?'<li>$5 hold when you join, back when you check in</li>':'<li>No deposit · tap “I’m here” when you arrive</li>'}${c.wo?'<li>Women only · verified ID required</li>':''}<li>Meet in public spots · share your location from Safety</li><li>Leave anytime · the host is told, no one else</li></ul>
+    ${c.spare?`<button class="scspare" data-act="claimspare" data-v="${c.spare.id}" style="margin-top:14px"><span class="scst"><b>${/floor|ga/i.test(c.spare.sec)?'GA':'SEC'}</b><small>×1</small></span><span><b>No ticket? ${c.spare.seller[0].split(' ')[0]} has a spare · $${c.spare.face}</b><small>Crew-mates first · face value · $2 fee</small></span>${ic('right',14)}</button>`:''}
+  </div><div class="uff"><button class="ufx" data-act="scpclose">Not now</button><button class="cgo new" data-act="crew" data-id="${c.s.id}">${c.dep?'Join · $5 hold':'Join crew'}</button></div></div>`; }
 function sceneBack(){
   const i=state.id, src=[...document.querySelectorAll('#sfan .sf')].map((e,k)=>{ const r=e.getBoundingClientRect(); return {cx:r.left+r.width/2,cy:r.top+r.height/2,w:e.offsetWidth,h:e.offsetHeight,src:e.querySelector('img').src}; });
   const p=state.history.pop()||['home',null]; state.screen=p[0]; state.id=p[1]; render(false);
@@ -3336,6 +3367,7 @@ function render(anim){ window._dockActive=null; const _ap=document.getElementByI
   if(state.psheet) plusAim();
   if(state.screen==='clips'){ clWatch(); }
   if(state.screen==='show'){ rvBalance(); shWatch(); }
+  if(state.screen==='scene'){ const sc=document.getElementById('scsc'), bar=document.getElementById('scbar'); if(sc&&bar){ const f=()=>bar.classList.toggle('stuck',bar.getBoundingClientRect().top-sc.getBoundingClientRect().top<=0.5); sc.addEventListener('scroll',f,{passive:true}); f(); const on=bar.querySelector('.gch[aria-pressed=true]'), fl=bar.querySelector('.scfl'); if(on&&fl) fl.scrollLeft=Math.max(0,on.offsetLeft-fl.clientWidth/2+on.offsetWidth/2); } }
   if(state.screen==='wall'){ const c=document.getElementById('wci'); if(c&&state._chBottom){ c.scrollTop=c.scrollHeight; state._chBottom=false; } }
   state._ufAnim=false; if(state.screen==='home'){ upWatch(); ptrAttach(); }
   const xs=document.querySelector('.xtop'); if(xs){ const sc=xs.closest('.scroll'), f=()=>xs.classList.toggle('stuck',sc.scrollTop>2); sc&&sc.addEventListener('scroll',f,{passive:true}); f(); } if(state.screen==='search'&&!state._sqf){ const i=document.getElementById('sq'); if(i){ i.focus(); state._sqf=true; } }
@@ -3473,7 +3505,9 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='nudge'){ toast(`Reminder sent to ${P0(6)} · due in 2 days`); }
   else if(a==='release'){ SPLIT.released=true; render(); toast('Seat listed · your crew gets 24h first'); }
   else if(a==='crew') go('crew',id);
-  else if(a==='scf'){ const sc=document.querySelector('.scroll'), y=sc?sc.scrollTop:0; state.scF=v; state.scFor=+state.id; render(); const n=document.querySelector('.scroll'); if(n) n.scrollTop=y; }
+  else if(a==='scprev'){ const c=(window._scCrews||[])[+v]; if(!c||document.getElementById('scpsh')) return; sheetMount(scPrev(c)); }
+  else if(a==='scpclose'){ sheetDrop(document.getElementById('scpsh')); }
+  else if(a==='scf'){ const sc=document.getElementById('scsc'), y=sc?sc.scrollTop:0, stuck=document.querySelector('.scbar.stuck'); state.scF=v; state.scFor=+state.id; render(); const n=document.getElementById('scsc'); if(n){ n.scrollTop=y; if(stuck){ const b=document.getElementById('scbar'); n.scrollTop=Math.min(y,b.offsetTop); } } }
   else if(a==='mtab'){ state.mf=v; render(); }
   else if(a==='addbuddy'){ const p=+v; if(bState(p)!=='none'){ toast(bState(p)==='buddy'?'Already buddies':'Waiting for '+P0(p)); return; } addBuddy(p); render(); toast('Request sent · buddies are mutual, '+P0(p)+' has to add you back'); }
   else if(a==='mrqyes'){ const r=MREQ.splice(+v,1)[0]; const t={id:'t'+(++TSEQ),k:'dm',person:r.p,show:r.show,un:1,ts:++TSEQ,msgs:[{d:'sys',t:`You accepted ${P0(r.p)}’s message request`},{d:'in',p:r.p,t:r.t,time:r.time}],replies:[[r.p,'Amazing, see you there!']]}; TH.unshift(t); render(); toast('Moved to Direct'); }
