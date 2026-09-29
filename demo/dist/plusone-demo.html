@@ -1777,15 +1777,13 @@ i.tw{font-style:normal;opacity:0}
 .clinfo,.clrail,.cldisc{transition:opacity .2s}.clp.scrub .clinfo,.clp.scrub .clrail,.clp.clp.scrub .cldisc,.clp.scrub .clbig{opacity:0}
 .clp.scrub .cldur{left:50%;bottom:calc(150px + var(--sb));transform:translateX(-50%);font-family:var(--display);font-size:30px;font-weight:700;letter-spacing:-.02em;opacity:1;text-shadow:0 2px 12px rgba(0,0,0,.5)}.clp.paused .cldur,.clp.scrub .cldur{opacity:.85}
 .clp.paused .cldisc{opacity:.9}
-.clhint{position:absolute;left:50%;bottom:calc(150px + var(--sb));transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:2px;color:#fff;font-size:12px;font-weight:600;z-index:3;pointer-events:none;animation:hint 1.6s ease-in-out 3;opacity:.9;text-shadow:0 1px 6px rgba(0,0,0,.4)}
-.clhint svg{transform:rotate(180deg)}@keyframes hint{50%{transform:translate(-50%,-10px)}}
 .cms{max-height:72%;display:flex;flex-direction:column}.cms .ufb{flex:1}
 .cmr{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--line)}.cmr:first-child{border-top:0}.cmr .bgav span{width:32px;height:32px;border:0}
 .cmb{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;font-size:14px;line-height:1.35}.cmb b{font-size:13px;display:flex;align-items:center;gap:6px}.cmb b em{font-style:normal;font-size:10.5px;font-weight:600;color:var(--muted);display:inline-flex;align-items:center;gap:2px}.cmb small{font-size:11.5px;color:var(--muted)}
 .cml{display:flex;flex-direction:column;align-items:center;gap:1px;color:var(--muted);flex-shrink:0;padding-top:2px}.cml small{font-size:11px}.cml[aria-pressed=true]{color:#0B0B0C}.cml[aria-pressed=true] svg{fill:#0B0B0C}
 .cmf{padding:10px 16px 0;border-top:1px solid var(--line)}.cmf .bgav span{width:30px;height:30px;border:0}
 .pvr{display:flex;gap:8px}.pvlook i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.5);margin-right:6px;display:inline-block}.pvlook.on{background:#fff!important;color:#0B0B0C!important}.pvlook.on i{background:#0B0B0C;animation:ldot 1.4s ease-in-out infinite}
-.clhint{bottom:auto;top:40%}
+
 .wtw{font-style:normal;font-size:10.5px;font-weight:600;color:var(--muted);margin-left:4px;display:inline-flex;align-items:center;gap:2px}
 
 .csreq{font-style:normal;float:right;letter-spacing:0;text-transform:none;font-weight:600;color:#0B0B0C}
@@ -2262,7 +2260,7 @@ function clips(){ const L0=clipList(), L=state.clFeed==='fo'?L0.filter(c=>c.me||
       <div class="clinfo"><span class="clwho"><b>${c.me?'You':p[0]}</b><em class="clloc">${ic('pin',10)} ${esc(VSH(c.loc||c.s.venue))}${(c.onsite!==false)?' · On-site':' · Tagged'}</em><span>${c.ago}</span></span>
         <p>${esc(c.cap)}</p><span class="clsong"><span class="clmq"><i>♪ ${esc(c.song)} · ${esc(c.s.artist)}&nbsp;&nbsp;&nbsp;♪ ${esc(c.song)} · ${esc(c.s.artist)}&nbsp;&nbsp;&nbsp;</i></span></span>
         <button class="clshow" data-act="show" data-id="${c.s.id}"><span class="xth">${img(c.s)}</span><span><b>${esc(c.s.artist)}</b><small>${xDays(c.s.dates[0])<0?'Last night':sd(c.s.dates[0])} · ${esc(VSH(c.s.venue))}</small></span><em>Find a crew</em></button></div>
-      <span class="clbar" role="slider" aria-label="Seek" aria-valuemin="0" aria-valuemax="${cv?cv.d:14}" aria-valuenow="0"><i></i></span><span class="cldisc">${img(c.s)}</span><span class="cldur">${cv?'0:00 / '+mmss(cv.d):'0:'+['14','22','31','09','18','26','12','40'][i%8]}</span></section>`; }).join('')}${state.clSeen?'':`<div class="clhint">${ic('chev',18)}<span>Swipe up</span></div>`}</div>
+      <span class="clbar" role="slider" aria-label="Seek" aria-valuemin="0" aria-valuemax="${cv?cv.d:14}" aria-valuenow="0"><i></i></span><span class="cldisc">${img(c.s)}</span><span class="cldur">${cv?'0:00 / '+mmss(cv.d):'0:'+['14','22','31','09','18','26','12','40'][i%8]}</span></section>`; }).join('')}</div>
     <header class="clhd"><span></span><div class="clseg"><button data-act="clfeed" data-v="fy" aria-pressed="${(state.clFeed||'fy')==='fy'}">For you</button><button data-act="clfeed" data-v="fo" aria-pressed="${state.clFeed==='fo'}">Following</button></div><button class="clmute" data-act="clmute" aria-label="${mute?'Unmute':'Mute'}">${ic(mute?'mute':'sound',20)}</button></header>
     <button class="clpost" data-act="clshare" aria-label="Share a clip">${ic('camera',20)}</button>${dock('clips')}`; }
 // Some viewers block <video> outright (Claude's preview panel refuses every media source, even with H.264 support).
@@ -2879,7 +2877,7 @@ function render(anim){ window._dockActive=null; const _ap=document.getElementByI
   if(document.getElementById('wal')) layWallet(null);
   syncNav(window._dockActive);
   if(state.psheet) plusAim();
-  if(state.screen==='clips'){ clWatch(); const cv=document.getElementById('clv'); if(cv&&!state.clSeen){ cv.addEventListener('scroll',()=>{ if(!state.clSeen){ state.clSeen=true; const hn=document.querySelector('.clhint'); hn&&hn.remove(); } },{once:true,passive:true}); } }
+  if(state.screen==='clips'){ clWatch(); }
   state._ufAnim=false; if(state.screen==='home'){ upWatch(); ptrAttach(); }
   const xs=document.querySelector('.xtop'); if(xs){ const sc=xs.closest('.scroll'), f=()=>xs.classList.toggle('stuck',sc.scrollTop>2); sc&&sc.addEventListener('scroll',f,{passive:true}); f(); } if(state.screen==='search'&&!state._sqf){ const i=document.getElementById('sq'); if(i){ i.focus(); state._sqf=true; } }
   const form=document.getElementById('composer');
@@ -2952,7 +2950,7 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='cmclose'){ state.cmt=null; render(); }
   else if(a==='cmlike'){ state.cml=state.cml||{}; state.cml[v]=!state.cml[v]; render(); }
   else if(a==='clmute'){ state.clMute=state.clMute===false; const b=t; b.innerHTML=ic(state.clMute!==false?'mute':'sound',20); b.setAttribute('aria-label',state.clMute!==false?'Unmute':'Mute'); document.querySelectorAll('.clp video').forEach(x=>{ x.muted=state.clMute!==false; }); toast(state.clMute!==false?'Muted':(CL_FB?'No sound in this preview':'Sound on')); }
-  else if(a==='clfeed'){ state.clFeed=v; state.clY=0; state.clSeen=true; render(); }
+  else if(a==='clfeed'){ state.clFeed=v; state.clY=0; render(); }
   else if(a==='clshare'){ if(document.getElementById('psheet')) closePlus(); state.cs={v:0,loc:CSVID[0].geo,src:'geo'}; render(); }
   else if(a==='csclose'){ state.cs=null; render(); }
   else if(a==='cspick'){ const c=document.getElementById('cscap'), vd=CSVID[+v]; state.cs={v:+v,cap:c?c.value:'',loc:vd.geo,src:vd.geo?'geo':null}; render(); }
