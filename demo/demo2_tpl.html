@@ -1925,7 +1925,7 @@ const I = {
 const ic = (n,sz=22) => `<svg class="icon" viewBox="0 0 24 24" style="width:${sz}px;height:${sz}px" aria-hidden="true">${I[n]}</svg>`;
 const AV=/*AVATARS*/;
 // Clip videos: inlined as data URIs at build time, turned into blob URLs once so each re-render reuses them
-const CLIPV=/*CLIPV*/; CLIPV.forEach(x=>{ try{ const b=atob(x.v.slice(x.v.indexOf(',')+1)), u=new Uint8Array(b.length); for(let i=0;i<b.length;i++) u[i]=b.charCodeAt(i); x.u=URL.createObjectURL(new Blob([u],{type:'video/mp4'})); }catch(_){ x.u=x.v; } });
+const CLIPV=/*CLIPV*/; CLIPV.forEach(x=>{ try{ const b=atob(x.v.slice(x.v.indexOf(',')+1)), u=new Uint8Array(b.length); for(let i=0;i<b.length;i++) u[i]=b.charCodeAt(i); x.b=u; x.u=URL.createObjectURL(new Blob([u],{type:'video/mp4'})); }catch(_){ x.u=x.v; } });
 const mmss=t=>{ t=Math.max(0,Math.floor(t||0)); return Math.floor(t/60)+':'+String(t%60).padStart(2,'0'); };
 const avi=(n,x='')=>`<img class="avimg" alt="" decoding="sync" src="${AV[n%AV.length]}" ${x}>`;
 const PEOPLE = [['Maya R.','MR','a1',0],['Sam O.','SO','a2',1],['Ana K.','AK','a3',2],['Priya K.','PK','a4',13],['Theo L.','TL','a5',4],['Dev M.','DM','a6',5],['Jules W.','JW','a2',6],['Ines B.','IB','a1',7]];
@@ -2252,7 +2252,7 @@ function clipList(){ const base=NYC_SHOWS.filter(x=>x.img.startsWith('data:')).s
 const fmtK=n=>n>=1000?(n/1000).toFixed(n>=10000?0:1)+'k':''+n;
 function clips(){ const L0=clipList(), L=state.clFeed==='fo'?L0.filter(c=>c.me||BUD[c.p]||[1,3,4,7].includes(c.p)):L0, lk=state.clk||{}, mute=state.clMute!==false;
   return `<div class="clips" id="clv">${L.map((c,i)=>{ const p=c.me?MEP:PEOPLE[c.p], on=!!lk[c.id], cv=c.vid!=null?CLIPV[c.vid]:null;
-    return `<section class="clp${i===0?' act':''}${cv?' hv':''}" data-i="${i}" data-id="${c.id}"><div class="clm" data-act="cltap" data-v="${c.id}">${cv?CL_FB?`<canvas width="${cv.sw}" height="${cv.sh}" data-k="${c.vid}" style="background:#000 url(${cv.p}) center/cover" aria-label="Clip of ${esc(c.s.artist)}"></canvas>`:`<video src="${cv.u}" data-k="${c.vid}" poster="${cv.p}" muted playsinline webkit-playsinline ${i===0?'autoplay ':''}loop preload="${i<2?'auto':'metadata'}" aria-label="Clip of ${esc(c.s.artist)}"></video>`:img(c.s)}</div><span class="clsh"></span><span class="clgr"></span><i class="clbig">${ic('play',40)}</i><i class="clheart">${ic('heart',96)}</i>
+    return `<section class="clp${i===0?' act':''}${cv?' hv':''}" data-i="${i}" data-id="${c.id}"><div class="clm" data-act="cltap" data-v="${c.id}">${cv?CL_FB?`<canvas width="720" height="1280" data-k="${c.vid}" style="background:#000 url(${cv.p}) center/cover" aria-label="Clip of ${esc(c.s.artist)}"></canvas>`:`<video src="${cv.u}" data-k="${c.vid}" poster="${cv.p}" muted playsinline webkit-playsinline ${i===0?'autoplay ':''}loop preload="${i<2?'auto':'metadata'}" aria-label="Clip of ${esc(c.s.artist)}"></video>`:img(c.s)}</div><span class="clsh"></span><span class="clgr"></span><i class="clbig">${ic('play',40)}</i><i class="clheart">${ic('heart',96)}</i>
       <div class="clrail"><button class="clav" ${c.me?'':`data-act="person" data-v="${c.p}"`} aria-label="${p[0]}"><span>${avi(p[3])}</span>${c.me?'':`<i>${ic('plus',10)}</i>`}</button>
         <button data-act="cllike" data-v="${c.id}" aria-pressed="${on}" aria-label="Like">${ic('heart',26)}<small>${fmtK(c.likes+(on?1:0))}</small></button>
         <button data-act="clcom" data-v="${c.id}" aria-label="Comments">${ic('chat',26)}<small>${fmtK(c.com)}</small></button>
@@ -2263,19 +2263,40 @@ function clips(){ const L0=clipList(), L=state.clFeed==='fo'?L0.filter(c=>c.me||
       <span class="clbar" role="slider" aria-label="Seek" aria-valuemin="0" aria-valuemax="${cv?cv.d:14}" aria-valuenow="0"><i></i></span><span class="cldisc">${img(c.s)}</span><span class="cldur">${cv?'0:00 / '+mmss(cv.d):'0:'+['14','22','31','09','18','26','12','40'][i%8]}</span></section>`; }).join('')}${state.clSeen?'':`<div class="clhint">${ic('chev',18)}<span>Swipe up</span></div>`}</div>
     <header class="clhd"><span></span><div class="clseg"><button data-act="clfeed" data-v="fy" aria-pressed="${(state.clFeed||'fy')==='fy'}">For you</button><button data-act="clfeed" data-v="fo" aria-pressed="${state.clFeed==='fo'}">Following</button></div><button class="clmute" data-act="clmute" aria-label="${mute?'Unmute':'Mute'}">${ic(mute?'mute':'sound',20)}</button></header>
     <button class="clpost" data-act="clshare" aria-label="Share a clip">${ic('camera',20)}</button>${dock('clips')}`; }
-// Some viewers (sandboxed previews, browsers without H.264) can't play <video>. There the clip falls back to a
-// canvas that flips through an 8 fps WebP frame sheet; FramePlayer mimics the bits of the <video> API we use.
+// Some viewers block <video> outright (Claude's preview panel refuses every media source, even with H.264 support).
+// There the same .mp4 bytes are decoded with WebCodecs and drawn to a canvas: the build ships each clip's packet
+// table (offset, size, keyframe) and avcC config, so no demuxer is needed. CodecPlayer mimics the <video> API we use.
 let CL_FB=!document.createElement('video').canPlayType('video/mp4; codecs="avc1.4D401E"');
-class FramePlayer{ constructor(c,x){ this.c=c; this.g=c.getContext('2d'); this.x=x; this.duration=x.sn/x.sf; this._t=0; this.paused=true; this.muted=true; this.readyState=0;
-    if(!x._img){ x._img=new Image(); x._img.src=x.s; } this.img=x._img; const ok=()=>{ this.readyState=4; this.draw(); }; if(this.img.complete&&this.img.naturalWidth) ok(); else this.img.addEventListener('load',ok,{once:true}); }
-  get currentTime(){ return this._t; } set currentTime(t){ this._t=Math.max(0,Math.min(t,this.duration-.001)); this.draw(); }
-  draw(){ if(this.readyState<4) return; const x=this.x, i=Math.min(x.sn-1,Math.floor(this._t*x.sf)); this.g.drawImage(this.img,(i%x.sc)*x.sw,Math.floor(i/x.sc)*x.sh,x.sw,x.sh,0,0,this.c.width,this.c.height); }
-  play(){ if(this.paused){ this.paused=false; let lt=performance.now(); const f=n=>{ if(this.paused||!this.c.isConnected) return; this._t=(this._t+(n-lt)/1000)%this.duration; lt=n; this.draw(); requestAnimationFrame(f); }; requestAnimationFrame(f); } return Promise.resolve(); }
-  pause(){ this.paused=true; } addEventListener(){} }
-function clFrames(sec,el){ const x=CLIPV[+el.dataset.k]; let c=el; if(el.tagName==='VIDEO'){ c=document.createElement('canvas'); c.width=x.sw; c.height=x.sh; c.dataset.k=el.dataset.k; c.style.background='#000 url('+x.p+') center/cover'; c.setAttribute('aria-label',el.getAttribute('aria-label')||''); el.pause(); el.removeAttribute('src'); try{ el.load(); }catch(_){} el.replaceWith(c); }
-  sec._fp=new FramePlayer(c,x); return sec._fp; }
-function clGoFrames(){ if(CL_FB) return; CL_FB=true; document.querySelectorAll('.clp.hv').forEach(sec=>{ const v=sec.querySelector('.clm video'); v&&clFrames(sec,v); }); const a=document.querySelector('.clp.act.hv'); a&&clPlay(a); }
-const clVid=sec=>{ if(!sec) return null; if(sec._fp&&sec._fp.c.isConnected) return sec._fp; const el=sec.querySelector('.clm video,.clm canvas'); if(!el) return null; return (CL_FB||el.tagName==='CANVAS')?clFrames(sec,el):el; };
+const CL_WC=typeof VideoDecoder==='function';
+class CodecPlayer{
+  constructor(c,x){ this.c=c; this.g=c.getContext('2d'); this.x=x; const k=x.k; this.fps=k.fps; this.fd=1e6/k.fps; this.n=k.pk.length; this.duration=this.n/k.fps;
+    this.paused=true; this.muted=true; this.readyState=4; this.q=[]; this.cur=null; this.T=0; this.next=0; this.loop=0; this.minTs=-1;
+    this.bytes=x.b; this.cfg={codec:k.c,optimizeForLatency:true}; if(k.dsc) this.cfg.description=Uint8Array.from(atob(k.dsc),ch=>ch.charCodeAt(0));
+    this.dec=new VideoDecoder({output:f=>this.onFrame(f),error:()=>{ this.dead=true; }}); this.dec.configure(this.cfg); this.feed(); }
+  onFrame(f){ if(f.timestamp<this.minTs||!this.c.isConnected){ f.close(); return; } this.q.push(f); if(!this.cur||this.paused) this.show(); }
+  feed(){ const pk=this.x.k.pk; while(!this.dead&&this.dec.state==='configured'&&this.dec.decodeQueueSize<4&&this.q.length<6){
+      const i=this.next, e=pk[i]; this.dec.decode(new EncodedVideoChunk({type:e[2]?'key':'delta',timestamp:Math.round((this.loop*this.n+i)*this.fd),data:this.bytes.subarray(e[0],e[0]+e[1])}));
+      if(++this.next>=this.n){ this.next=0; this.loop++; } } }
+  show(){ let pick=null; while(this.q.length&&(this.q[0].timestamp<=this.T+1||(!this.cur&&!pick))){ if(pick) pick.close(); pick=this.q.shift(); }
+    if(pick){ if(this.cur) this.cur.close(); this.cur=pick; this.g.drawImage(pick,0,0,this.c.width,this.c.height); } this.feed(); }
+  get currentTime(){ return (this.T/1e6)%this.duration; }
+  set currentTime(t){ // seek: restart decoding from the keyframe at or before t, drop frames before t
+    if(this.dead) return; t=Math.max(0,Math.min(t,this.duration-1/this.fps)); const pk=this.x.k.pk, i=Math.floor(t*this.fps); let kf=i; while(kf>0&&!pk[kf][2]) kf--;
+    try{ this.dec.reset(); this.dec.configure(this.cfg); }catch(_){ this.dead=true; return; }
+    this.q.forEach(f=>f.close()); this.q=[]; if(this.cur){ this.cur.close(); this.cur=null; } this.loop=0; this.next=kf; this.T=Math.round(i*this.fd); this.minTs=this.T; this.feed(); }
+  play(){ if(this.paused&&!this.dead){ this.paused=false; let lt=performance.now(); const f=n=>{ if(this.paused) return; if(!this.c.isConnected){ this.destroy(); return; }
+      this.T+=(n-lt)*1000; lt=n; if(this.cur&&!this.q.length&&this.T>this.cur.timestamp+2*this.fd) this.T=this.cur.timestamp+this.fd; this.minTs=-1; this.show(); requestAnimationFrame(f); }; requestAnimationFrame(f); }
+    return this.dead?Promise.reject(new Error('decode')):Promise.resolve(); }
+  pause(){ this.paused=true; }
+  destroy(){ this.paused=true; this.q.forEach(f=>f.close()); this.q=[]; if(this.cur){ this.cur.close(); this.cur=null; } try{ this.dec.close(); }catch(_){} this.dead=true; }
+  addEventListener(){} }
+function clFrames(sec,el,mk=true){ const x=CLIPV[+el.dataset.k]; if(!CL_WC||!x.k) return null; let c=el;
+  if(el.tagName==='VIDEO'){ c=document.createElement('canvas'); c.width=720; c.height=1280; c.dataset.k=el.dataset.k; c.style.background='#000 url('+x.p+') center/cover'; c.setAttribute('aria-label',el.getAttribute('aria-label')||''); el.pause(); el.removeAttribute('src'); try{ el.load(); }catch(_){} el.replaceWith(c); }
+  if(!mk) return null; try{ sec._fp=new CodecPlayer(c,x); }catch(_){ return null; } return sec._fp; }
+function clGoFrames(){ if(CL_FB) return; CL_FB=true; document.querySelectorAll('.clp.hv').forEach(sec=>{ const v=sec.querySelector('.clm video'); v&&clFrames(sec,v,false); }); const a=document.querySelector('.clp.act.hv'); a&&clPlay(a); }
+// mk=false: only return a player that already exists (don't spin up decoders for clips that are off screen)
+const clVid=(sec,mk=true)=>{ if(!sec) return null; if(sec._fp&&!sec._fp.dead&&sec._fp.c.isConnected) return sec._fp; const el=sec.querySelector('.clm video,.clm canvas'); if(!el) return null;
+  if(el.tagName==='VIDEO'&&!CL_FB) return el; return mk?clFrames(sec,el):null; };
 // Play the clip in view. Blob URL refused -> retry with the inline data URI -> still nothing -> frame fallback.
 function clPlay(sec){ const vd=clVid(sec); if(!vd) return; vd.muted=state.clMute!==false; vd.defaultMuted=vd.muted;
   const isV=vd.tagName==='VIDEO';
@@ -2286,7 +2307,7 @@ function clPlay(sec){ const vd=clVid(sec); if(!vd) return; vd.muted=state.clMute
   else vd.pause(); }
 function clWatch(){ const v=document.getElementById('clv'); if(!v||v._w) return; v._w=1; if(state.clY) v.scrollTop=state.clY; v.addEventListener('scroll',()=>{ state.clY=v.scrollTop; },{passive:true});
   const io=new IntersectionObserver(es=>es.forEach(e=>{ const sec=e.target, on=e.intersectionRatio>.6; sec.classList.toggle('act',on);
-      if(!on){ sec.classList.remove('paused'); const vd=clVid(sec); if(vd){ vd.pause(); try{ vd.currentTime=0; }catch(_){} } } else clPlay(sec); }),{root:v,threshold:[.6]}); v.querySelectorAll('.clp').forEach(x=>io.observe(x));
+      if(!on){ sec.classList.remove('paused'); const vd=clVid(sec,false); if(vd&&vd.destroy){ vd.destroy(); vd.g.clearRect(0,0,vd.c.width,vd.c.height); sec._fp=null; } else if(vd){ vd.pause(); try{ vd.currentTime=0; }catch(_){} } } else clPlay(sec); }),{root:v,threshold:[.6]}); v.querySelectorAll('.clp').forEach(x=>io.observe(x));
   let lt=0; v.addEventListener('click',e=>{ const m=e.target.closest('.clm'); if(!m) return; const now=Date.now(); if(now-lt<280){ const id=m.dataset.v; state.clk=state.clk||{}; if(!state.clk[id]) { state.clk[id]=true; clUpd(id); } m.parentElement.classList.remove('paused'); clPlay(m.parentElement); const hs=m.parentElement.querySelector('.clheart'); hs.classList.remove('go'); void hs.offsetWidth; hs.classList.add('go'); lt=0; e.stopPropagation(); return; } lt=now; },true);
   // progress bar + time follow the real video
   const tick=()=>{ if(!v.isConnected) return; const sec=v.querySelector('.clp.act.hv'), vd=clVid(sec);
@@ -2305,7 +2326,7 @@ function cmSheet(){ const c=clipList().find(x=>x.id===state.cmt.id); if(!c) retu
   <div class="ufb">${R.map(r=>{ const p=r.me?MEP:PEOPLE[r.p], on=!!lk[r.id]; return `<div class="cmr"><span class="bgav"><span>${avi(p[3])}</span></span><span class="cmb"><b>${r.me?'You':p[0]}${(r.me?hasTix(c.s):r.was)?` <em>${ic('check',9)} Was there</em>`:''}</b><span>${esc(r.t)}</span><small>${r.ago}</small></span><button class="cml" data-act="cmlike" data-v="${r.id}" aria-pressed="${on}">${ic('heart',16)}<small>${r.l+(on?1:0)}</small></button></div>`; }).join('')}</div>
   <form class="wtf cmf" onsubmit="return cmPost(event,'${c.id}')"><span class="bgav"><span>${avi(MEP[3])}</span></span><label hidden for="cmin">Comment</label><input id="cmin" placeholder="Add a comment" autocomplete="off"><button type="submit">Post</button></form></div>`; }
 function cmPost(e,id){ e.preventDefault(); const i=document.getElementById('cmin'), v=i.value.trim(); if(!v) return false; state.cmMine=state.cmMine||{}; (state.cmMine[id]=state.cmMine[id]||[]).push({id:id+'-me'+Date.now(),me:true,t:v,l:0,ago:'now'}); render(); const b=document.querySelector('.cms .ufb'); if(b) b.scrollTop=b.scrollHeight; return false; }
-const CSVID=[{geo:'Radio City Music Hall',d:'2026-09-29',vid:5},{geo:'Radio City Music Hall',d:'2026-09-29',vid:6},{geo:null,d:null,vid:7}];
+const CSVID=[{geo:'Radio City Music Hall',d:'2026-09-29',vid:4},{geo:'Radio City Music Hall',d:'2026-09-29',vid:5},{geo:null,d:null,vid:6}];
 const VENUES=()=>[...new Set(SHOWS.map(x=>x.venue))].slice(0,8);
 function csShows(v){ return SHOWS.filter(x=>x.venue===v).sort((a,b)=>Math.abs(xDays(a.dates[0])+1)-Math.abs(xDays(b.dates[0])+1)); }
 function csSheet(){ const k=state.cs, vid=CSVID[k.v], loc=k.loc, sh=loc?csShows(loc):[], sel=k.sid?byId[k.sid]:sh[0], thumb=A(KIT.show);
