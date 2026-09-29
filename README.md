@@ -7,3 +7,10 @@
 - `iterations/`: M1–M6 comparison. `app-expo/`: early React Native prototype.
 
 Full handoff: see [HANDOFF.md](HANDOFF.md).
+
+## Docs
+- [HANDOFF.md](HANDOFF.md) — product, architecture, full version history
+- [DESIGN.md](DESIGN.md) — design tokens and rules
+- [docs/DECISIONS.md](docs/DECISIONS.md) — decision log from the design conversations (incl. rejected options)
+- [docs/CHANGES-SINCE-FIGMA.md](docs/CHANGES-SINCE-FIGMA.md) — everything changed after the last Figma export, per screen
+- [docs/screens-v96/](docs/screens-v96/) — current screens (393×852 @2x) for Figma sync

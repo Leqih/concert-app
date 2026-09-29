@@ -144,6 +144,11 @@ pip install playwright && python3 demo/tests/m7test.py   # 可选：批量截屏
 - 片段社区 Clips（M17）：谁都能发，但每条片段必须带场馆位置标签（视频定位自动识别 On-site，或手动 Tagged）；评论、回复对所有人开放，持票者只加标记；每条都挂着演出与「Find a crew」，内容服务于组队。
 - 不做全站广场：公开内容只存在于每场演出的 Show wall，且只有持票人能发；热搜只来自组队行为，不接受投放。
 
+## 决策记录与 Figma 同步
+
+- 讨论中的所有关键决定（含被否的方案）：`docs/DECISIONS.md`
+- Figma（M6 起）之后的全部改动，按页面：`docs/CHANGES-SINCE-FIGMA.md`；当前 23 张页面截图：`docs/screens-v96/`（`demo/tests/capture_all.py` 可重新生成）
+
 ## 7. 待办
 
 1. **Figma**：把 M6 截图上传到 M6 分区的空矩形；新增 M7 分区并上传截图。
