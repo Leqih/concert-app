@@ -32,7 +32,7 @@
 ```
 HANDOFF.md            ← 本文件
 CLAUDE.md             ← 给 Claude 的工作规则（精简版）
-demo/                 ← 主作品：单文件 HTML 交互 demo（当前 = M17.2 / 线上 v94）
+demo/                 ← 主作品：单文件 HTML 交互 demo（当前 = M17.3 / 线上 v95）
   demo2_tpl.html      模板源码（唯一需要改的文件）
   build.py            把数据注入模板 → dist/plusone-demo.html
   shows.js            纽约演出数据（Ticketmaster 抓取后的静态快照）
@@ -119,6 +119,7 @@ pip install playwright && python3 demo/tests/m7test.py   # 可选：批量截屏
 | M17 | v92 | Clips 社区（演唱会片段） | 底部导航新增 Clips 标签（Home / Explore / Clips / Chats / Tickets）；全屏竖滑一条一条看（scroll-snap），画面用演出图 + 慢推镜头模拟视频、进度条、点一下暂停、双击点赞爱心动画；右侧头像/点赞/评论/分享；左下「Was there · 座位」持票徽章、文案、歌名，以及演出卡片 +「Find a crew」直达该演出；顶部 For you / Following、静音；左上相机或 ＋ 菜单新增的「Share a clip」胶囊 → 发布面板（只能发自己去过的演出、选视频、写文案）→ 发布后出现在第一条 |
 | M17.1 | v93 | 头像移出底部导航 | 主人选择：个人头像放首页左上角（黑色细圈），原左上铃铛移到右上与搜索并排；底部导航只剩 5 个标签 + ＋；个人页左上角加返回 |
 | M17.2 | v94 | Clips v2 | ＋ 菜单：星星改为 Share a clip（From last night），去掉单独胶囊；Find a +1 开关移到个人页右上（Open to invites）。Clips：真实评论面板（只有去过的人可评论、Was there 标记、评论点赞、发评论）；Following 只看 buddy/小队成员；右下转动唱片 + 歌名滚动；首次打开 Swipe up 提示；暂停时进度条加粗并显示时长；切换 tab 保留滚动位置 |
+| M17.3 | v95 | 评论对所有人开放 | 主人要求：任何人都能评论 Clips、回复演出墙；去过/持票的人只是名字旁多一个「Was there」/「Going」标记。发片段、在演出墙发帖仍需持票 |
 
 ## 6. 链接（原账号所有，新账号只能查看）
 
@@ -139,7 +140,7 @@ pip install playwright && python3 demo/tests/m7test.py   # 可选：批量截屏
 - 差异化落在「一定会一起到场的小队」：持票身份、到场记录（会累积的数据）、小队而非配对、多余票优先给小队、小队可延续。
 - 原则：信任看得见但不强制。默认零门槛，押金/集合点都是可选项，只有女性专属必须认证。
 - 不做几百人的演出大群；每个小队有 4–8 人上限，满了自动开新队。
-- 片段社区 Clips（M17）：只能发自己持票去过的演出，每条都挂着演出与「Find a crew」，内容服务于组队。
+- 片段社区 Clips（M17）：只能发自己持票去过的演出（评论、回复对所有人开放，持票者只加标记），每条都挂着演出与「Find a crew」，内容服务于组队。
 - 不做全站广场：公开内容只存在于每场演出的 Show wall，且只有持票人能发；热搜只来自组队行为，不接受投放。
 
 ## 7. 待办
