@@ -1781,6 +1781,14 @@ i.tw{font-style:normal;opacity:0}
 .pvr{display:flex;gap:8px}.pvlook i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.5);margin-right:6px;display:inline-block}.pvlook.on{background:#fff!important;color:#0B0B0C!important}.pvlook.on i{background:#0B0B0C;animation:ldot 1.4s ease-in-out infinite}
 .clhint{bottom:auto;top:40%}
 .wtw{font-style:normal;font-size:10.5px;font-weight:600;color:var(--muted);margin-left:4px;display:inline-flex;align-items:center;gap:2px}
+
+.csreq{font-style:normal;float:right;letter-spacing:0;text-transform:none;font-weight:600;color:#0B0B0C}
+.csgeo{position:absolute;left:6px;top:6px;width:20px;height:20px;border-radius:50%;background:#fff;color:#0B0B0C;display:grid;place-items:center}
+.csloc{display:flex;align-items:center;gap:12px;width:100%;padding:12px 14px;border-radius:var(--r-lg);background:var(--card2);text-align:left;color:var(--text);box-shadow:inset 0 0 0 1.5px transparent}
+button.csloc{box-shadow:inset 0 0 0 1.5px #0B0B0C;background:transparent}
+.csloc .ub b{font-size:15px}.csloc .ufx{height:auto;font-size:13.5px}
+.cslocs{display:flex;flex-direction:column}.cslocs .itrow{gap:10px}
+.clloc svg{margin-right:1px}
 </style>
 
 <div class="app framed" id="app">
@@ -2242,7 +2250,7 @@ function clips(){ const L0=clipList(), L=state.clFeed==='fo'?L0.filter(c=>c.me||
         <button data-act="cllike" data-v="${c.id}" aria-pressed="${on}" aria-label="Like">${ic('heart',26)}<small>${fmtK(c.likes+(on?1:0))}</small></button>
         <button data-act="clcom" data-v="${c.id}" aria-label="Comments">${ic('chat',26)}<small>${fmtK(c.com)}</small></button>
         <button data-act="toast" data-msg="Link copied" aria-label="Share">${ic('share',24)}<small>Share</small></button></div>
-      <div class="clinfo"><span class="clwho"><b>${c.me?'You':p[0]}</b><em>${ic('check',10)} Was there · ${c.sec}</em><span>${c.ago}</span></span>
+      <div class="clinfo"><span class="clwho"><b>${c.me?'You':p[0]}</b><em class="clloc">${ic('pin',10)} ${esc(VSH(c.loc||c.s.venue))}${(c.onsite!==false)?' · On-site':' · Tagged'}</em><span>${c.ago}</span></span>
         <p>${esc(c.cap)}</p><span class="clsong"><span class="clmq"><i>♪ ${esc(c.song)} · ${esc(c.s.artist)}&nbsp;&nbsp;&nbsp;♪ ${esc(c.song)} · ${esc(c.s.artist)}&nbsp;&nbsp;&nbsp;</i></span></span>
         <button class="clshow" data-act="show" data-id="${c.s.id}"><span class="xth">${img(c.s)}</span><span><b>${esc(c.s.artist)}</b><small>${xDays(c.s.dates[0])<0?'Last night':sd(c.s.dates[0])} · ${esc(VSH(c.s.venue))}</small></span><em>Find a crew</em></button></div>
       <span class="clbar"><i></i></span><span class="cldisc">${img(c.s)}</span><span class="cldur">0:${['14','22','31','09','18','26','12','40'][i%8]}</span></section>`; }).join('')}${state.clSeen?'':`<div class="clhint">${ic('chev',18)}<span>Swipe up</span></div>`}</div>
@@ -2259,12 +2267,20 @@ function cmSheet(){ const c=clipList().find(x=>x.id===state.cmt.id); if(!c) retu
   <div class="ufb">${R.map(r=>{ const p=r.me?MEP:PEOPLE[r.p], on=!!lk[r.id]; return `<div class="cmr"><span class="bgav"><span>${avi(p[3])}</span></span><span class="cmb"><b>${r.me?'You':p[0]}${(r.me?hasTix(c.s):r.was)?` <em>${ic('check',9)} Was there</em>`:''}</b><span>${esc(r.t)}</span><small>${r.ago}</small></span><button class="cml" data-act="cmlike" data-v="${r.id}" aria-pressed="${on}">${ic('heart',16)}<small>${r.l+(on?1:0)}</small></button></div>`; }).join('')}</div>
   <form class="wtf cmf" onsubmit="return cmPost(event,'${c.id}')"><span class="bgav"><span>${avi(MEP[3])}</span></span><label hidden for="cmin">Comment</label><input id="cmin" placeholder="Add a comment" autocomplete="off"><button type="submit">Post</button></form></div>`; }
 function cmPost(e,id){ e.preventDefault(); const i=document.getElementById('cmin'), v=i.value.trim(); if(!v) return false; state.cmMine=state.cmMine||{}; (state.cmMine[id]=state.cmMine[id]||[]).push({id:id+'-me'+Date.now(),me:true,t:v,l:0,ago:'now'}); render(); const b=document.querySelector('.cms .ufb'); if(b) b.scrollTop=b.scrollHeight; return false; }
-function csSheet(){ const k=state.cs, past=A(KIT.show);
-  const head=`<div class="sheetbg" data-act="csclose"></div><div class="sheet csheet" role="dialog" aria-label="Share a clip"><div class="cgrab"><i class="grab"></i><h3>Share a clip</h3><p>From a show you were at · only ticket holders can post</p></div><div class="ufb">`;
-  let b=`<p class="ncl">Show</p><div class="itrow" style="border:0"><span class="uthumb">${img(past)}</span><span class="ub"><b>${esc(past.artist)}</b><span class="um">Last night · ${esc(VSH(past.venue))} · ticket verified ✓</span></span></div>
-    <p class="ncl">Pick a video</p><div class="csvid">${[0,1,2].map(i=>`<button data-act="cspick" data-v="${i}" aria-pressed="${k.v===i}"><span>${img(past)}</span><em>0:${['14','22','09'][i]}</em></button>`).join('')}</div>
-    <p class="ncl">Caption</p><input id="cscap" class="eptx" style="height:46px" maxlength="80" placeholder="What was the moment?" value="${esc(k.cap||'')}">`;
-  return head+b+`</div><div class="uff"><button class="ufx" data-act="csclose">Cancel</button><button class="cgo new" data-act="cspost">Post clip</button></div></div>`; }
+const CSVID=[{geo:'Radio City Music Hall',d:'2026-09-29',len:'0:14'},{geo:'Radio City Music Hall',d:'2026-09-29',len:'0:22'},{geo:null,d:null,len:'0:09'}];
+const VENUES=()=>[...new Set(SHOWS.map(x=>x.venue))].slice(0,8);
+function csShows(v){ return SHOWS.filter(x=>x.venue===v).sort((a,b)=>Math.abs(xDays(a.dates[0])+1)-Math.abs(xDays(b.dates[0])+1)); }
+function csSheet(){ const k=state.cs, vid=CSVID[k.v], loc=k.loc, sh=loc?csShows(loc):[], sel=k.sid?byId[k.sid]:sh[0], thumb=A(KIT.show);
+  const head=`<div class="sheetbg" data-act="csclose"></div><div class="sheet csheet ufs" role="dialog" aria-label="Share a clip"><div class="cgrab"><i class="grab"></i><h3>Share a clip</h3><p>Every clip carries the venue it was filmed at</p></div><div class="ufb">`;
+  let b=`<p class="ncl">Pick a video</p><div class="csvid">${CSVID.map((x,i)=>`<button data-act="cspick" data-v="${i}" aria-pressed="${k.v===i}"><span>${img(thumb)}</span>${x.geo?`<i class="csgeo">${ic('pin',10)}</i>`:''}<em>${x.len}</em></button>`).join('')}</div>
+    <p class="ncl">Location <em class="csreq">Required</em></p>`;
+  if(k.pickLoc) b+=`<div class="cslocs">${VENUES().map(v=>`<button class="itrow" data-act="csloc" data-v="${esc(v)}">${ic('pin',16)}<span class="ub"><b>${esc(VSH(v))}</b><span class="um">${esc(v)}</span></span>${ic('right',14)}</button>`).join('')}</div>`;
+  else if(loc) b+=`<div class="csloc on">${ic('pin',18)}<span class="ub"><b>${esc(VSH(loc))}</b><span class="um">${k.src==='geo'?'From your video’s location · On-site':'Tagged by you'}</span></span><button class="ufx" data-act="csedit">Change</button></div>`;
+  else b+=`<button class="csloc" data-act="csedit">${ic('pin',18)}<span class="ub"><b>Add the venue</b><span class="um">This video has no location · pick where you filmed it</span></span>${ic('right',14)}</button>`;
+  if(loc&&!k.pickLoc&&sh.length) b+=`<p class="ncl">Show</p>${sh.length>1?`<div class="ncv">${sh.slice(0,4).map(x=>`<button class="gch" data-act="csshow" data-id="${x.id}" aria-pressed="${sel===x}">${esc(x.artist)} · ${sd(x.dates[0])}</button>`).join('')}</div>`:`<div class="itrow" style="border:0"><span class="uthumb">${img(sel)}</span><span class="ub"><b>${esc(sel.artist)}</b><span class="um">${sd(sel.dates[0])} · matched by venue and date</span></span></div>`}`;
+  b+=`<p class="ncl">Caption</p><input id="cscap" class="eptx" style="height:46px" maxlength="80" placeholder="What was the moment?" value="${esc(k.cap||'')}">`;
+  const ok=!!loc&&!k.pickLoc;
+  return head+b+`</div><div class="uff"><button class="ufx" data-act="csclose">Cancel</button><button class="cgo new" data-act="cspost" ${ok?'':'disabled'}>${ok?'Post clip':'Add a location to post'}</button></div></div>`; }
 function upSwap(anim){ const old=document.querySelector('#sc .wup'); if(!old){ render(); return; } state._ufAnim=anim; const tmp=document.createElement('div'); tmp.innerHTML=home(); state._ufAnim=false; window._dockActive='home';
   const nw=tmp.querySelector('.wup'); if(!nw){ render(); return; } const sl=(old.querySelector('.ufl')||{}).scrollLeft||0; old.replaceWith(nw); const f=nw.querySelector('.ufl'); if(f) f.scrollLeft=sl; upWatch(); }
 function upTail(feed){ return state.upN<feed.length?`<div class="usent" id="upsent" aria-hidden="true"></div>`:`<p class="uend">${ic('check',13)} That’s every show in ${state.city} · ${feed.length} ${feed.length===1?'show':'shows'}</p>`; }
@@ -2311,9 +2327,9 @@ function wallPosts(x){ const k=Math.abs(h(x.id)), S=songsFor(x.artist), v=VSH(x.
   return (state.wall&&state.wall[x.id]||[]).concat(base).map((o,i)=>({...o,id:x.id+'-w'+i})); }
 function hasTix(x){ return MYTIX().some(r=>r[0]===x)||!!(state.claimed&&state.claimed[x.id]); }
 function wallView(x){ const tag=state.wtag||'All', L=wallPosts(x).filter(o=>(tag==='All'||o.tag===tag)&&!(o.p!=null&&(state.blocked||{})[o.p])), lk=state.wlk||{}, me=hasTix(x);
-  return `<div id="wall"><h2 class="h2 sec" style="margin-top:14px">Show wall <span class="emo">🧱</span></h2><p class="sub" style="margin:-6px 0 2px">Only people with a ticket to this show can post</p>
+  return `<div id="wall"><h2 class="h2 sec" style="margin-top:14px">Show wall <span class="emo">🧱</span></h2><p class="sub" style="margin:-6px 0 2px">Plans, fits and setlist talk for this show</p>
     <div class="hs wtg">${WTAGS.map(t=>`<button class="gch" data-act="wtag" data-v="${t}" aria-pressed="${tag===t}">${t}</button>`).join('')}</div>
-    ${me?`<form class="wcomp2" onsubmit="return wallPost(event,'${x.id}')"><span class="bgav"><span>${avi(MEP[3])}</span></span><label for="wq" hidden>Post</label><input id="wq" placeholder="Post to the ${esc(x.artist)} wall" autocomplete="off"><button type="submit">Post</button></form>`
+    ${true?`<form class="wcomp2" onsubmit="return wallPost(event,'${x.id}')"><span class="bgav"><span>${avi(MEP[3])}</span></span><label for="wq" hidden>Post</label><input id="wq" placeholder="Post to the ${esc(x.artist)} wall" autocomplete="off"><button type="submit">Post</button></form>`
       :`<div class="wlock"><span>🎟️</span><span><b>Read-only for now</b><small>Claim a spare or import your ticket to post</small></span><button data-act="itopen">Add ticket</button></div>`}
     ${L.map(o=>{ const p=o.me?MEP:PEOPLE[o.p], liked=!!lk[o.id];
       return `<article class="wp"><div class="wph"><button class="bgav" ${o.me?'':`data-act="person" data-v="${o.p}"`} aria-label="${p[0]}"><span>${avi(p[3])}</span></button><span class="wpn"><b>${o.me?'You':p[0]}</b><small>${ic('check',10)} Ticket holder · ${o.m<60?o.m+' min':Math.round(o.m/60)+' h'} ago</small></span><i class="wpt">${o.tag}</i></div>
@@ -2853,10 +2869,13 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='cmlike'){ state.cml=state.cml||{}; state.cml[v]=!state.cml[v]; render(); }
   else if(a==='clmute'){ state.clMute=state.clMute===false; const b=t; b.innerHTML=ic(state.clMute!==false?'mute':'sound',20); toast(state.clMute!==false?'Muted':'Sound on'); }
   else if(a==='clfeed'){ state.clFeed=v; state.clY=0; state.clSeen=true; render(); }
-  else if(a==='clshare'){ if(document.getElementById('psheet')) closePlus(); state.cs={v:0}; render(); }
+  else if(a==='clshare'){ if(document.getElementById('psheet')) closePlus(); state.cs={v:0,loc:CSVID[0].geo,src:'geo'}; render(); }
   else if(a==='csclose'){ state.cs=null; render(); }
-  else if(a==='cspick'){ const c=document.getElementById('cscap'); state.cs.cap=c?c.value:''; state.cs.v=+v; render(); }
-  else if(a==='cspost'){ const c=document.getElementById('cscap'), past=A(KIT.show); state.myClips=[{id:'m'+Date.now(),me:true,p:null,s:past,cap:(c&&c.value.trim())||'Last night was unreal',song:songsFor(past.artist)[0],likes:0,com:0,ago:'now',sec:'Floor GA'}].concat(state.myClips||[]); state.cs=null; state.history=[]; state.screen='clips'; render(); toast('Clip posted · your crew gets a ping'); }
+  else if(a==='cspick'){ const c=document.getElementById('cscap'), vd=CSVID[+v]; state.cs={v:+v,cap:c?c.value:'',loc:vd.geo,src:vd.geo?'geo':null}; render(); }
+  else if(a==='csedit'){ const c=document.getElementById('cscap'); state.cs.cap=c?c.value:''; state.cs.pickLoc=true; render(); }
+  else if(a==='csloc'){ state.cs.loc=v; state.cs.src='manual'; state.cs.pickLoc=false; state.cs.sid=null; render(); }
+  else if(a==='csshow'){ const c=document.getElementById('cscap'); state.cs.cap=c?c.value:''; state.cs.sid=id; render(); }
+  else if(a==='cspost'){ const k=state.cs; if(!k.loc) return; const c=document.getElementById('cscap'), sh=csShows(k.loc), sel=k.sid?byId[k.sid]:(sh[0]||A(KIT.show)); state.myClips=[{id:'m'+Date.now(),me:true,p:null,s:sel,cap:(c&&c.value.trim())||'What a night',song:songsFor(sel.artist)[0],likes:0,com:0,ago:'now',loc:k.loc,onsite:k.src==='geo'}].concat(state.myClips||[]); state.cs=null; state.history=[]; state.screen='clips'; state.clY=0; render(); toast('Clip posted · tagged at '+VSH(k.loc)); }
   else if(a==='xtag'){ state.xtag=+v<0?null:+v; render(); }
   else if(a==='hold'){ const t=thById(state.tid); t.hold='held'; render(); toast('$5 held · it comes back when you check in'); }
   else if(a==='checkin'&&!thById(state.tid).dep){ const t=thById(state.tid); t.hold='in'; t.msgs.push({d:'sys',t:`You’re at ${t.plan[1]}`}); t.ts=++TSEQ; render(); toast('Nice · this counts toward your show-up record'); }
