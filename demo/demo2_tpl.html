@@ -1705,6 +1705,14 @@ i.tw{font-style:normal;opacity:0}
 .pk.sh.hot{animation:none}
 .pfan4.out .pk.sh{animation:none}
 .pfbg.out{animation:fadeout .45s ease .1s both}
+
+/* hover v2: keep float + angle; only scale and lift via independent properties */
+.pk.sh{transition:scale .38s cubic-bezier(.34,1.56,.5,1),filter .3s ease;will-change:transform}
+.pk.sh.hot,.pk.sh.dealt.hot,.pk.sh:focus-visible{transform:none;scale:1.05;animation:shfloat 6s ease-in-out infinite;filter:drop-shadow(0 14px 22px rgba(0,0,0,.16));z-index:auto}
+.pk.sh:active{transform:none;scale:.96}
+.pk.sh.dealt:active{animation:shfloat 6s ease-in-out infinite}
+.pk.sh.st{pointer-events:none}.pk.sh.st svg path{pointer-events:auto}
+.pk.sh.st .shl{pointer-events:none}
 </style>
 
 <div class="app framed" id="app">
