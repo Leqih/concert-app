@@ -1,0 +1,161 @@
+const page=await figma.getNodeByIdAsync('1362:11953');await figma.setCurrentPageAsync(page);
+await figma.loadFontAsync({family:'Inter',style:'Regular'});
+const SRC=String.raw`const B = {};
+const FW = { 100: 'Thin', 200: 'Extra Light', 300: 'Light', 400: 'Regular', 500: 'Medium', 600: 'Semi Bold', 700: 'Bold', 800: 'Extra Bold', 900: 'Black' };
+const fontFor = (fam, w, it) => { let s = FW[Math.round((w || 400) / 100) * 100] || 'Regular'; if (it) s = s === 'Regular' ? 'Italic' : s + ' Italic'; return { family: 'Inter', style: s }; };
+const loaded = new Set();
+async function lf(f) { const k = f.family + '/' + f.style; if (loaded.has(k)) return; try { await figma.loadFontAsync(f); } catch (e) { f.style = f.style.includes('Italic') ? 'Italic' : 'Regular'; await figma.loadFontAsync(f); } loaded.add(k); }
+const C = c => ({ r: c[0] / 255, g: c[1] / 255, b: c[2] / 255 });
+let VARS = null, TSTY = null;
+async function tokens() {
+if (VARS) return;
+VARS = {}; TSTY = {};
+const cols = await figma.variables.getLocalVariableCollectionsAsync();
+for (const col of cols) if (col.name === 'Plus One tokens') for (const id of col.variableIds) { const v = await figma.variables.getVariableByIdAsync(id); VARS[v.name] = v; }
+for (const s of await figma.getLocalTextStylesAsync()) TSTY[s.name] = s;
+}
+const hex = c => c.slice(0, 3).map(v => v.toString(16).padStart(2, '0')).join('').toUpperCase();
+const COLVAR = { '0B0B0C': 'color/ink', 'F2F2F4': 'color/bg', 'FFFFFF': 'color/card', 'ECECEF': 'color/card-2', '86868C': 'color/muted', 'B9B9BF': 'color/dim' };
+const RADVAR = { 30: 'radius/xl', 20: 'radius/lg', 18: 'radius/md', 14: 'radius/sm', 12: 'radius/xs' };
+function solid(c) {
+let p = { type: 'SOLID', color: C(c), opacity: c[3] };
+const vn = c[3] === 1 && COLVAR[hex(c)]; if (vn && VARS[vn]) p = figma.variables.setBoundVariableForPaint(p, 'color', VARS[vn]);
+return p;
+}
+function gradPaint(g) {
+const stops = g.s.map(([c, p]) => ({ position: Math.max(0, Math.min(1, p)), color: { r: c[0] / 255, g: c[1] / 255, b: c[2] / 255, a: c[3] } }));
+if (g.t === 'r') return { type: 'GRADIENT_RADIAL', gradientStops: stops, gradientTransform: [[0.72, 0, 0.14], [0, 0.72, 0.14]] };
+return { type: 'GRADIENT_LINEAR', gradientStops: stops, gradientTransform: g.m };
+}
+function linM(a, w, h) {
+const r = a * Math.PI / 180, s = Math.sin(r), c = Math.cos(r); const L = Math.abs(w * s) + Math.abs(h * c) || 1;
+const a1 = w * s / L, b1 = -h * c / L; const t1 = 0.5 - 0.5 * a1 - 0.5 * b1;
+const a2 = -b1, b2 = a1; const t2 = 0.5 - 0.5 * a2 - 0.5 * b2;
+return [[a1, b1, t1], [a2, b2, t2]];
+}
+function applyBox(f, n, IMG) {
+const fills = [];
+if (n.bg) fills.push(solid(n.bg));
+const layers = [];
+if (n.gr) for (const g of n.gr) { if (g.t === 'l') g.m = linM(g.a, n.w, n.h); layers.push(gradPaint(g)); }
+if (n.img && IMG[n.img[0]]) layers.push({ type: 'IMAGE', imageHash: IMG[n.img[0]], scaleMode: n.img[1] });
+fills.push(...layers.reverse());
+f.fills = fills;
+if (n.r !== undefined) {
+if (Array.isArray(n.r)) { f.topLeftRadius = n.r[0]; f.topRightRadius = n.r[1]; f.bottomRightRadius = n.r[2]; f.bottomLeftRadius = n.r[3]; }
+else { f.cornerRadius = n.r; const vn = RADVAR[n.r]; if (vn && VARS[vn]) ['topLeftRadius', 'topRightRadius', 'bottomLeftRadius', 'bottomRightRadius'].forEach(k => f.setBoundVariable(k, VARS[vn])); }
+}
+if (n.st) {
+const [ws, c, dash] = n.st; f.strokes = [solid(c)]; f.strokeAlign = 'INSIDE';
+if (ws.every(v => v === ws[0])) f.strokeWeight = ws[0];
+else { f.strokeTopWeight = ws[0]; f.strokeRightWeight = ws[1]; f.strokeBottomWeight = ws[2]; f.strokeLeftWeight = ws[3]; }
+if (dash) f.dashPattern = [4, 4];
+} else f.strokes = [];
+const fx = [];
+if (n.sh) for (const [x, y, b, s, c, ins] of n.sh) fx.push({ type: ins ? 'INNER_SHADOW' : 'DROP_SHADOW', color: { r: c[0] / 255, g: c[1] / 255, b: c[2] / 255, a: c[3] }, offset: { x, y }, radius: b, spread: s, visible: true, blendMode: 'NORMAL', showShadowBehindNode: false });
+if (n.bl) fx.push({ type: 'BACKGROUND_BLUR', radius: n.bl, visible: true });
+f.effects = fx;
+f.opacity = n.op ?? 1;
+}
+function place(node, n, px, py) {
+if (n.rot) {
+const r = n.rot * Math.PI / 180, c = Math.cos(r), s = Math.sin(r);
+const cx = n.x + n.w / 2 - px, cy = n.y + n.h / 2 - py;
+node.relativeTransform = [[c, -s, cx - (c * n.w / 2 - s * n.h / 2)], [s, c, cy - (s * n.w / 2 + c * n.h / 2)]];
+} else { node.x = n.x - px; node.y = n.y - py; }
+}
+const STYLEMAP = [ // [name, family, size, weight, upper]
+['Brand', 'D', 32, 800], ['Hero', 'D', 44, 800], ['Page title', 'D', 26, 800], ['Section title', 'D', 26, 700],
+['Card title', 'D', 17, 700], ['Row title', 'D', 16, 700], ['Label', 'B', 12, 600]];
+async function applyText(t, n) {
+const segs = n.s; const chars = segs.map(s => s[0]).join('');
+for (const s of segs) { s.f = fontFor(s[6], s[2], s[3]); await lf(s.f); }
+t.fontName = segs[0].f; t.characters = chars;
+let i = 0;
+for (const s of segs) {
+const j = i + s[0].length; if (j > i) {
+t.setRangeFontName(i, j, s.f); t.setRangeFontSize(i, j, s[1]);
+const col = s[4]; t.setRangeFills(i, j, [solid(col)]);
+const ls = s[5] + (s[6] === 'D' ? -0.03 * s[1] : 0); // Inter Tight -> Inter: tighten a little
+t.setRangeLetterSpacing(i, j, { unit: 'PIXELS', value: Math.round(ls * 100) / 100 });
+if (s[7]) t.setRangeTextDecoration(i, j, 'STRIKETHROUGH');
+} i = j;
+}
+if (segs.length === 1) { const s = segs[0]; const m = STYLEMAP.find(x => x[1] === s[6] && x[2] === s[1] && x[3] === s[2]); if (m && TSTY[m[0]]) { await t.setTextStyleIdAsync(TSTY[m[0]].id); t.setRangeFills(0, chars.length, [solid(s[4])]); } }
+}
+async function mkText(n, px, py) {
+const t = figma.createText();
+await applyText(t, n);
+const size = Math.max(...n.s.map(s => s[1]));
+const lh = n.lh || null; if (lh) t.lineHeight = { unit: 'PIXELS', value: lh };
+t.textAlignHorizontal = { left: 'LEFT', center: 'CENTER', right: 'RIGHT', justify: 'JUSTIFIED' }[n.al] || 'LEFT';
+t.name = n.s.map(s => s[0]).join('').slice(0, 40);
+if (n.wrap || n.ell) {
+t.textAutoResize = 'HEIGHT'; t.resize(Math.max(n.w + (n.wrap ? 2 : 0), 1), t.height);
+if (n.ell) { t.textAutoResize = 'NONE'; t.resize(Math.max(n.w, 1), lh || size * 1.25); t.textTruncation = 'ENDING'; }
+} else t.textAutoResize = 'WIDTH_AND_HEIGHT';
+let x = n.x - px;
+if (!n.wrap && !n.ell) { if (n.al === 'center') x = n.x + n.w / 2 - t.width / 2 - px; else if (n.al === 'right') x = n.x + n.w - t.width - px; }
+t.x = x; t.y = n.y + n.h / 2 - t.height / 2 - py;
+return t;
+}
+function mkSvg(n, px, py) {
+let node; try { node = figma.createNodeFromSvg(n.svg); } catch (e) { node = figma.createFrame(); node.fills = []; node.name = 'icon (svg failed)'; }
+node.name = 'icon'; node.resize(Math.max(n.w, 0.01), Math.max(n.h, 0.01)); node.x = n.x - px; node.y = n.y - py; node.fills = node.fills || []; return node;
+}
+let CROOT = null; const CREG = {};
+async function compRoot(pageId) {
+if (CROOT) return CROOT;
+const page = await figma.getNodeByIdAsync(pageId);
+CROOT = page.children.find(c => c.name === 'Components');
+for (const c of CROOT.children) if (c.type === 'COMPONENT') CREG[c.getPluginDataKeys ? c.name : c.name] = c;
+return CROOT;
+}
+async function overrideInstance(inst, n, IMG) {
+async function go(node, d) {
+if (d.k === 'T' && node.type === 'TEXT') { const cur = node.characters; const want = d.s.map(s => s[0]).join(''); const same = cur === want; if (!same || true) { await applyText(node, d); } return; }
+if (d.k === 'F' && 'fills' in node && node !== inst) {
+if (d.img && IMG[d.img[0]]) { const fills = []; if (d.bg) fills.push(solid(d.bg)); fills.push({ type: 'IMAGE', imageHash: IMG[d.img[0]], scaleMode: d.img[1] }); node.fills = fills; }
+else if (d.bg) { node.fills = [solid(d.bg)]; }
+if (d.st) node.strokes = [solid(d.st[1])];
+node.opacity = d.op ?? 1;
+}
+if (d.c && 'children' in node) for (let i = 0; i < d.c.length && i < node.children.length; i++) await go(node.children[i], d.c[i]);
+}
+await go(inst, n);
+if (n.img && IMG[n.img[0]]) { const fills = []; if (n.bg) fills.push(solid(n.bg)); fills.push({ type: 'IMAGE', imageHash: IMG[n.img[0]], scaleMode: n.img[1] }); inst.fills = fills; }
+}
+let COUNT = 0;
+async function build(n, parent, px, py, IMG, opts) {
+COUNT++;
+if (n.k === 'T') { const t = await mkText(n, px, py); parent.appendChild(t); return t; }
+if (n.k === 'S') { const s = mkSvg(n, px, py); parent.appendChild(s); return s; }
+if (n.cs && opts.pageId) {
+await compRoot(opts.pageId);
+const main = CREG[n.cs];
+if (main) { const inst = main.createInstance(); parent.appendChild(inst); place(inst, n, px, py); await overrideInstance(inst, n, IMG); inst.name = n.cs.split(' #')[0]; return inst; }
+}
+const f = figma.createFrame(); f.name = n.n || 'frame';
+f.resize(Math.max(n.w, 0.01), Math.max(n.h, 0.01));
+parent.appendChild(f); place(f, n, px, py);
+applyBox(f, n, IMG); f.clipsContent = !!n.clip;
+for (const c of n.c || []) await build(c, f, n.x, n.y, IMG, opts);
+if (n.cs && opts.pageId) { // first occurrence -> make main component in Components section, keep an instance here
+const clone = f.clone(); CROOT.appendChild(clone);
+const comp = figma.createComponentFromNode(clone); comp.name = n.cs;
+const last = CROOT.children.filter(c => c !== comp); let y = 0, x = 40; // simple stacking layout
+const others = CROOT.children.filter(c => c !== comp);
+const maxY = others.reduce((m, c) => Math.max(m, c.y + c.height), 40);
+comp.x = 40; comp.y = maxY + 40;
+CROOT.resize(Math.max(CROOT.width, comp.width + 80), comp.y + comp.height + 40);
+CREG[n.cs] = comp;
+const inst = comp.createInstance(); parent.insertChild(parent.children.indexOf(f), inst); inst.x = f.x; inst.y = f.y; if (n.rot) inst.relativeTransform = f.relativeTransform; inst.name = n.cs.split(' #')[0]; f.remove(); return inst;
+}
+return f;
+}
+B.build = async (tree, parent, px, py, IMG, opts) => { await tokens(); COUNT = 0; const node = await build(tree, parent, px, py, IMG, opts || {}); return { id: node.id, count: COUNT }; };
+B.tokens = tokens;
+return B;`;
+const f=figma.createFrame();f.name='_builder (temp)';f.x=-2000;f.y=0;f.resize(400,100);f.visible=false;const t=figma.createText();t.characters=SRC;f.appendChild(t);
+const AF=Object.getPrototypeOf(async function(){}).constructor;const B=await new AF('figma',t.characters)(figma);
+return {frame:f.id,text:t.id,len:SRC.length,ok:typeof B.build};
