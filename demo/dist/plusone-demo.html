@@ -1901,7 +1901,10 @@ i.tw{font-style:normal;opacity:0}
 .cms .cmtag svg{stroke:#fff;fill:none;stroke-width:2.2}
 .cmpost+.cgrab{margin:14px 16px 0;padding:14px 0 12px!important;border-top:1px solid var(--line)}.cms .cmgr{margin:0 auto -4px}
 /* rich comments: mentions, stickers, photos */
-.cmat{font-weight:700;color:#0B0B0C;display:inline}
+.cmat{font:inherit;font-weight:700;color:#0B0B0C;display:inline;padding:0;border-radius:4px;transition:background .15s}.cmat:active{background:rgba(11,11,12,.08)}
+.cms .cmr>.bgav{padding:0;flex-shrink:0}.cmnm{font:inherit;color:inherit;padding:0}
+.cmath{display:flex;align-items:baseline;justify-content:space-between;padding:0 2px 6px}.cmath span{font-size:12.5px;font-weight:700}.cmath small{font-size:11.5px;color:var(--muted)}
+.cmats u{text-decoration:none;background:rgba(11,11,12,.1);border-radius:3px}
 .cmc{display:flex;flex-direction:column;align-items:flex-start;gap:6px}.cmt{font-size:15px;line-height:1.38;color:var(--text);word-break:break-word}
 .cmsk{padding:4px 2px 2px}.cmimg{width:132px;aspect-ratio:3/4;border-radius:14px;overflow:hidden;background:var(--card2);padding:0}.cmimg img{width:100%;height:100%;object-fit:cover;display:block}
 .stk{display:inline-flex;align-items:center;gap:5px;font-family:var(--display);font-weight:800;letter-spacing:-.01em;line-height:1;white-space:nowrap;transform:rotate(var(--r,0deg))}
@@ -2296,7 +2299,7 @@ function shWatch(){ const sc=document.getElementById('shsc'), bar=document.getEl
     document.querySelectorAll('.shtabs button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===cur)); };
   sc.addEventListener('scroll',f,{passive:true}); f(); }
 function go(screen,id){ state.history.push([state.screen,state.id]); state.screen=screen; state.id=id||null; render(true); }
-function back(){ const p=state.history.pop()||['home',null]; state.screen=p[0]; state.id=p[1]; render(true); }
+function back(){ const p=state.history.pop()||['home',null]; state.screen=p[0]; state.id=p[1]; const cb=state._cmBack; if(cb&&cb.screen===state.screen){ state.cmt=cb.cmt; state.cmd={}; } state._cmBack=null; render(true); }
 let tt; function toast(m){ const t=document.getElementById('toast'); t.textContent=m; t.hidden=false; clearTimeout(tt); tt=setTimeout(()=>t.hidden=true,2000); }
 
 function dock(active){ window._dockActive=active; return ''; }
@@ -2585,20 +2588,26 @@ const CM_EMO=['😂','🥹','😭','😍','🤯','🥳','😎','🫶','🙌','�
 const CM_ICO={at:'<b class="cmtat">@</b>',stk:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="8.8"/><path d="M8.3 14.2c1 1.4 2.2 2 3.7 2s2.7-.6 3.7-2"/><circle cx="9" cy="10" r=".9" fill="currentColor" stroke="none"/><circle cx="15" cy="10" r=".9" fill="currentColor" stroke="none"/></svg>',
   pic:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.2" y="4.8" width="17.6" height="14.4" rx="3.2"/><circle cx="9" cy="10" r="1.7"/><path d="M20.5 15.6l-4.6-4.6-8.6 8.2"/></svg>'};
 const cmStk=id=>{ const x=CM_STK.find(k=>k[0]===id); return x?`<span class="stk s-${x[2]}" style="--r:${x[3]}deg">${x[2]==='stub'?ic('ticket',14):''}${x[1]}</span>`:''; };
+const PH=i=>PEOPLE[i][0].split(' ')[0].toLowerCase()+'live';
 function cmPics(){ return CLIPV.map(x=>x.p).concat(NYC_SHOWS.filter(x=>x.img.startsWith('data:')).slice(0,4).map(x=>x.img)); }
-function cmText(t){ let o=esc(t); PEOPLE.map(p=>p[0]).sort((a,b)=>b.length-a.length).forEach(n=>{ o=o.split('@'+esc(n)).join(`<span class="cmat">@${esc(n)}</span>`); }); return o; }
+function cmText(t){ let o=esc(t); const T=[];
+  PEOPLE.forEach((p,i)=>{ T.push(['@'+esc(p[0]),i,'@'+esc(p[0])]); T.push(['@'+PH(i),i,'@'+PH(i)]); }); T.sort((a,b)=>b[0].length-a[0].length);
+  T.forEach(([k,i,l],n)=>{ o=o.split(k).join('\u0001'+n+'\u0002'); });
+  return o.replace(/\u0001(\d+)\u0002/g,(_,n)=>{ const x=T[+n]; return `<button type="button" class="cmat" data-act="cmperson" data-v="${x[1]}">${x[2]}</button>`; }); }
 function cmRow(r,c,lk,nw){ const p=r.me?MEP:PEOPLE[r.p], on=!!lk[r.id], nm=r.me?'You':p[0];
-  return `<div class="cmr${nw?' new':''}" data-id="${r.id}"><span class="bgav"><span>${avi(p[3])}</span></span><span class="cmb"><b>${nm}${(r.me?hasTix(c.s):r.was)?` <em class="cmtag">${ic('ticket',11)}Was there</em>`:''}</b><span class="cmc">${r.t?`<span class="cmt">${cmText(r.t)}</span>`:''}${r.stk?`<span class="cmsk">${cmStk(r.stk)}</span>`:''}${r.img?`<button class="cmimg" data-act="cmview" aria-label="Open photo"><img alt="" src="${r.img}"></button>`:''}</span><span class="cmm"><small>${r.ago==='now'?'Just now':r.ago}</small>${r.me?'':`<button data-act="cmreply" data-v="${esc(p[0])}">Reply</button>`}</span></span><button class="cml" data-act="cmlike" data-v="${r.id}" aria-pressed="${on}" aria-label="Like comment">${ic('heart',16)}<small>${r.l+(on?1:0)}</small></button></div>`; }
+  return `<div class="cmr${nw?' new':''}" data-id="${r.id}"><button type="button" class="bgav" data-act="cmperson" data-v="${r.me?'me':r.p}" aria-label="${esc(nm)}"><span>${avi(p[3])}</span></button><span class="cmb"><b><button type="button" class="cmnm" data-act="cmperson" data-v="${r.me?'me':r.p}">${nm}</button>${(r.me?hasTix(c.s):r.was)?` <em class="cmtag">${ic('ticket',11)}Was there</em>`:''}</b><span class="cmc">${r.t?`<span class="cmt">${cmText(r.t)}</span>`:''}${r.stk?`<span class="cmsk">${cmStk(r.stk)}</span>`:''}${r.img?`<button class="cmimg" data-act="cmview" aria-label="Open photo"><img alt="" src="${r.img}"></button>`:''}</span><span class="cmm"><small>${r.ago==='now'?'Just now':r.ago}</small>${r.me?'':`<button data-act="cmreply" data-v="${PH(r.p)}">Reply</button>`}</span></span><button class="cml" data-act="cmlike" data-v="${r.id}" aria-pressed="${on}" aria-label="Like comment">${ic('heart',16)}<small>${r.l+(on?1:0)}</small></button></div>`; }
 function cmCount(c){ return c.com+((state.cmMine||{})[c.id]||[]).length; }
 function cmSeed(c){ const k=Math.abs(h(c.id+'m')), T=['That encore was insane','I was two rows behind you!!','The crowd sang louder than the band','Same crew next show?','Goosebumps rewatching this','Where were you standing?'];
   return [0,1,2,3,4].map(i=>{ const r={id:c.id+'-'+i,p:(k+i*3)%8,t:T[(k+i)%T.length],l:3+((k>>>i)%60),ago:(i+1)*7+'m',was:(k+i)%3!==1};
-    if(i===1) r.t='@'+PEOPLE[k%8][0]+' '+r.t; if(i===2){ r.stk=['encore','goat','ten','frontrow'][k%4]; r.t=''; } if(i===3){ r.img=cmPics()[(k+3)%8]; r.t='My view from the floor'; } return r; }); }
+    if(i===1) r.t='@'+PH(k%8)+' '+r.t; if(i===2){ r.stk=['encore','goat','ten','frontrow'][k%4]; r.t=''; } if(i===3){ r.img=cmPics()[(k+3)%8]; r.t='My view from the floor'; } return r; }); }
 function cmPanel(){ const d=state.cmd||{}; if(d.panel==='stk') return `<div class="cmtabs"><button type="button" data-act="cmtab" data-v="stk" aria-pressed="${d.tab!=='emo'}">Stickers</button><button type="button" data-act="cmtab" data-v="emo" aria-pressed="${d.tab==='emo'}">Emoji</button></div>`+
     (d.tab==='emo'?`<div class="cmemg">${CM_EMO.map(e=>`<button type="button" data-act="cmemo" data-v="${e}">${e}</button>`).join('')}</div>`:`<div class="cmstg">${CM_STK.map(x=>`<button type="button" data-act="cmsticker" data-v="${x[0]}" aria-label="Send sticker ${esc(x[1])}">${cmStk(x[0])}</button>`).join('')}</div>`);
   if(d.panel==='pic') return `<div class="cmtabs"><button type="button" aria-pressed="true">Recent photos</button></div><div class="cmpg">${cmPics().map((u,i)=>`<button type="button" data-act="cmpick" data-v="${i}" aria-pressed="${d.img===u}"><img alt="" src="${u}"></button>`).join('')}</div>`; return ''; }
 function cmTop(){ const d=state.cmd||{}; if(d.panel&&d.panel!=='at'&&d.q==null) return ''; if(d.q!=null){ const q=d.q.toLowerCase(), c=clipAny(state.cmt.id), inTh=new Set(cmSeed(c).map(r=>r.p));
-    const L=PEOPLE.map((p,i)=>({p,i,b:!!BUD[i],t:inTh.has(i)})).filter(x=>x.p[0].toLowerCase().startsWith(q)||x.p[0].toLowerCase().includes(' '+q)).sort((a,b)=>(b.b-a.b)||(b.t-a.t));
-    return L.length?`<div class="cmats">${L.map(x=>`<button type="button" data-act="cmmention" data-v="${esc(x.p[0])}"><span class="bgav"><span>${avi(x.p[3])}</span></span><span><b>${esc(x.p[0])}</b><small>${x.b?'Buddy':x.t?'In this thread':'Going'}</small></span></button>`).join('')}</div>`:`<p class="cmnone">No one called “${esc(d.q)}”</p>`; }
+    const hit=(txt)=>{ if(!q) return txt; const k=txt.toLowerCase().indexOf(q); return k<0?esc(txt):esc(txt.slice(0,k))+'<u>'+esc(txt.slice(k,k+q.length))+'</u>'+esc(txt.slice(k+q.length)); };
+    const L=PEOPLE.map((p,i)=>({p,i,hd:PH(i),b:!!BUD[i],t:inTh.has(i)})).filter(x=>!q||x.hd.includes(q)||x.p[0].toLowerCase().split(/[\s.]+/).some(w=>w&&w.startsWith(q))||x.p[0].toLowerCase().startsWith(q))
+      .sort((a,b)=>(b.b-a.b)||(b.t-a.t)||a.p[0].localeCompare(b.p[0]));
+    return `<div class="cmath"><span>${q?`Results for “@${esc(d.q)}”`:'Mention someone'}</span><small>Search a name or @id</small></div>`+(L.length?`<div class="cmats">${L.map(x=>`<button type="button" data-act="cmmention" data-v="${x.hd}"><span class="bgav"><span>${avi(x.p[3])}</span></span><span><b>${hit(x.p[0])}</b><small>@${hit(x.hd)}${x.b?' · Buddy':x.t?' · In thread':''}</small></span></button>`).join('')}</div>`:`<p class="cmnone">No one matches “@${esc(d.q)}”</p>`); }
   return `<div class="cmemo">${['🔥','🙌','😭','🎶','❤️','👏','🤘'].map(e=>`<button type="button" data-act="cmemo" data-v="${e}" aria-label="Add ${e}">${e}</button>`).join('')}</div>`; }
 function cmAtt(){ const d=state.cmd||{}; return d.img?`<div class="cmatt"><span><img alt="" src="${d.img}"><button type="button" data-act="cmunpic" aria-label="Remove photo">${ic('x',12)}</button></span></div>`:''; }
 function cmSheet(){ const c=clipAny(state.cmt.id); if(!c) return ''; const lk=state.cml||{}, d=state.cmd=state.cmd||{};
@@ -2618,7 +2627,7 @@ function cmDraw(what){ const d=state.cmd||{}; if(what.includes('top')){ const t=
 function cmFocus(){ const d=state.cmd||{}; if(d.panel&&d.panel!=='at'){ d.panel=null; cmDraw(['panel']); } }
 // input watcher: send button state + the @mention picker while the caret sits right after "@name"
 function cmIn(quiet){ const i=document.getElementById('cmin'); if(!i) return; const d=state.cmd=state.cmd||{}, b=document.querySelector('#cmsh .cmsend'); if(b) b.disabled=!(i.value.trim()||d.img);
-  if(quiet===true) return; const m=i.value.slice(0,i.selectionStart??i.value.length).match(/(?:^|\s)@([A-Za-z]{0,10}(?: [A-Za-z]?\.?)?)$/), q=m?m[1]:null;
+  if(quiet===true) return; const m=i.value.slice(0,i.selectionStart??i.value.length).match(/(?:^|\s)@([A-Za-z0-9._]{0,20})$/), q=m?m[1]:null;
   if(q!==d.q){ d.q=q; cmDraw(['top']); } }
 function cmInsert(txt,replaceQ){ const i=document.getElementById('cmin'); if(!i) return; let p=i.selectionStart??i.value.length, a=i.value.slice(0,p), z=i.value.slice(p);
   if(replaceQ!=null){ a=a.slice(0,a.length-replaceQ.length-1); } i.value=(a+txt+z).slice(0,200); const np=Math.min(200,a.length+txt.length); i.focus(); i.setSelectionRange(np,np); cmIn(); }
@@ -2648,7 +2657,7 @@ function cmPost(e,id,stk){ e&&e.preventDefault&&e.preventDefault(); const i=docu
     const dx2=-20-Math.random()*90, rot=(Math.random()-.5)*50; f.animate([{transform:'translate(0,0) scale(.4)',opacity:0},{transform:`translate(${dx2*.4}px,-50px) scale(1.2)`,opacity:1,offset:.3},{transform:`translate(${dx2}px,-${170+Math.random()*90}px) rotate(${rot}deg) scale(.9)`,opacity:0}],{duration:1100+Math.random()*300,delay:k*90,easing:'cubic-bezier(.2,.7,.4,1)',fill:'both'}); setTimeout(()=>f.remove(),1700); });
   const n=document.getElementById('cmn'); if(n){ n.textContent=fmtK(cmCount(c)); n.animate([{transform:'translateY(8px)',opacity:0},{transform:'none',opacity:1}],{duration:300,easing:E}); }
   const rc=document.querySelector(`.clp[data-id="${id}"] [data-act=clcom] small`); if(rc) rc.textContent=fmtK(cmCount(c));
-  const at=PEOPLE.map(p=>p[0]).filter(nm=>v.includes('@'+nm)); if(at.length) setTimeout(()=>toast(at.length===1?at[0]+' will get a heads-up':at.length+' people will get a heads-up'),450);
+  const at=PEOPLE.map((p,k)=>[p[0],k]).filter(([nm,k])=>new RegExp('@('+PH(k)+'|'+nm.replace('.','\\.')+')(?![A-Za-z0-9_])').test(v)).map(x=>x[0]); if(at.length) setTimeout(()=>toast(at.length===1?at[0]+' will get a heads-up':at.length+' people will get a heads-up'),450);
   i.value=''; d.img=null; d.q=null; d.panel=d.panel==='pic'?null:d.panel; cmDraw(['top','att','panel']); if(!d.panel) i.focus(); return false; }
 function cmView(src,from){ const o=document.createElement('div'); o.className='cmlb'; o.innerHTML=`<img alt="" src="${src}"><p>Tap to close</p>`; document.getElementById('view').appendChild(o);
   const im=o.querySelector('img'), f=from.getBoundingClientRect(), t=im.getBoundingClientRect(); im.animate([{transform:`translate(${f.left+f.width/2-(t.left+t.width/2)}px,${f.top+f.height/2-(t.top+t.height/2)}px) scale(${f.width/t.width})`,borderRadius:'24px'},{transform:'none',borderRadius:'16px'}],{duration:380,easing:'cubic-bezier(.2,.8,.2,1)'});
@@ -3378,6 +3387,9 @@ document.getElementById('app').addEventListener('click',e=>{
     else { d.panel=d.panel===v?null:v; if(d.panel){ const i=document.getElementById('cmin'); i&&i.blur(); } cmDraw(['panel']); if(!d.panel) document.getElementById('cmin').focus(); } }
   else if(a==='cmtab'){ state.cmd.tab=v; cmDraw(['panel']); }
   else if(a==='cmmention'){ const q=state.cmd.q; state.cmd.q=null; cmInsert('@'+v+' ',q); cmDraw(['top']); }
+  else if(a==='cmperson'){ // leave the thread for a profile; Back brings the same thread back up
+    state._cmBack={screen:state.screen,cmt:state.cmt}; state.cmt=null; state.cmd=null; const sh=document.getElementById('cmsh'); if(sh){ const bg=sh.previousElementSibling; sh.remove(); bg&&bg.classList.contains('sheetbg')&&bg.remove(); }
+    if(v==='me') go('me'); else { state.pid=+v; go('person'); } }
   else if(a==='cmsticker'){ t.animate([{transform:'scale(1)'},{transform:'scale(.9)'},{transform:'scale(1)'}],{duration:200}); cmPost(null,state.cmt.id,v); }
   else if(a==='cmpick'){ const d=state.cmd; d.img=cmPics()[+v]; d.panel=null; cmDraw(['att','panel']); const x=document.querySelector('#cmattw .cmatt span'); x&&x.animate([{transform:'scale(.6)',opacity:0},{transform:'none',opacity:1}],{duration:260,easing:'cubic-bezier(.34,1.5,.5,1)'}); document.getElementById('cmin').focus(); }
   else if(a==='cmunpic'){ state.cmd.img=null; cmDraw(['att']); }

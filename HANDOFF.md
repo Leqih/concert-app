@@ -32,7 +32,7 @@
 ```
 HANDOFF.md            ← 本文件
 CLAUDE.md             ← 给 Claude 的工作规则（精简版）
-demo/                 ← 主作品：单文件 HTML 交互 demo（当前 = M19.5 / 线上 v111）
+demo/                 ← 主作品：单文件 HTML 交互 demo（当前 = M19.6 / 线上 v112）
   demo2_tpl.html      模板源码（唯一需要改的文件）
   build.py            把数据注入模板 → dist/plusone-demo.html
   clips/              Clips 用的 8 段演唱会视频 + 封面（Pexels，CREDITS.md）
@@ -137,6 +137,7 @@ pip install playwright && python3 demo/tests/m7test.py   # 可选：批量截屏
 | M19.3 | v109 | 评论能发了 + 发送动效 | 主人：评论发不出去。原因：Claude 预览面板是沙盒 iframe（没有 allow-forms），原生表单提交根本不会触发，onsubmit 不执行（Show chat、小队聊天的输入框同理）。修复：全局接管——在 input 里按 Enter（中文输入法组字中不算）或点 submit 按钮时，取消原生提交，手动派发 submit 事件，所有表单在任何环境都能用。发送动效：发送键箭头向右上飞出再从左侧回来并轻微按压；文字变成黑色气泡从输入框沿弧线飞到列表顶部的新评论位置后淡入成正文；下面的评论用 FLIP 平滑下移让位；新头像弹出；标题评论数滚动 +1；评论里的 emoji 从发送键向上飘散；手机上轻震 |
 | M19.4 | v110 | 评论区「Was there」改成实心标签 | 主人：不要名字旁那个淡淡的 ✓ 小勾，要更明显的标签表示这个人去过现场；去掉标题下「✓ marks people who were at …」提示。改为名字右侧黑底白字胶囊「🎫 Was there」（ticket 图标，class `.cmtag`，18px 高），评论行和评价详情头部统一；删除提示行。顺手：评价详情里正文和「N comments」之间加分隔线和间距，关闭键对齐 |
 | M19.5 | v111 | 评论：去掉 ✕，支持 @、贴纸、表情、图片 | 主人：评论区不需要关闭的 ✕；发评论要有更多选择（@ 别人、表情包、图片）。去掉 ✕，改为点外面或下拉 sheet 关闭（拖动头部/把手，超过 90px 关闭，背景跟随变淡）。输入框内三个工具：@（插入 @ 并弹出人选）、😊 贴纸/表情面板、🖼 图片面板。@：光标前是「@字母」就在输入框上方出现横向人选（头像 + 名字 + Buddy / In this thread / Going，按好友 → 本帖参与者排序），点选替换为「@Name 」；评论里 @Name 加粗；发出后提示「Maya R. will get a heads-up」。贴纸面板：Stickers / Emoji 两个 tab；12 个黑白贴纸（ENCORE!、FRONT ROW、SEE YOU THERE、LOUDER 🔊、I WAS THERE 票根、GOAT 🐐、10/10、CRYING RN 😭、大号 🔥🎸🎤🪩），点一下直接发出并从面板飞到新评论位置；Emoji tab 32 个表情插入光标处。图片面板：Recent photos 4 列（Clips 视频封面 + 演出图），选中后输入框上方出现缩略图（可 ✕ 移除），可配文字一起发；评论里图片 3:4 圆角，点开全屏查看（从缩略图放大）。面板打开时收起键盘和快捷表情栏；聚焦输入框时面板收起。示例评论里加了一条 @、一条贴纸、一条带图，展示能力。注意：`.cmin button` 旧样式已限定为 `.cmsend`，避免工具按钮被染成黑色圆 |
+| M19.6 | v112 | @ 可搜名字或 ID，点 @ 进主页 | 主人：@ 时要能搜名字或 ID；评论里点 @ 能跳到那个人的主页。每人有 ID = 名字小写 + live（和个人主页上显示的 @mayalive 一致，函数 `PH(i)`）。输入「@」即出现「Mention someone · Search a name or @id」，列出所有人；继续输入按 ID 子串或名字任一单词开头过滤（如 @jul → Jules W.，@theoli → Theo L.），命中部分灰底高亮，每项显示头像 + 名字 + @id（+ Buddy / In thread），好友 → 本帖参与者 → 字母排序；无结果显示「No one matches」。选中插入「@id 」。Reply 也改插 @id。评论里的 @id（兼容旧的 @名字）渲染为可点按钮，点击跳到对方主页；评论头像、名字也可点进主页（自己 → Me）。从评论跳主页时记住当前帖子，按返回回到原页面并自动重新打开同一个评论区，自己发的评论还在 |
 
 ## 6. 链接（原账号所有，新账号只能查看）
 
