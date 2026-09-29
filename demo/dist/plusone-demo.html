@@ -1891,6 +1891,46 @@ i.tw{font-style:normal;opacity:0}
 .cmf{padding:10px 16px 0;border-top:1px solid var(--line)}.cmf .bgav span{width:30px;height:30px;border:0}
 .pvr{display:flex;gap:8px}.pvlook i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.5);margin-right:6px;display:inline-block}.pvlook.on{background:#fff!important;color:#0B0B0C!important}.pvlook.on i{background:#0B0B0C;animation:ldot 1.4s ease-in-out infinite}
 
+/* ---------- Clips v3: comment sheet, likes, posting */
+.csheet .ufb,.csheet .csvid,.csheet .ncv{scrollbar-width:none;-ms-overflow-style:none}.csheet .ufb::-webkit-scrollbar,.csheet .csvid::-webkit-scrollbar,.csheet .ncv::-webkit-scrollbar{display:none;width:0;height:0}
+.cms{height:74%;max-height:74%}
+.cms .cgrab{position:relative;padding-bottom:8px}.cms .cgrab h3{font-size:17px;letter-spacing:-.02em;font-variant-numeric:tabular-nums}.cms .cgrab h3 span{display:inline-block}
+.cms .cgrab p{font-size:12px;margin-top:2px;display:flex;align-items:center;justify-content:center;gap:3px}
+.cmx{position:absolute;right:10px;top:-2px;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:var(--muted);transition:background .15s}.cmx:active{background:var(--card2)}
+.cms .ufb{padding:6px 16px 10px;-webkit-mask:linear-gradient(180deg,transparent 0,#000 12px,#000 calc(100% - 16px),transparent);mask:linear-gradient(180deg,transparent 0,#000 12px,#000 calc(100% - 16px),transparent);overscroll-behavior:contain}
+.cms .cmr{border:0;border-radius:0;margin:0;width:auto;background:transparent;padding:9px 0;gap:12px;align-items:flex-start;font-weight:400;font-size:14px;color:var(--text)}.cms .cmr .bgav span{width:36px;height:36px}
+.cms .cmb{gap:1px}.cms .cmb b{font-size:12.5px;font-weight:600;color:var(--muted)}.cms .cmb>span:not(.cmm){font-size:15px;line-height:1.38;color:var(--text);letter-spacing:-.005em;word-break:break-word}
+.cmm{display:flex;align-items:center;gap:14px;margin-top:3px}.cmm small{font-size:12px;color:var(--muted)}.cmm button{font-size:12px;font-weight:600;color:var(--muted);padding:2px 0}
+.cms .cml{min-width:34px;padding-top:6px;transition:color .15s}.cms .cml small{font-variant-numeric:tabular-nums}.cms .cml[aria-pressed=true]{color:var(--like)}.cms .cml[aria-pressed=true] svg{fill:var(--like);stroke:var(--like)}.cms .cml.pop svg{animation:hpop2 .42s cubic-bezier(.34,1.6,.5,1)}
+@keyframes hpop2{0%{transform:scale(.5)}60%{transform:scale(1.25)}100%{transform:scale(1)}}
+.cms .cmr.new{margin:0 -16px;padding:10px 16px;animation:cmin .45s cubic-bezier(.2,.8,.2,1) both,cmhl 1.8s ease .35s both}
+@keyframes cmin{from{opacity:0;transform:translateY(-10px)}}@keyframes cmhl{from{background:#F2F2F4}to{background:rgba(242,242,244,0)}}
+.cms .cmf{padding:8px 16px 0;border-top:1px solid var(--line)}
+.cmemo{display:flex;justify-content:space-between;padding:0 2px 8px}.cmemo button{font-size:22px;width:40px;height:36px;border-radius:12px;line-height:1}.cmemo button:active{background:var(--card2)}
+.cmform{display:flex;align-items:center;gap:10px}.cmform .bgav span{width:32px;height:32px;border:0}
+.cmin{flex:1;min-width:0;display:flex;align-items:center;height:44px;padding:0 4px 0 16px;border-radius:var(--r-pill);background:var(--card2);transition:box-shadow .2s,background .2s}
+.cmin:focus-within{background:#fff;box-shadow:inset 0 0 0 1.5px #0B0B0C}
+.cmin input{flex:1;min-width:0;height:100%;border:0;background:transparent;font:inherit;font-size:15px;outline:none;color:var(--text)}
+.cmin button{flex-shrink:0;width:36px;height:36px;border-radius:50%;background:#0B0B0C;color:#fff;display:grid;place-items:center;transition:transform .22s cubic-bezier(.34,1.6,.5,1),opacity .18s}
+.cmin button svg{transform:rotate(-90deg)}.cmin button:disabled{opacity:0;transform:scale(.4);pointer-events:none}
+/* rail heart burst */
+.clrail button[data-act=cllike]{position:relative}.clrail button[data-act=cllike] svg{transform-origin:50% 55%}
+.lkfx{position:absolute;left:50%;top:13px;width:0;height:0;pointer-events:none}
+.lkfx b{position:absolute;display:block}.lkfx .lkr{left:-22px;top:-22px;width:44px;height:44px;border-radius:50%;border:8px solid var(--like);box-sizing:border-box}
+.lkfx .lkd{left:-3px;top:-3px;width:6px;height:6px;border-radius:50%;background:var(--like)}.lkfx .lkd.w{background:#fff}
+.clfh svg{filter:drop-shadow(0 8px 20px rgba(254,44,85,.35))}
+/* new post lands */
+.clp.nw .clm{animation:clnw .7s cubic-bezier(.2,.8,.2,1) both}@keyframes clnw{from{transform:scale(.88);opacity:0;border-radius:28px}to{transform:none;opacity:1;border-radius:0}}
+.clp.nw .clinfo,.clp.nw .clrail{animation:cmin .5s cubic-bezier(.2,.8,.2,1) .25s both}
+.clwho .clnw{background:#fff!important;color:#0B0B0C}
+/* share sheet */
+.css .ncl{display:flex;align-items:center;gap:6px}.css .ncl .csreq{float:none;margin-left:auto}.cscnt{margin-left:auto;font-style:normal;font-size:11px;font-weight:600;letter-spacing:0;color:var(--muted);font-variant-numeric:tabular-nums;text-transform:none}.cscnt.max{color:#0B0B0C}
+.css .csvid button{transition:box-shadow .2s,transform .2s cubic-bezier(.34,1.6,.5,1)}.css .csvid button:active{transform:scale(.95)}
+.css .csvid button[aria-pressed=true]{box-shadow:0 0 0 2.5px #fff,0 0 0 4.5px #0B0B0C}
+.css .csrate button{transition:color .15s}
+.cspb{position:relative;overflow:hidden;transition:background .25s}.cspb .cslb{position:relative;display:inline-flex;align-items:center;justify-content:center}
+.cspb.busy{pointer-events:none}.cspb .cspg{position:absolute;left:0;top:0;bottom:0;width:0;background:rgba(255,255,255,.2);animation:cspg 1.05s cubic-bezier(.4,0,.2,1) forwards}@keyframes cspg{to{width:100%}}
+.cspb.done .cspg{display:none}.cspb.done .cslb{animation:cmin .3s cubic-bezier(.2,.8,.2,1)}
 .wtw{font-style:normal;font-size:10.5px;font-weight:600;color:var(--muted);margin-left:4px;display:inline-flex;align-items:center;gap:2px}
 
 .csreq{font-style:normal;float:right;letter-spacing:0;text-transform:none;font-weight:600;color:#0B0B0C}
@@ -2398,12 +2438,12 @@ function clipList(){ const base=NYC_SHOWS.filter(x=>x.img.startsWith('data:')).s
 const fmtK=n=>n>=1000?(n/1000).toFixed(n>=10000?0:1)+'k':''+n;
 function clips(){ const L0=clipList(), L=state.clFeed==='fo'?L0.filter(c=>c.me||BUD[c.p]||[1,3,4,7].includes(c.p)):L0, lk=state.clk||{}, mute=state.clMute!==false;
   return `<div class="clips" id="clv">${L.map((c,i)=>{ const p=c.me?MEP:PEOPLE[c.p], on=!!lk[c.id], cv=c.vid!=null?CLIPV[c.vid]:null;
-    return `<section class="clp${i===0?' act':''}${cv?' hv':' tx'}" data-i="${i}" data-id="${c.id}"><div class="clm" data-act="cltap" data-v="${c.id}">${!cv&&c.cap?`<div class="cltx"><p>“${esc(c.cap)}”</p>${c.rate?stars(c.rate):''}</div>`:''}${cv?CL_FB?`<canvas width="720" height="1280" data-k="${c.vid}" style="background:#000 url(${cv.p}) center/cover" aria-label="Clip of ${esc(c.s.artist)}"></canvas>`:`<video src="${cv.u}" data-k="${c.vid}" poster="${cv.p}" muted playsinline webkit-playsinline ${i===0?'autoplay ':''}loop preload="${i<2?'auto':'metadata'}" aria-label="Clip of ${esc(c.s.artist)}"></video>`:img(c.s)}</div><span class="clsh"></span><span class="clgr"></span><i class="clbig">${ic('play',40)}</i>
+    return `<section class="clp${i===0?' act':''}${cv?' hv':' tx'}${c.id===state.clNew?' nw':''}" data-i="${i}" data-id="${c.id}"><div class="clm" data-act="cltap" data-v="${c.id}">${!cv&&c.cap?`<div class="cltx"><p>“${esc(c.cap)}”</p>${c.rate?stars(c.rate):''}</div>`:''}${cv?CL_FB?`<canvas width="720" height="1280" data-k="${c.vid}" style="background:#000 url(${cv.p}) center/cover" aria-label="Clip of ${esc(c.s.artist)}"></canvas>`:`<video src="${cv.u}" data-k="${c.vid}" poster="${cv.p}" muted playsinline webkit-playsinline ${i===0?'autoplay ':''}loop preload="${i<2?'auto':'metadata'}" aria-label="Clip of ${esc(c.s.artist)}"></video>`:img(c.s)}</div><span class="clsh"></span><span class="clgr"></span><i class="clbig">${ic('play',40)}</i>
       <div class="clrail"><button class="clav" ${c.me?'':`data-act="person" data-v="${c.p}"`} aria-label="${p[0]}"><span>${avi(p[3])}</span>${c.me?'':`<i>${ic('plus',10)}</i>`}</button>
         <button data-act="cllike" data-v="${c.id}" aria-pressed="${on}" aria-label="Like">${ic('heart',26)}<small>${fmtK(c.likes+(on?1:0))}</small></button>
         <button data-act="clcom" data-v="${c.id}" aria-label="Comments">${ic('chat',26)}<small>${fmtK(c.com)}</small></button>
         <button data-act="toast" data-msg="Link copied" aria-label="Share">${ic('share',24)}<small>Share</small></button></div>
-      <div class="clinfo"><span class="clwho"><b>${c.me?'You':p[0]}</b><em class="clloc">${ic('pin',10)} ${esc(VSH(c.loc||c.s.venue))}${(c.onsite!==false)?' · On-site':' · Tagged'}</em><span>${c.ago}</span></span>
+      <div class="clinfo"><span class="clwho"><b>${c.me?'You':p[0]}</b>${c.id===state.clNew?`<em class="clnw">${ic('check',10)} Posted</em>`:''}<em class="clloc">${ic('pin',10)} ${esc(VSH(c.loc||c.s.venue))}${(c.onsite!==false)?' · On-site':' · Tagged'}</em><span>${c.ago}</span></span>
         <p>${esc(c.cap)}</p><span class="clsong"><span class="clmq"><i>♪ ${esc(c.song)} · ${esc(c.s.artist)}&nbsp;&nbsp;&nbsp;♪ ${esc(c.song)} · ${esc(c.s.artist)}&nbsp;&nbsp;&nbsp;</i></span></span>
         <button class="clshow" data-act="show" data-id="${c.s.id}"><span class="xth">${img(c.s)}</span><span><b>${esc(c.s.artist)}</b><small>${xDays(c.s.dates[0])<0?'Last night':sd(c.s.dates[0])} · ${esc(VSH(c.s.venue))}</small></span><em>Find a crew</em></button></div>
       <span class="clbar" role="slider" aria-label="Seek" aria-valuemin="0" aria-valuemax="${cv?cv.d:14}" aria-valuenow="0"><i></i></span><span class="cldisc">${img(c.s)}</span><span class="cldur">${cv?'0:00 / '+mmss(cv.d):'0:'+['14','22','31','09','18','26','12','40'][i%8]}</span></section>`; }).join('')}</div>
@@ -2457,13 +2497,13 @@ function clPlay(sec){ const vd=clVid(sec); if(!vd) return; vd.muted=state.clMute
     pr&&pr.catch(err=>{ if(!err||err.name==='AbortError') return; if(err.name==='NotAllowedError'&&!vd.muted){ vd.muted=true; state.clMute=true; const m=document.querySelector('.clmute'); m&&(m.innerHTML=ic('mute',20)); clPlay(sec); return; } clGoFrames(); });
     if(isV) setTimeout(()=>{ if(!CL_FB&&vd.isConnected&&sec.classList.contains('act')&&!sec.classList.contains('paused')&&document.visibilityState==='visible'&&vd.currentTime<.05) clGoFrames(); },2200); }
   else vd.pause(); }
-function clWatch(){ const v=document.getElementById('clv'); if(!v||v._w) return; v._w=1; if(state.clJump){ const j=v.querySelector(`.clp[data-id="${state.clJump}"]`); state.clJump=null; if(j){ v.scrollTop=j.offsetTop; state.clY=v.scrollTop; v.querySelectorAll('.clp').forEach(x=>x.classList.toggle('act',x===j)); } } else if(state.clY) v.scrollTop=state.clY; v.addEventListener('scroll',()=>{ state.clY=v.scrollTop; },{passive:true});
+function clWatch(){ const v=document.getElementById('clv'); if(!v||v._w) return; v._w=1; if(state.clNew) setTimeout(()=>{ state.clNew=null; },50); if(state.clJump){ const j=v.querySelector(`.clp[data-id="${state.clJump}"]`); state.clJump=null; if(j){ v.scrollTop=j.offsetTop; state.clY=v.scrollTop; v.querySelectorAll('.clp').forEach(x=>x.classList.toggle('act',x===j)); } } else if(state.clY) v.scrollTop=state.clY; v.addEventListener('scroll',()=>{ state.clY=v.scrollTop; },{passive:true});
   const io=new IntersectionObserver(es=>es.forEach(e=>{ const sec=e.target, on=e.intersectionRatio>.6; sec.classList.toggle('act',on);
       if(!on){ sec.classList.remove('paused'); const vd=clVid(sec,false); if(vd&&vd.destroy){ vd.destroy(); vd.g.clearRect(0,0,vd.c.width,vd.c.height); sec._fp=null; } else if(vd){ vd.pause(); try{ vd.currentTime=0; }catch(_){} } } else clPlay(sec); }),{root:v,threshold:[.6]}); v.querySelectorAll('.clp').forEach(x=>io.observe(x));
   // Taps on the video: one tap pauses/plays after a short wait; a second tap inside that wait cancels it and likes instead,
   // so a double tap never pauses. Every tap within 450 ms of a heart adds another heart (TikTok-style burst).
   let tt=null, lh=0; v.addEventListener('click',e=>{ const m=e.target.closest('.clm'); if(!m) return; e.stopPropagation(); const sec=m.parentElement, now=Date.now();
-    if(tt||now-lh<450){ clearTimeout(tt); tt=null; lh=now; const id=m.dataset.v; state.clk=state.clk||{}; if(!state.clk[id]){ state.clk[id]=true; clUpd(id); } clBurst(sec,e); return; }
+    if(tt||now-lh<450){ clearTimeout(tt); tt=null; lh=now; const id=m.dataset.v; state.clk=state.clk||{}; if(!state.clk[id]){ state.clk[id]=true; clUpd(id,true); } clBurst(sec,e); return; }
     tt=setTimeout(()=>{ tt=null; sec.classList.toggle('paused'); clPlay(sec); },250); },true);
   // progress bar + time follow the real video
   const tick=()=>{ if(!v.isConnected) return; const sec=v.querySelector('.clp.act.hv'), vd=clVid(sec);
@@ -2474,36 +2514,63 @@ function clWatch(){ const v=document.getElementById('clv'); if(!v||v._w) return;
     const seek=x=>{ const r=bar.getBoundingClientRect(), f=Math.min(1,Math.max(0,(x-r.left)/r.width)); vd.currentTime=f*vd.duration; bar.querySelector('i').style.width=(f*100)+'%'; sec.querySelector('.cldur').textContent=mmss(f*vd.duration)+' / '+mmss(vd.duration); };
     seek(e.clientX); const mv=ev=>seek(ev.clientX), up=()=>{ sec.classList.remove('scrub'); clPlay(sec); removeEventListener('pointermove',mv); removeEventListener('pointerup',up); removeEventListener('pointercancel',up); };
     addEventListener('pointermove',mv); addEventListener('pointerup',up); addEventListener('pointercancel',up); }); }
-// Double-tap like, "Confetti drop": the heart pops with a shockwave ring and sprays tiny hearts + confetti bits, like the encore cannon
+// Likes. Double tap: a glossy heart pops where you tapped (random tilt), a thin ring ripples out and a few mini hearts
+// float up and away; every extra tap in the combo window adds another heart. The rail heart answers with its own burst.
 const CLHP='M12 20.5s-7.5-4.6-7.5-10.4A4.3 4.3 0 0 1 12 7.4a4.3 4.3 0 0 1 7.5 2.7c0 5.8-7.5 10.4-7.5 10.4z';
 const clHeartSvg=(sz,fill='var(--like)')=>`<svg width="${sz}" height="${sz}" viewBox="0 0 24 24" aria-hidden="true"><path d="${CLHP}" fill="${fill}"/></svg>`;
-function clBurst(sec,e){ const r=sec.getBoundingClientRect(), x=(e.clientX||r.left+r.width/2)-r.left, y=(e.clientY||r.top+r.height*.45)-r.top, rnd=(a,b)=>a+Math.random()*(b-a), rot=rnd(-12,12), made=[];
+const clBigHeart=sz=>`<svg width="${sz}" height="${sz}" viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="clg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF5A7A"/><stop offset="1" stop-color="#F0164A"/></linearGradient></defs><path d="${CLHP}" fill="url(#clg)"/><path d="M7.3 9.2a2.6 2.6 0 0 1 3-1.3" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="1.3" stroke-linecap="round"/></svg>`;
+let clCombo=0, clComboT=0;
+function clBurst(sec,e){ const r=sec.getBoundingClientRect(), x=(e.clientX||r.left+r.width/2)-r.left, y=(e.clientY||r.top+r.height*.45)-r.top, rnd=(a,b)=>a+Math.random()*(b-a), rot=rnd(-18,18), made=[];
+  const now=Date.now(); clCombo=now-clComboT<700?Math.min(clCombo+1,4):0; clComboT=now; const big=96+clCombo*8;
+  try{ navigator.vibrate&&navigator.vibrate(10); }catch(_){}
   const put=(html,w,h,cls='')=>{ const d=document.createElement('i'); d.className='clfx '+cls; d.style.cssText=`left:${x-w/2}px;top:${y-h/2}px;width:${w}px;height:${h}px`; d.innerHTML=html; sec.appendChild(d); made.push(d); return d; };
-  put('<svg width="160" height="160" viewBox="0 0 160 160"><circle cx="80" cy="80" r="60" fill="none" stroke="#fff" stroke-width="3"/></svg>',160,160)
-    .animate([{transform:'scale(.25)',opacity:.9},{transform:'scale(1.25)',opacity:0}],{duration:600,easing:'cubic-bezier(.1,.7,.3,1)',fill:'forwards'});
-  for(let i=0;i<14;i++){ const a=i/14*Math.PI*2+rnd(-.2,.2), d=rnd(60,115), k=i%3;
-    const html=k===0?clHeartSvg(rnd(14,20)):k===1?`<b style="display:block;width:6px;height:12px;border-radius:2px;background:${i%2?'#fff':'var(--like)'}"></b>`:'<b style="display:block;width:7px;height:7px;border-radius:50%;background:#fff"></b>';
-    put(html,20,20).animate([{transform:'translate(0,0) scale(.4)',opacity:0,easing:'cubic-bezier(.1,.8,.3,1)'},{transform:`translate(${Math.cos(a)*d}px,${Math.sin(a)*d}px) rotate(${rnd(-120,120)}deg) scale(1)`,opacity:1,offset:.45,easing:'ease-in'},{transform:`translate(${Math.cos(a)*d*1.1}px,${Math.sin(a)*d+60}px) rotate(${rnd(-260,260)}deg) scale(.7)`,opacity:0}],{duration:rnd(900,1150),delay:40,easing:'linear',fill:'both'}); }
-  const po='cubic-bezier(.2,.9,.3,1.2)'; // easing per keyframe (not on the whole timeline) so the heart holds, then leaves
-  put(clHeartSvg(96),96,96,'clfh').animate([{transform:`rotate(${rot}deg) scale(0)`,opacity:1,easing:po},{transform:`rotate(${rot}deg) scale(1.28)`,offset:.18,easing:'ease-in-out'},{transform:`rotate(${rot}deg) scale(.92)`,offset:.3,easing:'ease-out'},{transform:`rotate(${rot}deg) scale(1)`,opacity:1,offset:.42},{transform:`rotate(${rot}deg) scale(1)`,opacity:1,offset:.68,easing:'ease-in'},{transform:`rotate(${rot}deg) translateY(-44px) scale(1.1)`,opacity:0}],{duration:1000,easing:'linear',fill:'forwards'});
-  setTimeout(()=>made.forEach(m=>m.remove()),1250); }
-function clUpd(id){ const b=document.querySelector(`.clp[data-id="${id}"] [data-act=cllike]`); if(!b) return; const c=clipList().find(x=>x.id===id), on=!!(state.clk||{})[id]; b.setAttribute('aria-pressed',on); b.querySelector('small').textContent=fmtK(c.likes+(on?1:0)); b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); }
+  put('<svg width="170" height="170" viewBox="0 0 170 170"><circle cx="85" cy="85" r="64" fill="none" stroke="#fff" stroke-opacity=".85" stroke-width="2"/></svg>',170,170)
+    .animate([{transform:'scale(.3)',opacity:.9},{transform:'scale(1.2)',opacity:0}],{duration:560,easing:'cubic-bezier(.1,.7,.3,1)',fill:'forwards'});
+  const n=7; for(let i=0;i<n;i++){ const a=-Math.PI/2+(i-(n-1)/2)*.42+rnd(-.12,.12), d=rnd(70,110), sz=rnd(12,18), fill=i%3===1?'#fff':'var(--like)';
+    put(clHeartSvg(sz,fill),sz,sz).animate([{transform:'translate(0,0) scale(.3)',opacity:0},{transform:`translate(${Math.cos(a)*d*.7}px,${Math.sin(a)*d*.7}px) scale(1)`,opacity:1,offset:.35,easing:'ease-out'},{transform:`translate(${Math.cos(a)*d+rnd(-10,10)}px,${Math.sin(a)*d-50}px) rotate(${rnd(-40,40)}deg) scale(.6)`,opacity:0}],{duration:rnd(850,1050),delay:60+i*18,easing:'cubic-bezier(.2,.7,.3,1)',fill:'both'}); }
+  put(clBigHeart(big),big,big,'clfh').animate([{transform:`rotate(${rot}deg) scale(0)`,opacity:1,easing:'cubic-bezier(.2,.9,.3,1.25)'},{transform:`rotate(${rot}deg) scale(1.18)`,offset:.2,easing:'ease-in-out'},{transform:`rotate(${rot}deg) scale(.94)`,offset:.32,easing:'ease-out'},{transform:`rotate(${rot}deg) scale(1)`,opacity:1,offset:.44},{transform:`rotate(${rot}deg) scale(1)`,opacity:1,offset:.66,easing:'cubic-bezier(.5,0,.8,.4)'},{transform:`rotate(${rot*.4}deg) translateY(-90px) scale(.7)`,opacity:0}],{duration:1050,easing:'linear',fill:'forwards'});
+  setTimeout(()=>made.forEach(m=>m.remove()),1300); }
+// Rail heart: like = pop + ring + six dots; unlike = a small squash back to outline. The count rolls.
+function clUpd(id,fx){ const b=document.querySelector(`.clp[data-id="${id}"] [data-act=cllike]`); if(!b) return; const c=clipList().find(x=>x.id===id), on=!!(state.clk||{})[id], was=b.getAttribute('aria-pressed')==='true', sm=b.querySelector('small'), sv=b.querySelector('svg');
+  b.setAttribute('aria-pressed',on); const nt=fmtK(c.likes+(on?1:0)); if(sm.textContent!==nt){ sm.textContent=nt; sm.animate([{transform:`translateY(${on?8:-8}px)`,opacity:0},{transform:'none',opacity:1}],{duration:260,easing:'cubic-bezier(.2,.8,.2,1)'}); }
+  if(on===was&&!fx) return;
+  if(!on){ sv.animate([{transform:'scale(1)'},{transform:'scale(.72)'},{transform:'scale(1)'}],{duration:260,easing:'ease-out'}); return; }
+  if(was) return;
+  sv.animate([{transform:'scale(.4)'},{transform:'scale(1.3)',offset:.45},{transform:'scale(.92)',offset:.72},{transform:'scale(1)'}],{duration:480,easing:'cubic-bezier(.2,.8,.2,1)'});
+  const fxw=document.createElement('i'); fxw.className='lkfx'; b.appendChild(fxw);
+  fxw.insertAdjacentHTML('beforeend','<b class="lkr"></b>'); fxw.lastChild.animate([{transform:'scale(.2)',opacity:1,borderWidth:'8px'},{transform:'scale(1)',opacity:0,borderWidth:'0px'}],{duration:420,easing:'ease-out',fill:'forwards'});
+  for(let i=0;i<6;i++){ const a=i/6*Math.PI*2-Math.PI/2, d=24; fxw.insertAdjacentHTML('beforeend',`<b class="lkd${i%2?' w':''}"></b>`); fxw.lastChild.animate([{transform:'translate(0,0) scale(0)',opacity:1},{transform:`translate(${Math.cos(a)*d*.8}px,${Math.sin(a)*d*.8}px) scale(1)`,opacity:1,offset:.5},{transform:`translate(${Math.cos(a)*d}px,${Math.sin(a)*d}px) scale(0)`,opacity:0}],{duration:520,delay:90,easing:'cubic-bezier(.2,.8,.2,1)',fill:'both'}); }
+  setTimeout(()=>fxw.remove(),700); }
+// Comments: opened, liked and posted in place (no full render), so the clip underneath keeps playing and the sheet never re-slides
+function cmRow(r,c,lk,nw){ const p=r.me?MEP:PEOPLE[r.p], on=!!lk[r.id], nm=r.me?'You':p[0];
+  return `<div class="cmr${nw?' new':''}" data-id="${r.id}"><span class="bgav"><span>${avi(p[3])}</span></span><span class="cmb"><b>${nm}${(r.me?hasTix(c.s):r.was)?` <em>${ic('check',9)} Was there</em>`:''}</b><span>${esc(r.t)}</span><span class="cmm"><small>${r.ago==='now'?'Just now':r.ago}</small>${r.me?'':`<button data-act="cmreply" data-v="${esc(p[0])}">Reply</button>`}</span></span><button class="cml" data-act="cmlike" data-v="${r.id}" aria-pressed="${on}" aria-label="Like comment">${ic('heart',16)}<small>${r.l+(on?1:0)}</small></button></div>`; }
+function cmCount(c){ return c.com+((state.cmMine||{})[c.id]||[]).length; }
 function cmSheet(){ const c=clipAny(state.cmt.id); if(!c) return ''; const k=Math.abs(h(c.id+'m')), lk=state.cml||{};
   const T=['That encore was insane','I was two rows behind you!!','The crowd sang louder than the band','Same crew next show?','Goosebumps rewatching this','Where were you standing?'];
-  const R=[0,1,2,3,4].map(i=>({id:c.id+'-'+i,p:(k+i*3)%8,t:T[(k+i)%T.length],l:3+((k>>>i)%60),ago:(i+1)*7+'m',was:(k+i)%3!==1})).concat((state.cmMine||{})[c.id]||[]);
+  const R=((state.cmMine||{})[c.id]||[]).slice().reverse().concat([0,1,2,3,4].map(i=>({id:c.id+'-'+i,p:(k+i*3)%8,t:T[(k+i)%T.length],l:3+((k>>>i)%60),ago:(i+1)*7+'m',was:(k+i)%3!==1})));
   const pw=c.me?MEP:PEOPLE[c.p], post=state.cmt.post?`<div class="cmpost"><div class="rvh"><span class="bgav"><span>${avi(pw[3])}</span></span><span class="rvw"><b>${c.me?'You':pw[0]} <em>${ic('check',9)} Was there</em></b><small>${c.ago==='now'?'Just now':c.ago+' ago'}${c.sec?' · '+esc(c.sec):''}</small></span>${c.rate?stars(c.rate,'sm'):''}</div><p>${esc(c.cap)}</p></div>`:'';
-  return `<div class="sheetbg" data-act="cmclose"></div><div class="sheet csheet cms" role="dialog" aria-label="${state.cmt.post?'Review':'Comments'}">${post}<div class="cgrab"${post?' style="padding-top:0"':''}>${post?'':'<i class="grab"></i>'}<h3>${c.com+((state.cmMine||{})[c.id]||[]).length} comments</h3><p>${ic('check',10)} marks people who were at ${esc(c.s.artist)}</p></div>
-  <div class="ufb">${R.map(r=>{ const p=r.me?MEP:PEOPLE[r.p], on=!!lk[r.id]; return `<div class="cmr"><span class="bgav"><span>${avi(p[3])}</span></span><span class="cmb"><b>${r.me?'You':p[0]}${(r.me?hasTix(c.s):r.was)?` <em>${ic('check',9)} Was there</em>`:''}</b><span>${esc(r.t)}</span><small>${r.ago}</small></span><button class="cml" data-act="cmlike" data-v="${r.id}" aria-pressed="${on}">${ic('heart',16)}<small>${r.l+(on?1:0)}</small></button></div>`; }).join('')}</div>
-  <form class="wtf cmf" onsubmit="return cmPost(event,'${c.id}')"><span class="bgav"><span>${avi(MEP[3])}</span></span><label hidden for="cmin">Comment</label><input id="cmin" placeholder="Add a comment" autocomplete="off"><button type="submit">Post</button></form></div>`; }
-function cmPost(e,id){ e.preventDefault(); const i=document.getElementById('cmin'), v=i.value.trim(); if(!v) return false; state.cmMine=state.cmMine||{}; (state.cmMine[id]=state.cmMine[id]||[]).push({id:id+'-me'+Date.now(),me:true,t:v,l:0,ago:'now'}); render(); const b=document.querySelector('.cms .ufb'); if(b) b.scrollTop=b.scrollHeight; return false; }
+  const n=cmCount(c);
+  return `<div class="sheetbg" data-act="cmclose"></div><div class="sheet csheet cms" id="cmsh" role="dialog" aria-label="${state.cmt.post?'Review':'Comments'}">${post}<div class="cgrab"${post?' style="padding-top:0"':''}>${post?'':'<i class="grab"></i>'}<h3><span id="cmn">${fmtK(n)}</span> comment${n===1?'':'s'}</h3><p>${ic('check',10)} marks people who were at ${esc(c.s.artist)}</p><button class="cmx" data-act="cmclose" aria-label="Close">${ic('x',18)}</button></div>
+  <div class="ufb" id="cmlist">${R.map(r=>cmRow(r,c,lk)).join('')}</div>
+  <div class="cmf"><div class="cmemo">${['🔥','🙌','😭','🎶','❤️','👏','🤘'].map(e=>`<button type="button" data-act="cmemo" data-v="${e}" aria-label="Add ${e}">${e}</button>`).join('')}</div>
+  <form class="cmform" onsubmit="return cmPost(event,'${c.id}')"><span class="bgav"><span>${avi(MEP[3])}</span></span><label class="cmin"><span hidden>Comment</span><input id="cmin" placeholder="Add a comment…" autocomplete="off" maxlength="200" oninput="cmIn()"><button type="submit" disabled aria-label="Post comment">${ic('send',18)}</button></label></form></div></div>`; }
+function cmIn(){ const i=document.getElementById('cmin'), b=i&&i.parentElement.querySelector('button'); if(b) b.disabled=!i.value.trim(); }
+function cmPost(e,id){ e.preventDefault(); const i=document.getElementById('cmin'), v=i.value.trim(); if(!v) return false; const c=clipAny(id);
+  const r={id:id+'-me'+Date.now(),me:true,t:v,l:0,ago:'now'}; state.cmMine=state.cmMine||{}; (state.cmMine[id]=state.cmMine[id]||[]).push(r);
+  const L=document.getElementById('cmlist'); if(L){ L.insertAdjacentHTML('afterbegin',cmRow(r,c,state.cml||{},true)); L.scrollTo({top:0,behavior:'smooth'}); }
+  const n=document.getElementById('cmn'); if(n){ n.textContent=fmtK(cmCount(c)); n.animate([{transform:'translateY(6px)',opacity:0},{transform:'none',opacity:1}],{duration:260,easing:'cubic-bezier(.2,.8,.2,1)'}); }
+  const rc=document.querySelector(`.clp[data-id="${id}"] [data-act=clcom] small`); if(rc) rc.textContent=fmtK(cmCount(c));
+  i.value=''; cmIn(); i.focus(); return false; }
+function sheetDrop(sh,after){ const bg=sh&&sh.previousElementSibling; if(!sh){ after&&after(); return; } sh.classList.add('out'); bg&&bg.classList.contains('sheetbg')&&bg.classList.add('out'); setTimeout(()=>{ sh.remove(); bg&&bg.classList.contains('sheetbg')&&bg.remove(); after&&after(); },260); }
+function sheetMount(html){ document.getElementById('view').insertAdjacentHTML('beforeend',html); }
 const CSVID=[{geo:'Radio City Music Hall',d:'2026-09-29',vid:4},{geo:'Radio City Music Hall',d:'2026-09-29',vid:5},{geo:null,d:null,vid:6}];
 const VENUES=()=>[...new Set(SHOWS.map(x=>x.venue))].slice(0,8);
 function csShows(v){ return SHOWS.filter(x=>x.venue===v).sort((a,b)=>Math.abs(xDays(a.dates[0])+1)-Math.abs(xDays(b.dates[0])+1)); }
 function csSheet(){ const k=state.cs, loc=k.loc, sh=loc?csShows(loc):[], sel=k.sid?byId[k.sid]:sh[0], txt=k.v===-1;
-  const head=`<div class="sheetbg" data-act="csclose"></div><div class="sheet csheet ufs" role="dialog" aria-label="${k.fromShow?'Review this show':'Share a clip'}"><div class="cgrab"><i class="grab"></i><h3>${k.fromShow?'How was '+esc(sel.artist)+'?':'Share a clip'}</h3><p>${k.fromShow?'Rate it, add a clip, or just a few words':'Every clip carries the venue it was filmed at'}</p></div><div class="ufb">`;
+  const head=`<div class="sheetbg" data-act="csclose"></div><div class="sheet csheet ufs css" id="cssh" role="dialog" aria-label="${k.fromShow?'Review this show':'Share a clip'}"><div class="cgrab"><i class="grab"></i><h3>${k.fromShow?'How was '+esc(sel.artist)+'?':'Share a clip'}</h3><p>${k.fromShow?'Rate it, add a clip, or just a few words':'Every clip carries the venue it was filmed at'}</p></div><div class="ufb">`;
   let b=`<p class="ncl">Your rating <em class="csopt">Optional</em></p><div class="csrate">${[1,2,3,4,5].map(n=>`<button data-act="csrate" data-v="${n}" aria-pressed="${n<=(k.rate||0)}" aria-label="${n} star${n>1?'s':''}">★</button>`).join('')}<span>${['Tap to rate','Not great','It was okay','Good night','Great night','Unforgettable'][k.rate||0]}</span></div>
-    <p class="ncl">${txt?'Your take':'Caption'}</p>${txt?`<textarea id="cscap" class="eptx" rows="3" maxlength="280" placeholder="What made the night? Setlist, sound, the crowd…">${esc(k.cap||'')}</textarea>`:`<input id="cscap" class="eptx" style="height:46px" maxlength="80" placeholder="What was the moment?" value="${esc(k.cap||'')}">`}
-    <p class="ncl">Add a clip <em class="csopt">${k.fromShow?'Optional':''}</em></p><div class="csvid"><button data-act="cspick" data-v="-1" aria-pressed="${txt}"><span class="cstxt"><b>Aa</b><small>Text only</small></span></button>${CSVID.map((x,i)=>`<button data-act="cspick" data-v="${i}" aria-pressed="${k.v===i}"><span><img class="cover" alt="" src="${CLIPV[x.vid].p}"></span>${x.geo?`<i class="csgeo">${ic('pin',10)}</i>`:''}<em>${mmss(CLIPV[x.vid].d)}</em></button>`).join('')}</div>`;
+    <p class="ncl">${txt?'Your take':'Caption'}<em class="cscnt" id="cscnt">${(k.cap||'').length}/${txt?280:80}</em></p>${txt?`<textarea id="cscap" class="eptx" rows="3" maxlength="280" oninput="csCnt(this)" placeholder="What made the night? Setlist, sound, the crowd…">${esc(k.cap||'')}</textarea>`:`<input id="cscap" class="eptx" style="height:46px" maxlength="80" oninput="csCnt(this)" placeholder="What was the moment?" value="${esc(k.cap||'')}">`}
+    <p class="ncl">Add a clip <em class="csopt">${k.fromShow?'Optional':''}</em></p><div class="csvid"><button data-act="cspick" data-v="-1" aria-label="Text only" aria-pressed="${txt}"><span class="cstxt"><b>Aa</b><small>Text only</small></span></button>${CSVID.map((x,i)=>`<button data-act="cspick" data-v="${i}" aria-pressed="${k.v===i}"><span><img class="cover" alt="" src="${CLIPV[x.vid].p}"></span>${x.geo?`<i class="csgeo">${ic('pin',10)}</i>`:''}<em>${mmss(CLIPV[x.vid].d)}</em></button>`).join('')}</div>`;
   if(k.fromShow) b+=`<p class="ncl">Show</p><div class="itrow" style="border:0"><span class="uthumb">${img(sel)}</span><span class="ub"><b>${esc(sel.artist)}</b><span class="um">${sd(sel.dates[0])} · ${esc(VSH(sel.venue))} · Tagged</span></span></div>`;
   else { b+=`<p class="ncl">Location <em class="csreq">Required</em></p>`;
     if(k.pickLoc) b+=`<div class="cslocs">${VENUES().map(v=>`<button class="itrow" data-act="csloc" data-v="${esc(v)}">${ic('pin',16)}<span class="ub"><b>${esc(VSH(v))}</b><span class="um">${esc(v)}</span></span>${ic('right',14)}</button>`).join('')}</div>`;
@@ -2511,7 +2578,11 @@ function csSheet(){ const k=state.cs, loc=k.loc, sh=loc?csShows(loc):[], sel=k.s
     else b+=`<button class="csloc" data-act="csedit">${ic('pin',18)}<span class="ub"><b>Add the venue</b><span class="um">${txt?'Where was the show? Pick the venue':'This video has no location · pick where you filmed it'}</span></span>${ic('right',14)}</button>`;
     if(loc&&!k.pickLoc&&sh.length) b+=`<p class="ncl">Show</p>${sh.length>1?`<div class="ncv">${sh.slice(0,4).map(x=>`<button class="gch" data-act="csshow" data-id="${x.id}" aria-pressed="${sel===x}">${esc(x.artist)} · ${sd(x.dates[0])}</button>`).join('')}</div>`:`<div class="itrow" style="border:0"><span class="uthumb">${img(sel)}</span><span class="ub"><b>${esc(sel.artist)}</b><span class="um">${sd(sel.dates[0])} · matched by venue and date</span></span></div>`}`; }
   const ok=!!loc&&!k.pickLoc;
-  return head+b+`</div><div class="uff"><button class="ufx" data-act="csclose">Cancel</button><button class="cgo new" data-act="cspost" ${ok?'':'disabled'}>${ok?(txt?'Post review':'Post clip'):'Add a location to post'}</button></div></div>`; }
+  return head+b+`</div><div class="uff"><button class="ufx" data-act="csclose">Cancel</button><button class="cgo new cspb" id="cspb" data-act="cspost" ${ok?'':'disabled'}><span class="cslb">${ok?(txt?'Post review':'Post clip'):'Add a location to post'}</span></button></div></div>`; }
+function csCnt(el){ const n=document.getElementById('cscnt'); if(n) n.textContent=el.value.length+'/'+el.maxLength; n&&n.classList.toggle('max',el.value.length>=el.maxLength); }
+// Share sheet: every option redraws only the sheet (keeps scroll, no slide-up replay, clip underneath keeps playing)
+function csStash(){ const c=document.getElementById('cscap'); if(c&&state.cs) state.cs.cap=c.value; }
+function csRedraw(){ const sh=document.getElementById('cssh'); if(!sh){ render(); return; } const b=sh.querySelector('.ufb'), y=b?b.scrollTop:0, t=document.createElement('div'); t.innerHTML=csSheet(); const n=t.querySelector('#cssh'); n.style.animation='none'; sh.replaceWith(n); const nb=n.querySelector('.ufb'); if(nb) nb.scrollTop=y; }
 function upSwap(anim){ const old=document.querySelector('#sc .wup'); if(!old){ render(); return; } state._ufAnim=anim; const tmp=document.createElement('div'); tmp.innerHTML=home(); state._ufAnim=false; window._dockActive='home';
   const nw=tmp.querySelector('.wup'); if(!nw){ render(); return; } const sl=(old.querySelector('.ufl')||{}).scrollLeft||0; old.replaceWith(nw); const f=nw.querySelector('.ufl'); if(f) f.scrollLeft=sl; upWatch(); }
 function upTail(feed){ return state.upN<feed.length?`<div class="usent" id="upsent" aria-hidden="true"></div>`:`<p class="uend">${ic('check',13)} That’s every show in ${state.city} · ${feed.length} ${feed.length===1?'show':'shows'}</p>`; }
@@ -3194,23 +3265,30 @@ document.getElementById('app').addEventListener('click',e=>{
     t.ts=++TSEQ; render(); }
   else if(a==='wrep'){ state.wopen=state.wopen||{}; state.wopen[v]=!state.wopen[v]; const sc=scEl(), y=sc&&sc.scrollTop; render(); const n=scEl(); if(n) n.scrollTop=y; }
   else if(a==='cltap'){ const sec=t.closest('.clp'); sec.classList.toggle('paused'); clPlay(sec); }
-  else if(a==='cllike'){ state.clk=state.clk||{}; state.clk[v]=!state.clk[v]; clUpd(v); }
-  else if(a==='clcom'){ state.cmt={id:v}; render(); }
-  else if(a==='cmclose'){ state.cmt=null; render(); }
-  else if(a==='cmlike'){ state.cml=state.cml||{}; state.cml[v]=!state.cml[v]; render(); }
+  else if(a==='cllike'){ state.clk=state.clk||{}; state.clk[v]=!state.clk[v]; clUpd(v,true); }
+  else if(a==='clcom'){ if(document.getElementById('cmsh')) return; state.cmt={id:v}; sheetMount(cmSheet()); }
+  else if(a==='cmclose'){ state.cmt=null; const i=document.getElementById('cmin'); i&&i.blur(); sheetDrop(document.getElementById('cmsh')); }
+  else if(a==='cmreply'){ const i=document.getElementById('cmin'); if(i){ i.value='@'+v+' '; cmIn(); i.focus(); i.setSelectionRange(i.value.length,i.value.length); } }
+  else if(a==='cmemo'){ const i=document.getElementById('cmin'); if(i){ const p=i.selectionStart??i.value.length; i.value=i.value.slice(0,p)+v+i.value.slice(p); cmIn(); i.focus(); i.setSelectionRange(p+v.length,p+v.length); } t.animate([{transform:'scale(1)'},{transform:'scale(1.35) translateY(-4px)'},{transform:'scale(1)'}],{duration:320,easing:'cubic-bezier(.34,1.6,.5,1)'}); }
+  else if(a==='cmlike'){ state.cml=state.cml||{}; const on=state.cml[v]=!state.cml[v], n=t.querySelector('small'); t.setAttribute('aria-pressed',on); n.textContent=(+n.textContent)+(on?1:-1); t.classList.remove('pop'); void t.offsetWidth; on&&t.classList.add('pop'); }
   else if(a==='clmute'){ state.clMute=state.clMute===false; const b=t; b.innerHTML=ic(state.clMute!==false?'mute':'sound',20); b.setAttribute('aria-label',state.clMute!==false?'Unmute':'Mute'); document.querySelectorAll('.clp video').forEach(x=>{ x.muted=state.clMute!==false; }); toast(state.clMute!==false?'Muted':(CL_FB?'No sound in this preview':'Sound on')); }
   else if(a==='clfeed'){ state.clFeed=v; state.clY=0; render(); }
-  else if(a==='clshare'){ if(document.getElementById('psheet')) closePlus(); state.cs={v:0,loc:CSVID[0].geo,src:'geo'}; render(); }
-  else if(a==='csclose'){ state.cs=null; render(); }
-  else if(a==='cspick'){ const c=document.getElementById('cscap'), vd=CSVID[+v], k=state.cs; state.cs=k.fromShow?{...k,v:+v,cap:c?c.value:''}:{v:+v,cap:c?c.value:'',rate:k.rate||0,loc:vd?vd.geo:null,src:vd&&vd.geo?'geo':null}; render(); }
-  else if(a==='csedit'){ const c=document.getElementById('cscap'); state.cs.cap=c?c.value:''; state.cs.pickLoc=true; render(); }
-  else if(a==='csloc'){ state.cs.loc=v; state.cs.src='manual'; state.cs.pickLoc=false; state.cs.sid=null; render(); }
-  else if(a==='csshow'){ const c=document.getElementById('cscap'); state.cs.cap=c?c.value:''; state.cs.sid=id; render(); }
-  else if(a==='cspost'){ const k=state.cs; if(!k.loc) return; const c=document.getElementById('cscap'), txt=c?c.value.trim():'', sh=csShows(k.loc), sel=k.sid?byId[k.sid]:(sh[0]||A(KIT.show));
-    if(k.v===-1&&!txt){ toast('Write a few words first'); c&&c.focus(); return; }
-    state.myClips=[{id:'m'+Date.now(),me:true,p:null,vid:k.v===-1?null:CSVID[k.v].vid,rate:k.rate||0,s:sel,cap:txt||'What a night',song:songsFor(sel.artist)[0],likes:0,com:0,ago:'now',loc:k.loc,onsite:k.src==='geo'}].concat(state.myClips||[]); state.cs=null;
-    if(k.fromShow){ render(); toast(k.v===-1?'Review posted':'Clip posted'); setTimeout(()=>shGo('clips'),60); }
-    else { state.history=[]; state.screen='clips'; state.clY=0; render(); toast('Clip posted · tagged at '+VSH(k.loc)); } }
+  else if(a==='clshare'){ if(document.getElementById('psheet')) closePlus(); if(document.getElementById('cssh')) return; state.cs={v:0,loc:CSVID[0].geo,src:'geo'}; sheetMount(csSheet()); }
+  else if(a==='csclose'){ state.cs=null; sheetDrop(document.getElementById('cssh')); }
+  else if(a==='cspick'){ const c=document.getElementById('cscap'), vd=CSVID[+v], k=state.cs; state.cs=k.fromShow?{...k,v:+v,cap:c?c.value:''}:{v:+v,cap:c?c.value:'',rate:k.rate||0,loc:vd?vd.geo:null,src:vd&&vd.geo?'geo':null}; csRedraw(); }
+  else if(a==='csedit'){ const c=document.getElementById('cscap'); state.cs.cap=c?c.value:''; state.cs.pickLoc=true; csRedraw(); }
+  else if(a==='csloc'){ csStash(); state.cs.loc=v; state.cs.src='manual'; state.cs.pickLoc=false; state.cs.sid=null; csRedraw(); }
+  else if(a==='csshow'){ const c=document.getElementById('cscap'); state.cs.cap=c?c.value:''; state.cs.sid=id; csRedraw(); }
+  else if(a==='cspost'){ const k=state.cs; if(!k||!k.loc||t.classList.contains('busy')) return; const c=document.getElementById('cscap'), txt=c?c.value.trim():'', sh=csShows(k.loc), sel=k.sid?byId[k.sid]:(sh[0]||A(KIT.show));
+    if(k.v===-1&&!txt){ toast('Write a few words first'); c&&c.focus(); c&&c.animate([{transform:'translateX(0)'},{transform:'translateX(-6px)'},{transform:'translateX(6px)'},{transform:'translateX(-3px)'},{transform:'none'}],{duration:320}); return; }
+    const nid='m'+Date.now(), clip={id:nid,me:true,p:null,vid:k.v===-1?null:CSVID[k.v].vid,rate:k.rate||0,s:sel,cap:txt||'What a night',song:songsFor(sel.artist)[0],likes:0,com:0,ago:'now',loc:k.loc,onsite:k.src==='geo'};
+    // Posting: the button fills like an upload, turns into a check, then the sheet drops and the new post lands
+    const lb=t.querySelector('.cslb'), cancel=t.parentElement.querySelector('[data-act=csclose]'); t.classList.add('busy'); cancel&&(cancel.disabled=true); t.insertAdjacentHTML('afterbegin','<i class="cspg"></i>'); lb.textContent=k.v===-1?'Posting…':'Uploading…';
+    setTimeout(()=>{ t.classList.add('done'); lb.innerHTML=ic('check',18)+'&nbsp;Posted';
+      setTimeout(()=>{ state.myClips=[clip].concat(state.myClips||[]); state.cs=null; state.clNew=nid;
+        sheetDrop(document.getElementById('cssh'),()=>{
+          if(k.fromShow){ render(); toast(k.v===-1?'Review posted':'Clip posted'); setTimeout(()=>shGo('clips'),60); }
+          else { state.history=[]; state.screen='clips'; state.clFeed='fy'; state.clY=0; render(); toast('Posted · '+VSH(k.loc)); } }); },520); },k.v===-1?520:1100); }
   else if(a==='xtag'){ state.xtag=+v<0?null:+v; render(); }
   else if(a==='hold'){ const t=thById(state.tid); t.hold='held'; render(); toast('$5 held · it comes back when you check in'); }
   else if(a==='checkin'&&!thById(state.tid).dep){ const t=thById(state.tid); t.hold='in'; t.msgs.push({d:'sys',t:`You’re at ${t.plan[1]}`}); t.ts=++TSEQ; render(); toast('Nice · this counts toward your show-up record'); }
@@ -3272,7 +3350,7 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='rvopen'){ state.cmt={id,post:true}; render(); }
   else if(a==='rvmore'){ (state.rvMore ||= {})[id]=true; render(); }
   else if(a==='rvnew'){ const sh=byId[id]; state.cs={v:-1,loc:sh.venue,src:'show',sid:sh.id,fromShow:true,rate:0}; render(); setTimeout(()=>{ const c=document.getElementById('cscap'); c&&c.focus(); },300); }
-  else if(a==='csrate'){ const c=document.getElementById('cscap'); state.cs.cap=c?c.value:''; state.cs.rate=state.cs.rate===+v?0:+v; render(); }
+  else if(a==='csrate'){ csStash(); const r=state.cs.rate=state.cs.rate===+v?0:+v, w=t.parentElement; w.querySelectorAll('button').forEach((b,j)=>{ const was=b.getAttribute('aria-pressed')==='true', on=j<r; b.setAttribute('aria-pressed',on); if(on&&!was) b.animate([{transform:'scale(.5) rotate(-20deg)'},{transform:'scale(1.3) rotate(8deg)',offset:.6},{transform:'none'}],{duration:380,delay:j*35,easing:'cubic-bezier(.2,.8,.2,1)',fill:'backwards'}); }); w.querySelector('span').textContent=['Tap to rate','Not great','It was okay','Good night','Great night','Unforgettable'][r]; }
   else if(a==='clopen'){ state.history=[]; state.screen='clips'; state.clFeed='fy'; state.clJump=t.dataset.id; state.clY=0; render(); }
   else if(a==='tickets'){ state.history=[]; state.screen='tickets'; render(); }
   else if(a==='shuffle'){ state.drop++; render(); }
