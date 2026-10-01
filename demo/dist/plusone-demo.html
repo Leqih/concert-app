@@ -18,7 +18,7 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;paddin
 button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
 [hidden]{display:none!important}
 .app{position:relative;max-width:420px;height:100%;margin:0 auto;background:var(--bg);overflow:hidden}
-@media (min-width:600px){ body{padding-block:24px} .app{max-height:900px;border-radius:34px;box-shadow:0 30px 80px rgba(20,40,70,.18)} }
+@media (min-width:600px){ body{padding-block:24px} .app{max-height:900px;border-radius:34px} }
 .scroll{position:absolute;inset:0;overflow-y:auto;scrollbar-width:none}
 .scroll::-webkit-scrollbar,.hs::-webkit-scrollbar{display:none}
 .hs{display:flex;gap:12px;overflow-x:auto;scrollbar-width:none;margin:0 -20px;padding:0 20px}
@@ -1365,7 +1365,7 @@ i.tw{font-style:normal;opacity:0}
 
 /* ===== device: iPhone 16 / 15 · 393×852 pt ===== */
 .app.framed{--st:54px;--sb:34px;width:393px;max-width:100%;height:852px;max-height:none}
-@media (min-width:600px){body{display:flex;align-items:center;justify-content:center;min-height:100%;padding-block:24px;box-sizing:border-box}.app.framed{margin:0 auto;border-radius:55px;box-shadow:0 0 0 10px #0B0B0C,0 0 0 11px #3A3A3E,0 30px 80px rgba(20,40,70,.25)}}
+@media (min-width:600px){body{display:flex;align-items:center;justify-content:center;min-height:100%;padding-block:24px;box-sizing:border-box}.app.framed{margin:0 auto;border-radius:55px;box-shadow:0 0 0 10px #0B0B0C,0 0 0 11px #3A3A3E}}
 @media (max-width:599px){.app.framed{width:100%;height:100%}}
 .bnav{bottom:calc(4px + var(--sb))}
 .app.framed .ioshome{bottom:8px}
