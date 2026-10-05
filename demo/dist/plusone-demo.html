@@ -89,7 +89,10 @@ h1,h2,h3{margin:0;letter-spacing:-.045em;font-weight:700;line-height:1.02}
 .rsvp button[aria-pressed="true"]{background:var(--grad);color:#0A0A0B;border-color:transparent}
 
 /* Crew chat (full-bleed background) */
-.chat{position:absolute;inset:0;overflow:hidden}
+.chat{position:absolute;inset:0;overflow:hidden;color:#fff}
+/* fade under the pinned strip + composer so messages don't show through at the bottom */
+.chat .sheet{color:var(--text)}
+.cbfade{position:absolute;left:0;right:0;bottom:0;height:calc(150px + var(--sb));z-index:2;pointer-events:none;background:linear-gradient(180deg,rgba(11,11,12,0) 0%,rgba(11,11,12,.88) 45%,#0B0B0C 100%)}
 .chat .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:blur(2px) saturate(1.2);transform:scale(1.05)}
 .chat .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,11,.5) 0%,rgba(10,10,11,.25) 30%,rgba(10,10,11,.75) 60%,rgba(10,10,11,.95) 100%)}
 .chat .grain{position:absolute;inset:0;opacity:.18;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E")}
@@ -319,6 +322,7 @@ h1,h2,h3{margin:0;letter-spacing:-.045em;font-weight:700;line-height:1.02}
 .chb .wth{margin-top:4px}
 .chbar{position:absolute;left:0;right:0;bottom:0;z-index:5;padding:10px 12px calc(12px + var(--sb));background:linear-gradient(180deg,rgba(242,242,244,0),var(--bg) 30%)}.chbar .wcomp2{margin:0;box-shadow:0 4px 18px rgba(0,0,0,.06)}.chbar .wpill.big{width:100%}
 .whoh{display:flex;flex-direction:column;align-items:center;gap:4px;padding:18px 16px 6px;text-align:center}.whoa{width:72px;height:72px;border-radius:50%;overflow:hidden;margin-bottom:6px}.whoa .avimg,.whoa img{width:100%;height:100%;object-fit:cover}.whoh b{font-family:var(--display);font-size:22px;letter-spacing:-.03em}.whoh small{font-size:13px;color:var(--muted);display:inline-flex;align-items:center;gap:3px}
+.whof{display:flex;justify-content:center;gap:22px;padding:12px 16px 2px}.whof button{font-size:13.5px;font-weight:600;color:var(--muted)}.whof button:last-child{color:var(--text)}
 .whob{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:14px 16px 4px}.whob button{display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 6px;border-radius:var(--r-md);background:var(--card2);font-size:13px;font-weight:600}.whob button:first-child{background:#0B0B0C;color:#fff}.wphr{display:grid;grid-template-columns:40px 1fr 40px;align-items:center}
 #wpsc #wall .wtg{margin-top:4px}
 .infob{display:inline-grid;place-items:center;width:30px;height:30px;margin-left:4px;vertical-align:3px;border-radius:50%;color:var(--muted)}.infob:active{background:var(--card2)}
@@ -2784,12 +2788,13 @@ function buddiesGoing(){ const R=BUDDY_GO();
 
 const WTAGS=['All','Getting there','Outfits','Setlist','Missed connections'];
 function wallPosts(x){ const k=Math.abs(h(x.id)), S=songsFor(x.artist), v=VSH(x.venue), P=i=>(k+i*3)%8;
+  const pick=(arr,o=0)=>arr[(k+o)%arr.length];
   const base=[
-    {p:P(0),tag:'Getting there',t:`Anyone taking the subway from Union Square around 6? Happy to walk over together.`,m:12,l:24,r:6},
-    {p:P(1),tag:'Outfits',t:`Fit check for ${x.artist} 🖤 going full black, you?`,img:1,m:34,l:81,r:14},
-    {p:P(2),tag:'Setlist',t:`Calling it now: “${S[0]}” opens, “${S[2]}” for the encore.`,m:58,l:132,r:41},
-    {p:P(3),tag:'Missed connections',t:`To the person in the red jacket who shared their water in the GA line at ${v}, thank you. Hope you had the best night.`,m:95,l:57,r:3,mc:true},
-    {p:P(4),tag:'Getting there',t:`Bag policy is clear bags only, small clutch is fine. Learned that the hard way last time.`,m:140,l:203,r:19}];
+    {p:P(0),tag:'Getting there',t:pick([`Anyone taking the subway from Union Square around 6? Happy to walk over together.`,`Who’s coming from Penn Station? I’ll be at the 7th Ave exit at 6:15.`,`Driving in from Jersey, parking near ${v} is $45. Anyone want to split a spot?`,`Rideshare home after? I’m headed to Brooklyn, have room for 2.`]),m:12,l:24,r:6},
+    {p:P(1),tag:'Outfits',t:pick([`Fit check for ${x.artist} 🖤 going full black, you?`,`Matching tees for the pit, DM if you want in 👕`,`Is it too much to wear the tour jacket to the tour? Asking for me.`],1),img:1,m:34,l:81,r:14},
+    {p:P(2),tag:'Setlist',t:pick([`Calling it now: “${S[0]}” opens, “${S[2]}” for the encore.`,`If they skip “${S[1]}” I’m writing a letter.`,`Last night’s encore was “${S[2]}”. Bet they switch it up tonight.`],2),m:58,l:132,r:41},
+    {p:P(3),tag:'Missed connections',t:pick([`To the person in the red jacket who shared their water in the GA line at ${v}, thank you. Hope you had the best night.`,`Girl with the glitter hearts in section 105, you lent me a charger. Want to give it back!`,`We swapped bracelets at the merch line. Find me here 🫶`],3),m:95,l:57,r:3,mc:true},
+    {p:P(4),tag:'Getting there',t:pick([`Bag policy is clear bags only, small clutch is fine. Learned that the hard way last time.`,`Doors at ${v} move fast after 6:30, the 8th Ave line is shorter.`,`Coat check fills up by 7. Travel light.`],4),m:140,l:203,r:19}];
   return (state.wall&&state.wall[x.id]||[]).concat(base).map((o,i)=>({...o,id:x.id+'-w'+i})); }
 function hasTix(x){ return MYTIX().some(r=>r[0]===x)||!!(state.claimed&&state.claimed[x.id]); }
 // Show chat = the big group for everyone going to a show (the old Show wall, now a chat). Crews are small groups
@@ -2807,7 +2812,7 @@ function wallPage(){ const x=byId[state.id], tag=state.wtag||'All', st=chatStats
   const L=wallPosts(x).filter(o=>(tag==='All'||o.tag===tag)&&!(o.p!=null&&(state.blocked||{})[o.p])).slice().reverse(), crewsN=xCrews().filter(c=>c.s===x&&!c.full).length;
   const ago=m=>m<1?'now':m<60?m+'m':Math.round(m/60)+'h';
   return `<div class="chat showchat"><img class="bg" alt="" src="${x.img}"><div class="shade"></div><div class="grain"></div>
-    <div class="sctop"></div><div class="nav cnav"><button class="nb" data-act="back" aria-label="Back">${ic('back')}</button><button class="nb" data-act="toast" data-msg="Link copied" aria-label="Share">${ic('share',20)}</button></div>
+    <div class="sctop"></div><div class="nav cnav"><button class="nb" data-act="back" aria-label="Back">${ic('back')}</button><button class="nb sfb" data-act="chsafe" aria-label="Safety tools">🛡️ Safety</button></div>
     <div class="hs wtg chch">${WTAGS.map(t=>`<button class="gch" data-act="wtag" data-v="${t}" aria-pressed="${tag===t}">${t==='All'?'All':'# '+t}</button>`).join('')}</div>
     <div class="inner crewpad" id="wci">
       <div class="ctitle">${esc(x.artist)} · Show chat</div>
@@ -2818,13 +2823,23 @@ function wallPage(){ const x=byId[state.id], tag=state.wtag||'All', st=chatStats
         return o.me?`<div class="bub out">${esc(o.t)}</div><div class="when scw">${tag==='All'&&o.tag?'# '+o.tag+' · ':''}${ago(o.m)} ${acts}</div>`
           :`<div class="bub in">${esc(o.t)}${o.img?`<span class="scpic">${img(x)}</span>`:''}</div><div class="who scw"><button class="scwho" data-act="chwho" data-v="${o.p}">${av(p,'style="border:0;width:26px;height:26px"')}<b>${p[0]}</b></button><em>${ic('check',9)}</em>${tag==='All'&&o.tag?`<i># ${o.tag}</i>`:''}<span>${ago(o.m)}</span>${acts}</div>${open?`<div class="scth">${wallThread(o,x,me)}</div>`:''}`; }).join('')||`<div class="sysm">No messages in # ${tag} yet. Start it off.</div>`}</div>
     </div>
-    ${joined?`<form class="composer" id="wcomposer" onsubmit="return wallPost(event,'${x.id}')"><label for="wq" hidden>Message</label><input id="wq" placeholder="Message ${tag==='All'?'everyone':'# '+tag}" autocomplete="off"><button class="send" type="submit" aria-label="Send">${ic('send',18)}</button></form>`
+    <div class="cbfade"></div>${joined?`<form class="composer" id="wcomposer" onsubmit="return wallPost(event,'${x.id}')"><label for="wq" hidden>Message</label><input id="wq" placeholder="Message ${tag==='All'?'everyone':'# '+tag}" autocomplete="off"><button class="send" type="submit" aria-label="Send">${ic('send',18)}</button></form>`
       :`<button class="composer scjoin" data-act="chatjoin" data-id="${x.id}">Join the show chat</button>`}
-    ${state.who!=null?whoSheet(x):''}</div>`; }
+    ${state.who!=null?whoSheet(x):''}${state.chsafe?chSafeSheet(x):''}</div>`; }
+// Safety in the big group: it's full of strangers, so mute / DM rules / report / blocked are one tap away
+function chSafeSheet(x){ const m=!!(state.chMute||{})[x.id], dmr=state.dmReq!==false, nb=Object.keys(state.blocked||{}).length;
+  return `<div class="sheetbg" data-act="chsafeclose"></div><div class="sheet csheet" role="dialog" aria-label="Safety tools"><div class="cgrab"><i class="grab"></i><h3>Safety tools <span class="emo">🛡️</span></h3><p>This chat is open to everyone going · you control who reaches you</p></div>
+  <div class="sfl">
+   <button class="sfr" data-act="chmute" data-id="${x.id}" aria-pressed="${m}"><i class="eb">🔕</i><span class="sft"><b>Mute this chat</b><small>Still see it in Chats, no notifications</small></span><span class="tg"><i></i></span></button>
+   <button class="sfr" data-act="dmreq" aria-pressed="${dmr}"><i class="eb">✉️</i><span class="sft"><b>DMs arrive as requests</b><small>Strangers can’t message you until you accept</small></span><span class="tg"><i></i></span></button>
+   <button class="sfr" data-act="toast" data-msg="Tap a name, then Report · our team reviews within 24h"><i class="eb">🚩</i><span class="sft"><b>Report someone</b><small>Scalping, spam or harassment · tap their name to report</small></span>${ic('right',16)}</button>
+   <button class="sfr" data-act="toast" data-msg="${nb?nb+' blocked':'No one blocked'}"><i class="eb">🚫</i><span class="sft"><b>Blocked</b><small>${nb?nb+' people · their messages are hidden':'No one yet'}</small></span>${ic('right',16)}</button>
+  </div></div>`; }
 // tap a name in the chat: DM them, invite them to a crew, or see their profile
 function whoSheet(x){ const i=state.who, p=PEOPLE[i];
   return `<div class="sheetbg" data-act="whoclose"></div><div class="sheet csheet whos" role="dialog" aria-label="${p[0]}"><div class="whoh"><span class="whoa">${avi(p[3])}</span><b>${p[0]}</b><small>${ic('check',10)} Ticket holder · ${REL[i][0]} of ${REL[i][1]} shows showed up</small></div>
-    <div class="whob"><button data-act="dm" data-v="${i}">${ic('chat',20)}<span>Say hi</span></button><button data-act="chinvite" data-v="${i}">${ic('users',20)}<span>Invite to a crew</span></button><button data-act="person" data-v="${i}">${ic('right',20)}<span>Profile</span></button></div></div>`; }
+    <div class="whob"><button data-act="dm" data-v="${i}">${ic('chat',20)}<span>Say hi</span></button><button data-act="chinvite" data-v="${i}">${ic('users',20)}<span>Invite to a crew</span></button><button data-act="person" data-v="${i}">${ic('right',20)}<span>Profile</span></button></div>
+    <div class="whof"><button data-act="chblock" data-v="${i}">Block</button><button data-act="chreport" data-v="${i}">Report</button></div></div>`; }
 function wallView(x){ const tag=state.wtag||'All', L=wallPosts(x).filter(o=>(tag==='All'||o.tag===tag)&&!(o.p!=null&&(state.blocked||{})[o.p])), lk=state.wlk||{}, me=hasTix(x);
   return `<div id="wall">
     <div class="hs wtg">${WTAGS.map(t=>`<button class="gch" data-act="wtag" data-v="${t}" aria-pressed="${tag===t}">${t}</button>`).join('')}</div>
@@ -3294,7 +3309,7 @@ function crew(){
       <div class="msgs" ${dm?'style="margin-top:220px"':''}>${dm?'':pollCard(t)}${msgs.map(bub).join('')}${t.typing!=null?`<div class="bub in tpb"><span class="mtyp"><i></i><i></i><i></i></span></div><div class="who">${av(PEOPLE[t.typing],'style="border:0;width:26px;height:26px"')}${P0(t.typing)} is typing…</div>`:''}</div>
       <p class="note" style="color:rgba(255,255,255,.4);margin-top:10px">${dm?(t.pending?(t.reqSent?'Request sent · you can send more once '+P0(t.person)+' accepts · expires in 7 days if they don’t reply':'Not buddies yet · one message, sent as a request · '+dmLeft()+' of '+DM_LIMIT+' requests left today'):'Only crew-mates and buddies can message you.'):'Everyone here is ID + ticket verified. Meetups are in public spots.'}</p>
     </div>
-    ${state.att?attMenu(t,s,dm):''}${dm||state.att?'':`<div class="mstpin">${meetStrip(t)}</div>`}<form class="composer" id="composer"><button type="button" aria-label="Attach" data-act="attach" aria-expanded="${!!state.att}">${ic('clip',20)}</button><label for="msg" hidden>Message</label><input id="msg" placeholder="${dm?(t.pending&&t.reqSent?'Waiting for '+P0(t.person)+' to accept':'Message '+P0(t.person)):'Message the crew'}" autocomplete="off"${dm&&t.pending&&t.reqSent?' disabled':''}><button class="send" type="submit" aria-label="Send">${ic('send',18)}</button></form>
+    <div class="cbfade"></div>${state.att?attMenu(t,s,dm):''}${dm||state.att?'':`<div class="mstpin">${meetStrip(t)}</div>`}<form class="composer" id="composer"><button type="button" aria-label="Attach" data-act="attach" aria-expanded="${!!state.att}">${ic('clip',20)}</button><label for="msg" hidden>Message</label><input id="msg" placeholder="${dm?(t.pending&&t.reqSent?'Waiting for '+P0(t.person)+' to accept':'Message '+P0(t.person)):'Message the crew'}" autocomplete="off"${dm&&t.pending&&t.reqSent?' disabled':''}><button class="send" type="submit" aria-label="Send">${ic('send',18)}</button></form>
   </div>`;
 }
 
@@ -3302,9 +3317,9 @@ function crews(){
   const f=state.mf||'all', q=(state.mq||'').trim().toLowerCase();
   const listed=Object.keys(state.listed||{}).map(id=>({id:'L'+id,k:'listing',sid:id,ts:50,un:0}));
   const showc=SHOWS.filter(x=>inChat(x)).map(x=>({id:'S'+x.id,k:'show',sid:x.id,ts:(state.joinedChat||{})[x.id]?9e9:60,un:0}));
-  const rows=TH.concat(listed,showc).filter(t=>f==='all'||(f==='crews'&&(t.k==='crew'||t.k==='show'))||(f==='tickets'&&(t.k==='listing'||(t.spare&&state.claimed&&state.claimed[thShow(t).id])))||(f==='dms'&&t.k==='dm'))
+  const rows=TH.concat(listed,showc).filter(t=>f==='all'||(f==='shows'&&t.k==='show')||(f==='crews'&&t.k==='crew')||(f==='tickets'&&(t.k==='listing'||(t.spare&&state.claimed&&state.claimed[thShow(t).id])))||(f==='dms'&&t.k==='dm'))
     .filter(t=>!q||(t.k==='listing'||t.k==='show'?byId[t.sid].artist+' show chat':thName(t)+' '+thLast(t)).toLowerCase().includes(q)).sort((a,b)=>b.ts-a.ts);
-  const tabs=[['all','All'],['crews','Crews'],['dms','Direct'],['requests','Requests'+((mreqVisible().length+(REQ.t1?1:0))?' '+(mreqVisible().length+(REQ.t1?1:0)):'')]], req=REQ.t1||[];
+  const tabs=[['all','All'],['shows','Shows'],['crews','Crews'],['dms','Direct'],['requests','Requests'+((mreqVisible().length+(REQ.t1?1:0))?' '+(mreqVisible().length+(REQ.t1?1:0)):'')]], req=REQ.t1||[];
   const tone=(t,i)=>['dk','w','g2','g1'][i%4];
   const bub=(t,i)=>{ const z=rows.length-i;
     if(t.k==='show'){ const s=byId[t.sid], st=chatStats(s), last=wallPosts(s)[0], lp=last.me?'You':PEOPLE[last.p][0].split(' ')[0];
@@ -3404,6 +3419,12 @@ document.getElementById('app').addEventListener('click',e=>{
     setTimeout(()=>{ t.who.push(p); t.msgs.push({d:'sys',t:`${P0(p)} joined${c.priv?' via your link':''} · ${t.who.length+1} of ${t.cap}`}); t.msgs.push({d:'in',p,t:`Hey! First time seeing ${s.artist} live 🙌`,time:nowT()}); t.ts=++TSEQ; if(state.screen==='crew'&&state.tid===t.id) render(); else t.un++; },2600); }
   else if(a==='wallgo'){ state.wtag='All'; state._chBottom=true; go('wall',id); }
   else if(a==='chatjoin'){ (state.joinedChat ||= {})[id]=true; if(state.screen==='wall'){ state._chBottom=true; render(); } else { const sc=document.getElementById('shsc'); (state.shY ||= {})[id]=sc?sc.scrollTop:0; state.wtag='All'; state._chBottom=true; go('wall',id); } toast('You’re in the '+byId[id].artist+' show chat'); }
+  else if(a==='chsafe'){ state.chsafe=true; render(); }
+  else if(a==='chsafeclose'){ state.chsafe=false; render(); }
+  else if(a==='chmute'){ (state.chMute ||= {})[id]=!state.chMute[id]; render(); toast(state.chMute[id]?'Chat muted':'Notifications on'); }
+  else if(a==='dmreq'){ state.dmReq=state.dmReq===false; render(); toast(state.dmReq!==false?'DMs from strangers arrive as requests':'Anyone in this chat can DM you'); }
+  else if(a==='chblock'){ (state.blocked ||= {})[v]=true; state.who=null; render(); toast(P0(+v)+' is blocked · their messages are hidden'); }
+  else if(a==='chreport'){ state.who=null; render(); toast('Thanks · we’ll review '+P0(+v)+' within 24h'); }
   else if(a==='chwho'){ state.who=+v; render(); }
   else if(a==='whoclose'){ state.who=null; render(); }
   else if(a==='chinvite'){ state.who=null; render(); toast(`Invite sent · ${P0(+v)} can join your crew from Requests`); }
