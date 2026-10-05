@@ -92,6 +92,65 @@ h1,h2,h3{margin:0;letter-spacing:-.045em;font-weight:700;line-height:1.02}
 .chat{position:absolute;inset:0;overflow:hidden;color:#fff}
 /* fade under the pinned strip + composer so messages don't show through at the bottom */
 .chat .sheet{color:var(--text)}
+/* ===== Instagram-style chats (crew, DM, show chat share these) */
+.ighd{position:absolute;left:0;right:0;top:0;z-index:6;display:flex;align-items:center;gap:4px;padding:calc(var(--st) + 4px) 8px 8px 6px;background:rgba(11,11,12,.72);backdrop-filter:saturate(1.4) blur(22px);-webkit-backdrop-filter:saturate(1.4) blur(22px);box-shadow:0 1px 0 rgba(255,255,255,.06)}
+.igbk{width:40px;height:40px;display:grid;place-items:center;color:#fff;flex-shrink:0}
+.igwho{flex:1;min-width:0;display:flex;align-items:center;gap:10px;color:#fff;text-align:left}.igwho>span:last-child{min-width:0;display:flex;flex-direction:column}.igwho b{font-size:16px;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.igwho small{font-size:12px;color:rgba(255,255,255,.6);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.igact{display:flex;gap:2px;flex-shrink:0}.igact button{width:40px;height:40px;display:grid;place-items:center;color:#fff}
+.igav1{position:relative;width:38px;height:38px;border-radius:50%;overflow:hidden;flex-shrink:0;display:block}.igav1.sq{border-radius:12px;overflow:visible}.igav1.sq img{border-radius:12px}.igav1 img,.igav1 .avimg{width:100%;height:100%;object-fit:cover;display:block}.igav1.lg{width:84px;height:84px}.igav1.lg.sq{border-radius:22px}.igav1.lg.sq img{border-radius:22px}
+.igon{position:absolute;right:-2px;bottom:-2px;width:12px;height:12px;border-radius:50%;background:#34C759;box-shadow:0 0 0 2.5px #0B0B0C}
+.igavg{position:relative;width:40px;height:40px;flex-shrink:0;display:block}.igavg>span{position:absolute;width:28px;height:28px;border-radius:50%;overflow:hidden;box-shadow:0 0 0 2px #0B0B0C}.igavg>span:first-child{left:0;top:0}.igavg>span:last-child{right:0;bottom:0}.igavg img,.igavg .avimg{width:100%;height:100%;object-fit:cover}
+.igpin{position:absolute;left:10px;right:10px;top:calc(var(--st) + 60px);z-index:5;height:38px;padding:0 14px;border-radius:19px;background:rgba(44,44,48,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:rgba(255,255,255,.85);font-size:12.5px;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.igpin b{color:#fff}
+.igch{position:absolute!important;top:calc(var(--st) + 52px)!important;z-index:6!important;padding:8px 12px 10px!important;background:rgba(11,11,12,.72);backdrop-filter:saturate(1.4) blur(22px);-webkit-backdrop-filter:saturate(1.4) blur(22px);box-shadow:0 1px 0 rgba(255,255,255,.06)}
+.showchat .ighd{box-shadow:none}
+.chat .inner.igin{padding:calc(var(--st) + 70px) 12px 150px}.chat .inner.igin.haspin{padding-top:calc(var(--st) + 112px)}.chat .inner.igin.crewpad{padding-bottom:200px}
+.igintro{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;padding:18px 20px 22px}.igintro .igavg{width:84px;height:84px}.igintro .igavg>span{width:58px;height:58px}
+.igintro b{font-size:17px;letter-spacing:-.02em;margin-top:8px}.igintro small{font-size:12.5px;color:rgba(255,255,255,.6);max-width:280px}.igintro button{margin-top:10px;height:32px;padding:0 14px;border-radius:10px;background:rgba(255,255,255,.14);color:#fff;font-size:13px;font-weight:600}
+.igl{display:flex;flex-direction:column;margin-top:6px}
+.igsep{align-self:center;margin:14px 0 10px;font-size:11.5px;font-weight:600;color:rgba(255,255,255,.5)}
+.igr{display:flex;align-items:flex-end;gap:8px;margin-top:2px;max-width:100%}.igr.f{margin-top:12px}.igr.out{justify-content:flex-end}
+.igav{width:28px;height:28px;flex-shrink:0}.igav button{width:28px;height:28px;border-radius:50%;overflow:hidden;padding:0;display:block}.igav img,.igav .avimg{width:100%;height:100%;object-fit:cover}
+.igc{display:flex;flex-direction:column;align-items:flex-start;max-width:74%;min-width:0;position:relative}.igr.out .igc{align-items:flex-end}
+.ign{font-size:12px;font-weight:500;color:rgba(255,255,255,.6);margin:0 0 3px 12px}.ign i{font-style:normal;color:rgba(255,255,255,.4)}
+.igb{position:relative;padding:9px 14px;font-size:15.5px;line-height:1.32;letter-spacing:-.01em;background:rgba(60,60,64,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:#fff;border-radius:22px;word-wrap:break-word;-webkit-user-select:none;user-select:none;transition:transform .15s}
+.igr.in .igb{border-radius:6px 22px 22px 6px}.igr.in.f .igb{border-top-left-radius:22px}.igr.in.l .igb{border-bottom-left-radius:22px}
+.igr.out .igb{background:#F5F5F7;color:#0B0B0C;border-radius:22px 6px 6px 22px}.igr.out.f .igb{border-top-right-radius:22px}.igr.out.l .igb{border-bottom-right-radius:22px}
+.igb.held{transform:scale(1.03);z-index:31}.igb.im{padding:4px}.igim{display:block;width:200px;height:150px;border-radius:18px;overflow:hidden;position:relative}.igim img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.igb.im:not(:has(.igim+*)){padding:4px}
+.igb.tp{padding:12px 14px}.igb.tp .mtyp{background:none;padding:0}.igb.tp .mtyp i{background:rgba(255,255,255,.8)}
+.igq{display:flex;flex-direction:column;gap:2px;margin:0 0 -6px;padding:8px 12px 12px;border-radius:16px;background:rgba(255,255,255,.08);max-width:100%;opacity:.85}.igq small{font-size:11px;color:rgba(255,255,255,.55)}.igq span{font-size:13px;color:rgba(255,255,255,.75);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.igrxp{margin:-6px 8px 0;position:relative;z-index:1;height:22px;padding:0 6px;border-radius:11px;background:#262628;box-shadow:0 0 0 2px #0B0B0C;font-size:12px;color:rgba(255,255,255,.85);display:inline-flex;align-items:center;gap:1px}.igrxp.on{background:#3A3A3E}
+.igseen{margin:4px 6px 0;font-size:11.5px;color:rgba(255,255,255,.5)}
+.igheart{position:absolute;left:50%;top:50%;font-style:normal;font-size:34px;transform:translate(-50%,-50%);animation:igh .7s cubic-bezier(.2,.9,.3,1.3) forwards;pointer-events:none}@keyframes igh{0%{transform:translate(-50%,-50%) scale(0)}35%{transform:translate(-50%,-50%) scale(1.2)}70%{transform:translate(-50%,-50%) scale(1)}100%{transform:translate(-50%,-90%) scale(.9);opacity:0}}
+.igpop{position:absolute;inset:0;z-index:30;animation:fadein .15s}.igdim{position:absolute;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(2px)}.igpe,.igpa{position:absolute}.igpa{flex-direction:column;align-items:stretch;min-width:150px;padding:6px;border-radius:18px;background:#262628}.igpa button{box-shadow:none!important;background:none!important;justify-content:flex-start}
+.igb.held{z-index:31;position:relative}
+.igpe{display:flex;gap:2px;padding:6px 8px;border-radius:28px;background:#262628;box-shadow:0 10px 30px rgba(0,0,0,.45)}.igpe button{width:40px;height:40px;font-size:26px;border-radius:50%;transition:transform .12s}.igpe button:active{transform:scale(1.25)}
+.igpa{display:flex;gap:6px}.igpa button{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:18px;background:#262628;color:#fff;font-size:13.5px;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.45)}
+.igrp{position:absolute;left:12px;right:12px;bottom:calc(76px + var(--sb));z-index:4;display:flex;align-items:center;gap:10px;padding:8px 8px 8px 14px;border-radius:16px;background:rgba(40,40,44,.9);backdrop-filter:blur(14px);color:#fff}.igrp span{flex:1;min-width:0;display:flex;flex-direction:column}.igrp small{font-size:11.5px;color:rgba(255,255,255,.55)}.igrp b{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.igrp button{width:32px;height:32px;display:grid;place-items:center;color:#fff}
+.igcomp{position:absolute;left:12px;right:12px;bottom:calc(14px + var(--sb));z-index:4;display:flex;align-items:center;gap:8px;height:52px;padding:0 6px 0 6px;border-radius:26px;background:rgba(40,40,44,.82);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);color:#fff}
+.igcam{width:40px;height:40px;border-radius:50%;background:#fff;color:#0B0B0C;display:grid;place-items:center;flex-shrink:0}
+.igcomp input{flex:1;min-width:0;background:none;border:0;outline:0;color:#fff;font:inherit;font-size:16px}.igcomp input::placeholder{color:rgba(255,255,255,.5)}
+.igico{display:flex;gap:2px}.igico button{width:36px;height:40px;display:grid;place-items:center;color:#fff}
+.igsend{display:none;height:40px;padding:0 12px;font-weight:700;font-size:15px;color:#fff}
+.igcomp:has(input:not(:placeholder-shown)) .igico{display:none}.igcomp:has(input:not(:placeholder-shown)) .igsend{display:block}
+.igchat .mstpin{bottom:calc(76px + var(--sb))}.igchat .igrp~.mstpin{display:none}
+.igjoin{bottom:calc(14px + var(--sb))!important}
+.igis{padding-bottom:calc(18px + var(--sb))}.igis .grab{display:block;margin:0 auto}.igih{display:flex;flex-direction:column;align-items:center;gap:4px;padding:14px 16px 4px;text-align:center}.igih .igavg{width:72px;height:72px}.igih .igavg>span{width:50px;height:50px;box-shadow:0 0 0 2px #fff}
+.igia{width:72px;height:72px;border-radius:50%;overflow:hidden;position:relative}.igia.sq{border-radius:20px}.igia img,.igia .avimg{width:100%;height:100%;object-fit:cover}.igih b{font-family:var(--display);font-size:21px;letter-spacing:-.03em;margin-top:6px}.igih small{font-size:13px;color:var(--muted)}
+.igib{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:14px 16px 6px}.igib button{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 6px;border-radius:var(--r-md);background:var(--card2);font-size:13px;font-weight:600}
+.igbody{padding:4px 16px 0;max-height:300px;overflow-y:auto}.igil{margin:12px 0 6px;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.igmem{display:flex;align-items:center;gap:10px;width:100%;padding:6px 0;text-align:left}.igmem>span{width:40px;height:40px;border-radius:50%;overflow:hidden;flex-shrink:0}.igmem img,.igmem .avimg{width:100%;height:100%;object-fit:cover}.igmem b{flex:1;font-size:15px;letter-spacing:-.02em}.igmem small{font-size:12px;color:var(--muted)}
+.igplan{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.igplan span{display:flex;flex-direction:column;padding:10px 12px;border-radius:14px;background:var(--card2)}.igplan small{font-size:11px;color:var(--muted)}.igplan b{font-size:15px}
+.igleave{display:block;width:100%;margin-top:8px;height:46px;border-radius:var(--r-md);background:var(--card2);font-size:14.5px;font-weight:600}
+/* Chats list, Instagram style */
+.igrows{display:flex;flex-direction:column;padding:4px 8px 0}
+.igrow{display:flex;align-items:center;gap:12px;width:100%;padding:8px 10px;border-radius:16px;text-align:left}.igrow:active{background:var(--card2)}
+.igra{position:relative;width:56px;height:56px;flex-shrink:0;display:block}.igra>img,.igra>.avimg{width:56px;height:56px;border-radius:50%;object-fit:cover;display:block}.igra.sq>img{border-radius:16px}.igra .igon{box-shadow:0 0 0 3px var(--bg)}
+.igra .igavg{width:56px;height:56px}.igra .igavg>span{width:40px;height:40px;box-shadow:0 0 0 2.5px var(--bg)}
+.igrb{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}.igrb b{font-size:15px;font-weight:500;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.igrb>span{display:flex;min-width:0;font-size:13.5px;color:var(--muted)}.igrb em{font-style:normal;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}.igrb i{font-style:normal;white-space:nowrap;flex-shrink:0}
+.igtag{font-size:11.5px;font-weight:500;color:var(--muted);margin-left:2px}
+.igrow.un b{font-weight:700}.igrow.un .igrb>span{color:var(--text);font-weight:600}
+.igdot{width:9px;height:9px;border-radius:50%;background:#0B0B0C;flex-shrink:0}
+
 .cbfade{position:absolute;left:0;right:0;bottom:0;height:calc(150px + var(--sb));z-index:2;pointer-events:none;background:linear-gradient(180deg,rgba(11,11,12,0) 0%,rgba(11,11,12,.88) 45%,#0B0B0C 100%)}
 .chat .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:blur(2px) saturate(1.2);transform:scale(1.05)}
 .chat .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,11,.5) 0%,rgba(10,10,11,.25) 30%,rgba(10,10,11,.75) 60%,rgba(10,10,11,.95) 100%)}
@@ -2135,7 +2194,7 @@ const I = {
   user:'<circle cx="12" cy="8" r="3.8"/><path d="M5 20a7 7 0 0 1 14 0"/>', users:'<circle cx="9" cy="8.5" r="3.2"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><path d="M15.5 5.5a3 3 0 0 1 0 6M17.5 19a5 5 0 0 0-2-4"/>',
   mic:'<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/>', cal:'<rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/>',
   pin:'<path d="M12 21s-6.5-5.8-6.5-11A6.5 6.5 0 0 1 18.5 10c0 5.2-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/>', info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.2"/>', spark:'<path d="M12 3l1.8 5.4L19 10l-5.2 1.6L12 17l-1.8-5.4L5 10l5.2-1.6z"/><path d="M19 16l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"/>', clip:'<path d="M20 11.5l-7.8 7.8a5 5 0 0 1-7-7l8.2-8.3a3.3 3.3 0 0 1 4.7 4.7l-8.1 8.1a1.7 1.7 0 0 1-2.4-2.4l7.4-7.4"/>',
-  send:'<path d="M5 12h13M12 6l6 6-6 6"/>', share:'<path d="M12 3v12M7 8l5-5 5 5M5 14v6h14v-6"/>', bell:'<path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 21h4"/>', compass:'<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>', ticket:'<path d="M3 7h18v3a2 2 0 0 0 0 4v3H3v-3a2 2 0 0 0 0-4z"/><path d="M14 7v10"/>', play:'<path d="M8 5.5v13l10.5-6.5z"/>', clip:'<rect x="4" y="4" width="16" height="16" rx="4"/><path d="M10 9v6l5-3z"/>', heart:'<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>', sound:'<path d="M5 10v4h3l4 3.5v-11L8 10z"/><path d="M16 9.5a3.5 3.5 0 0 1 0 5"/>', mute:'<path d="M5 10v4h3l4 3.5v-11L8 10z"/><path d="M16 10l4 4M20 10l-4 4"/>', camera:'<path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>', shuffle:'<path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/>', bolt:'<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>', chev:'<path d="M6 9l6 6 6-6"/>', check:'<path d="M5 12l4 4 10-10"/>', x:'<path d="M6 6l12 12M18 6L6 18"/>', clock:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>', sliders:'<path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/>', shield:'<path d="M12 3l7.5 3v6c0 4.7-3.2 7.7-7.5 9-4.3-1.3-7.5-4.3-7.5-9V6z"/>',
+  send:'<path d="M5 12h13M12 6l6 6-6 6"/>', mic:'<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/>', image:'<rect x="3.5" y="4.5" width="17" height="15" rx="4"/><circle cx="9" cy="10" r="1.8"/><path d="M20 16l-5-5-8.5 8.5"/>', sticker:'<path d="M20.5 12.5V8a4.5 4.5 0 0 0-4.5-4.5H8A4.5 4.5 0 0 0 3.5 8v8A4.5 4.5 0 0 0 8 20.5h4.5z"/><path d="M12.5 20.5c0-4.4 3.6-8 8-8"/><path d="M9 10.5v.2M15 10.5v.2M9 14.5c1.5 1.3 3.5 1.3 5 0"/>', reply:'<path d="M9.5 7L4.5 12l5 5"/><path d="M4.5 12H14a5.5 5.5 0 0 1 5.5 5.5V19"/>', share:'<path d="M12 3v12M7 8l5-5 5 5M5 14v6h14v-6"/>', bell:'<path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 21h4"/>', compass:'<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>', ticket:'<path d="M3 7h18v3a2 2 0 0 0 0 4v3H3v-3a2 2 0 0 0 0-4z"/><path d="M14 7v10"/>', play:'<path d="M8 5.5v13l10.5-6.5z"/>', clip:'<rect x="4" y="4" width="16" height="16" rx="4"/><path d="M10 9v6l5-3z"/>', heart:'<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>', sound:'<path d="M5 10v4h3l4 3.5v-11L8 10z"/><path d="M16 9.5a3.5 3.5 0 0 1 0 5"/>', mute:'<path d="M5 10v4h3l4 3.5v-11L8 10z"/><path d="M16 10l4 4M20 10l-4 4"/>', camera:'<path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>', shuffle:'<path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/>', bolt:'<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>', chev:'<path d="M6 9l6 6 6-6"/>', check:'<path d="M5 12l4 4 10-10"/>', x:'<path d="M6 6l12 12M18 6L6 18"/>', clock:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>', sliders:'<path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/>', shield:'<path d="M12 3l7.5 3v6c0 4.7-3.2 7.7-7.5 9-4.3-1.3-7.5-4.3-7.5-9V6z"/>',
 };
 const ic = (n,sz=22) => `<svg class="icon" viewBox="0 0 24 24" style="width:${sz}px;height:${sz}px" aria-hidden="true">${I[n]}</svg>`;
 const AV=/*AVATARS*/;
@@ -2357,7 +2416,7 @@ function shWatch(){ const sc=document.getElementById('shsc'), bar=document.getEl
     if(sc.scrollTop+sc.clientHeight>=sc.scrollHeight-4) cur=keys[keys.length-1];
     document.querySelectorAll('.shtabs button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===cur)); };
   sc.addEventListener('scroll',f,{passive:true}); f(); }
-function go(screen,id){ state.history.push([state.screen,state.id]); state.screen=screen; state.id=id||null; render(true); }
+function go(screen,id){ state.igi=false; state.rpl=null; state.history.push([state.screen,state.id]); state.screen=screen; state.id=id||null; render(true); }
 function back(){ const p=state.history.pop()||['home',null]; state.screen=p[0]; state.id=p[1]; const cb=state._cmBack; if(cb&&cb.screen===state.screen){ state.cmt=cb.cmt; state.cmd={}; } state._cmBack=null; render(true); }
 let tt; function toast(m){ const t=document.getElementById('toast'); t.textContent=m; t.hidden=false; clearTimeout(tt); tt=setTimeout(()=>t.hidden=true,2000); }
 
@@ -2808,24 +2867,25 @@ function wallEntry(x){ const L=wallPosts(x).filter(o=>!(o.p!=null&&(state.blocke
     ${L.slice(0,2).map(o=>{ const p=o.me?MEP:PEOPLE[o.p]; return `<span class="wenr"><span><b>${o.me?'You':p[0]}</b> ${esc(o.t)}</span></span>`; }).join('')}
     <span class="wenf"><span>${WTAGS.slice(1).map(t=>`<em># ${t}</em>`).join('')}</span><b>${joined?'Open chat':'Join chat'} ${ic('right',14)}</b></span></button>`; }
 // Same look as the crew chat (show photo, dark glass bubbles), with the # channel tabs pinned under the nav
-function wallPage(){ const x=byId[state.id], tag=state.wtag||'All', st=chatStats(x), joined=inChat(x), lk=state.wlk||{}, me=hasTix(x);
-  const L=wallPosts(x).filter(o=>(tag==='All'||o.tag===tag)&&!(o.p!=null&&(state.blocked||{})[o.p])).slice().reverse(), crewsN=xCrews().filter(c=>c.s===x&&!c.full).length;
-  const ago=m=>m<1?'now':m<60?m+'m':Math.round(m/60)+'h';
-  return `<div class="chat showchat"><img class="bg" alt="" src="${x.img}"><div class="shade"></div><div class="grain"></div>
-    <div class="sctop"></div><div class="nav cnav"><button class="nb" data-act="back" aria-label="Back">${ic('back')}</button><button class="nb sfb" data-act="chsafe" aria-label="Safety tools">🛡️ Safety</button></div>
-    <div class="hs wtg chch">${WTAGS.map(t=>`<button class="gch" data-act="wtag" data-v="${t}" aria-pressed="${tag===t}">${t==='All'?'All':'# '+t}</button>`).join('')}</div>
-    <div class="inner crewpad" id="wci">
-      <div class="ctitle">${esc(x.artist)} · Show chat</div>
-      <div class="scmeta"><i class="chdot"></i>${fmtK(st.going)} going · ${st.online} online · ${sd(x.dates[0])} · ${esc(VSH(x.venue))}</div>
-      <button class="chpin" data-act="ncopen" data-id="${x.id}"><i>👥</i><span><b>Want a smaller group?</b><small>${crewsN} crew${crewsN===1?'':'s'} forming · start one from this chat</small></span><em>Start a crew</em></button>
-      <div class="msgs scmsgs">${L.map(o=>{ const p=o.me?MEP:PEOPLE[o.p], liked=!!lk[o.id], open=!!(state.wopen||{})[o.id], nr=o.r+((state.wrp||{})[o.id]||[]).length;
-        const acts=`<button data-act="wlike" data-v="${o.id}" aria-pressed="${liked}">${liked?'♥':'♡'} ${o.l+(liked?1:0)}</button>${nr||!o.me?`<button data-act="wrep" data-v="${o.id}" aria-expanded="${open}">${nr?nr+' repl'+(nr>1?'ies':'y'):'Reply'}</button>`:''}${o.mc&&!o.me?`<button data-act="wmc" data-v="${o.p}">That’s me 👋</button>`:''}`;
-        return o.me?`<div class="bub out">${esc(o.t)}</div><div class="when scw">${tag==='All'&&o.tag?'# '+o.tag+' · ':''}${ago(o.m)} ${acts}</div>`
-          :`<div class="bub in">${esc(o.t)}${o.img?`<span class="scpic">${img(x)}</span>`:''}</div><div class="who scw"><button class="scwho" data-act="chwho" data-v="${o.p}">${av(p,'style="border:0;width:26px;height:26px"')}<b>${p[0]}</b></button><em>${ic('check',9)}</em>${tag==='All'&&o.tag?`<i># ${o.tag}</i>`:''}<span>${ago(o.m)}</span>${acts}</div>${open?`<div class="scth">${wallThread(o,x,me)}</div>`:''}`; }).join('')||`<div class="sysm">No messages in # ${tag} yet. Start it off.</div>`}</div>
+function wallPage(){ const x=byId[state.id], tag=state.wtag||'All', st=chatStats(x), joined=inChat(x), crewsN=xCrews().filter(c=>c.s===x&&!c.full).length, k=Math.abs(h(x.id));
+  const posts=wallPosts(x).filter(o=>(tag==='All'||o.tag===tag||(o.me&&!o.tag&&tag==='All'))&&!(o.p!=null&&(state.blocked||{})[o.p]));
+  const RT=['Same! See you there','Count me in','Saving this','Where exactly?','I’ll be on the 6 train around then'];
+  const items=[]; posts.forEach((o,i)=>{ items.push({...o,_m:o.m}); if(!o.me&&o.r){ const rp=(k+i+2)%8; if(!(state.blocked||{})[rp]) items.push({id:o.id+'-r',p:rp,t:RT[(k+i)%RT.length],rp:{n:PEOPLE[o.p][0],t:o.t},rx:{},tag:o.tag,_m:Math.max(0,o.m-4)}); } });
+  items.sort((a,b)=>b._m-a._m);
+  const L=[{sep:'Today'}].concat(items.map(o=>({id:o.id,me:!!o.me,p:o.p,t:o.t,img:o.img?img(x):'',tag:tag==='All'?o.tag:null,rp:o.rp,rx:o.rx||{'❤️':o.l||0}})));
+  const last=L[L.length-1], seen=last&&last.me?'Seen by '+(3+k%40):'';
+  return `<div class="chat showchat igchat"><img class="bg" alt="" src="${x.img}"><div class="shade"></div><div class="grain"></div>
+    ${igHead({av:`<span class="igav1 sq">${img(x)}<i class="igon"></i></span>`,title:esc(x.artist),sub:`Show chat · ${fmtK(st.going)} going · ${st.online} online`,safe:'chsafe'})}
+    <div class="hs wtg chch igch">${WTAGS.map(t=>`<button class="gch" data-act="wtag" data-v="${t}" aria-pressed="${tag===t}">${t==='All'?'All':'# '+t}</button>`).join('')}</div>
+    <div class="inner igin haspin" id="wci">
+      <div class="igintro"><span class="igav1 lg sq">${img(x)}</span><b>${esc(x.artist)} · Show chat</b><small>Everyone going to ${esc(VSH(x.venue))} on ${sd(x.dates[0])} · ticket holders are marked</small>
+        <button data-act="ncopen" data-id="${x.id}">Start a crew · ${crewsN} forming</button></div>
+      ${igList(L,{group:true,whoAct:'chwho',seen})}
     </div>
-    <div class="cbfade"></div>${joined?`<form class="composer" id="wcomposer" onsubmit="return wallPost(event,'${x.id}')"><label for="wq" hidden>Message</label><input id="wq" placeholder="Message ${tag==='All'?'everyone':'# '+tag}" autocomplete="off"><button class="send" type="submit" aria-label="Send">${ic('send',18)}</button></form>`
-      :`<button class="composer scjoin" data-act="chatjoin" data-id="${x.id}">Join the show chat</button>`}
-    ${state.who!=null?whoSheet(x):''}${state.chsafe?chSafeSheet(x):''}</div>`; }
+    <div class="cbfade"></div>
+    ${joined?igComposer({id:'wcomposer',input:'wq',key:'w'+x.id,ph:tag==='All'?'Message everyone…':'Message # '+tag+'…',onsubmit:`return wallPost(event,'${x.id}')`,attach:'toast" data-msg="Photos in show chats are coming soon'})
+      :`<button class="composer scjoin igjoin" data-act="chatjoin" data-id="${x.id}">Join the show chat</button>`}
+    ${state.who!=null?whoSheet(x):''}${state.chsafe?chSafeSheet(x):''}${state.igi?igInfo():''}</div>`; }
 // Safety in the big group: it's full of strangers, so mute / DM rules / report / blocked are one tap away
 function chSafeSheet(x){ const m=!!(state.chMute||{})[x.id], dmr=state.dmReq!==false, nb=Object.keys(state.blocked||{}).length;
   return `<div class="sheetbg" data-act="chsafeclose"></div><div class="sheet csheet" role="dialog" aria-label="Safety tools"><div class="cgrab"><i class="grab"></i><h3>Safety tools <span class="emo">🛡️</span></h3><p>This chat is open to everyone going · you control who reaches you</p></div>
@@ -2849,7 +2909,7 @@ function wallView(x){ const tag=state.wtag||'All', L=wallPosts(x).filter(o=>(tag
       return `<article class="wp"><div class="wph"><button class="bgav" ${o.me?'':`data-act="person" data-v="${o.p}"`} aria-label="${p[0]}"><span>${avi(p[3])}</span></button><span class="wpn"><b>${o.me?'You':p[0]}</b><small>${ic('check',10)} Ticket holder · ${o.m<60?o.m+' min':Math.round(o.m/60)+' h'} ago</small></span><i class="wpt">${o.tag}</i></div>
         <p>${esc(o.t)}</p>${o.img?`<span class="wpi">${img(x)}</span>`:''}
         <div class="wpf"><button data-act="wlike" data-v="${o.id}" aria-pressed="${liked}">${liked?'♥':'♡'} ${o.l+(liked?1:0)}</button><button data-act="wrep" data-v="${o.id}" aria-expanded="${!!(state.wopen||{})[o.id]}">💬 ${o.r+((state.wrp||{})[o.id]||[]).length}</button>${o.me?'':o.mc?`<button class="wme" data-act="wmc" data-v="${o.p}">That’s me 👋</button>`:`<button class="wme" data-act="dm" data-v="${o.p}">Say hi</button>`}</div>${(state.wopen||{})[o.id]?wallThread(o,x,me):''}</article>`; }).join('')||`<p class="note">Nothing here yet. Be the first to post.</p>`}</div>`; }
-function wallPost(e,sid){ e.preventDefault(); const i=document.getElementById('wq'), v=i.value.trim(); if(!v) return false; state.wall=state.wall||{}; (state.wall[sid]=state.wall[sid]||[]).unshift({me:true,p:null,tag:state.wtag&&state.wtag!=='All'?state.wtag:null,t:v,m:0,l:0,r:0}); state._chBottom=true; render(); const n=document.getElementById('wq'); n&&n.focus(); return false; }
+function wallPost(e,sid){ e.preventDefault(); const i=document.getElementById('wq'), v=i.value.trim(); if(!v) return false; state.wall=state.wall||{}; const rp=state.rpl&&state.rpl.key==='w'+sid?{n:state.rpl.n,t:state.rpl.t}:null; state.rpl=null; (state.wall[sid]=state.wall[sid]||[]).unshift({me:true,p:null,tag:state.wtag&&state.wtag!=='All'?state.wtag:null,t:v,m:0,l:0,r:0,rp}); state._chBottom=true; render(); const n=document.getElementById('wq'); n&&n.focus(); return false; }
 function home(){
   const drops=DROPS();
   const k=state.drop%drops.length, d=drops[k];
@@ -3282,34 +3342,107 @@ function dmStart(p,ctx){ if((state.blocked||{})[p]){ toast('You blocked '+P0(p)+
   if(dmLeft()<=0){ toast('You’ve sent '+DM_LIMIT+' message requests today · try again tomorrow'); return; }
   openThread(dmFor(p,sh)); }
 function openThread(t){ t.un=0; state.tid=t.id; go('crew',t.id); }
-function sendMsg(txt){ const t=thById(state.tid); if(!t) return; t.msgs.push({d:'out',t:txt,time:nowT()}); t.ts=++TSEQ;
+function sendMsg(txt){ const t=thById(state.tid); if(!t) return; const qrp=state.rpl&&state.rpl.key===t.id?{n:state.rpl.n,t:state.rpl.t}:null; state.rpl=null; t.msgs.push({d:'out',t:txt,time:nowT(),rp:qrp}); t.ts=++TSEQ;
   if(t.pending){ if(t.reqSent){ t.msgs.pop(); toast('Wait for '+P0(t.person)+' to accept first'); render(); return; } if(dmLeft()<=0){ t.msgs.pop(); toast('You’ve sent '+DM_LIMIT+' message requests today · try again tomorrow'); render(); return; } t.reqSent=true; state.dmSent=(state.dmSent||0)+1; render();
     setTimeout(()=>{ t.pending=false; t.msgs.push({d:'sys',t:`${P0(t.person)} accepted your message request`}); if(state.screen==='crew'&&state.tid===t.id) render(); else { t.un++; toast(P0(t.person)+' accepted your message request'); if(state.screen==='crews') render(); } setTimeout(()=>{ const rp=t.replies[0]; t.msgs.push({d:'in',p:rp[0],t:rp[1],time:nowT()}); t.ts=++TSEQ; if(!(state.screen==='crew'&&state.tid===t.id)) t.un++; if(['crew','crews'].includes(state.screen)) render(); },1400); },2400); return; }
   render();
   const rp=t.replies&&t.replies[(t.rix=(t.rix||0))%t.replies.length]; t.rix++; if(!rp) return;
   setTimeout(()=>{ t.typing=rp[0]; if(state.screen==='crew'&&state.tid===t.id) render(); },700);
   setTimeout(()=>{ t.typing=null; t.msgs.push({d:'in',p:rp[0],t:rp[1],time:nowT()}); t.ts=++TSEQ; if(!(state.screen==='crew'&&state.tid===t.id)){ t.un++; toast(`${P0(rp[0])}: ${rp[1]}`); } if(['crew','crews'].includes(state.screen)) render(); else syncNav(window._dockActive); },2300); }
+// ===== Instagram-style chat, shared by crews, DMs and show chats =====
+// One header (avatar · name · status · safety · details), grouped bubbles with sender names, avatars on the last
+// bubble of a run, reactions (double-tap = ❤️, hold = emoji bar + Reply), quoted replies, Seen, one composer.
+const IG_RX=['❤️','😂','😮','😢','🔥','👍'];
+function igHead(o){ return `<div class="ighd"><button class="igbk" data-act="back" aria-label="Back">${ic('back')}</button>
+  <button class="igwho" data-act="iginfo" aria-label="Chat details">${o.av}<span><b>${o.title}</b><small>${o.sub}</small></span></button>
+  <span class="igact"><button data-act="${o.safe}" aria-label="Safety tools">${ic('shield',22)}</button><button data-act="iginfo" aria-label="Chat details">${ic('info',22)}</button></span></div>`; }
+const igAvGroup=(a,b)=>`<span class="igavg"><span>${avi(a)}</span><span>${avi(b)}</span></span>`;
+function igBase(id){ const k=Math.abs(h(id)); return k%3===0?{[IG_RX[k%2?1:0]]:1+k%3}:{}; }
+function igRx(id,base){ const r={...(base||{})}, mine=(state.rx||{})[id]; if(mine) r[mine]=(r[mine]||0)+1; return r; }
+// items: {id, me, p (PEOPLE idx), name, t, rp:{n,t}, rx:{emoji:n}, html (custom card), sys, sep, tag, img, typing}
+function igList(L,o){ let out=''; const who=x=>x.me?'me':(x.p!=null?'p'+x.p:x.name);
+  L.forEach((m,i)=>{
+    if(m.sep){ out+=`<p class="igsep">${m.sep}</p>`; return; }
+    if(m.sys){ out+=`<div class="sysm">${ic('check',12)}${esc(m.sys)}</div>`; return; }
+    if(m.html){ out+=m.html; return; }
+    const pv=L[i-1], nx=L[i+1], same=x=>x&&!x.sep&&!x.sys&&!x.html&&who(x)===who(m), first=!same(pv), last=!same(nx);
+    const P=m.me?MEP:PEOPLE[m.p], name=m.me?'You':(m.p!=null?P[0]:m.name), rx=igRx(m.id,m.rx), rk=Object.keys(rx).filter(e=>rx[e]>0), mine=(state.rx||{})[m.id];
+    const bubble=m.typing?`<div class="igb tp"><span class="mtyp"><i></i><i></i><i></i></span></div>`
+      :`<div class="igb${m.img?' im':''}" data-mid="${m.id}" data-who="${esc(name)}" data-txt="${esc((m.t||'').slice(0,90))}">${m.img?`<span class="igim">${m.img}</span>`:''}${m.t?esc(m.t):''}</div>`;
+    out+=`<div class="igr ${m.me?'out':'in'}${first?' f':''}${last?' l':''}">${m.me?'':`<span class="igav">${last?`<button data-act="${o.whoAct}" data-v="${m.p}" aria-label="${esc(name)}">${avi(P[3])}</button>`:''}</span>`}
+      <div class="igc">${!m.me&&o.group&&first?`<b class="ign">${esc(name)}${m.tag?` <i>· # ${esc(m.tag)}</i>`:''}</b>`:''}
+        ${m.rp?`<div class="igq"><small>${m.me?'You replied to '+esc(m.rp.n):'Replied to '+esc(m.rp.n)}</small><span>${esc(m.rp.t)}</span></div>`:''}
+        ${bubble}${rk.length?`<button class="igrxp${mine?' on':''}" data-act="igreact" data-id="${m.id}" data-v="${mine||rk[0]}" aria-label="Reactions">${rk.slice(0,3).join('')}${rk.reduce((n,e)=>n+rx[e],0)>1?' '+rk.reduce((n,e)=>n+rx[e],0):''}</button>`:''}
+        ${m.me&&o.seen&&i===L.length-1?`<small class="igseen">${o.seen}</small>`:''}</div></div>`; });
+  return `<div class="igl">${out}</div>`; }
+function igComposer(o){ const rp=state.rpl&&state.rpl.key===o.key?state.rpl:null;
+  return `${rp?`<div class="igrp"><span><small>Replying to ${esc(rp.n)}</small><b>${esc(rp.t)}</b></span><button data-act="igreplyx" aria-label="Cancel reply">${ic('x',16)}</button></div>`:''}
+  <form class="igcomp" id="${o.id}" ${o.onsubmit?`onsubmit="${o.onsubmit}"`:''}><button type="button" class="igcam" data-act="${o.attach||'attach'}" aria-label="Camera">${ic('camera',20)}</button><label for="${o.input}" hidden>Message</label>
+    <input id="${o.input}" placeholder="${o.ph}" autocomplete="off" ${o.disabled?'disabled':''}><span class="igico"><button type="button" data-act="toast" data-msg="Hold to record a voice message" aria-label="Voice message">${ic('mic',22)}</button><button type="button" data-act="${o.attach||'attach'}" aria-label="Photo">${ic('image',22)}</button><button type="button" data-act="toast" data-msg="Stickers are coming soon" aria-label="Sticker">${ic('sticker',22)}</button></span><button class="igsend" type="submit">Send</button></form>`; }
+// details sheet behind the header (members, mute, safety, leave)
+function igInfo(){ const sc=state.screen;
+  if(sc==='wall'){ const x=byId[state.id], st=chatStats(x), L=wallPosts(x), m=!!(state.chMute||{})[x.id];
+    return igSheet(`<span class="igia sq">${img(x)}</span><b>${esc(x.artist)}</b><small>Show chat · ${fmtK(st.going)} going · ${st.online} online</small>`,
+      `<button data-act="chmute" data-id="${x.id}">${ic('bell',20)}<span>${m?'Unmute':'Mute'}</span></button><button data-act="chsafe">${ic('shield',20)}<span>Safety</span></button><button data-act="ncopen" data-id="${x.id}">${ic('users',20)}<span>Start a crew</span></button>`,
+      `<p class="igil">Recently active</p>${[...new Set(L.filter(o=>!o.me).map(o=>o.p))].slice(0,5).map(i=>`<button class="igmem" data-act="chwho" data-v="${i}"><span>${avi(PEOPLE[i][3])}</span><b>${PEOPLE[i][0]}</b><small>Ticket holder</small></button>`).join('')}<button class="igleave" data-act="chatleave" data-id="${x.id}">Leave show chat</button>`); }
+  const t=thById(state.tid), s=thShow(t);
+  if(t.k==='dm'){ const p=PEOPLE[t.person];
+    return igSheet(`<span class="igia">${avi(p[3])}</span><b>${p[0]}</b><small>${BUD[t.person]?'Buddy · ':''}Also going to ${esc(t.show)}</small>`,
+      `<button data-act="person" data-v="${t.person}">${ic('user',20)}<span>Profile</span></button><button data-act="igmute">${ic('bell',20)}<span>Mute</span></button><button data-act="safety">${ic('shield',20)}<span>Safety</span></button>`,
+      `<button class="igleave" data-act="toast" data-msg="${P0(t.person)} is blocked">Block ${P0(t.person)}</button><button class="igleave" data-act="toast" data-msg="Thanks · we’ll review within 24h">Report</button>`); }
+  const mem=[t.mine?null:t.host].concat(t.who).filter(x=>x!=null).map(x=>typeof x==='number'?x:PEOPLE.indexOf(x)).filter(x=>x>=0);
+  return igSheet(`${igAvGroup(PEOPLE[t.who[0]][3],PEOPLE[t.who[1]][3])}<b>${esc(t.title)}</b><small>${esc(t.show)} · ${t.who.length+1} of ${t.cap} in</small>`,
+    `<button data-act="show" data-id="${s.id}">${ic('ticket',20)}<span>Show</span></button><button data-act="igmute">${ic('bell',20)}<span>Mute</span></button><button data-act="safety">${ic('shield',20)}<span>Safety</span></button>`,
+    `${t.plan?`<p class="igil">Plan</p><div class="igplan"><span><small>Meet</small><b>${t.plan[0]}</b><small>${esc(t.plan[1])}</small></span><span><small>Doors</small><b>7:00 PM</b><small>${esc(VSH(s.venue))}</small></span><span><small>Date</small><b>${sd(s.dates[0])}</b></span></div>`:''}
+     <p class="igil">${mem.length+1} members</p><div class="igmem me"><span>${avi(MEP[3])}</span><b>You</b><small>${t.mine?'Host':'Member'}</small></div>${[...new Set(mem)].map(i=>`<button class="igmem" data-act="person" data-v="${i}"><span>${avi(PEOPLE[i][3])}</span><b>${PEOPLE[i][0]}</b><small>${PEOPLE[t.host]===PEOPLE[i]&&!t.mine?'Host':'ID + ticket verified'}</small></button>`).join('')}
+     <button class="igleave" data-act="toast" data-msg="You left ${esc(t.title)}">Leave crew</button>`); }
+const igSheet=(head,acts,body)=>`<div class="sheetbg" data-act="iginfox"></div><div class="sheet csheet igis" role="dialog" aria-label="Chat details"><i class="grab"></i><div class="igih">${head}</div><div class="igib">${acts}</div><div class="igbody">${body}</div></div>`;
+// hold a bubble → reaction bar + Reply/Copy; double-tap → ❤️
+function igWire(){ const box=document.querySelector('.chat'); if(!box||box._ig) return; box._ig=1; let tm=null, lt=0, lid=null;
+  const menu=b=>{ document.querySelectorAll('.igpop').forEach(x=>x.remove()); const r=b.getBoundingClientRect(), R=box.getBoundingClientRect(), d=document.createElement('div'); d.className='igpop';
+    const out=b.closest('.igr').classList.contains('out'), top=Math.max(R.top+70,r.top-60)-R.top, bot=Math.min(R.bottom-170,r.bottom+8)-R.top;
+    d.innerHTML=`<span class="igdim"></span><span class="igpe" style="top:${top}px;${out?'right:12px':'left:12px'}">${IG_RX.map(e=>`<button data-act="igreact" data-id="${b.dataset.mid}" data-v="${e}">${e}</button>`).join('')}</span><span class="igpa" style="top:${bot}px;${out?'right:12px':'left:46px'}"><button data-act="igreply" data-id="${b.dataset.mid}">${ic('reply',18)}Reply</button><button data-act="igcopy">${ic('clip',18)}Copy</button></span>`;
+    box.appendChild(d); d._b=b; b.classList.add('held'); };
+  box.addEventListener('pointerdown',e=>{ const b=e.target.closest('.igb[data-mid]'); if(!b) return; tm=setTimeout(()=>{ tm=null; b._held=Date.now(); menu(b); },430); });
+  ['pointerup','pointerleave','pointercancel'].forEach(ev=>box.addEventListener(ev,()=>{ if(tm){ clearTimeout(tm); tm=null; } }));
+  box.addEventListener('scroll',()=>{ document.querySelectorAll('.igpop').forEach(x=>x.remove()); document.querySelectorAll('.igb.held').forEach(x=>x.classList.remove('held')); },true);
+  box.addEventListener('click',e=>{ const b=e.target.closest('.igb[data-mid]');
+    if(b&&b._held&&Date.now()-b._held<900) return; // the click that ends a long-press keeps the menu open
+    if(!e.target.closest('.igpop')){ document.querySelectorAll('.igpop').forEach(x=>x.remove()); document.querySelectorAll('.igb.held').forEach(x=>x.classList.remove('held')); }
+    if(!b||(b._held&&Date.now()-b._held<600)) return; const now=Date.now(); if(lid===b.dataset.mid&&now-lt<300){ lt=0; igReact(b.dataset.mid,'❤️',true); } else { lt=now; lid=b.dataset.mid; } }); }
+function igKeep(){ const c=document.getElementById('ci')||document.getElementById('wci'); state._ciKeep=c?c.scrollTop:null; }
+function igReact(id,e,dbl){ state.rx=state.rx||{}; if(dbl&&state.rx[id]==='❤️') return igBurst(id); state.rx[id]=state.rx[id]===e?null:e; igKeep(); render(); if(state.rx[id]) igBurst(id); }
+function igBurst(id){ const b=document.querySelector(`.igb[data-mid="${id}"]`); if(!b) return; const hrt=document.createElement('i'); hrt.className='igheart'; hrt.textContent='❤️'; b.appendChild(hrt); setTimeout(()=>hrt.remove(),700); }
+
 function crew(){
   const t=String(state.id).startsWith('t')?thById(state.id):threadFor(state.id); state.tid=t.id; t.un=0;
   const s=thShow(t), dm=t.k==='dm', sp=spareOf(s), claimed=state.claimed&&state.claimed[s.id];
   const msgs=t.msgs.filter(m=>!(m.p!=null&&(state.blocked||{})[m.p])).concat(claimed&&t.spare?[{d:'sys',t:`You claimed ${sp.seller[0].split(' ')[0]}’s ticket · transfer in progress`}]:[]);
   const person=dm?PEOPLE[t.person]:(t.mine?MEP:PEOPLE[t.host]), n=dm?2:t.who.length+1;
-  const head=dm?`<div class="row" style="gap:10px"><button class="row" data-act="person" data-v="${t.person}" style="gap:10px;color:#fff">${av(person,'style="border:0;width:44px;height:44px"')}<span style="text-align:left"><b style="display:block;font-size:17px">${person[0]}</b><span style="font-size:13px;opacity:.65">${BUD[t.person]?'Buddy · ':''}Also going to ${esc(t.show)}</span></span></button></div>`
-   :`<div class="row" style="gap:10px;flex-wrap:wrap"><button class="chip" data-act="show" data-id="${s.id}">${esc(s.artist)}</button><span class="row" style="gap:5px;font-size:15px">${ic('users',18)}${n} of ${t.cap} in</span>
-        ${t.mine?`<span class="hostme">${t.priv?`<button data-act="toast" data-msg="Invite link copied · only people with the link can join">🔗 Invite</button>`:''}<b>You’re hosting</b></span></div>`:`<button class="row" data-act="person" data-v="${t.host}" style="margin-left:auto;gap:8px;height:38px;padding:0 14px 0 4px;border-radius:19px;background:rgba(60,60,64,.5);backdrop-filter:blur(12px);color:#fff" aria-label="Host profile">${av(person,'style="border:0"')}<span style="font-size:14px;font-weight:600">${person[0]}</span></button></div>`}
-      <div class="ctitle">${esc(t.long)}</div>
-      <div class="plan" style="margin-top:16px"><div><small>Meet</small><b>${t.plan?t.plan[0]:'Not set'}</b><small>${t.plan?esc(t.plan[1]):'Optional'}</small></div><div><small>Doors</small><b>7:00 PM</b><small>${esc(s.venue.replace('Madison Square Garden','MSG'))}</small></div><div><small>Date</small><b>${sd(s.dates[0])}</b><small>${DOW[new Date(s.dates[0]+'T12:00:00Z').getUTCDay()]}</small></div></div>${state.loc&&state.loc[t.id]?'<div class="locchip">📍 Sharing location with this crew · until 1h after the show</div>':''}`;
-  const bub=m=>m.d==='img'?`<div class="bub out bimg"><span>${img(s)}</span></div><div class="when">${m.time}</div>`:m.d==='home'?homeCard(t):m.d==='spare'?`<div class="spare ${claimed?'done':''}"><span class="spimg">${img(s)}</span><span class="spb"><em>🎟️ Face value + $2 flat</em><b>${esc(s.artist)}</b><span>${sd(s.dates[0])} · ${sp.sec} · next to the crew</span><span class="spv">${ic('check',12)}Verified ticket</span></span><span class="spr"><b>$${sp.face+FEE}</b>${claimed?'<span class="spc">Claimed</span>':`<button data-act="claim" data-id="${s.id}">Claim</button>`}</span></div><div class="who">${av(sp.seller,'style="border:0;width:26px;height:26px"')}${sp.seller[0]} <span>${m.time}</span></div>`
-    :m.d==='sys'?`<div class="sysm">${ic('check',12)}${esc(m.t)}</div>`
-    :m.d==='in'?`<div class="bub in">${esc(m.t)}</div>${dm?'':`<div class="who">${av(PEOPLE[m.p],'style="border:0;width:26px;height:26px"')}${PEOPLE[m.p][0]} <span>${m.time}</span></div>`}`
-    :`<div class="bub out">${esc(m.t)}</div><div class="when">${m.time}${m.time===nowT()||m.time==='now'?' · Delivered':''}</div>`;
-  return `<div class="chat">${`<img class="bg" alt="" src="${s.img}">`}<div class="shade"></div><div class="grain"></div>
-    <div style="position:absolute;left:0;right:0;top:0;height:calc(84px + var(--st));background:linear-gradient(180deg,#0B0B0C 55%,rgba(10,10,11,0));z-index:2;pointer-events:none"></div><div class="nav cnav"><button class="nb" data-act="back" aria-label="Back">${ic('back')}</button>${dm?'':'<button class="nb sfb" data-act="safety" aria-label="Safety tools">🛡️ Safety</button>'}</div>
-    <div class="inner ${dm?'':'crewpad'}" id="ci">${head}
-      <div class="msgs" ${dm?'style="margin-top:220px"':''}>${dm?'':pollCard(t)}${msgs.map(bub).join('')}${t.typing!=null?`<div class="bub in tpb"><span class="mtyp"><i></i><i></i><i></i></span></div><div class="who">${av(PEOPLE[t.typing],'style="border:0;width:26px;height:26px"')}${P0(t.typing)} is typing…</div>`:''}</div>
-      <p class="note" style="color:rgba(255,255,255,.4);margin-top:10px">${dm?(t.pending?(t.reqSent?'Request sent · you can send more once '+P0(t.person)+' accepts · expires in 7 days if they don’t reply':'Not buddies yet · one message, sent as a request · '+dmLeft()+' of '+DM_LIMIT+' requests left today'):'Only crew-mates and buddies can message you.'):'Everyone here is ID + ticket verified. Meetups are in public spots.'}</p>
+  const grpAv=dm?`<span class="igav1">${avi(person[3])}</span>`:igAvGroup(PEOPLE[t.who[0]][3],PEOPLE[t.who[1]][3]);
+  const sub=dm?(t.pending?(t.reqSent?'Request sent':'Message request'):'Active '+(2+h(t.id)%40)+'m ago'):`${esc(t.show)} · ${n} of ${t.cap} in`;
+  const L=[{sep:sd(s.dates[0])==='Today'?'Today':'Today'}];
+  msgs.forEach((m,i)=>{ const id=t.id+':'+i;
+    if(m.d==='sys') L.push({sys:m.t});
+    else if(m.d==='in') L.push({id,p:m.p,t:m.t,rx:igBase(id),rp:m.rp});
+    else if(m.d==='out') L.push({id,me:true,t:m.t,rp:m.rp});
+    else if(m.d==='img') L.push({id,me:true,img:img(s)});
+    else if(m.d==='home') L.push({html:homeCard(t)});
+    else if(m.d==='spare') L.push({html:`<div class="spare ${claimed?'done':''}"><span class="spimg">${img(s)}</span><span class="spb"><em>🎟️ Face value + $2 flat</em><b>${esc(s.artist)}</b><span>${sd(s.dates[0])} · ${sp.sec} · next to the crew</span><span class="spv">${ic('check',12)}Verified ticket</span></span><span class="spr"><b>$${sp.face+FEE}</b>${claimed?'<span class="spc">Claimed</span>':`<button data-act="claim" data-id="${s.id}">Claim</button>`}</span></div>`}); });
+  if(t.typing!=null) L.push({id:t.id+':ty',p:t.typing,typing:true});
+  const lastOut=[...L].reverse().find(x=>x.id&&!x.typing), seen=lastOut&&lastOut.me?(dm?(t.pending?'Sent':'Seen'):`Seen by ${P0(t.who[0])}${t.who.length>1?' + '+(t.who.length-1):''}`):'';
+  const pin=!dm&&t.plan?`<button class="igpin" data-act="iginfo">📌 <b>Meet ${t.plan[0]}</b> · ${esc(t.plan[1])} · Doors 7:00 · ${sd(s.dates[0])}</button>`:'';
+  return `<div class="chat igchat"><img class="bg" alt="" src="${s.img}"><div class="shade"></div><div class="grain"></div>
+    ${igHead({av:grpAv,title:esc(dm?person[0]:t.title),sub,safe:'safety'})}${pin}
+    <div class="inner igin${pin?' haspin':''}" id="ci">
+      <div class="igintro">${dm?`<span class="igav1 lg">${avi(person[3])}</span><b>${person[0]}</b><small>${BUD[t.person]?'Buddy · ':''}Also going to ${esc(t.show)}</small><button data-act="person" data-v="${t.person}">View profile</button>`
+        :`${igAvGroup(PEOPLE[t.who[0]][3],PEOPLE[t.who[1]][3])}<b>${esc(t.long)}</b><small>Everyone here is ID + ticket verified · meetups are in public spots</small>`}</div>
+      ${dm?'':pollCard(t)}${igList(L,{group:!dm,whoAct:'person',seen})}
+      ${dm&&t.pending?`<p class="note" style="color:rgba(255,255,255,.45);margin-top:10px">${t.reqSent?'Request sent · you can send more once '+P0(t.person)+' accepts · expires in 7 days if they don’t reply':'Not buddies yet · one message, sent as a request · '+dmLeft()+' of '+DM_LIMIT+' requests left today'}</p>`:''}
     </div>
-    <div class="cbfade"></div>${state.att?attMenu(t,s,dm):''}${dm||state.att?'':`<div class="mstpin">${meetStrip(t)}</div>`}<form class="composer" id="composer"><button type="button" aria-label="Attach" data-act="attach" aria-expanded="${!!state.att}">${ic('clip',20)}</button><label for="msg" hidden>Message</label><input id="msg" placeholder="${dm?(t.pending&&t.reqSent?'Waiting for '+P0(t.person)+' to accept':'Message '+P0(t.person)):'Message the crew'}" autocomplete="off"${dm&&t.pending&&t.reqSent?' disabled':''}><button class="send" type="submit" aria-label="Send">${ic('send',18)}</button></form>
+    <div class="cbfade"></div>${state.att?attMenu(t,s,dm):''}${dm||state.att||(state.rpl&&state.rpl.key===t.id)?'':`<div class="mstpin">${meetStrip(t)}</div>`}
+    ${igComposer({id:'composer',input:'msg',key:t.id,ph:dm?(t.pending&&t.reqSent?'Waiting for '+P0(t.person)+' to accept':'Message…'):'Message…',disabled:dm&&t.pending&&t.reqSent})}
+    ${state.igi?igInfo():''}
   </div>`;
 }
 
@@ -3321,17 +3454,15 @@ function crews(){
     .filter(t=>!q||(t.k==='listing'||t.k==='show'?byId[t.sid].artist+' show chat':thName(t)+' '+thLast(t)).toLowerCase().includes(q)).sort((a,b)=>b.ts-a.ts);
   const tabs=[['all','All'],['shows','Shows'],['crews','Crews'],['dms','Direct'],['requests','Requests'+((mreqVisible().length+(REQ.t1?1:0))?' '+(mreqVisible().length+(REQ.t1?1:0)):'')]], req=REQ.t1||[];
   const tone=(t,i)=>['dk','w','g2','g1'][i%4];
-  const bub=(t,i)=>{ const z=rows.length-i;
-    if(t.k==='show'){ const s=byId[t.sid], st=chatStats(s), last=wallPosts(s)[0], lp=last.me?'You':PEOPLE[last.p][0].split(' ')[0];
-      return `<button class="cb ${tone(t,i)} ${i%2?'r':'l'}" style="z-index:${z}" data-act="wallopen" data-id="${s.id}"><span class="cbav sq">${img(s)}</span><span class="cbb"><span class="cbt"><b>${esc(s.artist)}</b><em>${st.online} online</em></span><span class="cbs">Show chat · ${fmtK(st.going)} going</span><span class="cbm">${esc(lp)}: ${esc(last.t)}</span></span></button>`; }
-    if(t.k==='listing'){ const s=byId[t.sid]; return `<button class="cb ${['dk','w','g2','g1'][i%4]} ${i%2?'r':'l'}" style="z-index:${z}" data-act="tickets"><span class="cbav sq">${img(s)}</span><span class="cbb"><span class="cbt"><b>Your listing</b><em>live</em></span><span class="cbm">${esc(s.artist)} · ${3+h(s.id)%9} fans looking at your ticket</span></span></button>`; }
+  // Instagram-style rows: same layout for every chat; unread = bold + dot; the avatar says what kind of chat it is
+  const row=(act,id,av,name,prev,time,un,extra='')=>`<button class="igrow${un?' un':''}" data-act="${act}" data-id="${id}">${av}<span class="igrb"><b>${name}</b><span><em>${prev}</em>${time?`<i> · ${time}</i>`:''}</span>${extra}</span>${un?`<i class="igdot" aria-label="${un} unread"></i>`:''}</button>`;
+  const bub=t=>{
+    if(t.k==='show'){ const s=byId[t.sid], st=chatStats(s), last=wallPosts(s)[0], lp=last.me?'You':P0(last.p), un=(state.joinedChat||{})[s.id]?0:(2+h(s.id)%7);
+      return row('wallopen',s.id,`<span class="igra sq">${img(s)}<i class="igon"></i></span>`,`${esc(s.artist)} <small class="igtag">Show chat</small>`,`${esc(lp)}: ${esc(last.t)}`,`${st.online} online`,un); }
+    if(t.k==='listing'){ const s=byId[t.sid]; return row('tickets','',`<span class="igra sq">${img(s)}</span>`,'Your listing',`${esc(s.artist)} · ${3+h(s.id)%9} fans looking at your ticket`,'live',0); }
     const dm=t.k==='dm';
-    return `<button class="cb ${tone(t,i)} ${i%2?'r':'l'}" style="z-index:${z}" data-act="thread" data-id="${t.id}">
-      <span class="cbav ${dm?'':'grp'}">${dm?avi(PEOPLE[t.person][3]):`<span>${avi(PEOPLE[t.who[0]][3])}</span><span>${avi(PEOPLE[t.who[1]][3])}</span>`}</span>
-      <span class="cbb"><span class="cbt"><b>${esc(dm?PEOPLE[t.person][0]:t.title)}</b><em>${thTime(t)}</em></span>
-        <span class="cbs">${dm?'Direct':esc(t.show)}</span>
-        <span class="cbm">${t.typing!=null?`<span class="mtyp"><i></i><i></i><i></i></span>`:esc(thLast(t))}</span></span>
-      ${t.un?`<span class="cbn">${t.un>9?'9+':t.un}</span>`:''}</button>`; };
+    return row('thread',t.id,dm?`<span class="igra">${avi(PEOPLE[t.person][3])}${h(t.id)%2?'<i class="igon"></i>':''}</span>`:`<span class="igra">${igAvGroup(PEOPLE[t.who[0]][3],PEOPLE[t.who[1]][3])}</span>`,
+      esc(dm?PEOPLE[t.person][0]:t.title)+(dm?'':` <small class="igtag">${esc(t.show)}</small>`),t.typing!=null?'typing…':esc(thLast(t)),thTime(t),t.un); };
   return `<div class="scroll"><div style="padding-bottom:130px">
     <header class="chead"><h1>Chats</h1>${unreadTotal()?`<span class="chn">${unreadTotal()}</span>`:''}<button class="wicon" data-act="msearch" aria-label="Search">${ic(state.msOpen?'x':'search',20)}</button></header>
     ${state.msOpen?`<div class="pad" style="margin-top:4px"><label class="sbar">${ic('search',18)}<span hidden>Search</span><input id="mq" value="${esc(state.mq||'')}" placeholder="Search people, crews, shows"></label></div>`:''}
@@ -3341,7 +3472,7 @@ function crews(){
     
     ${f==='requests'?`<div class="rqset"><span><b>Only verified people</b><small>Hide requests from accounts without ID verification</small></span><button class="tgl" role="switch" aria-checked="${!!state.reqVerOnly}" aria-label="Only verified people" data-act="reqver"><i></i></button></div>
     <p class="creqn">Only people going to the same shows as you can send a request, and just one message until you accept. Ignored requests expire after 7 days. They’re never told you saw, deleted or reported it.</p>${state.reqVerOnly&&MREQ.some(r=>!r.ver&&!(state.blocked||{})[r.p])?`<p class="rqhid">${MREQ.filter(r=>!r.ver&&!(state.blocked||{})[r.p]).length} from unverified accounts hidden</p>`:''}<div class="cbl">${mreqVisible().map((r,j)=>{ const i=MREQ.indexOf(r); return `<div class="cb ${['w','g1'][j%2]} ${j%2?'r':'l'} rq" style="z-index:${9-j}"><span class="cbav">${avi(PEOPLE[r.p][3])}</span><span class="cbb"><span class="cbt"><b>${PEOPLE[r.p][0]}</b>${r.ver?`<i class="rqv">${ic('check',9)} Verified</i>`:'<i class="rqv no">Not verified</i>'}<em>${r.time}</em></span><span class="cbs">Both going to ${esc(r.show)}${r.crew?' · '+esc(r.crew):''}</span><span class="cbm">${esc(r.t)}</span><span class="rqx">Expires in ${r.exp} day${r.exp>1?'s':''} if you don’t reply</span><span class="rqb"><button class="rep" data-act="mrqrep" data-v="${i}" aria-label="Report or block">Report</button><span class="rqsp"></span><button data-act="mrqno" data-v="${i}">Delete</button><button class="on" data-act="mrqyes" data-v="${i}">Accept</button></span></span></div>`; }).join('')||'<p class="mempty">No message requests.</p>'}</div>`:
-    `<div class="cbl">${rows.map(bub).join('')||`<p class="mempty">${q?'No matches for “'+esc(state.mq)+'”':f==='tickets'?'No ticket updates yet.':'Nothing here yet.'}</p>`}</div>`}
+    `<div class="igrows">${rows.map(bub).join('')||`<p class="mempty">${q?'No matches for “'+esc(state.mq)+'”':f==='tickets'?'No ticket updates yet.':'Nothing here yet.'}</p>`}</div>`}
   </div></div>${dock('crews')}`;
 }
 
@@ -3377,7 +3508,9 @@ function render(anim){ window._dockActive=null; const _ap=document.getElementByI
   const nsh=document.getElementById('shsc'); if(nsh&&shKeep) nsh.scrollTop=shKeep;
   if(nsh&&!shKeep&&state._prevScreen==='wall'&&(state.shY||{})[state.id]) nsh.scrollTop=state.shY[state.id];
   if(anim){ v.classList.remove('screen'); void v.offsetWidth; v.classList.add('screen'); }
-  const ci=document.getElementById('ci'); if(ci) ci.scrollTop=ci.scrollHeight;
+  const ci=document.getElementById('ci'); if(ci) ci.scrollTop=state._ciKeep!=null?state._ciKeep:ci.scrollHeight;
+  if(state.screen==='wall'&&state._ciKeep!=null){ const w=document.getElementById('wci'); if(w) w.scrollTop=state._ciKeep; }
+  state._ciKeep=null; if(state.screen==='crew'||state.screen==='wall') igWire();
   if(state.sheet) initCitySheet();
   if(document.getElementById('wal')) layWallet(null);
   syncNav(window._dockActive);
@@ -3419,7 +3552,15 @@ document.getElementById('app').addEventListener('click',e=>{
     setTimeout(()=>{ t.who.push(p); t.msgs.push({d:'sys',t:`${P0(p)} joined${c.priv?' via your link':''} · ${t.who.length+1} of ${t.cap}`}); t.msgs.push({d:'in',p,t:`Hey! First time seeing ${s.artist} live 🙌`,time:nowT()}); t.ts=++TSEQ; if(state.screen==='crew'&&state.tid===t.id) render(); else t.un++; },2600); }
   else if(a==='wallgo'){ state.wtag='All'; state._chBottom=true; go('wall',id); }
   else if(a==='chatjoin'){ (state.joinedChat ||= {})[id]=true; if(state.screen==='wall'){ state._chBottom=true; render(); } else { const sc=document.getElementById('shsc'); (state.shY ||= {})[id]=sc?sc.scrollTop:0; state.wtag='All'; state._chBottom=true; go('wall',id); } toast('You’re in the '+byId[id].artist+' show chat'); }
-  else if(a==='chsafe'){ state.chsafe=true; render(); }
+  else if(a==='iginfo'){ state.igi=true; igKeep(); render(); }
+  else if(a==='iginfox'){ state.igi=false; igKeep(); render(); }
+  else if(a==='igreact'){ document.querySelectorAll('.igpop').forEach(x=>x.remove()); igReact(id,v); }
+  else if(a==='igreply'){ const b=document.querySelector(`.igb[data-mid="${id}"]`); document.querySelectorAll('.igpop').forEach(x=>x.remove()); state.rpl={key:state.screen==='wall'?'w'+state.id:state.tid,n:b.dataset.who,t:b.dataset.txt}; igKeep(); render(); const inp=document.getElementById(state.screen==='wall'?'wq':'msg'); inp&&inp.focus(); }
+  else if(a==='igreplyx'){ state.rpl=null; igKeep(); render(); }
+  else if(a==='igcopy'){ document.querySelectorAll('.igpop').forEach(x=>x.remove()); toast('Copied'); }
+  else if(a==='igmute'){ state.igi=false; render(); toast('Muted · you’ll still see new messages here'); }
+  else if(a==='chatleave'){ if(state.joinedChat) delete state.joinedChat[id]; state.igi=false; state.history=[]; state.screen='crews'; render(); toast('You left the show chat'); }
+  else if(a==='chsafe'){ state.igi=false; state.chsafe=true; render(); }
   else if(a==='chsafeclose'){ state.chsafe=false; render(); }
   else if(a==='chmute'){ (state.chMute ||= {})[id]=!state.chMute[id]; render(); toast(state.chMute[id]?'Chat muted':'Notifications on'); }
   else if(a==='dmreq'){ state.dmReq=state.dmReq===false; render(); toast(state.dmReq!==false?'DMs from strangers arrive as requests':'Anyone in this chat can DM you'); }
@@ -3513,7 +3654,7 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='checkin'){ const t=thById(state.tid); t.hold='in'; t.msgs.push({d:'sys',t:`You checked in at ${t.plan[1]} · $5 released`}); t.ts=++TSEQ; render(); toast('Checked in · $5 released'); }
   else if(a==='vote'){ const t=thById(state.tid); t.vote=+v; render(); }
   else if(a==='bracelet'){ toast('Pick 3 letters · trade real bracelets at the meetup 📿'); }
-  else if(a==='safety'){ state.safe=true; render(); }
+  else if(a==='safety'){ state.igi=false; state.safe=true; render(); }
   else if(a==='safeclose'){ closeSafe(); }
   else if(a==='loc'){ state.loc=state.loc||{}; const on=!state.loc[state.tid]; state.loc[state.tid]=on; render(); toast(on?'Sharing with this crew until 1h after the show':'Location sharing off'); }
   else if(a==='homeplan'){ const t=thById(state.tid); if(!t.msgs.some(m=>m.d==='home')){ t.msgs.push({d:'home',time:nowT()}); t.homeSt='offer'; t.ts=++TSEQ; } closeSafe(); }
