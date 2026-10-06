@@ -2292,6 +2292,7 @@ button.csloc{box-shadow:inset 0 0 0 1.5px #0B0B0C;background:transparent}
 .klink{display:flex;align-items:center;gap:10px;width:100%;margin-top:10px;padding:14px 16px;border-radius:var(--r-lg);background:var(--bg);font-weight:600;font-size:15px;color:var(--text)}
 .ncinv{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;border-radius:var(--r-md);background:var(--bg)}
 .ncinv span{display:flex;flex-direction:column;gap:2px}.ncinv b{font-size:15px}.ncinv small{font-size:13px;color:var(--muted);line-height:1.4}
+.ncname{width:100%;height:48px;padding:0 16px;border:0;outline:0;border-radius:var(--r-md);background:var(--bg);font:600 16px var(--body);color:var(--text)}.ncname::placeholder{color:var(--muted);font-weight:500}
 </style>
 
 <div class="app framed" id="app">
@@ -2497,14 +2498,14 @@ const GEMO={'All':'🌐','Pop':'🎤','Rock':'🎸','R&B':'🎷','Hip-Hop/Rap':'
 const CITY_EMO={'New York':'🗽','Los Angeles':'🌴','Chicago':'🌬️','London':'💂','Toronto':'🍁'};
 const SCENE_EMO=['🙋','🤘','🍜','✨','🎧','🪩','🧃','💃'];
 const SCENE_LIST = [
-  ['Going solo','Bought one ticket? Meet up before doors so you are never on your own.',['Solo-goers meet at the bar','Doors-open meetup, all solo','Came alone, leaving with friends','Solo at the soundboard'],86],
-  ['Front row','Front row energy. Early line, loud singalongs, last song.',['Rail by 6pm, who is in','Pit crew, then late-night food','Floor GA, loud and early','Front row or nothing'],142],
-  ['Dinner first','Eat together near the venue, then walk over as a crew.',['Ramen at 6, doors at 7','Tacos before the show','Pizza slice, then pit','Dumplings in Chinatown first'],64],
-  ['First timers','New to New York or to this venue? Go with people who know the way.',['First time at this venue','New in town, first NYC show','Show me the good exits','Just moved here, say hi'],51],
-  ['Sit & listen','Good seats, good sound, no shoving. Just the music.',['Section seats, no phones up','Sit, listen, sing quietly','Balcony crew','Good seats, early drinks'],39],
-  ['After party','The night does not end at the encore.',['Afterparty in the LES','Karaoke after the encore','Late bar, same playlist','Diner at 1am'],77],
-  ['Sober','All of the music, none of the drinks.',['Sober and loud','Mocktails, then the pit','Zero-proof night out','Sober, singing every word'],33],
-  ['Women only','Crews hosted by and for women.',['Women-only crew','Girls to the front','Women-only, meet at 7','Sister crew, pit edition'],95]
+  ['Going solo','Bought one ticket? Meet up before doors so you are never on your own.',['solo but not alone 🫶','came alone lol','one ticket gang','soundboard solos'],86],
+  ['Front row','Front row energy. Early line, loud singalongs, last song.',['rail or die','pit people 🤘','GA line by 5','barricade besties'],142],
+  ['Dinner first','Eat together near the venue, then walk over as a crew.',['ramen then MSG 🍜','tacos b4 doors','pizza & pit','dumpling run 🥟'],64],
+  ['First timers','New to New York or to this venue? Go with people who know the way.',['first time here 😳','new in nyc','where’s the entrance','just moved here hi'],51],
+  ['Sit & listen','Good seats, good sound, no shoving. Just the music.',['sec 212 people','phones down pls','balcony gang','seated & vibing'],39],
+  ['After party','The night does not end at the encore.',['after?? 🪩','karaoke after 🎤','LES after','diner at 1am'],77],
+  ['Sober','All of the music, none of the drinks.',['sober & loud','mocktail crew','zero proof','no drinks all vibes'],33],
+  ['Women only','Crews hosted by and for women.',['girls to the front 💅','girls night','the girls','sister pit'],95]
 ];
 // Scene crews. Your ticketed shows come first (one crew each), then the city's other shows. Every crew carries the trust
 // facts people want before joining strangers (verified members, host's show-up record, deposit, women-only) and, when a
@@ -3172,14 +3173,14 @@ function home(){
 
 const XSPOT=['Box office','Main entrance','Bar by Section 105','Merch stand','Gate B line'];
 const XDIN=['Ramen across the street','Taco spot on 8th Ave','Pizza by the venue'];
-const XOV={'Harry Styles':[1,'Pit crew, then late-night food','Box office','6:15 PM'],'Doja Cat':[2,'Dinner first, then Doja Cat','Ippudo, 8th Ave','6:00 PM'],'Gorillaz':[0,'Solo, not alone','Bar by Section 105','7:30 PM']};
+const XOV={'Harry Styles':[1,'hs pit people 🤘','Box office','6:15 PM'],'Doja Cat':[2,'doja ramen night 🍜','Ippudo, 8th Ave','6:00 PM'],'Gorillaz':[0,'gorillaz solo squad','Bar by Section 105','7:30 PM']};
 const MEP=['Jordan Lee','JL','a2',10], MINE=[];
 function xCrews(){ const out=[];
   SHOWS.slice().sort((a,b)=>a.dates[0].localeCompare(b.dates[0])).forEach(s=>{ const k0=h(s.id), nc=1+k0%2;
     MINE.filter(m=>m.s===s).forEach(m=>{ const t=thById(m.tid); const c={s,k:-1,j:m.j,name:m.name,host:MEP,n:t.cap,f:t.who.length+1,time:t.plan?t.plan[0]:'',spot:t.plan?t.plan[1]:'Meetup optional',rel:false,solo:8+Math.abs(k0>>2)%30,mine:true,tid:t.id,who:t.who}; c.ix=out.length; out.push(c); });
     for(let k=0;k<nc;k++){ const j=(k0+k*3)%8, host=PEOPLE[(k0+k*5)%8], n=4+(k0+k)%3, o=k===0&&XOV[s.artist], full=!o&&(k0+k)%4===0, f=full?n:1+(Math.abs(k0>>k)%(n-1));
       const c={s,k,j:o?o[0]:j,name:o?o[1]:SCENE_LIST[j][2][(k0+k)%4],host,n,f,time:o?o[3]:['5:45 PM','6:00 PM','6:15 PM','6:30 PM'][(k0+k)%4],spot:o?o[2]:j===2?XDIN[(k0+k)%3]:XSPOT[(k0+k)%5],rel:(k0+k)%3!==0,solo:8+Math.abs(k0>>2)%30,full}; c.wo=c.j===7; c.ix=out.length; out.push(c);
-      if(full){ const c2={...c,k:k+10,name:c.name+' · crew 2',host:PEOPLE[(k0+k*5+3)%8],f:1+Math.abs(k0>>3)%2,full:false,auto:true,rel:false}; c2.ix=out.length; out.push(c2); } } });
+      if(full){ const c2={...c,k:k+10,name:c.name+' (2)',host:PEOPLE[(k0+k*5+3)%8],f:1+Math.abs(k0>>3)%2,full:false,auto:true,rel:false}; c2.ix=out.length; out.push(c2); } } });
   return out; }
 const xDays=d=>Math.round((Date.UTC(...d.split('-').map((v,i)=>i===1?v-1:+v))-Date.UTC(2026,8,27))/864e5);
 const xBucket=d=>{ const n=xDays(d); return n<=1?'Tonight & tomorrow':n<=7?'This week':n<=31?'Next few weeks':'Later'; };
@@ -3477,20 +3478,20 @@ let TSEQ=100;
 const nowT=()=>{ const d=new Date(); let h=d.getHours(),m=d.getMinutes(); return (h%12||12)+':'+String(m).padStart(2,'0')+(h<12?' am':' pm'); };
 const P0=k=>PEOPLE[k][0].split(' ')[0];
 const TH=[
- {id:'t1',k:'crew',show:'Harry Styles',title:'Pit crew',long:'Pit crew for Harry Styles, then late-night food',host:0,who:[0,1,3],cap:6,un:37,ts:9,spare:true,dep:true,plan:['6:15 PM','Box office'],
+ {id:'t1',k:'crew',show:'Harry Styles',title:'hs pit people 🤘',long:'hs pit people 🤘',host:0,who:[0,1,3],cap:6,un:37,ts:9,spare:true,dep:true,plan:['6:15 PM','Box office'],
   msgs:[{d:'in',p:1,t:'Who else is doing the pit? I can get there by 6.',time:'6:02 pm'},{d:'out',t:'Same. Meet at the box office at 6:15?',time:'6:04 pm'},{d:'in',p:3,t:'My friend just bailed. Anyone want her ticket? Face value, it’s next to us.',time:'6:08 pm'},{d:'spare',time:'6:08 pm'},{d:'in',p:3,t:'I know a taco spot for after 🌮',time:'6:11 pm'},{d:'in',p:0,t:'Saving you a spot on the rail',time:'6:12 pm'}],
   replies:[[0,'Love it. Rail crew assemble 🙌'],[1,'On my way, grabbing a water first'],[3,'See you at the box office!']]},
- {id:'t2',k:'crew',show:'Doja Cat',title:'Dinner first',long:'Dinner first, then Doja Cat at MSG',host:3,who:[3,5,2],cap:4,un:4,ts:8,chip:'🍜 Table for 4',plan:['6:00 PM','Ippudo, 8th Ave'],
-  msgs:[{d:'sys',t:'Priya created Dinner first'},{d:'in',p:5,t:'Ramen or tacos?',time:'5:20 pm'},{d:'in',p:2,t:'Ramen, always 🍜',time:'5:31 pm'},{d:'in',p:3,t:'Booked the ramen place for 7',time:'5:40 pm'}],
+ {id:'t2',k:'crew',show:'Doja Cat',title:'doja ramen night 🍜',long:'doja ramen night 🍜',host:3,who:[3,5,2],cap:4,un:4,ts:8,chip:'🍜 Table for 4',plan:['6:00 PM','Ippudo, 8th Ave'],
+  msgs:[{d:'sys',t:'Priya created doja ramen night 🍜'},{d:'in',p:5,t:'Ramen or tacos?',time:'5:20 pm'},{d:'in',p:2,t:'Ramen, always 🍜',time:'5:31 pm'},{d:'in',p:3,t:'Booked the ramen place for 7',time:'5:40 pm'}],
   replies:[[3,'Perfect, table’s under Priya'],[5,'Can’t wait, first Doja show for me']]},
- {id:'t3',k:'crew',show:'Gorillaz',title:'Solo, not alone',long:'Solo-goers meet at the bar, Gorillaz',host:1,who:[1,4,7],cap:6,un:12,ts:6,plan:['7:30 PM','Bar by Section 105'],
+ {id:'t3',k:'crew',show:'Gorillaz',title:'gorillaz solo squad',long:'gorillaz solo squad',host:1,who:[1,4,7],cap:6,un:12,ts:6,plan:['7:30 PM','Bar by Section 105'],
   msgs:[{d:'in',p:4,t:'First time going solo to a show, a bit nervous 😅',time:'Tue'},{d:'in',p:7,t:'Same! That’s why we’re here',time:'Tue'},{d:'in',p:1,t:'Who has an extra ticket?',time:'Tue'}],
   replies:[[1,'Welcome! We’ll wave you over 👋'],[7,'Grab a drink with us before doors']]},
  {id:'t4',k:'dm',person:4,show:'Steve Lacy',un:0,ts:4,msgs:[{d:'in',p:4,t:'Balcony seats were a steal',time:'Mon'},{d:'out',t:'See you at Radio City 👋',time:'Mon'}],replies:[[4,'Yes! Meet at the merch stand?']]}
 ];
 const REQ={t1:[7,2]};
 const BUD={4:true}, BREQ={};
-const MREQ=[{p:6,show:'Harry Styles',crew:'Pit crew',t:'Hey! Are you doing the pit too? Could use a rail buddy',time:'5:02 pm',ver:true,exp:7},{p:2,show:'Doja Cat',crew:'Dinner first',t:'Want to split an Uber to MSG after dinner?',time:'4:47 pm',ver:true,exp:6},{p:5,show:'Gorillaz',crew:null,t:'hey whats up 👀',time:'Mon',ver:false,exp:2}];
+const MREQ=[{p:6,show:'Harry Styles',crew:'hs pit people 🤘',t:'Hey! Are you doing the pit too? Could use a rail buddy',time:'5:02 pm',ver:true,exp:7},{p:2,show:'Doja Cat',crew:'doja ramen night 🍜',t:'Want to split an Uber to MSG after dinner?',time:'4:47 pm',ver:true,exp:6},{p:5,show:'Gorillaz',crew:null,t:'hey whats up 👀',time:'Mon',ver:false,exp:2}];
 // Message requests: a DM to someone who isn't a buddy or crew-mate needs a show you're both going to, arrives as ONE request
 // (no follow-ups until they accept), counts against 10 requests a day, and quietly expires after 7 days if ignored.
 const DM_LIMIT=10, MY_GOING=['Harry Styles','Doja Cat','Gorillaz','Steve Lacy'];
@@ -3549,9 +3550,10 @@ function ncSheet(){ const c=state.nc; if(!c.sid) return ncPick(); const s=byId[c
   return `<div class="sheetbg" data-act="ncclose"></div><div class="sheet csheet ncs" role="dialog" aria-label="Start a crew">
   <div class="cgrab"><i class="grab"></i><h3>Start a crew <span class="emo">🤝</span></h3><p>${esc(s.artist)} · ${sd(s.dates[0])} · ${esc(s.venue.replace('Madison Square Garden','MSG').replace('Radio City Music Hall','Radio City'))}</p></div>
   <div class="ncb">
+    <p class="ncl">Name</p><input class="ncname" id="ncname" maxlength="32" autocomplete="off" placeholder="${esc(SCENE_LIST[c.j][2][0])}" value="${esc(c.name||'')}" oninput="state.nc.name=this.value">
     <p class="ncl">Vibe</p><div class="ncv">${order.map(j=>`<button class="gch" data-act="ncset" data-k="j" data-v="${j}" aria-pressed="${c.j===j}">${SCENE_EMO[j]} ${SCENE_LIST[j][0]}</button>`).join('')}</div>
     <p class="ncl">Crew size</p><div class="ncsz">${[4,5,6,7,8].map(n=>`<button data-act="ncset" data-k="cap" data-v="${n}" aria-pressed="${c.cap===n}">${n}</button>`).join('')}</div>
-    <small class="nch">Small crews actually talk. When yours fills, new people go to the next crew.</small>
+    <small class="nch">Small crews actually talk, and actually find each other at the venue.</small>
     <p class="ncl">Who can join</p><div class="ncinv">${ic('users',18)}<span><b>Private · invite only</b><small>Send invites or share the crew ID. People who use the ID ask to join, and you approve.</small></span></div>
     <p class="ncl">Optional</p>
     ${tg('meet',c.meet,'Suggest a meetup',c.meet?'6:30 PM · '+esc(XSPOT[h(s.id)%XSPOT.length])+' · you can change it later':'Skip it, sort it out in the chat')}
@@ -3834,7 +3836,7 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='ncclose'){ state.nc=null; render(); }
   else if(a==='ncset'){ const k=t.dataset.k, n=+v; if(k==='vis') state.nc.priv=!n; else if(k==='meet'||k==='dep') state.nc[k]=!!n; else state.nc[k]=n; render(); }
   else if(a==='nccreate'){ const c=state.nc, s=byId[c.sid]; if(c.j===7&&ME.idv!==true){ toast('Women-only crews need a verified ID · verify it on your profile'); return; }
-    const name=SCENE_LIST[c.j][2][0], p=(h(s.id)+1)%8;
+    const name=(c.name||'').trim()||SCENE_LIST[c.j][2][0], p=(h(s.id)+1)%8;
     const t={id:'t'+(++TSEQ),k:'crew',mine:true,priv:c.priv,show:s.artist,title:name,long:`${name} · ${s.artist}`,host:-1,who:[],cap:c.cap,un:0,ts:++TSEQ,dep:c.dep,plan:c.meet?['6:30 PM',XSPOT[h(s.id)%XSPOT.length]]:null,
       msgs:[{d:'sys',t:`You started ${name} · crew ID #${crewCode(name,s.id)}`}],replies:[[p,'Sounds good!']]};
     TH.unshift(t); MINE.push({tid:t.id,s,j:c.j,name}); state.nc=null; openThread(t); toast('Crew created · invite people or share the crew ID');
@@ -3967,7 +3969,7 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='block'){ const p=+v; state.blocked=state.blocked||{}; state.blocked[p]=true; toast(`${P0(p)} blocked · they can’t see you or message you`); back(); }
   else if(a==='idv'){ if(ME.idv) return; ME.idv='busy'; render(); setTimeout(()=>{ ME.idv=true; if(state.screen==='me') render(); toast('ID verified · women-only crews unlocked'); },1600); }
   else if(a==='wcrew'){ if(ME.idv!==true) toast('Women-only crews need a verified ID · verify it on your profile'); else go('crew',id); }
-  else if(a==='recrew'){ const s2=A('Steve Lacy')||SHOWS[0]; const nt={id:'t'+(++TSEQ),k:'crew',show:s2.artist,title:'Same crew, again',long:`The ${KIT.show} crew, back for ${s2.artist}`,host:KIT.who[0],who:KIT.who.slice(),cap:6,un:0,ts:++TSEQ,plan:['6:30 PM','Main entrance'],msgs:[{d:'sys',t:`Crew re-formed from ${KIT.show} · 3 shows together`},{d:'in',p:KIT.who[1],t:'Round 4 🙌 same meetup spot?',time:nowT()}],replies:[[KIT.who[0],'Obviously. See you all there']]}; TH.unshift(nt); KIT.done=true; state.kit=false; openThread(nt); toast('Crew re-formed · everyone gets a ping to confirm'); }
+  else if(a==='recrew'){ const s2=A('Steve Lacy')||SHOWS[0]; const nt={id:'t'+(++TSEQ),k:'crew',show:s2.artist,title:'round 2 🔁',long:`The ${KIT.show} crew, back for ${s2.artist}`,host:KIT.who[0],who:KIT.who.slice(),cap:6,un:0,ts:++TSEQ,plan:['6:30 PM','Main entrance'],msgs:[{d:'sys',t:`Crew re-formed from ${KIT.show} · 3 shows together`},{d:'in',p:KIT.who[1],t:'Round 4 🙌 same meetup spot?',time:nowT()}],replies:[[KIT.who[0],'Obviously. See you all there']]}; TH.unshift(nt); KIT.done=true; state.kit=false; openThread(nt); toast('Crew re-formed · everyone gets a ping to confirm'); }
   else if(a==='nudge'){ toast(`Reminder sent to ${P0(6)} · due in 2 days`); }
   else if(a==='release'){ SPLIT.released=true; render(); toast('Seat listed · your crew gets 24h first'); }
   else if(a==='crew') go('crew',id);
