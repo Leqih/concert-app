@@ -2197,6 +2197,72 @@ button.csloc{box-shadow:inset 0 0 0 1.5px #0B0B0C;background:transparent}
 .chat.ksc:not(.ktopic) .inner{padding-top:calc(var(--st) + 50px)}
 .klab{padding-top:16px}
 .kxs{}
+
+/* ===== M23 chat v2: messenger layout ===== */
+.kv2 .bg{filter:blur(36px) saturate(1.4) brightness(.5);transform:scale(1.35)}
+.kv2 .shade{background:linear-gradient(180deg,rgba(11,11,12,.55),rgba(11,11,12,.72) 40%,rgba(11,11,12,.9) 100%)}
+.kv2 .grain,.kv2 .cbfade{display:none}
+.kv2:after{content:"";position:absolute;left:0;right:0;bottom:0;height:calc(84px + var(--sb));z-index:2;pointer-events:none;background:linear-gradient(180deg,rgba(14,14,16,0),rgba(14,14,16,.92) 45%,#0E0E10)}
+.kv2:has(.kchips):after{height:calc(128px + var(--sb))}
+.kv2.kreqv:after{height:calc(170px + var(--sb))}
+.khd{position:absolute;left:0;right:0;top:0;z-index:5;padding-top:var(--st);background:rgba(18,18,20,.72);backdrop-filter:saturate(1.6) blur(24px);-webkit-backdrop-filter:saturate(1.6) blur(24px);box-shadow:0 1px 0 rgba(255,255,255,.07)}
+.khr{display:flex;align-items:center;gap:4px;height:56px;padding:0 8px 0 4px}
+.kbk{width:40px;height:44px;display:grid;place-items:center;color:#fff;flex:0 0 auto}
+.kid{flex:1;min-width:0;display:flex;align-items:center;gap:10px;color:#fff;text-align:left;padding:4px 0}
+.kava{position:relative;width:38px;height:38px;border-radius:12px;overflow:hidden;flex:0 0 auto;background:#2a2a2e}.kava.r{border-radius:50%}
+.kava img,.kava .avimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.kidt{min-width:0;display:flex;flex-direction:column}
+.kidt b{font:700 16px/1.2 var(--display);letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kidt small{font-size:12.5px;line-height:1.3;color:rgba(255,255,255,.55);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-variant-numeric:tabular-nums}
+.kic{width:44px;height:44px;display:grid;place-items:center;color:#fff;flex:0 0 auto}
+.kinv2{flex:0 0 auto;height:32px;padding:0 14px;margin-right:6px;border-radius:16px;background:#fff;color:#0B0B0C;font-weight:700;font-size:13.5px}
+.kpb{display:flex;align-items:center;gap:10px;margin:2px 10px 10px;padding:8px 8px 8px 8px;border-radius:16px;background:rgba(255,255,255,.08);color:#fff}
+.kpi{width:34px;height:34px;border-radius:10px;background:#fff;color:#0B0B0C;display:grid;place-items:center;flex:0 0 auto}
+.kpt{flex:1;min-width:0;display:flex;flex-direction:column}
+.kpt b{font-size:14px;font-weight:600;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kpt small{font-size:12px;color:rgba(255,255,255,.55);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kpbb{flex:0 0 auto;height:32px;padding:0 14px;border-radius:16px;background:#fff;color:#0B0B0C;font-weight:700;font-size:13px;display:flex;align-items:center;gap:4px}
+.kpbb.on{background:rgba(255,255,255,.12);color:#fff}
+.kv2 .inner{padding:calc(var(--st) + 66px) 10px calc(96px + var(--sb))}
+.kv2.kpinned .inner{padding-top:calc(var(--st) + 122px)}
+.kv2:has(.kchips) .inner{padding-bottom:calc(140px + var(--sb))}
+.chat.kv2.showchat .inner{padding-top:calc(var(--st) + 122px)}
+.kv2 .msgs{margin-top:0}
+.kv2 .igb{background:#26262A;backdrop-filter:none;-webkit-backdrop-filter:none}
+.kv2 .igr.out .igb{background:#fff}
+.kv2 .igsep{color:rgba(255,255,255,.4);font-weight:500}
+.kv2 .ign{color:rgba(255,255,255,.5);font-weight:600;font-size:11.5px}
+.kv2 .igrxp{background:#2C2C30;box-shadow:0 0 0 2px #141416}
+.kv2 .sysm{background:none;padding:2px 16px;margin:12px 0;font-size:12px;color:rgba(255,255,255,.45);text-align:center;gap:0}.kv2 .sysm svg{display:none}
+.kv2 .igq{background:none;border-left:2px solid rgba(255,255,255,.25);border-radius:0;padding:0 0 0 9px;margin:2px 0 6px 4px;opacity:1}
+.kv2 .igq small{font-size:11px;color:rgba(255,255,255,.4)}.kv2 .igq span{font-size:12.5px;color:rgba(255,255,255,.55);-webkit-line-clamp:1}
+.kchips{position:absolute;left:0;right:0;bottom:calc(78px + var(--sb));z-index:3;display:flex;gap:8px;padding:0 12px;overflow-x:auto;scrollbar-width:none}.kchips::-webkit-scrollbar{display:none}
+.kchips button{flex:0 0 auto;height:34px;padding:0 14px;border-radius:17px;display:flex;align-items:center;gap:6px;font-size:13.5px;font-weight:600;color:#fff;background:rgba(255,255,255,.1);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+.kcmp{left:10px;right:10px;bottom:calc(14px + var(--sb));height:52px;padding:0 6px;gap:6px;background:rgba(38,38,42,.92);border-radius:26px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}
+.kcam{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.12);color:#fff;display:grid;place-items:center;flex:0 0 auto}
+.kcmp input{color:#fff;font-size:16px;padding-left:4px}
+.kcmp .send{width:40px;height:40px;border-radius:50%;background:#fff;color:#0B0B0C;display:grid;place-items:center;flex:0 0 auto}
+.kv2 .igrp{bottom:calc(76px + var(--sb))}
+.kjoin{left:10px;right:10px}
+.kv2 .kcard{margin:4px 2px 18px}
+.knote{text-align:center;font-size:12.5px;color:rgba(255,255,255,.45);margin:10px 24px 0;line-height:1.45}
+.krq{position:absolute;left:12px;right:12px;bottom:calc(10px + var(--sb));z-index:3;text-align:center}
+.krq p{font-size:12.5px;color:rgba(255,255,255,.55);margin-bottom:12px}
+.krqb{display:flex;gap:10px}.krqb button{flex:1;height:50px;border-radius:25px;font:700 16px var(--display);letter-spacing:-.01em;color:#fff;background:rgba(255,255,255,.12)}.krqb button.ok{background:#fff;color:#0B0B0C}
+.krqr{margin-top:8px;height:32px;font-size:13px;color:rgba(255,255,255,.45)}
+.kreqv .inner{padding-bottom:calc(150px + var(--sb))}
+.kspare{display:flex;align-items:center;gap:12px;align-self:stretch;margin:8px 0;padding:10px;border-radius:20px;background:#fff;color:#0B0B0C}
+.ksi{position:relative;width:52px;height:60px;border-radius:12px;overflow:hidden;flex:0 0 auto}.ksi img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ksb{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}.ksb small{font-size:11.5px;color:#86868C}.ksb b{font:700 15px var(--display);letter-spacing:-.01em}.ksb span{font-size:12.5px;color:#86868C}
+.ksr{display:flex;flex-direction:column;align-items:flex-end;gap:6px}.ksr b{font:800 17px var(--display)}
+.ksr button{height:30px;padding:0 14px;border-radius:15px;background:#0B0B0C;color:#fff;font-weight:700;font-size:13px}.ksr em{font-style:normal;font-size:12px;color:#86868C}
+.kcl{padding:0 16px 6px}
+.kcr{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.kcrh{position:relative;width:44px;height:44px;border-radius:50%;overflow:hidden;flex:0 0 auto}.kcrh img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.kcrb{flex:1;min-width:0;display:flex;flex-direction:column}.kcrb b{font:700 16px var(--display);letter-spacing:-.01em}.kcrb small{font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kcrj{flex:0 0 auto;height:34px;padding:0 16px;border-radius:17px;background:var(--text);color:#fff;font-weight:700;font-size:13.5px;display:grid;place-items:center}
+.kcrj.on{background:var(--card2);color:var(--text)}.kcrj.kwt{background:none;color:var(--muted);box-shadow:inset 0 0 0 1px var(--line)}
+.kcempty{color:var(--muted);text-align:center;padding:20px 0}
 </style>
 
 <div class="app framed" id="app">
@@ -2546,7 +2612,7 @@ function shWatch(){ const sc=document.getElementById('shsc'), bar=document.getEl
     if(sc.scrollTop+sc.clientHeight>=sc.scrollHeight-4) cur=keys[keys.length-1];
     document.querySelectorAll('.shtabs button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===cur)); };
   sc.addEventListener('scroll',f,{passive:true}); f(); }
-function go(screen,id){ state.igi=false; state.rpl=null; state.history.push([state.screen,state.id]); state.screen=screen; state.id=id||null; render(true); }
+function go(screen,id){ state.igi=false; state.rpl=null; state.kcrews=false; state.history.push([state.screen,state.id]); state.screen=screen; state.id=id||null; render(true); }
 function back(){ const p=state.history.pop()||['home',null]; state.screen=p[0]; state.id=p[1]; const cb=state._cmBack; if(cb&&cb.screen===state.screen){ state.cmt=cb.cmt; state.cmd={}; } state._cmBack=null; render(true); }
 let tt; function toast(m){ const t=document.getElementById('toast'); t.textContent=m; t.hidden=false; clearTimeout(tt); tt=setTimeout(()=>t.hidden=true,2000); }
 
@@ -2996,48 +3062,26 @@ function wallEntry(x){ const L=wallPosts(x).filter(o=>!(o.p!=null&&(state.blocke
     <span class="wenh"><span class="cstrip">${L.slice(0,4).map(o=>`<span>${avi((o.me?MEP:PEOPLE[o.p])[3])}</span>`).join('')}</span><b>${fmtK(st.going)} going</b><small><i class="chdot"></i>${st.online} online</small></span>
     ${L.slice(0,2).map(o=>{ const p=o.me?MEP:PEOPLE[o.p]; return `<span class="wenr"><span><b>${o.me?'You':p[0]}</b> ${esc(o.t)}</span></span>`; }).join('')}
     <span class="wenf"><span>${WTAGS.slice(1).map(t=>`<em># ${t}</em>`).join('')}</span><b>${joined?'Open chat':'Join chat'} ${ic('right',14)}</b></span></button>`; }
-// ---------- Show chat ----------
-function wallPage(){ const x=byId[state.id], st=chatStats(x), joined=inChat(x), k=Math.abs(h(x.id)), tp=state.wtopic||null;
+// ---------- Show chat: one big group chat ----------
+function wallPage(){ const x=byId[state.id], st=chatStats(x), joined=inChat(x), k=Math.abs(h(x.id));
   const all=wallPosts(x).filter(o=>!(o.p!=null&&(state.blocked||{})[o.p]));
-  const bar=`<div class="kbar"><button class="kbtn" data-act="${tp?'wtopicx':'back'}" aria-label="Back">${ic('back',20)}</button>
-    ${tp?`<span class="ktt"><b># ${esc(tp)}</b><small>${esc(x.artist)} · ${all.filter(o=>o.tag===tp).reduce((n,o)=>n+(o.r||0),0)+all.filter(o=>o.tag===tp).length} replies · ${8+k%20} talking</small></span>`
-      :`<span class="ktt ktp"><span class="kav sq">${img(x)}</span><span><b>${esc(x.artist)}</b><small><i class="kon"></i>Show chat · ${st.online} online · ${fmtK(st.going)} going</small></span></span>`}
-    <button class="knew" data-act="ncopen" data-id="${x.id}">${ic('plus',14)} Crew</button></div>`;
-  if(!tp){
-    const here=[0,1,2,3,4,5,6,7].map(i=>(k+i*3)%8).filter((p,i,a)=>a.indexOf(p)===i&&!(state.blocked||{})[p]).slice(0,5);
-    const cs=xCrews().filter(c=>c.s===x&&!c.full).slice(0,3);
-    const topics=WTAGS.slice(1).map((tg,j)=>{ const ps=all.filter(o=>o.tag===tg), last=ps[0], n=ps.reduce((a,o)=>a+(o.r||0),0)+ps.length, nw=Math.abs(k>>j)%14;
-      if(!last) return ''; const P=last.me?MEP:PEOPLE[last.p], av3=[P].concat(ps.slice(1).map(o=>o.me?MEP:PEOPLE[o.p])).concat([PEOPLE[(k+j+1)%8],PEOPLE[(k+j+4)%8]]);
-      return `<button class="ktpc" data-act="wtopic" data-v="${tg}"><span class="ktph"><i class="kti">${tIc(tg)}</i><b>${esc(tg)}</b><small>${last.m<60?last.m+'m':Math.round(last.m/60)+'h'}</small></span>
-        <span class="ktpm"><b>${last.me?'You':P[0]}</b> ${esc(last.t)}</span>
-        <span class="ktpf">${xStack(av3,'')}<span>${n} replies</span>${nw?`<em><i></i>${nw} new</em>`:''}</span></button>`; }).join('');
-    return `<div class="chat kchat showchat ksc"><img class="bg" alt="" src="${x.img}"><div class="shade"></div><div class="grain"></div>
-      <div class="ktop">${bar}</div>
-      <div class="inner" id="wci">
-        <p class="klab">At the venue now <small>${3+k%40} here · ${st.online} online</small></p>
-        <div class="kpres">${here.map((p,i)=>`<button data-act="chwho" data-v="${p}"><span class="${i<3?'in':''}">${avi(PEOPLE[p][3])}</span>${P0(p)}</button>`).join('')}<button data-act="toast" data-msg="${st.online} people online in this chat"><span class="more">+${st.online-here.length}</span>online</button></div>
-        <p class="klab">Topics</p>
-        <div class="ktps">
-          <div class="ktpc kfind"><span class="ktph"><i class="kti">${ic('users',16)}</i><b>Find a crew</b><small>${cs.length} open</small></span>
-            ${cs.map(c=>`<button class="kfc" data-act="xjoin" data-v="${c.ix}"><span><b>${esc(c.name)}</b><small>${c.time} · ${esc(c.spot)} · ${c.n-c.f} ${c.n-c.f===1?'spot':'spots'} left</small></span><em>${c.mine||xReq(c)==='ok'?'Open':xReq(c)==='wait'?'Requested':'Ask'}</em></button>`).join('')||'<span class="ktpm">No crews yet · start the first one</span>'}
-            <span class="ktpf"><span>Ask to join · the host approves</span><button data-act="ncopen" data-id="${x.id}">Start one</button></span></div>
-          ${topics}
-        </div>
-      </div>
-      <div class="cbfade"></div>${joined?'':`<button class="composer scjoin" data-act="chatjoin" data-id="${x.id}">Join the show chat</button>`}
-      ${state.who!=null?whoSheet(x):''}</div>`; }
   const RT=['Same! See you there','Count me in','Saving this','Where exactly?','I’ll be on the 6 train around then'];
-  const posts=all.filter(o=>o.tag===tp);
-  const items=[]; posts.forEach((o,i)=>{ items.push({...o,_m:o.m}); if(!o.me&&o.r){ const rp=(k+i+2)%8; if(!(state.blocked||{})[rp]) items.push({id:o.id+'-r',p:rp,t:RT[(k+i)%RT.length],rp:{n:PEOPLE[o.p][0],t:o.t},rx:{},_m:Math.max(0,o.m-4)}); } });
+  const items=[]; all.forEach((o,i)=>{ items.push({...o,_m:o.m}); if(!o.me&&o.r&&i%2===0){ const rp=(k+i+2)%8; if(!(state.blocked||{})[rp]) items.push({id:o.id+'-r',p:rp,t:RT[(k+i)%RT.length],rp:{n:PEOPLE[o.p][0],t:o.t},rx:{},_m:Math.max(0,o.m-4)}); } });
   items.sort((a,b)=>b._m-a._m);
   const L=[{sep:'Today'}].concat(items.map(o=>({id:o.id,me:!!o.me,p:o.p,t:o.t,img:o.img?img(x):'',badge:o.me?'':(o.p!=null&&tixOf(o.p)?tixOf(o.p):''),rp:o.rp,rx:o.rx||{'❤️':o.l||0}})));
   const last=L[L.length-1], seen=last&&last.me?'Seen by '+(3+k%40):'';
-  return `<div class="chat kchat showchat ksc ktopic"><img class="bg" alt="" src="${x.img}"><div class="shade"></div><div class="grain"></div>
-    <div class="ktop">${bar}<div class="ktabs">${WTAGS.slice(1).map(t=>`<button data-act="wtopic" data-v="${t}" aria-pressed="${tp===t}">${t}</button>`).join('')}</div></div>
-    <div class="inner" id="wci"><div class="msgs scmsgs">${igList(L,{group:true,whoAct:'chwho',seen})}</div></div>
-    <div class="cbfade"></div>${joined?`${igReplyBar('w'+x.id)}<form class="composer kcomp" id="wcomposer" onsubmit="return wallPost(event,'${x.id}')"><button type="button" aria-label="Photo" data-act="toast" data-msg="Photos are coming soon">${ic('plus',20)}</button><label for="wq" hidden>Message</label><input id="wq" placeholder="Message # ${esc(tp)}" autocomplete="off"><button class="send" type="submit" aria-label="Send">${ic('send',18)}</button></form>`
-      :`<button class="composer scjoin" data-act="chatjoin" data-id="${x.id}">Join to post in # ${esc(tp)}</button>`}
-    ${state.who!=null?whoSheet(x):''}</div>`; }
+  const cs=xCrews().filter(c=>c.s===x&&!c.full);
+  const hd=kHead({title:esc(x.artist),sub:`<i class="kon"></i>${st.online} online · ${fmtK(st.going)} going`,av:img(x),act:'show',attr:`data-id="${x.id}"`,
+    right:`<button class="kic" data-act="show" data-id="${x.id}" aria-label="Show">${ic('info',22)}</button>`,
+    pin:kPin(ic('users',16),'Find a crew',cs.length?`${cs.length} crew${cs.length>1?'s':''} forming · ask to join`:'No crews yet · start the first one',`<button class="kpbb" data-act="kcrews">View</button>`)});
+  return `<div class="chat kchat kv2 kpinned showchat ksc"><img class="bg" alt="" src="${x.img}"><div class="shade"></div>${hd}
+    <div class="inner" id="wci"><div class="msgs">${igList(L,{group:true,whoAct:'chwho',seen})}</div></div>
+    ${joined?`${igReplyBar('w'+x.id)}${kComp('wcomposer','wq','Message '+esc(x.artist)+' fans…',{onsubmit:`return wallPost(event,'${x.id}')`,attach:'toast" data-msg="Photos are coming soon'})}`
+      :`<button class="composer scjoin kjoin" data-act="chatjoin" data-id="${x.id}">Join the chat</button>`}
+    ${state.kcrews?kCrewSheet(x,cs):''}${state.who!=null?whoSheet(x):''}</div>`; }
+function kCrewSheet(x,cs){ return `<div class="sheetbg" data-act="kcrewsx"></div><div class="sheet csheet" role="dialog" aria-label="Crews"><div class="cgrab"><i class="grab"></i><h3>Crews for ${esc(x.artist)}</h3><p>Small groups of 4–8 · the host approves who joins</p></div>
+  <div class="kcl">${cs.map(c=>{ const r=xReq(c), left=c.n-c.f; return `<div class="kcr"><span class="kcrh">${avi(c.host[3])}</span><span class="kcrb"><b>${esc(c.name)}</b><small>${c.time} · ${esc(c.spot)} · ${left} ${left===1?'spot':'spots'} left</small></span>${c.mine||r==='ok'?`<button class="kcrj on" data-act="xjoin" data-v="${c.ix}">Open</button>`:r==='wait'?`<span class="kcrj kwt">Requested</span>`:`<button class="kcrj" data-act="xjoin" data-v="${c.ix}">Ask</button>`}</div>`; }).join('')||'<p class="kcempty">No crews yet for this show.</p>'}</div>
+  <button class="cgo new" data-act="ncopen" data-id="${x.id}" style="margin:6px 16px calc(16px + var(--sb));width:calc(100% - 32px)">${ic('plus',18)}&nbsp;Start a crew</button></div>`; }
 
 // Safety in the big group: it's full of strangers, so mute / DM rules / report / blocked are one tap away
 function chSafeSheet(x){ const m=!!(state.chMute||{})[x.id], dmr=state.dmReq!==false, nb=Object.keys(state.blocked||{}).length;
@@ -3592,38 +3636,34 @@ if(!window._cdTick) window._cdTick=setInterval(()=>{ const e=document.getElement
 const xStack=(ps,n)=>`<span class="kstk">${ps.slice(0,3).map(p=>`<span>${avi(p[3])}</span>`).join('')}${n?`<b>${n}</b>`:''}</span>`;
 
 // ---------- Crew + DM ----------
-function crewTop(t,s,claimed,sp){
-  const ppl=[t.mine?MEP:PEOPLE[t.host]].concat(t.who.filter(k=>k!==t.host).map(k=>PEOPLE[k])), n=t.who.length+1, cd=cdText(s), st=t.hold||'none';
-  const pins=[];
-  if(t.plan) pins.push(`<button class="kpin w" data-act="toast" data-msg="Meet ${esc(t.plan[0])} at ${esc(t.plan[1])}">${ic('pin',14)}${esc(t.plan[0].replace(' PM',''))} · ${esc(t.plan[1])}</button>`);
-  else pins.push(`<button class="kpin" data-act="setmeet">${ic('plus',14)}Suggest a meetup</button>`);
-  if(t.spare) pins.push(claimed?`<span class="kpin">${ic('check',14)}Ticket claimed</span>`:`<button class="kpin" data-act="claim" data-id="${s.id}">${ic('ticket',14)}1 spare · $${sp.face+FEE}</button>`);
-  if(t.dep) pins.push(st==='in'?`<span class="kpin">${ic('check',14)}$5 released</span>`:st==='held'?`<span class="kpin">${ic('check',14)}$5 held</span>`:`<button class="kpin" data-act="hold">${ic('bolt',14)}$5 hold · refundable</button>`);
-  if(state.loc&&state.loc[t.id]) pins.push(`<button class="kpin" data-act="loc"><i class="klive"></i>Sharing location</button>`);
-  return `<div class="ktop kcrew"><div class="kstub">
-      <div class="ksi"><img alt="" src="${s.img}"><div class="ksio">
-        <div class="ksn"><button class="kbtn" data-act="back" aria-label="Back">${ic('back',20)}</button><span class="ksr">${t.mine?`<button class="kinv" data-act="toast" data-msg="Invite link copied · only people with the link can join">🔗 Invite</button>`:''}<button class="kbtn" data-act="show" data-id="${s.id}" aria-label="Show details">${ic('info',18)}</button></span></div>
-        <div class="kst"><b>${esc(t.title)}</b><small>${t.mine?'You’re hosting · '+(t.priv?'Invite only':'Ask to join'):esc(s.artist)+' · '+sd(s.dates[0])+' · '+esc(VS(s.venue))}</small></div></div></div>
-      <div class="ksp"><span class="kcd" id="kcd" data-sid="${xDays(s.dates[0])>=1?'':s.id}">${cd[0]}</span><small>${cd[1].replace(' ','<br>')}</small>
-        <button class="kmem" data-act="${t.mine?'toast':'person'}" ${t.mine?`data-msg="${n} of ${t.cap} in · ${t.cap-n} spots left"`:`data-v="${t.host}"`}>${xStack(ppl.map(p=>p),`${n} of ${t.cap}`)}</button></div>
-    </div><div class="kpins">${pins.join('')}</div></div>`; }
-function crewActs(t){ const st=t.hold||'none';
-  const b=(l,a,x='',w='')=>`<button class="${w}" data-act="${a}" ${x}>${l}</button>`;
-  if(st==='in') return [b(ic('camera',15)+'Send a photo','attsend','data-v="photo"','w'),b('Best night ever','xq','data-v="Best night ever 🎉"'),b(ic('users',15)+'Keep in touch','kitopen')];
-  const loc=state.loc&&state.loc[t.id];
-  return [b(loc?'<i class="klive"></i>Sharing spot':ic('pin',15)+'Share spot','loc','',loc?'':'w'),b('On my way','xq','data-v="On my way 🏃"'),
-    t.plan?(t.dep&&st!=='held'?b('Hold $5','hold'):b(ic('check',15)+'I’m here','checkin')):b(ic('pin',15)+'Suggest meetup','setmeet')]; }
 function dmCard(t,p){ const P=PEOPLE[p], r=REL[p]||[3,3], s=thShow(t);
   return `<div class="kcard"><button class="kct" data-act="person" data-v="${p}"><span class="kcav">${avi(P[3])}</span><b>${P[0]}</b>
       <small>${cityOf(p)} · ${(MREQ.find(x=>x.p===p)||{ver:true}).ver===false?'Not verified':'✓ ID verified'}${BUD[p]?' · Buddy':''}</small>
       <span class="kcs"><span><b>${showsOf(p)}</b>shows</span><span><b>${r[0]}/${r[1]}</b>showed up</span><span><b>${1+h(P[0])%4}</b>mutual</span></span></button>
     <button class="kcb" data-act="show" data-id="${s.id}"><span>${img(s)}</span>You’re both going · ${esc(s.artist)} · ${sd(s.dates[0])}${ic('right',14)}</button></div>`; }
 
+// ===== M23 chat pages v2: one messenger layout for all three (header · pinned bar · messages · composer) =====
+// Show chat is ONE group chat (no topics). Crew and DM use the same header; only the pinned bar and quick chips change.
+const kHead=(o)=>`<header class="khd"><div class="khr"><button class="kbk" data-act="${o.back||'back'}" aria-label="Back">${ic('back',22)}</button>
+  <button class="kid" ${o.act?`data-act="${o.act}" ${o.attr||''}`:''}><span class="kava${o.round?' r':''}">${o.av}</span><span class="kidt"><b>${o.title}</b><small>${o.sub}</small></span></button>
+  ${o.right||''}</div>${o.pin||''}</header>`;
+const kPin=(icn,b,sm,btn)=>`<div class="kpb"><span class="kpi">${icn}</span><span class="kpt"><b>${b}</b><small>${sm}</small></span>${btn||''}</div>`;
+const kComp=(id,inp,ph,o={})=>`<form class="composer kcmp" id="${id}" ${o.onsubmit?`onsubmit="${o.onsubmit}"`:''}><button type="button" class="kcam" aria-label="Attach" data-act="${o.attach||'attach'}" aria-expanded="${!!state.att}">${ic('plus',20)}</button><label for="${inp}" hidden>Message</label><input id="${inp}" placeholder="${ph}" autocomplete="off"${o.disabled?' disabled':''}><button class="send" type="submit" aria-label="Send">${ic('send',18)}</button></form>`;
+
+function crewPin(t,s,sp,claimed){ const st=t.hold||'none';
+  if(!t.plan) return kPin(ic('pin',16),'No meetup yet','Most crews meet 30 min before doors',`<button class="kpbb" data-act="setmeet">Suggest</button>`);
+  const extra=[`Doors 7:00 PM`].concat(t.spare&&!claimed?[`1 spare · $${sp.face+FEE}`]:[]).concat(t.dep?[st==='in'?'$5 released':st==='held'?'$5 held':'$5 hold']:[]).join(' · ');
+  const btn=st==='in'?`<span class="kpbb on">${ic('check',14)} Here</span>`:t.dep&&st!=='held'?`<button class="kpbb" data-act="hold">Hold $5</button>`:`<button class="kpbb" data-act="checkin">I’m here</button>`;
+  return kPin(ic('pin',16),`${esc(t.plan[0])} · ${esc(t.plan[1])}`,extra,btn); }
+function crewChips(t){ const st=t.hold||'none', loc=state.loc&&state.loc[t.id], b=(l,a,x='')=>`<button data-act="${a}" ${x}>${l}</button>`;
+  if(st==='in') return [b(ic('camera',15)+'Photo','attsend','data-v="photo"'),b('Best night ever 🎉','xq','data-v="Best night ever 🎉"'),b(ic('users',15)+'Keep in touch','kitopen')];
+  return [b(loc?'<i class="klive"></i>Sharing location':ic('pin',15)+'Share location','loc'),b('On my way','xq','data-v="On my way 🏃"'),b('Running late','xq','data-v="Running 10 min late, save me a spot!"')]; }
+
 function crew(){
   const t=String(state.id).startsWith('t')?thById(state.id):threadFor(state.id); state.tid=t.id; t.un=0;
   const s=thShow(t), dm=t.k==='dm', sp=spareOf(s), claimed=state.claimed&&state.claimed[s.id];
   const msgs=t.msgs.filter(m=>!(m.p!=null&&(state.blocked||{})[m.p])).concat(claimed&&t.spare?[{d:'sys',t:`You claimed ${sp.seller[0].split(' ')[0]}’s ticket · transfer in progress`}]:[]);
-  const L=[];
+  const L=[{sep:'Today'}];
   msgs.forEach((m,i)=>{ const id=t.id+':'+i;
     if(m.d==='sys'){ if(!(dm&&i===0)) L.push({sys:m.t}); }
     else if(m.d==='in') L.push({id,p:m.p,t:m.t,rx:igBase(id),rp:m.rp,badge:dm?'':(m.p===t.host?'Host':'')});
@@ -3631,22 +3671,26 @@ function crew(){
     else if(m.d==='img') L.push({id,me:true,img:img(s)});
     else if(m.d==='home') L.push({html:homeCard(t)});
     else if(m.d==='req'){ const P=PEOPLE[m.p], r=REL[m.p]||[3,3], tk=tixOf(m.p); L.push(m.st?{sys:m.st===1?`You approved ${P0(m.p)} · ${t.who.length+1} of ${t.cap}`:`You declined ${P0(m.p)}’s request`}:{html:`<div class="jreq"><button class="jrp" data-act="person" data-v="${m.p}">${av(P,'style="border:0;width:42px;height:42px"')}<span><b>${P[0]} wants to join</b><small>✓ ID verified · showed up ${r[0]}/${r[1]}${tk?' · '+tk:''}</small></span></button><div class="jrb"><button data-act="jreq" data-v="${i}" data-k="2">Decline</button><button class="ok" data-act="jreq" data-v="${i}" data-k="1">Approve</button></div></div>`}); }
-    else if(m.d==='spare'){ if(claimed) L.push({sys:'Spare ticket claimed · transfer in progress'}); else L.push({sys:`${sp.seller[0].split(' ')[0]} listed a spare · $${sp.face+FEE} · pinned at the top`}); } });
+    else if(m.d==='spare') L.push({html:`<div class="kspare ${claimed?'done':''}"><span class="ksi">${img(s)}</span><span class="ksb"><small>Face value + $2 · verified</small><b>${esc(sp.sec)} · next to the crew</b><span>${sp.seller[0]} can’t make it</span></span><span class="ksr"><b>$${sp.face+FEE}</b>${claimed?'<em>Claimed</em>':`<button data-act="claim" data-id="${s.id}">Claim</button>`}</span></div>`}); });
   if(t.typing!=null) L.push({id:t.id+':ty',p:t.typing,typing:true});
   const lastOut=[...L].reverse().find(x=>x.id&&!x.typing), seen=lastOut&&lastOut.me?(dm?(t.pending?'Sent':'Seen'):`Seen by ${P0(t.who[0])}${t.who.length>1?' + '+(t.who.length-1):''}`):'';
   const replying=state.rpl&&state.rpl.key===t.id;
+  const bg=`<img class="bg" alt="" src="${s.img}"><div class="shade"></div>`;
   if(dm){ const p=t.person, P=PEOPLE[p], rq=t.inreq;
-    const top=`<div class="ktop"><div class="kbar"><button class="kbtn" data-act="back" aria-label="Back">${ic('back',20)}</button>
-      ${rq?`<span class="ktt"><b>Message request</b><small>From the ${esc(t.show)} show chat</small></span>`:`<button class="ktt ktp" data-act="person" data-v="${p}"><span class="kav">${avi(P[3])}</span><span><b>${P[0]}</b><small>${t.pending?'Request sent':`<i class="kon"></i>Active now`}</small></span></button>`}</div></div>`;
-    const foot=rq?`<div class="krq"><p>${P0(p)} won’t know you’ve seen this until you accept.</p><div class="krqb"><button data-act="dmrqno">Delete</button><button class="ok" data-act="dmrqyes">Accept</button></div><button class="krqr" data-act="dmrqrep">Block · Report</button></div>`
-      :`${state.att?attMenu(t,s,dm):''}${state.att||replying||t.pending?'':`<div class="kacts"><button class="w" data-act="chinvite" data-v="${p}">${ic('users',15)}Invite to my crew</button><button data-act="attsend" data-v="ticket">${ic('ticket',15)}Share ticket</button></div>`}${igReplyBar(t.id)}<form class="composer kcomp" id="composer"><button type="button" aria-label="Attach" data-act="attach" aria-expanded="${!!state.att}">${ic('plus',20)}</button><label for="msg" hidden>Message</label><input id="msg" placeholder="${t.pending&&t.reqSent?'Waiting for '+P0(p)+' to accept':'Message '+P0(p)}" autocomplete="off"${t.pending&&t.reqSent?' disabled':''}><button class="send" type="submit" aria-label="Send">${ic('send',18)}</button></form>`;
-    return `<div class="chat kchat kdm${rq?' kreqv':''}"><img class="bg" alt="" src="${s.img}"><div class="shade"></div><div class="grain"></div>${top}
-      <div class="inner" id="ci">${dmCard(t,p)}<div class="msgs">${igList(L,{group:false,whoAct:'person',seen})}</div>
-      ${t.pending?`<p class="knote">${t.reqSent?'Request sent · you can send more once '+P0(p)+' accepts':'Your first message is sent as a request · '+dmLeft()+' of '+DM_LIMIT+' left today'}</p>`:''}</div>
-      <div class="cbfade"></div>${foot}</div>`; }
-  return `<div class="chat kchat"><img class="bg" alt="" src="${s.img}"><div class="shade"></div><div class="grain"></div>${crewTop(t,s,claimed,sp)}
+    const hd=kHead({title:rq?'Message request':P[0],sub:rq?`From the ${esc(t.show)} show chat`:(t.pending?'Request sent':'<i class="kon"></i>Active now'),av:avi(P[3]),round:true,act:'person',attr:`data-v="${p}"`,
+      right:`<button class="kic" data-act="person" data-v="${p}" aria-label="Profile">${ic('info',22)}</button>`});
+    const foot=rq?`<div class="krq"><p>${P0(p)} won’t know you’ve seen this until you accept.</p><div class="krqb"><button data-act="dmrqno">Delete</button><button class="ok" data-act="dmrqyes">Accept</button></div><button class="krqr" data-act="dmrqrep">Block or report</button></div>`
+      :`${state.att?attMenu(t,s,dm):''}${state.att||replying||t.pending?'':`<div class="kchips"><button data-act="chinvite" data-v="${p}">${ic('users',15)}Invite to my crew</button><button data-act="attsend" data-v="ticket">${ic('ticket',15)}Share ticket</button></div>`}${igReplyBar(t.id)}${kComp('composer','msg',t.pending&&t.reqSent?'Waiting for '+P0(p)+' to accept':'Message…',{disabled:t.pending&&t.reqSent})}`;
+    return `<div class="chat kchat kv2 kdm${rq?' kreqv':''}">${bg}${hd}
+      <div class="inner" id="ci">${dmCard(t,p)}<div class="msgs">${igList(L.slice(1),{group:false,whoAct:'person',seen})}</div>
+      ${t.pending?`<p class="knote">${t.reqSent?'Request sent · you can send more once '+P0(p)+' accepts':'Your first message is sent as a request · '+dmLeft()+' of '+DM_LIMIT+' left today'}</p>`:''}</div>${foot}</div>`; }
+  const n=t.who.length+1, cd=cdText(s), live=xDays(s.dates[0])<1;
+  const hd=kHead({title:esc(t.title),sub:`${esc(s.artist)} · ${live?`doors in <span id="kcd" data-sid="${s.id}">${cd[0]}</span>`:'in '+cd[0]} · ${n}/${t.cap}`,av:img(s),act:'show',attr:`data-id="${s.id}"`,
+    right:t.mine?`<button class="kinv2" data-act="toast" data-msg="Invite link copied · only people with the link can join">Invite</button>`:`<button class="kic" data-act="show" data-id="${s.id}" aria-label="Show">${ic('info',22)}</button>`,
+    pin:crewPin(t,s,sp,claimed)});
+  return `<div class="chat kchat kv2 kpinned">${bg}${hd}
     <div class="inner" id="ci"><div class="msgs">${pollCard(t)}${igList(L,{group:true,whoAct:'person',seen})}</div></div>
-    <div class="cbfade"></div>${state.att?attMenu(t,s,dm):''}${state.att||replying?'':`<div class="kacts">${crewActs(t).join('')}</div>`}${igReplyBar(t.id)}<form class="composer kcomp" id="composer"><button type="button" aria-label="Attach" data-act="attach" aria-expanded="${!!state.att}">${ic('plus',20)}</button><label for="msg" hidden>Message</label><input id="msg" placeholder="Message the crew" autocomplete="off"><button class="send" type="submit" aria-label="Send">${ic('send',18)}</button></form>
+    ${state.att?attMenu(t,s,dm):''}${state.att||replying?'':`<div class="kchips">${crewChips(t).join('')}</div>`}${igReplyBar(t.id)}${kComp('composer','msg','Message the crew…')}
   </div>`;
 }
 
@@ -3709,14 +3753,14 @@ function person(){ return profileView(false); }
 function render(anim){ window._dockActive=null; const _ap=document.getElementById('app'); _ap.classList.toggle('dk',['crew','me','person','clips','wall'].includes(state.screen)); _ap.classList.toggle('framed',!(matchMedia('(pointer:coarse)').matches&&innerWidth<500));
   const v=document.getElementById('view');
   const shPrev=document.getElementById('shsc'), shKeep=shPrev&&!anim&&state.screen==='show'&&state._last==='show'&&state.id===state._lastId?shPrev.scrollTop:0; state._prevScreen=state._last; state._lastId=state.id;
-  const prev=document.getElementById('sc'); const keep=prev&&state.screen==='home'&&state._last==='home'?prev.scrollTop:0; state._last=state.screen;
+  const wPrev=document.getElementById('wci'), wKeep=wPrev&&state.screen==='wall'&&state._last==='wall'?wPrev.scrollTop:null; const prev=document.getElementById('sc'); const keep=prev&&state.screen==='home'&&state._last==='home'?prev.scrollTop:0; state._last=state.screen;
   v.innerHTML={home,show,crew,crews,me,person,explore,tickets,scene,sell,search,clips,wall:wallPage}[state.screen]()+(state.sheet?citySheet():'')+(state.tsheet?ticketSheet():'')+(state.psheet?plusSheet():'')+(state.kit?kitSheet():'')+(state.nc?ncSheet():'')+(state.ufo?ufSheet():'')+(state.itk?itSheet():'')+(state.ep?epSheet():'')+(state.secO?secSheet():'')+(state.cs?csSheet():'')+(state.cmt?cmSheet():'')+(state.info?infoSheet():'');
   const nsc=document.getElementById('sc'); if(nsc&&keep) nsc.scrollTop=keep;
   const nsh=document.getElementById('shsc'); if(nsh&&shKeep) nsh.scrollTop=shKeep;
   if(nsh&&!shKeep&&state._prevScreen==='wall'&&(state.shY||{})[state.id]) nsh.scrollTop=state.shY[state.id];
   if(anim){ v.classList.remove('screen'); void v.offsetWidth; v.classList.add('screen'); }
   const ci=document.getElementById('ci'); if(ci) ci.scrollTop=state._ciKeep!=null?state._ciKeep:ci.scrollHeight;
-  if(state.screen==='wall'&&state._ciKeep!=null){ const w=document.getElementById('wci'); if(w) w.scrollTop=state._ciKeep; }
+  if(state.screen==='wall'){ const w=document.getElementById('wci'); if(w&&state._ciKeep!=null) w.scrollTop=state._ciKeep; else if(w&&wKeep!=null&&!state._chBottom) w.scrollTop=wKeep; }
   state._ciKeep=null; if(state.screen==='crew'||state.screen==='wall') igWire();
   if(state.sheet) initCitySheet();
   if(document.getElementById('wal')) layWallet(null);
@@ -3759,8 +3803,8 @@ document.getElementById('app').addEventListener('click',e=>{
       msgs:[{d:'sys',t:`You started ${name} · 1 of ${c.cap}`}].concat(c.priv?[{d:'sys',t:'Invite only · share the link with friends'}]:[]),replies:[[p,'Sounds good!']]};
     TH.unshift(t); MINE.push({tid:t.id,s,j:c.j,name}); state.nc=null; openThread(t); toast(c.priv?'Crew created · invite link ready':'Crew created · listed on Explore, you approve who joins');
     setTimeout(()=>{ if(c.priv){ t.who.push(p); t.msgs.push({d:'sys',t:`${P0(p)} joined via your link · ${t.who.length+1} of ${t.cap}`}); t.msgs.push({d:'in',p,t:`Hey! First time seeing ${s.artist} live 🙌`,time:nowT()}); } else t.msgs.push({d:'req',p,st:0}); t.ts=++TSEQ; if(state.screen==='crew'&&state.tid===t.id) render(); else t.un++; },2600); }
-  else if(a==='wallgo'){ state.wtag='All'; state.wtopic=null; state._chBottom=false; go('wall',id); }
-  else if(a==='chatjoin'){ (state.joinedChat ||= {})[id]=true; if(state.screen==='wall'){ state._chBottom=!!state.wtopic; render(); } else { const sc=document.getElementById('shsc'); (state.shY ||= {})[id]=sc?sc.scrollTop:0; state.wtag='All'; state._chBottom=!!state.wtopic; go('wall',id); } toast('You’re in the '+byId[id].artist+' show chat'); }
+  else if(a==='wallgo'){ state.wtag='All'; state.wtopic=null; state._chBottom=true; go('wall',id); }
+  else if(a==='chatjoin'){ (state.joinedChat ||= {})[id]=true; if(state.screen==='wall'){ state._chBottom=true; render(); } else { const sc=document.getElementById('shsc'); (state.shY ||= {})[id]=sc?sc.scrollTop:0; state.wtag='All'; state._chBottom=true; go('wall',id); } toast('You’re in the '+byId[id].artist+' show chat'); }
   else if(a==='iginfo'){ state.igi=true; igKeep(); render(); }
   else if(a==='iginfox'){ state.igi=false; igKeep(); render(); }
   else if(a==='igreact'){ document.querySelectorAll('.igpop').forEach(x=>x.remove()); igReact(id,v); }
@@ -3775,6 +3819,8 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='dmreq'){ state.dmReq=state.dmReq===false; render(); toast(state.dmReq!==false?'DMs from strangers arrive as requests':'Anyone in this chat can DM you'); }
   else if(a==='chblock'){ (state.blocked ||= {})[v]=true; state.who=null; render(); toast(P0(+v)+' is blocked · their messages are hidden'); }
   else if(a==='chreport'){ state.who=null; render(); toast('Thanks · we’ll review '+P0(+v)+' within 24h'); }
+  else if(a==='kcrews'){ state.kcrews=true; render(); }
+  else if(a==='kcrewsx'){ state.kcrews=false; render(); }
   else if(a==='wtopic'){ state.wtopic=v; state.rpl=null; state._chBottom=true; render(); }
   else if(a==='wtopicx'){ state.wtopic=null; state.rpl=null; render(); const w=document.getElementById('wci'); if(w) w.scrollTop=0; }
   else if(a==='xq'){ sendMsg(v); }
@@ -3784,7 +3830,7 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='chwho'){ state.who=+v; render(); }
   else if(a==='whoclose'){ state.who=null; render(); }
   else if(a==='chinvite'){ state.who=null; render(); toast(`Invite sent · ${P0(+v)} can join your crew from Requests`); }
-  else if(a==='wallopen'){ const sc=document.getElementById('shsc'); (state.shY ||= {})[id]=sc?sc.scrollTop:0; state.wtag='All'; state.wtopic=null; state._chBottom=false; go('wall',id); }
+  else if(a==='wallopen'){ const sc=document.getElementById('shsc'); (state.shY ||= {})[id]=sc?sc.scrollTop:0; state.wtag='All'; state.wtopic=null; state._chBottom=true; go('wall',id); }
   else if(a==='wtag'){ state.wtag=v; if(state.screen==='wall'){ state._chBottom=true; render(); } else { const sc=document.querySelector('.scroll'), y=sc&&sc.scrollTop; render(); const n=document.querySelector('.scroll'); if(n) n.scrollTop=y; } }
   else if(a==='wlike'){ state.wlk=state.wlk||{}; state.wlk[v]=!state.wlk[v]; const sc=scEl(), y=sc&&sc.scrollTop; render(); const n=scEl(); if(n) n.scrollTop=y; }
   else if(a==='wmc'){ toast(`We’ll let ${P0(+v)} know · you can chat only if they say yes`); }
