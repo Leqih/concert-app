@@ -3079,9 +3079,9 @@ const chatStats=x=>{ const k=Math.abs(h(x.id)); return {going:1200+k%3800, onlin
 function wallEntry(x){ const L=wallPosts(x).filter(o=>!(o.p!=null&&(state.blocked||{})[o.p])), st=chatStats(x), joined=inChat(x);
   return `<h2 class="h2 sec">Show chat <span class="emo">💬</span></h2><p class="sub" style="margin:6px 0 4px">Everyone going to this show, in one place</p>
   <button class="went" data-act="${joined?'wallopen':'chatjoin'}" data-id="${x.id}" aria-label="${joined?'Open':'Join'} the ${esc(x.artist)} show chat">
-    <span class="wenh"><span class="cstrip">${L.slice(0,4).map(o=>`<span>${avi((o.me?MEP:PEOPLE[o.p])[3])}</span>`).join('')}</span><b>${fmtK(st.going)} going</b><small><i class="chdot"></i>${st.online} online</small></span>
+    <span class="wenh"><span class="cstrip">${L.slice(0,4).map(o=>`<span>${avi((o.me?MEP:PEOPLE[o.p])[3])}</span>`).join('')}</span><b>${esc(scName(x))}</b><small><i class="chdot"></i>${st.online} online · ${fmtK(st.going)} members</small></span>
     ${L.slice(0,2).map(o=>{ const p=o.me?MEP:PEOPLE[o.p]; return `<span class="wenr"><span><b>${o.me?'You':p[0]}</b> ${esc(o.t)}</span></span>`; }).join('')}
-    <span class="wenf"><span>${WTAGS.slice(1).map(t=>`<em># ${t}</em>`).join('')}</span><b>${joined?'Open chat':'Join chat'} ${ic('right',14)}</b></span></button>`; }
+    <span class="wenf"><span></span><b>${joined?'Open chat':'Join chat'} ${ic('right',14)}</b></span></button>`; }
 function kInvSheet(t,s){ const code=crewCode(t.title,s.id), bud=Object.keys(BUD).map(Number).concat([0,1,2,3,4,5,6,7]).filter((v,i,a)=>a.indexOf(v)===i&&!t.who.includes(v)).slice(0,4);
   return `<div class="sheetbg" data-act="kinvx"></div><div class="sheet csheet" role="dialog" aria-label="Invite"><div class="cgrab"><i class="grab"></i><h3>Invite to ${esc(t.title)}</h3><p>Only people you invite, or who ask with the crew ID, can join</p></div>
   <div class="kinvb"><div class="kcode"><small>Crew ID</small><b>#${code}</b><button data-act="toast" data-msg="Crew ID copied">Copy</button></div>
@@ -3097,7 +3097,7 @@ function wallPage(){ const x=byId[state.id], st=chatStats(x), joined=inChat(x), 
   const L=[{sep:'Today'}].concat(items.map(o=>({id:o.id,me:!!o.me,p:o.p,t:o.t,img:o.img?img(x):'',badge:o.me?'':(o.p!=null&&tixOf(o.p)?tixOf(o.p):''),rp:o.rp,rx:o.rx||{'❤️':o.l||0}})));
   const last=L[L.length-1], seen=last&&last.me?'Seen by '+(3+k%40):'';
   const cs=xCrews().filter(c=>c.s===x&&!c.full);
-  const hd=kHead({title:esc(x.artist),sub:`<i class="kon"></i>${st.online} online · ${fmtK(st.going)} going`,av:img(x),act:'show',attr:`data-id="${x.id}"`,
+  const hd=kHead({title:esc(scName(x)),sub:`<i class="kon"></i>${st.online} online · ${fmtK(st.going)} members`,av:img(x),act:'show',attr:`data-id="${x.id}"`,
     right:`<button class="kic" data-act="show" data-id="${x.id}" aria-label="Show">${ic('info',22)}</button>`});
   return `<div class="chat kchat kv2 showchat ksc"><img class="bg" alt="" src="${x.img}"><div class="shade"></div>${hd}
     <div class="inner" id="wci"><div class="msgs">${igList(L,{group:true,whoAct:'chwho',seen})}</div></div>
@@ -3210,13 +3210,15 @@ function xGroup(cs){ const s=cs[0].s, sh=v=>v.replace('Madison Square Garden','M
   return `<div class="xgrp"><button class="xsh" data-act="show" data-id="${s.id}"><span class="xth">${img(s)}</span><span class="xsb"><b>${esc(s.artist)}</b><small>${sd(s.dates[0])} · ${esc(sh(s.venue))}</small></span><span class="xsp">👤 ${cs[0].solo} solo</span></button>${cs.map(xRow).join('')}</div>`; }
 
 // Crews are private: join with an invite, or find one by its crew ID in Chats and ask; the host approves.
+// Public show chats are named the way fans name event chats: artist @ venue + date
+const scName=x=>{ const d=x.dates[0].split('-'); return `${x.artist.toLowerCase()} @ ${VSH(x.venue).toLowerCase()} ${+d[1]}/${+d[2]}`; };
 const crewCode=(name,sid)=>{ const w=String(name).split(/[^A-Za-z]+/).filter(Boolean); return ((w[0]||'C')[0]+(w[1]||w[0]||'R')[0]).toUpperCase()+'-'+(1000+Math.abs(h(name+'|'+sid))%9000); };
 const xCode=c=>crewCode(c.name,c.s.id);
 // Public chats (one per show) are what Explore, the show page and scene pages list
 function pubChat(x){ const st=chatStats(x), L=wallPosts(x).filter(o=>!(o.p!=null&&(state.blocked||{})[o.p])), last=L[0], P=last.me?MEP:PEOPLE[last.p], joined=inChat(x);
   return `<button class="pcc" data-act="${joined?'wallopen':'wallgo'}" data-id="${x.id}"><span class="pcv">${img(x)}</span>
-    <span class="pcb"><span class="pct"><b>${esc(x.artist)}</b><em><i class="kon"></i>${st.online} online</em></span>
-      <small>${sd(x.dates[0])} · ${esc(VSH(x.venue))} · ${fmtK(st.going)} in the chat</small>
+    <span class="pcb"><span class="pct"><b>${esc(scName(x))}</b><em><i class="kon"></i>${st.online} online</em></span>
+      <small>${esc(x.artist)} · ${sd(x.dates[0])} · ${fmtK(st.going)} members</small>
       <span class="pcm"><span class="pca">${avi(P[3])}</span><span><b>${last.me?'You':P0(last.p)}</b> ${esc(last.t)}</span></span></span>
     <span class="pcj${joined?' on':''}">${joined?'Open':'Join'}</span></button>`; }
 function kIdRow(c){ const r=xReq(c), left=c.n-c.f; return `<div class="kcr kidr"><span class="kcrh sq">${img(c.s)}</span><span class="kcrb"><b>${esc(c.name)}</b><small>#${xCode(c)} · ${esc(c.s.artist)} · ${sd(c.s.dates[0])} · ${left} ${left===1?'spot':'spots'} left</small></span>${c.mine||r==='ok'?`<button class="kcrj on" data-act="xjoin" data-v="${c.ix}">Open</button>`:r==='wait'?`<span class="kcrj kwt">Requested</span>`:`<button class="kcrj" data-act="xjoin" data-v="${c.ix}">Ask to join</button>`}</div>`; }
@@ -3741,7 +3743,7 @@ function crews(){
   const tone=(t,i)=>['dk','w','g2','g1'][i%4];
   const bub=(t,i)=>{ const z=rows.length-i;
     if(t.k==='show'){ const s=byId[t.sid], st=chatStats(s), last=wallPosts(s)[0], lp=last.me?'You':PEOPLE[last.p][0].split(' ')[0];
-      return `<button class="cb ${tone(t,i)} ${i%2?'r':'l'}" style="z-index:${z}" data-act="wallopen" data-id="${s.id}"><span class="cbav sq">${img(s)}</span><span class="cbb"><span class="cbt"><b>${esc(s.artist)}</b><em>${st.online} online</em></span><span class="cbs">Show chat · ${fmtK(st.going)} going</span><span class="cbm">${esc(lp)}: ${esc(last.t)}</span></span></button>`; }
+      return `<button class="cb ${tone(t,i)} ${i%2?'r':'l'}" style="z-index:${z}" data-act="wallopen" data-id="${s.id}"><span class="cbav sq">${img(s)}</span><span class="cbb"><span class="cbt"><b>${esc(scName(s))}</b><em>${st.online} online</em></span><span class="cbs">Show chat · ${fmtK(st.going)} members</span><span class="cbm">${esc(lp)}: ${esc(last.t)}</span></span></button>`; }
     if(t.k==='listing'){ const s=byId[t.sid]; return `<button class="cb ${['dk','w','g2','g1'][i%4]} ${i%2?'r':'l'}" style="z-index:${z}" data-act="tickets"><span class="cbav sq">${img(s)}</span><span class="cbb"><span class="cbt"><b>Your listing</b><em>live</em></span><span class="cbm">${esc(s.artist)} · ${3+h(s.id)%9} fans looking at your ticket</span></span></button>`; }
     const dm=t.k==='dm';
     return `<button class="cb ${tone(t,i)} ${i%2?'r':'l'}" style="z-index:${z}" data-act="thread" data-id="${t.id}">
