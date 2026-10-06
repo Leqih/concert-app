@@ -3224,6 +3224,29 @@ function xThread(c){
 function xGroup(cs){ const s=cs[0].s, sh=v=>v.replace('Madison Square Garden','MSG').replace('Radio City Music Hall','Radio City');
   return `<div class="xgrp"><button class="xsh" data-act="show" data-id="${s.id}"><span class="xth">${img(s)}</span><span class="xsb"><b>${esc(s.artist)}</b><small>${sd(s.dates[0])} · ${esc(sh(s.venue))}</small></span><span class="xsp">👤 ${cs[0].solo} solo</span></button>${cs.map(xRow).join('')}</div>`; }
 
+
+// Chats → chat: the tapped bubble grows into the chat screen and its avatar flies into the header (shared element)
+function cbSnap(card){ window._cbS=null; if(!card||matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const av=card.querySelector('.cbav'), cs=getComputedStyle(card);
+  window._cbS={r:card.getBoundingClientRect(),bg:cs.backgroundColor,rad:cs.borderRadius,card:card.cloneNode(true),av:av?av.cloneNode(true):null,ar:av?av.getBoundingClientRect():null,ac:av?getComputedStyle(av).borderRadius:'50%'}; }
+function cbOpen(v){ const S=window._cbS, AP=document.getElementById('app'), V=AP.getBoundingClientRect(), VR=getComputedStyle(AP).borderRadius||'0px', E='cubic-bezier(.2,.85,.25,1)', D=460;
+  v.classList.remove('screen');
+  const fx=(el,r,z)=>{ Object.assign(el.style,{position:'fixed',left:r.left+'px',top:r.top+'px',width:r.width+'px',height:r.height+'px',margin:'0',zIndex:z,pointerEvents:'none',boxSizing:'border-box'}); document.body.appendChild(el); return el; };
+  // 1. the bubble becomes the chat background
+  const g=fx(document.createElement('div'),S.r,9998); g.style.backgroundColor=S.bg; g.style.borderRadius=S.rad; g.style.overflow='hidden';
+  const c=S.card; Object.assign(c.style,{position:'absolute',inset:'0',margin:'0',transform:'none',width:'100%',height:'100%'}); g.appendChild(c);
+  g.animate([{left:S.r.left+'px',top:S.r.top+'px',width:S.r.width+'px',height:S.r.height+'px',borderRadius:S.rad,backgroundColor:S.bg,opacity:1},
+             {left:V.left+'px',top:V.top+'px',width:V.width+'px',height:V.height+'px',borderRadius:VR,backgroundColor:'#0E0E10',opacity:1,offset:.7},
+             {left:V.left+'px',top:V.top+'px',width:V.width+'px',height:V.height+'px',borderRadius:VR,backgroundColor:'#0E0E10',opacity:0}],{duration:D+120,easing:E,fill:'forwards'}).onfinish=()=>g.remove();
+  c.animate([{opacity:1,transform:'translateY(0)'},{opacity:0,transform:'translateY(-14px)'}],{duration:170,easing:'ease-out',fill:'forwards'});
+  // 2. the new chat fades up on top of it
+  v.animate([{opacity:0,transform:'translateY(18px)'},{opacity:0,transform:'translateY(18px)',offset:.32},{opacity:1,transform:'none'}],{duration:D+120,easing:E});
+  // 3. the avatar flies into the header
+  const tgt=v.querySelector('.khd .kava');
+  if(S.av&&tgt){ const T=tgt.getBoundingClientRect(), a=fx(S.av,S.ar,9999); a.style.overflow='hidden';
+    tgt.style.visibility='hidden'; a.style.transformOrigin='0 0';
+    const dx=T.left-S.ar.left, dy=T.top-S.ar.top, k=T.width/S.ar.width, tr=getComputedStyle(tgt).borderRadius;
+    a.animate([{transform:'translate(0,0) scale(1)',borderRadius:S.ac},{transform:`translate(${dx}px,${dy}px) scale(${k})`,borderRadius:tr}],{duration:D,easing:E,fill:'forwards'}).onfinish=()=>{ tgt.style.visibility=''; a.remove(); }; } }
 // Crews are private: join with an invite, or find one by its crew ID in Chats and ask; the host approves.
 // Public show chats are named the way fans name event chats: artist @ venue + date
 // Show chats are official: one per show, named by Plus One, split into numbered groups of 2,000 (Group 1 full → Group 2 …)
@@ -3822,6 +3845,7 @@ function render(anim){ window._dockActive=null; const _ap=document.getElementByI
   const ci=document.getElementById('ci'); if(ci) ci.scrollTop=state._ciKeep!=null?state._ciKeep:ci.scrollHeight;
   if(state.screen==='wall'){ const w=document.getElementById('wci'); if(w&&state._ciKeep!=null) w.scrollTop=state._ciKeep; else if(w&&wKeep!=null&&!state._chBottom) w.scrollTop=wKeep; }
   state._ciKeep=null; if(state.screen==='crew'||state.screen==='wall') igWire();
+  if(window._cbS){ if(state.screen==='crew'||state.screen==='wall') cbOpen(v); window._cbS=null; }
   if(state.sheet) initCitySheet();
   if(document.getElementById('wal')) layWallet(null);
   syncNav(window._dockActive);
@@ -3844,6 +3868,7 @@ document.addEventListener('keydown',e=>{ if(e.key!=='Enter'||e.isComposing||e.ke
 document.getElementById('app').addEventListener('click',e=>{
   const t=e.target.closest('[data-act]'); if(!t) return;
   const a=t.dataset.act, id=t.dataset.id, v=t.dataset.v;
+  if(state.screen==='crews'&&['thread','wallopen','mrqopen'].includes(a)) cbSnap(t.closest('.cb'));
   if(t.closest&&t.closest('#psheet')&&t.classList.contains('pk')&&!t.dataset.go){ pkPick(t); return; }
   if(a==='show'){ if(t.classList.contains('urow')) showFly(t,id); else go('show',id); }
   else if(a==='xmode'){ state.xmode=v; state.q=''; render(); }
