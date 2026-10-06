@@ -2293,6 +2293,20 @@ button.csloc{box-shadow:inset 0 0 0 1.5px #0B0B0C;background:transparent}
 .ncinv{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;border-radius:var(--r-md);background:var(--bg)}
 .ncinv span{display:flex;flex-direction:column;gap:2px}.ncinv b{font-size:15px}.ncinv small{font-size:13px;color:var(--muted);line-height:1.4}
 .ncname{width:100%;height:48px;padding:0 16px;border:0;outline:0;border-radius:var(--r-md);background:var(--bg);font:600 16px var(--body);color:var(--text)}.ncname::placeholder{color:var(--muted);font-weight:500}
+
+/* M25 chat types: official · private crew · direct */
+.ktype{display:flex;align-items:center;gap:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ktype svg{flex:0 0 auto}
+.kidt b{display:flex;align-items:center;gap:4px}
+.kofc{font-style:normal;display:inline-grid;place-items:center;color:#fff;flex:0 0 auto}
+.kofc svg{fill:#fff;stroke:#0B0B0C}
+.kidt small svg{vertical-align:-1px;margin-right:1px}
+.kava.g{background:none;overflow:visible;border-radius:0}
+.kgav{position:relative;display:block;width:38px;height:38px}
+.kgav>span{position:absolute;width:27px;height:27px;border-radius:50%;overflow:hidden;box-shadow:0 0 0 2px #17171A}
+.kgav>span:first-child{left:0;top:0}.kgav>span:last-child{right:0;bottom:0}
+.kgav img,.kgav .avimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.kpt small .kcdn{font-variant-numeric:tabular-nums}
 </style>
 
 <div class="app framed" id="app">
@@ -2420,7 +2434,7 @@ const I = {
   user:'<circle cx="12" cy="8" r="3.8"/><path d="M5 20a7 7 0 0 1 14 0"/>', users:'<circle cx="9" cy="8.5" r="3.2"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><path d="M15.5 5.5a3 3 0 0 1 0 6M17.5 19a5 5 0 0 0-2-4"/>',
   mic:'<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/>', cal:'<rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/>',
   pin:'<path d="M12 21s-6.5-5.8-6.5-11A6.5 6.5 0 0 1 18.5 10c0 5.2-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/>', info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.2"/>', spark:'<path d="M12 3l1.8 5.4L19 10l-5.2 1.6L12 17l-1.8-5.4L5 10l5.2-1.6z"/><path d="M19 16l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"/>', clip:'<path d="M20 11.5l-7.8 7.8a5 5 0 0 1-7-7l8.2-8.3a3.3 3.3 0 0 1 4.7 4.7l-8.1 8.1a1.7 1.7 0 0 1-2.4-2.4l7.4-7.4"/>',
-  send:'<path d="M5 12h13M12 6l6 6-6 6"/>', mic:'<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/>', image:'<rect x="3.5" y="4.5" width="17" height="15" rx="4"/><circle cx="9" cy="10" r="1.8"/><path d="M20 16l-5-5-8.5 8.5"/>', sticker:'<path d="M20.5 12.5V8a4.5 4.5 0 0 0-4.5-4.5H8A4.5 4.5 0 0 0 3.5 8v8A4.5 4.5 0 0 0 8 20.5h4.5z"/><path d="M12.5 20.5c0-4.4 3.6-8 8-8"/><path d="M9 10.5v.2M15 10.5v.2M9 14.5c1.5 1.3 3.5 1.3 5 0"/>', reply:'<path d="M9.5 7L4.5 12l5 5"/><path d="M4.5 12H14a5.5 5.5 0 0 1 5.5 5.5V19"/>', share:'<path d="M12 3v12M7 8l5-5 5 5M5 14v6h14v-6"/>', bell:'<path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 21h4"/>', compass:'<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>', ticket:'<path d="M3 7h18v3a2 2 0 0 0 0 4v3H3v-3a2 2 0 0 0 0-4z"/><path d="M14 7v10"/>', play:'<path d="M8 5.5v13l10.5-6.5z"/>', clip:'<rect x="4" y="4" width="16" height="16" rx="4"/><path d="M10 9v6l5-3z"/>', heart:'<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>', sound:'<path d="M5 10v4h3l4 3.5v-11L8 10z"/><path d="M16 9.5a3.5 3.5 0 0 1 0 5"/>', mute:'<path d="M5 10v4h3l4 3.5v-11L8 10z"/><path d="M16 10l4 4M20 10l-4 4"/>', camera:'<path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>', shuffle:'<path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/>', bolt:'<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>', chev:'<path d="M6 9l6 6 6-6"/>', check:'<path d="M5 12l4 4 10-10"/>', x:'<path d="M6 6l12 12M18 6L6 18"/>', clock:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>', sliders:'<path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/>', shield:'<path d="M12 3l7.5 3v6c0 4.7-3.2 7.7-7.5 9-4.3-1.3-7.5-4.3-7.5-9V6z"/>',
+  send:'<path d="M5 12h13M12 6l6 6-6 6"/>', mic:'<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/>', image:'<rect x="3.5" y="4.5" width="17" height="15" rx="4"/><circle cx="9" cy="10" r="1.8"/><path d="M20 16l-5-5-8.5 8.5"/>', sticker:'<path d="M20.5 12.5V8a4.5 4.5 0 0 0-4.5-4.5H8A4.5 4.5 0 0 0 3.5 8v8A4.5 4.5 0 0 0 8 20.5h4.5z"/><path d="M12.5 20.5c0-4.4 3.6-8 8-8"/><path d="M9 10.5v.2M15 10.5v.2M9 14.5c1.5 1.3 3.5 1.3 5 0"/>', reply:'<path d="M9.5 7L4.5 12l5 5"/><path d="M4.5 12H14a5.5 5.5 0 0 1 5.5 5.5V19"/>', share:'<path d="M12 3v12M7 8l5-5 5 5M5 14v6h14v-6"/>', bell:'<path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 21h4"/>', compass:'<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>', ticket:'<path d="M3 7h18v3a2 2 0 0 0 0 4v3H3v-3a2 2 0 0 0 0-4z"/><path d="M14 7v10"/>', play:'<path d="M8 5.5v13l10.5-6.5z"/>', clip:'<rect x="4" y="4" width="16" height="16" rx="4"/><path d="M10 9v6l5-3z"/>', heart:'<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>', sound:'<path d="M5 10v4h3l4 3.5v-11L8 10z"/><path d="M16 9.5a3.5 3.5 0 0 1 0 5"/>', mute:'<path d="M5 10v4h3l4 3.5v-11L8 10z"/><path d="M16 10l4 4M20 10l-4 4"/>', camera:'<path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>', shuffle:'<path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/>', bolt:'<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>', chev:'<path d="M6 9l6 6 6-6"/>', check:'<path d="M5 12l4 4 10-10"/>', x:'<path d="M6 6l12 12M18 6L6 18"/>', clock:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>', sliders:'<path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/>', shield:'<path d="M12 3l7.5 3v6c0 4.7-3.2 7.7-7.5 9-4.3-1.3-7.5-4.3-7.5-9V6z"/>',lock:'<rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V7.5a4 4 0 0 1 8 0V11"/>',badge:'<path d="M12 2.5l2.4 1.8 3-.2.9 2.9 2.5 1.7-1 2.8 1 2.8-2.5 1.7-.9 2.9-3-.2L12 21.5l-2.4-1.8-3 .2-.9-2.9-2.5-1.7 1-2.8-1-2.8 2.5-1.7.9-2.9 3 .2z"/><path d="M8.5 12l2.4 2.4 4.6-4.8"/>',
 };
 const ic = (n,sz=22) => `<svg class="icon" viewBox="0 0 24 24" style="width:${sz}px;height:${sz}px" aria-hidden="true">${I[n]}</svg>`;
 const AV=/*AVATARS*/;
@@ -3098,7 +3112,7 @@ function wallPage(){ const x=byId[state.id], st=chatStats(x), joined=inChat(x), 
   const L=[intro,{sep:'Today'}].concat(items.map(o=>({id:o.id,me:!!o.me,p:o.p,t:o.t,img:o.img?img(x):'',badge:o.me?'':(o.p!=null&&tixOf(o.p)?tixOf(o.p):''),rp:o.rp,rx:o.rx||{'❤️':o.l||0}})));
   const last=L[L.length-1], seen=last&&last.me?'Seen by '+(3+k%40):'';
   const cs=xCrews().filter(c=>c.s===x&&!c.full);
-  const hd=kHead({title:esc(scName(x)),sub:`<i class="kon"></i>${st.online} online · ${scMem(x)}`,av:img(x),act:'show',attr:`data-id="${x.id}"`,
+  const hd=kHead({title:esc(scName(x))+`<i class="kofc" title="Official">${ic('badge',15)}</i>`,sub:`Official show chat · <i class="kon"></i>${st.online} online`,av:img(x),act:'show',attr:`data-id="${x.id}"`,
     right:`<button class="kic" data-act="show" data-id="${x.id}" aria-label="Show">${ic('info',22)}</button>`});
   return `<div class="chat kchat kv2 showchat ksc"><img class="bg" alt="" src="${x.img}"><div class="shade"></div>${hd}
     <div class="inner" id="wci"><div class="msgs">${igList(L,{group:true,whoAct:'chwho',seen})}</div></div>
@@ -3688,14 +3702,14 @@ function dmCard(t,p){ const P=PEOPLE[p], r=REL[p]||[3,3], s=thShow(t);
 // ===== M23 chat pages v2: one messenger layout for all three (header · pinned bar · messages · composer) =====
 // Show chat is ONE group chat (no topics). Crew and DM use the same header; only the pinned bar and quick chips change.
 const kHead=(o)=>`<header class="khd"><div class="khr"><button class="kbk" data-act="${o.back||'back'}" aria-label="Back">${ic('back',22)}</button>
-  <button class="kid" ${o.act?`data-act="${o.act}" ${o.attr||''}`:''}><span class="kava${o.round?' r':''}">${o.av}</span><span class="kidt"><b>${o.title}</b><small>${o.sub}</small></span></button>
+  <button class="kid" ${o.act?`data-act="${o.act}" ${o.attr||''}`:''}><span class="kava${o.round?' r':''}${o.grp?' g':''}">${o.av}</span><span class="kidt"><b>${o.title}</b><small>${o.sub}</small></span></button>
   ${o.right||''}</div>${o.pin||''}</header>`;
 const kPin=(icn,b,sm,btn)=>`<div class="kpb"><span class="kpi">${icn}</span><span class="kpt"><b>${b}</b><small>${sm}</small></span>${btn||''}</div>`;
 const kComp=(id,inp,ph,o={})=>`<form class="composer kcmp" id="${id}" ${o.onsubmit?`onsubmit="${o.onsubmit}"`:''}><button type="button" class="kcam" aria-label="Attach" data-act="${o.attach||'attach'}" aria-expanded="${!!state.att}">${ic('plus',20)}</button><label for="${inp}" hidden>Message</label><input id="${inp}" placeholder="${ph}" autocomplete="off"${o.disabled?' disabled':''}><button class="send" type="submit" aria-label="Send">${ic('send',18)}</button></form>`;
 
 function crewPin(t,s,sp,claimed){ const st=t.hold||'none';
   if(!t.plan) return kPin(ic('pin',16),'No meetup yet','Most crews meet 30 min before doors',`<button class="kpbb" data-act="setmeet">Suggest</button>`);
-  const extra=[`Doors 7:00 PM`].concat(t.spare&&!claimed?[`1 spare · $${sp.face+FEE}`]:[]).concat(t.dep?[st==='in'?'$5 released':st==='held'?'$5 held':'$5 hold']:[]).join(' · ');
+  const cd=cdText(s), live=xDays(s.dates[0])<1, extra=[live?`Doors in <span id="kcd" data-sid="${s.id}">${cd[0]}</span>`:`${esc(s.artist)} in ${cd[0]}`].concat(t.spare&&!claimed?[`1 spare · $${sp.face+FEE}`]:[]).concat(t.dep?[st==='in'?'$5 released':st==='held'?'$5 held':'$5 hold']:[]).join(' · ');
   const btn=st==='in'?`<span class="kpbb on">${ic('check',14)} Here</span>`:t.dep&&st!=='held'?`<button class="kpbb" data-act="hold">Hold $5</button>`:`<button class="kpbb" data-act="checkin">I’m here</button>`;
   return kPin(ic('pin',16),`${esc(t.plan[0])} · ${esc(t.plan[1])}`,extra,btn); }
 function crewChips(t){ const st=t.hold||'none', loc=state.loc&&state.loc[t.id], b=(l,a,x='')=>`<button data-act="${a}" ${x}>${l}</button>`;
@@ -3720,7 +3734,7 @@ function crew(){
   const replying=state.rpl&&state.rpl.key===t.id;
   const bg=`<img class="bg" alt="" src="${s.img}"><div class="shade"></div>`;
   if(dm){ const p=t.person, P=PEOPLE[p], rq=t.inreq;
-    const hd=kHead({title:rq?'Message request':P[0],sub:rq?`From the ${esc(t.show)} show chat`:(t.pending?'Request sent':'<i class="kon"></i>Active now'),av:avi(P[3]),round:true,act:'person',attr:`data-v="${p}"`,
+    const hd=kHead({title:rq?'Message request':P[0],sub:rq?`From the ${esc(t.show)} show chat`:(t.pending?`${ic('chat',11)} Direct message · request sent`:`${ic('chat',11)} Direct message · <i class="kon"></i>Active now`),av:avi(P[3]),round:true,act:'person',attr:`data-v="${p}"`,
       right:`<button class="kic" data-act="person" data-v="${p}" aria-label="Profile">${ic('info',22)}</button>`});
     const foot=rq?`<div class="krq"><p>${P0(p)} won’t know you’ve seen this until you accept.</p><div class="krqb"><button data-act="dmrqno">Delete</button><button class="ok" data-act="dmrqyes">Accept</button></div><button class="krqr" data-act="dmrqrep">Block or report</button></div>`
       :`${state.att?attMenu(t,s,dm):''}${state.att||replying||t.pending?'':`<div class="kchips"><button data-act="chinvite" data-v="${p}">${ic('users',15)}Invite to my crew</button><button data-act="attsend" data-v="ticket">${ic('ticket',15)}Share ticket</button></div>`}${igReplyBar(t.id)}${kComp('composer','msg',t.pending&&t.reqSent?'Waiting for '+P0(p)+' to accept':'Message…',{disabled:t.pending&&t.reqSent})}`;
@@ -3728,7 +3742,8 @@ function crew(){
       <div class="inner" id="ci">${dmCard(t,p)}<div class="msgs">${igList(L.slice(1),{group:false,whoAct:'person',seen})}</div>
       ${t.pending?`<p class="knote">${t.reqSent?'Request sent · you can send more once '+P0(p)+' accepts':'Your first message is sent as a request · '+dmLeft()+' of '+DM_LIMIT+' left today'}</p>`:''}</div>${foot}</div>`; }
   const n=t.who.length+1, cd=cdText(s), live=xDays(s.dates[0])<1;
-  const hd=kHead({title:esc(t.title),sub:`${esc(s.artist)} · ${live?`doors in <span id="kcd" data-sid="${s.id}">${cd[0]}</span>`:'in '+cd[0]} · ${n}/${t.cap}`,av:img(s),act:'show',attr:`data-id="${s.id}"`,
+  const ppl=[t.mine?MEP:PEOPLE[t.host]].concat(t.who.filter(k=>k!==t.host).map(k=>PEOPLE[k]));
+  const hd=kHead({title:esc(t.title),sub:`${ic('lock',11)} Private crew · ${esc(s.artist)} · ${n}/${t.cap}`,av:`<span class="kgav"><span>${avi(ppl[0][3])}</span><span>${avi((ppl[1]||ppl[0])[3])}</span></span>`,grp:true,act:'show',attr:`data-id="${s.id}"`,
     right:t.mine?`<button class="kinv2" data-act="kinvopen">Invite</button>`:`<button class="kic" data-act="show" data-id="${s.id}" aria-label="Show">${ic('info',22)}</button>`,
     pin:crewPin(t,s,sp,claimed)});
   return `<div class="chat kchat kv2 kpinned">${bg}${hd}
@@ -3744,17 +3759,17 @@ function crews(){
   const showc=SHOWS.filter(x=>inChat(x)).map(x=>({id:'S'+x.id,k:'show',sid:x.id,ts:(state.joinedChat||{})[x.id]?9e9:60,un:0}));
   const rows=TH.filter(t=>!t.inreq).concat(listed,showc).filter(t=>f==='all'||(f==='shows'&&t.k==='show')||(f==='crews'&&t.k==='crew')||(f==='tickets'&&(t.k==='listing'||(t.spare&&state.claimed&&state.claimed[thShow(t).id])))||(f==='dms'&&t.k==='dm'))
     .filter(t=>!q||(t.k==='listing'||t.k==='show'?byId[t.sid].artist+' show chat':thName(t)+' '+thLast(t)).toLowerCase().includes(q)).sort((a,b)=>b.ts-a.ts);
-  const tabs=[['all','All'],['shows','Shows'],['crews','Crews'],['dms','Direct'],['requests','Requests'+((mreqVisible().length+(REQ.t1?1:0)+INV0().length)?' '+(mreqVisible().length+(REQ.t1?1:0)+INV0().length):'')]], req=REQ.t1||[];
+  const tabs=[['all','All'],['shows','Official'],['crews','Crews'],['dms','Direct'],['requests','Requests'+((mreqVisible().length+(REQ.t1?1:0)+INV0().length)?' '+(mreqVisible().length+(REQ.t1?1:0)+INV0().length):'')]], req=REQ.t1||[];
   const tone=(t,i)=>['dk','w','g2','g1'][i%4];
   const bub=(t,i)=>{ const z=rows.length-i;
     if(t.k==='show'){ const s=byId[t.sid], st=chatStats(s), last=wallPosts(s)[0], lp=last.me?'You':PEOPLE[last.p][0].split(' ')[0];
-      return `<button class="cb ${tone(t,i)} ${i%2?'r':'l'}" style="z-index:${z}" data-act="wallopen" data-id="${s.id}"><span class="cbav sq">${img(s)}</span><span class="cbb"><span class="cbt"><b>${esc(scName(s))}</b><em>${st.online} online</em></span><span class="cbs">Official show chat · ${fmtK(scGroup(s).n)} members</span><span class="cbm">${esc(lp)}: ${esc(last.t)}</span></span></button>`; }
+      return `<button class="cb ${tone(t,i)} ${i%2?'r':'l'}" style="z-index:${z}" data-act="wallopen" data-id="${s.id}"><span class="cbav sq">${img(s)}</span><span class="cbb"><span class="cbt"><b>${esc(scName(s))}</b><em>${st.online} online</em></span><span class="cbs ktype">${ic('badge',12)}Official show chat · ${fmtK(scGroup(s).n)} members</span><span class="cbm">${esc(lp)}: ${esc(last.t)}</span></span></button>`; }
     if(t.k==='listing'){ const s=byId[t.sid]; return `<button class="cb ${['dk','w','g2','g1'][i%4]} ${i%2?'r':'l'}" style="z-index:${z}" data-act="tickets"><span class="cbav sq">${img(s)}</span><span class="cbb"><span class="cbt"><b>Your listing</b><em>live</em></span><span class="cbm">${esc(s.artist)} · ${3+h(s.id)%9} fans looking at your ticket</span></span></button>`; }
     const dm=t.k==='dm';
     return `<button class="cb ${tone(t,i)} ${i%2?'r':'l'}" style="z-index:${z}" data-act="thread" data-id="${t.id}">
       <span class="cbav ${dm?'':'grp'}">${dm?avi(PEOPLE[t.person][3]):`<span>${avi(PEOPLE[t.who[0]][3])}</span><span>${avi(PEOPLE[t.who[1]][3])}</span>`}</span>
       <span class="cbb"><span class="cbt"><b>${esc(dm?PEOPLE[t.person][0]:t.title)}</b><em>${thTime(t)}</em></span>
-        <span class="cbs">${dm?'Direct':esc(t.show)}</span>
+        <span class="cbs ktype">${dm?`${ic('chat',11)}Direct message`:`${ic('lock',11)}Private crew · ${esc(t.show)} · ${t.who.length+1}/${t.cap}`}</span>
         <span class="cbm">${t.typing!=null?`<span class="mtyp"><i></i><i></i><i></i></span>`:esc(thLast(t))}</span></span>
       ${t.un?`<span class="cbn">${t.un>9?'9+':t.un}</span>`:''}</button>`; };
   return `<div class="scroll"><div style="padding-bottom:130px">
