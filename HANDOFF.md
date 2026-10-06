@@ -156,7 +156,7 @@ pip install playwright && python3 demo/tests/m7test.py   # 可选：批量截屏
 | M24.1 | Crew names sound like real group chats (lowercase, inside jokes, emoji): hs pit people 🤘, doja ramen night 🍜, gorillaz solo squad, rail or die, after?? 🪩 … The create sheet has a Name field (placeholder suggests one per vibe) |
 | M24.2 | Show chats are official and numbered (Leqi: like 演唱会一群/二群): `scName(x)` = “Artist · Venue m/d · Group N”; groups hold 2,000 (`SC_CAP`), you land in the newest open group; the chat opens with an “Official chat for … · Group 1 full, you’re in Group 2” line; counts read “1,430 / 2,000 members”. Removed leftover topic tags from the show page chat card |
 | M25 | Chat types are obvious everywhere: **Official show chat** (badge icon next to the name, square cover), **Private crew** (lock icon, two-face group avatar, “Private crew · Artist · 4/6”), **Direct message** (chat icon, round avatar). Same labels in the Chats list; tab Shows → Official. Crew countdown moved into the pinned plan bar. New icons: `lock`, `badge` |
-| M25.1 | Crew names start with a capital letter (Hs pit people 🤘, Rail or die …); names typed in the create sheet are capitalised too |
+| M25.1 | Crew names start with a capital letter (Harry pit people 🤘, Rail or die …); names typed in the create sheet are capitalised too |
 
 ## 6. 链接（原账号所有，新账号只能查看）
 
