@@ -2874,18 +2874,18 @@ function wallPage(){ const x=byId[state.id], tag=state.wtag||'All', st=chatStats
   items.sort((a,b)=>b._m-a._m);
   const L=[{sep:'Today'}].concat(items.map(o=>({id:o.id,me:!!o.me,p:o.p,t:o.t,img:o.img?img(x):'',tag:tag==='All'?o.tag:null,rp:o.rp,rx:o.rx||{'❤️':o.l||0}})));
   const last=L[L.length-1], seen=last&&last.me?'Seen by '+(3+k%40):'';
-  return `<div class="chat showchat igchat"><img class="bg" alt="" src="${x.img}"><div class="shade"></div><div class="grain"></div>
-    ${igHead({av:`<span class="igav1 sq">${img(x)}<i class="igon"></i></span>`,title:esc(x.artist),sub:`Show chat · ${fmtK(st.going)} going · ${st.online} online`,safe:'chsafe'})}
-    <div class="hs wtg chch igch">${WTAGS.map(t=>`<button class="gch" data-act="wtag" data-v="${t}" aria-pressed="${tag===t}">${t==='All'?'All':'# '+t}</button>`).join('')}</div>
-    <div class="inner igin haspin" id="wci">
-      <div class="igintro"><span class="igav1 lg sq">${img(x)}</span><b>${esc(x.artist)} · Show chat</b><small>Everyone going to ${esc(VSH(x.venue))} on ${sd(x.dates[0])} · ticket holders are marked</small>
-        <button data-act="ncopen" data-id="${x.id}">Start a crew · ${crewsN} forming</button></div>
-      ${igList(L,{group:true,whoAct:'chwho',seen})}
+  return `<div class="chat showchat"><img class="bg" alt="" src="${x.img}"><div class="shade"></div><div class="grain"></div>
+    <div class="sctop"></div><div class="nav cnav"><button class="nb" data-act="back" aria-label="Back">${ic('back')}</button><button class="nb sfb" data-act="chsafe" aria-label="Safety tools">🛡️ Safety</button></div>
+    <div class="hs wtg chch">${WTAGS.map(t=>`<button class="gch" data-act="wtag" data-v="${t}" aria-pressed="${tag===t}">${t==='All'?'All':'# '+t}</button>`).join('')}</div>
+    <div class="inner crewpad" id="wci">
+      <div class="ctitle">${esc(x.artist)} · Show chat</div>
+      <div class="scmeta"><i class="chdot"></i>${fmtK(st.going)} going · ${st.online} online · ${sd(x.dates[0])} · ${esc(VSH(x.venue))}</div>
+      <button class="chpin" data-act="ncopen" data-id="${x.id}"><i>👥</i><span><b>Want a smaller group?</b><small>${crewsN} crew${crewsN===1?'':'s'} forming · start one from this chat</small></span><em>Start a crew</em></button>
+      <div class="msgs scmsgs">${igList(L,{group:true,whoAct:'chwho',seen})}</div>
     </div>
-    <div class="cbfade"></div>
-    ${joined?igComposer({id:'wcomposer',input:'wq',key:'w'+x.id,ph:tag==='All'?'Message everyone…':'Message # '+tag+'…',onsubmit:`return wallPost(event,'${x.id}')`,attach:'toast" data-msg="Photos in show chats are coming soon'})
-      :`<button class="composer scjoin igjoin" data-act="chatjoin" data-id="${x.id}">Join the show chat</button>`}
-    ${state.who!=null?whoSheet(x):''}${state.chsafe?chSafeSheet(x):''}${state.igi?igInfo():''}</div>`; }
+    <div class="cbfade"></div>${joined?`${igReplyBar('w'+x.id)}<form class="composer" id="wcomposer" onsubmit="return wallPost(event,'${x.id}')"><label for="wq" hidden>Message</label><input id="wq" placeholder="Message ${tag==='All'?'everyone':'# '+tag}" autocomplete="off"><button class="send" type="submit" aria-label="Send">${ic('send',18)}</button></form>`
+      :`<button class="composer scjoin" data-act="chatjoin" data-id="${x.id}">Join the show chat</button>`}
+    ${state.who!=null?whoSheet(x):''}${state.chsafe?chSafeSheet(x):''}</div>`; }
 // Safety in the big group: it's full of strangers, so mute / DM rules / report / blocked are one tap away
 function chSafeSheet(x){ const m=!!(state.chMute||{})[x.id], dmr=state.dmReq!==false, nb=Object.keys(state.blocked||{}).length;
   return `<div class="sheetbg" data-act="chsafeclose"></div><div class="sheet csheet" role="dialog" aria-label="Safety tools"><div class="cgrab"><i class="grab"></i><h3>Safety tools <span class="emo">🛡️</span></h3><p>This chat is open to everyone going · you control who reaches you</p></div>
@@ -3375,6 +3375,7 @@ function igList(L,o){ let out=''; const who=x=>x.me?'me':(x.p!=null?'p'+x.p:x.na
         ${bubble}${rk.length?`<button class="igrxp${mine?' on':''}" data-act="igreact" data-id="${m.id}" data-v="${mine||rk[0]}" aria-label="Reactions">${rk.slice(0,3).join('')}${rk.reduce((n,e)=>n+rx[e],0)>1?' '+rk.reduce((n,e)=>n+rx[e],0):''}</button>`:''}
         ${m.me&&o.seen&&i===L.length-1?`<small class="igseen">${o.seen}</small>`:''}</div></div>`; });
   return `<div class="igl">${out}</div>`; }
+const igReplyBar=key=>{ const rp=state.rpl&&state.rpl.key===key?state.rpl:null; return rp?`<div class="igrp"><span><small>Replying to ${esc(rp.n)}</small><b>${esc(rp.t)}</b></span><button data-act="igreplyx" aria-label="Cancel reply">${ic('x',16)}</button></div>`:''; };
 function igComposer(o){ const rp=state.rpl&&state.rpl.key===o.key?state.rpl:null;
   return `${rp?`<div class="igrp"><span><small>Replying to ${esc(rp.n)}</small><b>${esc(rp.t)}</b></span><button data-act="igreplyx" aria-label="Cancel reply">${ic('x',16)}</button></div>`:''}
   <form class="igcomp" id="${o.id}" ${o.onsubmit?`onsubmit="${o.onsubmit}"`:''}><button type="button" class="igcam" data-act="${o.attach||'attach'}" aria-label="Camera">${ic('camera',20)}</button><label for="${o.input}" hidden>Message</label>
@@ -3419,8 +3420,11 @@ function crew(){
   const s=thShow(t), dm=t.k==='dm', sp=spareOf(s), claimed=state.claimed&&state.claimed[s.id];
   const msgs=t.msgs.filter(m=>!(m.p!=null&&(state.blocked||{})[m.p])).concat(claimed&&t.spare?[{d:'sys',t:`You claimed ${sp.seller[0].split(' ')[0]}’s ticket · transfer in progress`}]:[]);
   const person=dm?PEOPLE[t.person]:(t.mine?MEP:PEOPLE[t.host]), n=dm?2:t.who.length+1;
-  const grpAv=dm?`<span class="igav1">${avi(person[3])}</span>`:igAvGroup(PEOPLE[t.who[0]][3],PEOPLE[t.who[1]][3]);
-  const sub=dm?(t.pending?(t.reqSent?'Request sent':'Message request'):'Active '+(2+h(t.id)%40)+'m ago'):`${esc(t.show)} · ${n} of ${t.cap} in`;
+  const head=dm?`<div class="row" style="gap:10px"><button class="row" data-act="person" data-v="${t.person}" style="gap:10px;color:#fff">${av(person,'style="border:0;width:44px;height:44px"')}<span style="text-align:left"><b style="display:block;font-size:17px">${person[0]}</b><span style="font-size:13px;opacity:.65">${BUD[t.person]?'Buddy · ':''}Also going to ${esc(t.show)}</span></span></button></div>`
+   :`<div class="row" style="gap:10px;flex-wrap:wrap"><button class="chip" data-act="show" data-id="${s.id}">${esc(s.artist)}</button><span class="row" style="gap:5px;font-size:15px">${ic('users',18)}${n} of ${t.cap} in</span>
+        ${t.mine?`<span class="hostme">${t.priv?`<button data-act="toast" data-msg="Invite link copied · only people with the link can join">🔗 Invite</button>`:''}<b>You’re hosting</b></span></div>`:`<button class="row" data-act="person" data-v="${t.host}" style="margin-left:auto;gap:8px;height:38px;padding:0 14px 0 4px;border-radius:19px;background:rgba(60,60,64,.5);backdrop-filter:blur(12px);color:#fff" aria-label="Host profile">${av(person,'style="border:0"')}<span style="font-size:14px;font-weight:600">${person[0]}</span></button></div>`}
+      <div class="ctitle">${esc(t.long)}</div>
+      <div class="plan" style="margin-top:16px"><div><small>Meet</small><b>${t.plan?t.plan[0]:'Not set'}</b><small>${t.plan?esc(t.plan[1]):'Optional'}</small></div><div><small>Doors</small><b>7:00 PM</b><small>${esc(s.venue.replace('Madison Square Garden','MSG'))}</small></div><div><small>Date</small><b>${sd(s.dates[0])}</b><small>${DOW[new Date(s.dates[0]+'T12:00:00Z').getUTCDay()]}</small></div></div>${state.loc&&state.loc[t.id]?'<div class="locchip">📍 Sharing location with this crew · until 1h after the show</div>':''}`;
   const L=[{sep:sd(s.dates[0])==='Today'?'Today':'Today'}];
   msgs.forEach((m,i)=>{ const id=t.id+':'+i;
     if(m.d==='sys') L.push({sys:m.t});
@@ -3431,18 +3435,13 @@ function crew(){
     else if(m.d==='spare') L.push({html:`<div class="spare ${claimed?'done':''}"><span class="spimg">${img(s)}</span><span class="spb"><em>🎟️ Face value + $2 flat</em><b>${esc(s.artist)}</b><span>${sd(s.dates[0])} · ${sp.sec} · next to the crew</span><span class="spv">${ic('check',12)}Verified ticket</span></span><span class="spr"><b>$${sp.face+FEE}</b>${claimed?'<span class="spc">Claimed</span>':`<button data-act="claim" data-id="${s.id}">Claim</button>`}</span></div>`}); });
   if(t.typing!=null) L.push({id:t.id+':ty',p:t.typing,typing:true});
   const lastOut=[...L].reverse().find(x=>x.id&&!x.typing), seen=lastOut&&lastOut.me?(dm?(t.pending?'Sent':'Seen'):`Seen by ${P0(t.who[0])}${t.who.length>1?' + '+(t.who.length-1):''}`):'';
-  const pin=!dm&&t.plan?`<button class="igpin" data-act="iginfo">📌 <b>Meet ${t.plan[0]}</b> · ${esc(t.plan[1])} · Doors 7:00 · ${sd(s.dates[0])}</button>`:'';
-  return `<div class="chat igchat"><img class="bg" alt="" src="${s.img}"><div class="shade"></div><div class="grain"></div>
-    ${igHead({av:grpAv,title:esc(dm?person[0]:t.title),sub,safe:'safety'})}${pin}
-    <div class="inner igin${pin?' haspin':''}" id="ci">
-      <div class="igintro">${dm?`<span class="igav1 lg">${avi(person[3])}</span><b>${person[0]}</b><small>${BUD[t.person]?'Buddy · ':''}Also going to ${esc(t.show)}</small><button data-act="person" data-v="${t.person}">View profile</button>`
-        :`${igAvGroup(PEOPLE[t.who[0]][3],PEOPLE[t.who[1]][3])}<b>${esc(t.long)}</b><small>Everyone here is ID + ticket verified · meetups are in public spots</small>`}</div>
-      ${dm?'':pollCard(t)}${igList(L,{group:!dm,whoAct:'person',seen})}
-      ${dm&&t.pending?`<p class="note" style="color:rgba(255,255,255,.45);margin-top:10px">${t.reqSent?'Request sent · you can send more once '+P0(t.person)+' accepts · expires in 7 days if they don’t reply':'Not buddies yet · one message, sent as a request · '+dmLeft()+' of '+DM_LIMIT+' requests left today'}</p>`:''}
+  return `<div class="chat">${`<img class="bg" alt="" src="${s.img}">`}<div class="shade"></div><div class="grain"></div>
+    <div style="position:absolute;left:0;right:0;top:0;height:calc(84px + var(--st));background:linear-gradient(180deg,#0B0B0C 55%,rgba(10,10,11,0));z-index:2;pointer-events:none"></div><div class="nav cnav"><button class="nb" data-act="back" aria-label="Back">${ic('back')}</button>${dm?'':'<button class="nb sfb" data-act="safety" aria-label="Safety tools">🛡️ Safety</button>'}</div>
+    <div class="inner ${dm?'':'crewpad'}" id="ci">${head}
+      <div class="msgs" ${dm?'style="margin-top:220px"':''}>${dm?'':pollCard(t)}${igList(L,{group:!dm,whoAct:'person',seen})}</div>
+      <p class="note" style="color:rgba(255,255,255,.4);margin-top:10px">${dm?(t.pending?(t.reqSent?'Request sent · you can send more once '+P0(t.person)+' accepts · expires in 7 days if they don’t reply':'Not buddies yet · one message, sent as a request · '+dmLeft()+' of '+DM_LIMIT+' requests left today'):'Only crew-mates and buddies can message you.'):'Everyone here is ID + ticket verified. Meetups are in public spots.'}</p>
     </div>
-    <div class="cbfade"></div>${state.att?attMenu(t,s,dm):''}${dm||state.att||(state.rpl&&state.rpl.key===t.id)?'':`<div class="mstpin">${meetStrip(t)}</div>`}
-    ${igComposer({id:'composer',input:'msg',key:t.id,ph:dm?(t.pending&&t.reqSent?'Waiting for '+P0(t.person)+' to accept':'Message…'):'Message…',disabled:dm&&t.pending&&t.reqSent})}
-    ${state.igi?igInfo():''}
+    <div class="cbfade"></div>${state.att?attMenu(t,s,dm):''}${dm||state.att||(state.rpl&&state.rpl.key===t.id)?'':`<div class="mstpin">${meetStrip(t)}</div>`}${igReplyBar(t.id)}<form class="composer" id="composer"><button type="button" aria-label="Attach" data-act="attach" aria-expanded="${!!state.att}">${ic('clip',20)}</button><label for="msg" hidden>Message</label><input id="msg" placeholder="${dm?(t.pending&&t.reqSent?'Waiting for '+P0(t.person)+' to accept':'Message '+P0(t.person)):'Message the crew'}" autocomplete="off"${dm&&t.pending&&t.reqSent?' disabled':''}><button class="send" type="submit" aria-label="Send">${ic('send',18)}</button></form>
   </div>`;
 }
 
@@ -3454,15 +3453,17 @@ function crews(){
     .filter(t=>!q||(t.k==='listing'||t.k==='show'?byId[t.sid].artist+' show chat':thName(t)+' '+thLast(t)).toLowerCase().includes(q)).sort((a,b)=>b.ts-a.ts);
   const tabs=[['all','All'],['shows','Shows'],['crews','Crews'],['dms','Direct'],['requests','Requests'+((mreqVisible().length+(REQ.t1?1:0))?' '+(mreqVisible().length+(REQ.t1?1:0)):'')]], req=REQ.t1||[];
   const tone=(t,i)=>['dk','w','g2','g1'][i%4];
-  // Instagram-style rows: same layout for every chat; unread = bold + dot; the avatar says what kind of chat it is
-  const row=(act,id,av,name,prev,time,un,extra='')=>`<button class="igrow${un?' un':''}" data-act="${act}" data-id="${id}">${av}<span class="igrb"><b>${name}</b><span><em>${prev}</em>${time?`<i> · ${time}</i>`:''}</span>${extra}</span>${un?`<i class="igdot" aria-label="${un} unread"></i>`:''}</button>`;
-  const bub=t=>{
-    if(t.k==='show'){ const s=byId[t.sid], st=chatStats(s), last=wallPosts(s)[0], lp=last.me?'You':P0(last.p), un=(state.joinedChat||{})[s.id]?0:(2+h(s.id)%7);
-      return row('wallopen',s.id,`<span class="igra sq">${img(s)}<i class="igon"></i></span>`,`${esc(s.artist)} <small class="igtag">Show chat</small>`,`${esc(lp)}: ${esc(last.t)}`,`${st.online} online`,un); }
-    if(t.k==='listing'){ const s=byId[t.sid]; return row('tickets','',`<span class="igra sq">${img(s)}</span>`,'Your listing',`${esc(s.artist)} · ${3+h(s.id)%9} fans looking at your ticket`,'live',0); }
+  const bub=(t,i)=>{ const z=rows.length-i;
+    if(t.k==='show'){ const s=byId[t.sid], st=chatStats(s), last=wallPosts(s)[0], lp=last.me?'You':PEOPLE[last.p][0].split(' ')[0];
+      return `<button class="cb ${tone(t,i)} ${i%2?'r':'l'}" style="z-index:${z}" data-act="wallopen" data-id="${s.id}"><span class="cbav sq">${img(s)}</span><span class="cbb"><span class="cbt"><b>${esc(s.artist)}</b><em>${st.online} online</em></span><span class="cbs">Show chat · ${fmtK(st.going)} going</span><span class="cbm">${esc(lp)}: ${esc(last.t)}</span></span></button>`; }
+    if(t.k==='listing'){ const s=byId[t.sid]; return `<button class="cb ${['dk','w','g2','g1'][i%4]} ${i%2?'r':'l'}" style="z-index:${z}" data-act="tickets"><span class="cbav sq">${img(s)}</span><span class="cbb"><span class="cbt"><b>Your listing</b><em>live</em></span><span class="cbm">${esc(s.artist)} · ${3+h(s.id)%9} fans looking at your ticket</span></span></button>`; }
     const dm=t.k==='dm';
-    return row('thread',t.id,dm?`<span class="igra">${avi(PEOPLE[t.person][3])}${h(t.id)%2?'<i class="igon"></i>':''}</span>`:`<span class="igra">${igAvGroup(PEOPLE[t.who[0]][3],PEOPLE[t.who[1]][3])}</span>`,
-      esc(dm?PEOPLE[t.person][0]:t.title)+(dm?'':` <small class="igtag">${esc(t.show)}</small>`),t.typing!=null?'typing…':esc(thLast(t)),thTime(t),t.un); };
+    return `<button class="cb ${tone(t,i)} ${i%2?'r':'l'}" style="z-index:${z}" data-act="thread" data-id="${t.id}">
+      <span class="cbav ${dm?'':'grp'}">${dm?avi(PEOPLE[t.person][3]):`<span>${avi(PEOPLE[t.who[0]][3])}</span><span>${avi(PEOPLE[t.who[1]][3])}</span>`}</span>
+      <span class="cbb"><span class="cbt"><b>${esc(dm?PEOPLE[t.person][0]:t.title)}</b><em>${thTime(t)}</em></span>
+        <span class="cbs">${dm?'Direct':esc(t.show)}</span>
+        <span class="cbm">${t.typing!=null?`<span class="mtyp"><i></i><i></i><i></i></span>`:esc(thLast(t))}</span></span>
+      ${t.un?`<span class="cbn">${t.un>9?'9+':t.un}</span>`:''}</button>`; };
   return `<div class="scroll"><div style="padding-bottom:130px">
     <header class="chead"><h1>Chats</h1>${unreadTotal()?`<span class="chn">${unreadTotal()}</span>`:''}<button class="wicon" data-act="msearch" aria-label="Search">${ic(state.msOpen?'x':'search',20)}</button></header>
     ${state.msOpen?`<div class="pad" style="margin-top:4px"><label class="sbar">${ic('search',18)}<span hidden>Search</span><input id="mq" value="${esc(state.mq||'')}" placeholder="Search people, crews, shows"></label></div>`:''}
@@ -3472,7 +3473,7 @@ function crews(){
     
     ${f==='requests'?`<div class="rqset"><span><b>Only verified people</b><small>Hide requests from accounts without ID verification</small></span><button class="tgl" role="switch" aria-checked="${!!state.reqVerOnly}" aria-label="Only verified people" data-act="reqver"><i></i></button></div>
     <p class="creqn">Only people going to the same shows as you can send a request, and just one message until you accept. Ignored requests expire after 7 days. They’re never told you saw, deleted or reported it.</p>${state.reqVerOnly&&MREQ.some(r=>!r.ver&&!(state.blocked||{})[r.p])?`<p class="rqhid">${MREQ.filter(r=>!r.ver&&!(state.blocked||{})[r.p]).length} from unverified accounts hidden</p>`:''}<div class="cbl">${mreqVisible().map((r,j)=>{ const i=MREQ.indexOf(r); return `<div class="cb ${['w','g1'][j%2]} ${j%2?'r':'l'} rq" style="z-index:${9-j}"><span class="cbav">${avi(PEOPLE[r.p][3])}</span><span class="cbb"><span class="cbt"><b>${PEOPLE[r.p][0]}</b>${r.ver?`<i class="rqv">${ic('check',9)} Verified</i>`:'<i class="rqv no">Not verified</i>'}<em>${r.time}</em></span><span class="cbs">Both going to ${esc(r.show)}${r.crew?' · '+esc(r.crew):''}</span><span class="cbm">${esc(r.t)}</span><span class="rqx">Expires in ${r.exp} day${r.exp>1?'s':''} if you don’t reply</span><span class="rqb"><button class="rep" data-act="mrqrep" data-v="${i}" aria-label="Report or block">Report</button><span class="rqsp"></span><button data-act="mrqno" data-v="${i}">Delete</button><button class="on" data-act="mrqyes" data-v="${i}">Accept</button></span></span></div>`; }).join('')||'<p class="mempty">No message requests.</p>'}</div>`:
-    `<div class="igrows">${rows.map(bub).join('')||`<p class="mempty">${q?'No matches for “'+esc(state.mq)+'”':f==='tickets'?'No ticket updates yet.':'Nothing here yet.'}</p>`}</div>`}
+    `<div class="cbl">${rows.map(bub).join('')||`<p class="mempty">${q?'No matches for “'+esc(state.mq)+'”':f==='tickets'?'No ticket updates yet.':'Nothing here yet.'}</p>`}</div>`}
   </div></div>${dock('crews')}`;
 }
 
