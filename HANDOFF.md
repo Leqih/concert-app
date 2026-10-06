@@ -149,6 +149,7 @@ pip install playwright && python3 demo/tests/m7test.py   # 可选：批量截屏
 | M20.1 | v119 | 只借鉴 Instagram 的聊天细节，页面保持原样 | 主人纠正：参考 Instagram 的是「不同聊天里的细节」，不是改我们的 chat 页面。已恢复：Chats 列表原来的气泡卡片样式；小队群原来的头部（演出标签、人数、群主、大标题、集合/开门/日期卡、投票）、私聊头部、演出大群原来的标题区和 # 频道、原来的 🛡️ Safety 按钮和输入框。保留的 Instagram 细节（三种聊天一致）：连续消息成组、群里首条上方显示名字、头像只在一组最后一条、日期分隔、表情回应、双击 ❤️、长按表情条 + Reply / Copy、引用回复（输入框上方 Replying to …）、Seen / Seen by。ⓘ 详情页和 Instagram 式列表不再使用 |
 | M20.2 | Removed the Safety buttons and Safety sheets from crew chats and the show chat (Leqi doesn't want this feature) |
 | M21 | Crews: no more walking straight in. Start a crew as **Invite only** (default, link) or **Ask to join** (listed; host approves each request in the chat with Approve/Decline). Explore, show page and scene page buttons are now Ask to join → Requested → Open. Show chat stays open to everyone |
+| M22 | Chat pages redesigned (one skeleton, three roles). **Show chat = plaza**: header + “At the venue now” avatars + topic cards (Find a crew first); tap a topic for its chat (topic tabs, 🎫 seat badges, “Message # topic”). **Crew = ticket stub**: photo stub with countdown + members, pinned meet / spare / $5 pills, quick actions that change after check-in, host Invite + join-request cards. **DM = business card**: profile card (city, verified, shows, show-up, mutual, “You’re both going”), quick actions Invite to my crew / Share ticket; tapping a request opens it with Accept / Delete / Block · Report. Classes prefixed `k` (`.ktop`, `.kstub`, `.ktpc`, `.kcard`…) |
 
 ## 6. 链接（原账号所有，新账号只能查看）
 
