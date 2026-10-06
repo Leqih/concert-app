@@ -2343,7 +2343,7 @@ function scPrev(c){ const i=+state.id, others=[1,2,3,4,5,6].map(k=>(c.hi+k)%PEOP
     <p class="ncl">Who’s in <em class="csopt">${c.f} of ${c.n} · ${left} ${left===1?'spot':'spots'} left</em></p>
     ${ppl.map((p,k)=>{ const r=REL[p], v=k<c.ver; return `<button class="scpm" data-act="person" data-v="${p}"><span class="bgav"><span>${avi(PEOPLE[p][3])}</span></span><span class="ub"><b>${PEOPLE[p][0]}${k===0?' <em>Host</em>':''}</b><span class="um">${v?'✓ ID verified':'Not verified yet'} · showed up ${r[0]}/${r[1]}</span></span>${ic('right',14)}</button>`; }).join('')}
     <p class="ncl">The plan</p><div class="scpl">${SC_PLAN[i].map(x=>`<div><b>${x[0]}</b><span>${x[1]}</span></div>`).join('')}</div>
-    <p class="ncl">Good to know</p><ul class="scpr">${c.dep?'<li>$5 hold when you join, back when you check in</li>':'<li>No deposit · tap “I’m here” when you arrive</li>'}${c.wo?'<li>Women only · verified ID required</li>':''}<li>Meet in public spots · share your location from Safety</li><li>Leave anytime · the host is told, no one else</li></ul>
+    <p class="ncl">Good to know</p><ul class="scpr">${c.dep?'<li>$5 hold when you join, back when you check in</li>':'<li>No deposit · tap “I’m here” when you arrive</li>'}${c.wo?'<li>Women only · verified ID required</li>':''}<li>Meet in public spots</li><li>Leave anytime · the host is told, no one else</li></ul>
     ${c.spare?`<button class="scspare" data-act="claimspare" data-v="${c.spare.id}" style="margin-top:14px"><span class="scst"><b>${/floor|ga/i.test(c.spare.sec)?'GA':'SEC'}</b><small>×1</small></span><span><b>No ticket? ${c.spare.seller[0].split(' ')[0]} has a spare · $${c.spare.face}</b><small>Crew-mates first · face value · $2 fee</small></span>${ic('right',14)}</button>`:''}
   </div><div class="uff"><button class="ufx" data-act="scpclose">Not now</button><button class="cgo new" data-act="crew" data-id="${c.s.id}">${c.dep?'Join · $5 hold':'Join crew'}</button></div></div>`; }
 function sceneBack(){
@@ -2875,7 +2875,7 @@ function wallPage(){ const x=byId[state.id], tag=state.wtag||'All', st=chatStats
   const L=[{sep:'Today'}].concat(items.map(o=>({id:o.id,me:!!o.me,p:o.p,t:o.t,img:o.img?img(x):'',tag:tag==='All'?o.tag:null,rp:o.rp,rx:o.rx||{'❤️':o.l||0}})));
   const last=L[L.length-1], seen=last&&last.me?'Seen by '+(3+k%40):'';
   return `<div class="chat showchat"><img class="bg" alt="" src="${x.img}"><div class="shade"></div><div class="grain"></div>
-    <div class="sctop"></div><div class="nav cnav"><button class="nb" data-act="back" aria-label="Back">${ic('back')}</button><button class="nb sfb" data-act="chsafe" aria-label="Safety tools">🛡️ Safety</button></div>
+    <div class="sctop"></div><div class="nav cnav"><button class="nb" data-act="back" aria-label="Back">${ic('back')}</button></div>
     <div class="hs wtg chch">${WTAGS.map(t=>`<button class="gch" data-act="wtag" data-v="${t}" aria-pressed="${tag===t}">${t==='All'?'All':'# '+t}</button>`).join('')}</div>
     <div class="inner crewpad" id="wci">
       <div class="ctitle">${esc(x.artist)} · Show chat</div>
@@ -2885,7 +2885,7 @@ function wallPage(){ const x=byId[state.id], tag=state.wtag||'All', st=chatStats
     </div>
     <div class="cbfade"></div>${joined?`${igReplyBar('w'+x.id)}<form class="composer" id="wcomposer" onsubmit="return wallPost(event,'${x.id}')"><label for="wq" hidden>Message</label><input id="wq" placeholder="Message ${tag==='All'?'everyone':'# '+tag}" autocomplete="off"><button class="send" type="submit" aria-label="Send">${ic('send',18)}</button></form>`
       :`<button class="composer scjoin" data-act="chatjoin" data-id="${x.id}">Join the show chat</button>`}
-    ${state.who!=null?whoSheet(x):''}${state.chsafe?chSafeSheet(x):''}</div>`; }
+    ${state.who!=null?whoSheet(x):''}</div>`; }
 // Safety in the big group: it's full of strangers, so mute / DM rules / report / blocked are one tap away
 function chSafeSheet(x){ const m=!!(state.chMute||{})[x.id], dmr=state.dmReq!==false, nb=Object.keys(state.blocked||{}).length;
   return `<div class="sheetbg" data-act="chsafeclose"></div><div class="sheet csheet" role="dialog" aria-label="Safety tools"><div class="cgrab"><i class="grab"></i><h3>Safety tools <span class="emo">🛡️</span></h3><p>This chat is open to everyone going · you control who reaches you</p></div>
@@ -3436,7 +3436,7 @@ function crew(){
   if(t.typing!=null) L.push({id:t.id+':ty',p:t.typing,typing:true});
   const lastOut=[...L].reverse().find(x=>x.id&&!x.typing), seen=lastOut&&lastOut.me?(dm?(t.pending?'Sent':'Seen'):`Seen by ${P0(t.who[0])}${t.who.length>1?' + '+(t.who.length-1):''}`):'';
   return `<div class="chat">${`<img class="bg" alt="" src="${s.img}">`}<div class="shade"></div><div class="grain"></div>
-    <div style="position:absolute;left:0;right:0;top:0;height:calc(84px + var(--st));background:linear-gradient(180deg,#0B0B0C 55%,rgba(10,10,11,0));z-index:2;pointer-events:none"></div><div class="nav cnav"><button class="nb" data-act="back" aria-label="Back">${ic('back')}</button>${dm?'':'<button class="nb sfb" data-act="safety" aria-label="Safety tools">🛡️ Safety</button>'}</div>
+    <div style="position:absolute;left:0;right:0;top:0;height:calc(84px + var(--st));background:linear-gradient(180deg,#0B0B0C 55%,rgba(10,10,11,0));z-index:2;pointer-events:none"></div><div class="nav cnav"><button class="nb" data-act="back" aria-label="Back">${ic('back')}</button></div>
     <div class="inner ${dm?'':'crewpad'}" id="ci">${head}
       <div class="msgs" ${dm?'style="margin-top:220px"':''}>${dm?'':pollCard(t)}${igList(L,{group:!dm,whoAct:'person',seen})}</div>
       <p class="note" style="color:rgba(255,255,255,.4);margin-top:10px">${dm?(t.pending?(t.reqSent?'Request sent · you can send more once '+P0(t.person)+' accepts · expires in 7 days if they don’t reply':'Not buddies yet · one message, sent as a request · '+dmLeft()+' of '+DM_LIMIT+' requests left today'):'Only crew-mates and buddies can message you.'):'Everyone here is ID + ticket verified. Meetups are in public spots.'}</p>
@@ -3504,7 +3504,7 @@ function render(anim){ window._dockActive=null; const _ap=document.getElementByI
   const v=document.getElementById('view');
   const shPrev=document.getElementById('shsc'), shKeep=shPrev&&!anim&&state.screen==='show'&&state._last==='show'&&state.id===state._lastId?shPrev.scrollTop:0; state._prevScreen=state._last; state._lastId=state.id;
   const prev=document.getElementById('sc'); const keep=prev&&state.screen==='home'&&state._last==='home'?prev.scrollTop:0; state._last=state.screen;
-  v.innerHTML={home,show,crew,crews,me,person,explore,tickets,scene,sell,search,clips,wall:wallPage}[state.screen]()+(state.sheet?citySheet():'')+(state.tsheet?ticketSheet():'')+(state.psheet?plusSheet():'')+(state.kit?kitSheet():'')+(state.safe?safetySheet():'')+(state.nc?ncSheet():'')+(state.ufo?ufSheet():'')+(state.itk?itSheet():'')+(state.ep?epSheet():'')+(state.secO?secSheet():'')+(state.cs?csSheet():'')+(state.cmt?cmSheet():'')+(state.info?infoSheet():'');
+  v.innerHTML={home,show,crew,crews,me,person,explore,tickets,scene,sell,search,clips,wall:wallPage}[state.screen]()+(state.sheet?citySheet():'')+(state.tsheet?ticketSheet():'')+(state.psheet?plusSheet():'')+(state.kit?kitSheet():'')+(state.nc?ncSheet():'')+(state.ufo?ufSheet():'')+(state.itk?itSheet():'')+(state.ep?epSheet():'')+(state.secO?secSheet():'')+(state.cs?csSheet():'')+(state.cmt?cmSheet():'')+(state.info?infoSheet():'');
   const nsc=document.getElementById('sc'); if(nsc&&keep) nsc.scrollTop=keep;
   const nsh=document.getElementById('shsc'); if(nsh&&shKeep) nsh.scrollTop=shKeep;
   if(nsh&&!shKeep&&state._prevScreen==='wall'&&(state.shY||{})[state.id]) nsh.scrollTop=state.shY[state.id];
