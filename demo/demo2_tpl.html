@@ -2115,7 +2115,7 @@ button.csloc{box-shadow:inset 0 0 0 1.5px #0B0B0C;background:transparent}
 .kpin{flex:0 0 auto;height:32px;padding:0 12px;border-radius:16px;font-size:13px;font-weight:600;color:#fff;background:rgba(255,255,255,.12);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);display:flex;align-items:center;white-space:nowrap}
 .kpin.w{background:#fff;color:#0B0B0C}
 .kchat .inner:not(.x0){}
-.kchat:not(.kdm):not(.ksc) .inner{padding-top:calc(var(--st) + 214px)}
+
 /* quick actions + composer */
 .kacts{position:absolute;left:14px;right:14px;bottom:calc(80px + var(--sb));z-index:3;display:flex;gap:8px}
 .kacts button{flex:1;min-width:0;height:36px;border-radius:18px;font-size:13px;font-weight:600;color:#fff;background:rgba(255,255,255,.13);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 8px}
@@ -2226,7 +2226,7 @@ button.csloc{box-shadow:inset 0 0 0 1.5px #0B0B0C;background:transparent}
 .kv2 .inner{padding:calc(var(--st) + 66px) 10px calc(96px + var(--sb))}
 .kv2.kpinned .inner{padding-top:calc(var(--st) + 122px)}
 .kv2:has(.kchips) .inner{padding-bottom:calc(140px + var(--sb))}
-.chat.kv2.showchat .inner{padding-top:calc(var(--st) + 122px)}
+.chat.kv2.showchat .inner{padding-top:calc(var(--st) + 66px)}
 .kv2 .msgs{margin-top:0}
 .kv2 .igb{background:#26262A;backdrop-filter:none;-webkit-backdrop-filter:none}
 .kv2 .igr.out .igb{background:#fff}
@@ -2263,6 +2263,35 @@ button.csloc{box-shadow:inset 0 0 0 1.5px #0B0B0C;background:transparent}
 .kcrj{flex:0 0 auto;height:34px;padding:0 16px;border-radius:17px;background:var(--text);color:#fff;font-weight:700;font-size:13.5px;display:grid;place-items:center}
 .kcrj.on{background:var(--card2);color:var(--text)}.kcrj.kwt{background:none;color:var(--muted);box-shadow:inset 0 0 0 1px var(--line)}
 .kcempty{color:var(--muted);text-align:center;padding:20px 0}
+
+/* ===== M24 public show chats + private crews ===== */
+.pcl{display:flex;flex-direction:column;gap:10px;padding:0 12px}
+.pcc{display:flex;align-items:flex-start;gap:12px;width:100%;text-align:left;padding:12px;border-radius:var(--r-xl);background:var(--card);color:var(--text)}
+.pcv{position:relative;width:56px;height:56px;border-radius:var(--r-sm);overflow:hidden;flex:0 0 auto}.pcv img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.pcb{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.pct{display:flex;align-items:center;gap:8px}.pct b{font:700 16px var(--display);letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pct em{margin-left:auto;font-style:normal;font-size:12px;color:var(--muted);white-space:nowrap;display:flex;align-items:center}
+.pcb>small{font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pcm{display:flex;align-items:center;gap:6px;margin-top:6px;font-size:13px;color:#3A3A3E;min-width:0}
+.pcm>span:last-child{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.pca{position:relative;width:18px;height:18px;border-radius:50%;overflow:hidden;flex:0 0 auto}.pca img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.pcj{align-self:center;flex:0 0 auto;height:32px;padding:0 14px;border-radius:16px;background:var(--text);color:#fff;font-weight:700;font-size:13px;display:grid;place-items:center}
+.pcj.on{background:var(--card2);color:var(--text)}
+.knewc{margin-left:6px}
+.kidh{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:12px 20px 6px}
+.kidhint{font-size:13px;color:var(--muted);padding:8px 20px 2px}.kidhint b{color:var(--text)}
+.kidl{margin:0 12px 6px;padding:0 14px;border-radius:var(--r-lg);background:var(--card)}
+.kidl .kcr:last-child{border-bottom:0}
+.kcrh.sq{border-radius:var(--r-sm)}
+.kinvc{display:flex;align-items:center;gap:12px;margin:0 12px 10px;padding:12px 14px;border-radius:var(--r-lg);background:var(--card)}
+.kinx{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:var(--muted);background:var(--card2);flex:0 0 auto}
+.kinvb{padding:0 16px calc(16px + var(--sb))}
+.kcode{display:flex;align-items:center;gap:10px;padding:14px 16px;border-radius:var(--r-lg);background:var(--bg)}
+.kcode small{font-size:12px;color:var(--muted)}.kcode b{font:800 22px var(--display);letter-spacing:.02em;margin-right:auto}
+.kcode button{height:32px;padding:0 14px;border-radius:16px;background:var(--text);color:#fff;font-weight:700;font-size:13px}
+.klink{display:flex;align-items:center;gap:10px;width:100%;margin-top:10px;padding:14px 16px;border-radius:var(--r-lg);background:var(--bg);font-weight:600;font-size:15px;color:var(--text)}
+.ncinv{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;border-radius:var(--r-md);background:var(--bg)}
+.ncinv span{display:flex;flex-direction:column;gap:2px}.ncinv b{font-size:15px}.ncinv small{font-size:13px;color:var(--muted);line-height:1.4}
 </style>
 
 <div class="app framed" id="app">
@@ -2501,37 +2530,27 @@ const SC_PLAN=[[['6:30','Meet at the bar by the main entrance'],['7:00','Doors �
   [['6:30','Coffee or mocktails nearby'],['7:00','Doors · walk in together'],['After','Late diner, optional']],
   [['6:30','Meet in a public lobby'],['7:00','Doors · location sharing on'],['After','Walk to the train together']]];
 function scene(){
-  const i=+state.id, sc=SCENE_LIST[i], all=sceneCrews(i), mine=all.filter(c=>c.mine), f=(state.scFor===i&&state.scF)||(mine.length?'mine':'all');
+  const i=+state.id, sc=SCENE_LIST[i], all=sceneCrews(i), shs=new Set(all.map(c=>c.s)), mine=all.filter(c=>c.mine), f=(state.scFor===i&&state.scF)||(mine.length?'mine':'all');
   const L=f==='mine'?mine:f==='spare'?all.filter(c=>c.spare):f==='all'?all:all.filter(c=>c.s.id===f); window._scCrews=all;
   const nsp=all.filter(c=>c.spare).length, tonight=Math.max(6,Math.round(sc[3]/4));
   const members=[0,1,2,3,4].map(k=>PEOPLE[(i+k)%PEOPLE.length]);
   const short=v=>v.replace('Madison Square Garden','MSG').replace('Radio City Music Hall','Radio City');
   const chips=[['mine','Your shows',mine.length]].filter(()=>mine.length).concat(mine.map(c=>[c.s.id,c.s.artist,null]),[['spare','With a spare',nsp],['all','All crews',all.length]]);
-  const shs=new Set(all.map(c=>c.s)), cl=clipList().filter(c=>shs.has(c.s)).slice(0,8);
+  const cl=clipList().filter(c=>shs.has(c.s)).slice(0,8);
   return `<div class="scroll" id="scsc"><div style="padding-bottom:120px">
     <div class="shero sh2">
       <div class="sback">${avi(SCENE_POOL[i*4+1])}</div>
       <header class="whead"><button class="wicon glass" data-act="back" aria-label="Back">${ic('back',20)}</button><span></span><button class="wicon glass" data-act="toast" data-msg="Link copied" aria-label="Share">${ic('share',18)}</button></header>
       <div class="sfan" id="sfan">${[0,1,2,3].map(k=>`<span class="sf s${k}">${avi(SCENE_POOL[i*4+k])}</span>`).join('')}</div>
       <div class="stitle sin"><span class="skick">Scene · ${state.city}</span><h1>${sc[0]} <span class="emo">${SCENE_EMO[i]}</span></h1><p>${SC_DESC[i](tonight)}</p></div>
-      <div class="smem sin"><span class="smav">${members.map(p=>`<span>${avi(p[3])}</span>`).join('')}</span><span class="smt"><b>${sc[3]} in this scene</b> · ${sceneN(i)} crews open</span></div>
+      <div class="smem sin"><span class="smav">${members.map(p=>`<span>${avi(p[3])}</span>`).join('')}</span><span class="smt"><b>${sc[3]} in this scene</b> · ${shs.size} show chats</span></div>
     </div>
-    <div class="scbar" id="scbar"><div class="scmini"><button class="wicon" data-act="back" aria-label="Back">${ic('back',18)}</button><b>${sc[0]} <span class="emo">${SCENE_EMO[i]}</span></b><span></span></div>
-      <div class="scfl">${chips.map(([k,l,n])=>`<button class="gch" data-act="scf" data-v="${k}" aria-pressed="${f===k}">${esc(l)}${n!=null?` <em>${n}</em>`:''}</button>`).join('')}</div></div>
-    <section class="ssec sc2list">
-      ${L.map(c=>{ const left=c.n-c.f, ix=all.indexOf(c); return `<div class="screw">
-        <button class="scmain" data-act="scprev" data-v="${ix}"><span class="scimg">${img(c.s)}${c.mine?`<i class="scyou${c.tix?'':' want'}">${c.tix?ic('ticket',10)+' Going':'Want to go'}</i>`:''}</span>
-        <span class="scb"><b>${esc(c.name)}</b><span class="scm">${esc(c.s.artist)} · ${sd(c.s.dates[0])} · ${esc(short(c.s.venue))}</span>
-          <span class="scf"><span class="schost">${avi(c.host[3])}</span><span>${c.host[0]} · showed up ${c.rel[0]}/${c.rel[1]}</span></span>
-          <span class="sctr"><em>${ic('check',9)} ${c.f===1?'Host verified':c.ver+'/'+c.f+' verified'}</em>${c.dep?'<em>$5 hold</em>':''}${c.wo?'<em>Women only</em>':''}</span>
-          <span class="scsp">${Array.from({length:c.n},(_,k)=>`<i class="${k<c.f?'on':''}"></i>`).join('')}<em>${left} ${left===1?'spot':'spots'} left</em></span></span></button>
-        <div class="scside"><button class="scjoin" data-act="scprev" data-v="${ix}">${(state.req||{})['s'+c.s.id+':'+c.name]==='ok'?'Open':(state.req||{})['s'+c.s.id+':'+c.name]==='wait'?'Requested':'Ask'}</button></div>
-        ${c.spare?`<button class="scspare" data-act="claimspare" data-v="${c.spare.id}"><span class="scst"><b>${/floor|ga/i.test(c.spare.sec)?'GA':/balc/i.test(c.spare.sec)?'BAL':esc(c.spare.sec.split(' ').pop().slice(0,4).toUpperCase())}</b><small>×${Math.max(1,Math.abs(c.spare.qty))}</small></span><span><b>${c.spare.seller[0].split(' ')[0]} has a spare · $${c.spare.face} face value</b><small>Crew-mates get first dibs · $2 fee · escrow until it lands</small></span>${ic('right',14)}</button>`:''}
-      </div>`; }).join('')||`<p class="mempty">No ${esc(sc[0].toLowerCase())} crews here yet · start one below</p>`}
-    </section>
+    <div class="scbar" id="scbar"><div class="scmini"><button class="wicon" data-act="back" aria-label="Back">${ic('back',18)}</button><b>${sc[0]} <span class="emo">${SCENE_EMO[i]}</span></b><span></span></div></div>
+    <section class="ssec"><h2>Show chats <span class="emo">💬</span></h2><p class="sub" style="text-align:center;margin:-6px 0 12px">Open to everyone going · find your people here</p>
+      <div class="pcl">${[...shs].sort((a,b)=>a.dates[0].localeCompare(b.dates[0])).map(pubChat).join('')}</div></section>
     ${cl.length?`<section class="ssec"><h2>Clips from this scene <span class="emo">🎬</span></h2><p class="sub" style="text-align:center;margin:-6px 0 12px">From people who were at these shows</p>${clipThumbs(cl,true)}</section>`:''}
   </div></div>
-  <div class="wbar"><button class="wpill big" data-act="ncopen" data-id="${(L[0]||all[0]).s.id}" data-j="${i}">${ic('plus',18)}&nbsp;Start a ${esc(sc[0])} crew</button></div>`;
+  `;
 }
 // Join preview: who's in (verified, show-up record), the plan for the night, the rules, and a spare if there is one
 function scPrev(c){ const i=+state.id, others=[1,2,3,4,5,6].map(k=>(c.hi+k)%PEOPLE.length).slice(0,c.f-1), ppl=[c.hi].concat(others), left=c.n-c.f;
@@ -2612,7 +2631,7 @@ function shWatch(){ const sc=document.getElementById('shsc'), bar=document.getEl
     if(sc.scrollTop+sc.clientHeight>=sc.scrollHeight-4) cur=keys[keys.length-1];
     document.querySelectorAll('.shtabs button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===cur)); };
   sc.addEventListener('scroll',f,{passive:true}); f(); }
-function go(screen,id){ state.igi=false; state.rpl=null; state.kcrews=false; state.history.push([state.screen,state.id]); state.screen=screen; state.id=id||null; render(true); }
+function go(screen,id){ state.igi=false; state.rpl=null; state.kcrews=false; state.kinv=false; state.history.push([state.screen,state.id]); state.screen=screen; state.id=id||null; render(true); }
 function back(){ const p=state.history.pop()||['home',null]; state.screen=p[0]; state.id=p[1]; const cb=state._cmBack; if(cb&&cb.screen===state.screen){ state.cmt=cb.cmt; state.cmd={}; } state._cmBack=null; render(true); }
 let tt; function toast(m){ const t=document.getElementById('toast'); t.textContent=m; t.hidden=false; clearTimeout(tt); tt=setTimeout(()=>t.hidden=true,2000); }
 
@@ -3062,6 +3081,12 @@ function wallEntry(x){ const L=wallPosts(x).filter(o=>!(o.p!=null&&(state.blocke
     <span class="wenh"><span class="cstrip">${L.slice(0,4).map(o=>`<span>${avi((o.me?MEP:PEOPLE[o.p])[3])}</span>`).join('')}</span><b>${fmtK(st.going)} going</b><small><i class="chdot"></i>${st.online} online</small></span>
     ${L.slice(0,2).map(o=>{ const p=o.me?MEP:PEOPLE[o.p]; return `<span class="wenr"><span><b>${o.me?'You':p[0]}</b> ${esc(o.t)}</span></span>`; }).join('')}
     <span class="wenf"><span>${WTAGS.slice(1).map(t=>`<em># ${t}</em>`).join('')}</span><b>${joined?'Open chat':'Join chat'} ${ic('right',14)}</b></span></button>`; }
+function kInvSheet(t,s){ const code=crewCode(t.title,s.id), bud=Object.keys(BUD).map(Number).concat([0,1,2,3,4,5,6,7]).filter((v,i,a)=>a.indexOf(v)===i&&!t.who.includes(v)).slice(0,4);
+  return `<div class="sheetbg" data-act="kinvx"></div><div class="sheet csheet" role="dialog" aria-label="Invite"><div class="cgrab"><i class="grab"></i><h3>Invite to ${esc(t.title)}</h3><p>Only people you invite, or who ask with the crew ID, can join</p></div>
+  <div class="kinvb"><div class="kcode"><small>Crew ID</small><b>#${code}</b><button data-act="toast" data-msg="Crew ID copied">Copy</button></div>
+   <button class="klink" data-act="toast" data-msg="Invite link copied">${ic('share',18)}<span>Copy invite link</span></button>
+   <p class="kidh" style="padding:14px 0 4px">People you know</p>${bud.map(k=>{ const sent=(state.invSent||{})[t.id+':'+k]; return `<div class="kcr"><span class="kcrh">${avi(PEOPLE[k][3])}</span><span class="kcrb"><b>${PEOPLE[k][0]}</b><small>${BUD[k]?'Buddy':'Met at a show'} · showed up ${REL[k][0]}/${REL[k][1]}</small></span>${sent?'<span class="kcrj kwt">Sent</span>':`<button class="kcrj" data-act="kinvsend" data-v="${k}">Invite</button>`}</div>`; }).join('')}
+  </div></div>`; }
 // ---------- Show chat: one big group chat ----------
 function wallPage(){ const x=byId[state.id], st=chatStats(x), joined=inChat(x), k=Math.abs(h(x.id));
   const all=wallPosts(x).filter(o=>!(o.p!=null&&(state.blocked||{})[o.p]));
@@ -3072,9 +3097,8 @@ function wallPage(){ const x=byId[state.id], st=chatStats(x), joined=inChat(x), 
   const last=L[L.length-1], seen=last&&last.me?'Seen by '+(3+k%40):'';
   const cs=xCrews().filter(c=>c.s===x&&!c.full);
   const hd=kHead({title:esc(x.artist),sub:`<i class="kon"></i>${st.online} online · ${fmtK(st.going)} going`,av:img(x),act:'show',attr:`data-id="${x.id}"`,
-    right:`<button class="kic" data-act="show" data-id="${x.id}" aria-label="Show">${ic('info',22)}</button>`,
-    pin:kPin(ic('users',16),'Find a crew',cs.length?`${cs.length} crew${cs.length>1?'s':''} forming · ask to join`:'No crews yet · start the first one',`<button class="kpbb" data-act="kcrews">View</button>`)});
-  return `<div class="chat kchat kv2 kpinned showchat ksc"><img class="bg" alt="" src="${x.img}"><div class="shade"></div>${hd}
+    right:`<button class="kic" data-act="show" data-id="${x.id}" aria-label="Show">${ic('info',22)}</button>`});
+  return `<div class="chat kchat kv2 showchat ksc"><img class="bg" alt="" src="${x.img}"><div class="shade"></div>${hd}
     <div class="inner" id="wci"><div class="msgs">${igList(L,{group:true,whoAct:'chwho',seen})}</div></div>
     ${joined?`${igReplyBar('w'+x.id)}${kComp('wcomposer','wq','Message '+esc(x.artist)+' fans…',{onsubmit:`return wallPost(event,'${x.id}')`,attach:'toast" data-msg="Photos are coming soon'})}`
       :`<button class="composer scjoin kjoin" data-act="chatjoin" data-id="${x.id}">Join the chat</button>`}
@@ -3183,18 +3207,32 @@ function xThread(c){
     return t; }
 function xGroup(cs){ const s=cs[0].s, sh=v=>v.replace('Madison Square Garden','MSG').replace('Radio City Music Hall','Radio City');
   return `<div class="xgrp"><button class="xsh" data-act="show" data-id="${s.id}"><span class="xth">${img(s)}</span><span class="xsb"><b>${esc(s.artist)}</b><small>${sd(s.dates[0])} · ${esc(sh(s.venue))}</small></span><span class="xsp">👤 ${cs[0].solo} solo</span></button>${cs.map(xRow).join('')}</div>`; }
+
+// Crews are private: join with an invite, or find one by its crew ID in Chats and ask; the host approves.
+const crewCode=(name,sid)=>{ const w=String(name).split(/[^A-Za-z]+/).filter(Boolean); return ((w[0]||'C')[0]+(w[1]||w[0]||'R')[0]).toUpperCase()+'-'+(1000+Math.abs(h(name+'|'+sid))%9000); };
+const xCode=c=>crewCode(c.name,c.s.id);
+// Public chats (one per show) are what Explore, the show page and scene pages list
+function pubChat(x){ const st=chatStats(x), L=wallPosts(x).filter(o=>!(o.p!=null&&(state.blocked||{})[o.p])), last=L[0], P=last.me?MEP:PEOPLE[last.p], joined=inChat(x);
+  return `<button class="pcc" data-act="${joined?'wallopen':'wallgo'}" data-id="${x.id}"><span class="pcv">${img(x)}</span>
+    <span class="pcb"><span class="pct"><b>${esc(x.artist)}</b><em><i class="kon"></i>${st.online} online</em></span>
+      <small>${sd(x.dates[0])} · ${esc(VSH(x.venue))} · ${fmtK(st.going)} in the chat</small>
+      <span class="pcm"><span class="pca">${avi(P[3])}</span><span><b>${last.me?'You':P0(last.p)}</b> ${esc(last.t)}</span></span></span>
+    <span class="pcj${joined?' on':''}">${joined?'Open':'Join'}</span></button>`; }
+function kIdRow(c){ const r=xReq(c), left=c.n-c.f; return `<div class="kcr kidr"><span class="kcrh sq">${img(c.s)}</span><span class="kcrb"><b>${esc(c.name)}</b><small>#${xCode(c)} · ${esc(c.s.artist)} · ${sd(c.s.dates[0])} · ${left} ${left===1?'spot':'spots'} left</small></span>${c.mine||r==='ok'?`<button class="kcrj on" data-act="xjoin" data-v="${c.ix}">Open</button>`:r==='wait'?`<span class="kcrj kwt">Requested</span>`:`<button class="kcrj" data-act="xjoin" data-v="${c.ix}">Ask to join</button>`}</div>`; }
+const idFind=q=>{ const k=q.replace(/[#\s]/g,'').toUpperCase(); if(k.length<3) return []; return xCrews().filter(c=>!c.full&&xCode(c).replace('-','').startsWith(k.replace('-',''))).slice(0,3); };
+const INV0=()=>{ const c=xCrews().find(c=>!c.mine&&!c.full&&!c.wo&&xReq(c)!=='ok'); return c&&!state.invDone?[c]:[]; };
+
 function explore(){
   const tag=state.xtag==null?-1:state.xtag, order=[0,1,2,4,6,7,3,5], all=xCrews();
-  const L=all.filter(c=>tag<0||c.j===tag);
-  const solo=all.filter(c=>xDays(c.s.dates[0])<=7).reduce((n,c)=>n+c.solo,0)||23;
-  const top=`<div class="xtop"><header class="xhd"><h1 class="sh1">Explore <span class="emo">🧭</span></h1><span class="wcity">${L.length} crews forming in ${state.city}</span></header>
-    <div class="pad"><button class="sbar sfake" data-act="search" aria-label="Search">${ic('search',20)}<span>Artists, clips, crews, people</span><i class="shot">🔥 Trending</i></button></div>
+  const shows=SHOWS.filter(x=>xDays(x.dates[0])>=0&&(tag<0||all.some(c=>c.s===x&&c.j===tag))).sort((a,b)=>a.dates[0].localeCompare(b.dates[0]));
+  const online=shows.reduce((n,x)=>n+chatStats(x).online,0);
+  const top=`<div class="xtop"><header class="xhd"><h1 class="sh1">Explore <span class="emo">🧭</span></h1><span class="wcity">${shows.length} show chats in ${state.city} · ${fmtK(online)} online</span></header>
+    <div class="pad"><button class="sbar sfake" data-act="search" aria-label="Search">${ic('search',20)}<span>Artists, venues, people</span><i class="shot">🔥 Trending</i></button></div>
     <div class="hs xchips"><button class="gch" data-act="xtag" data-v="-1" aria-pressed="${tag<0}">All</button>${order.map(j=>`<button class="gch" data-act="xtag" data-v="${j}" aria-pressed="${tag===j}">${SCENE_EMO[j]} ${SCENE_LIST[j][0]}</button>`).join('')}</div></div>`;
-  const proof=`<div class="xsolo2"><span class="xav">${[3,5,7].map(k=>`<span>${avi(PEOPLE[k][3])}</span>`).join('')}</span><span><b>${solo} people</b> are going solo this week · every crew is ID + ticket verified</span></div>`;
-  const groups=XB.map(bk=>{ const cs=L.filter(c=>xBucket(c.s.dates[0])===bk); const by=[]; cs.forEach(c=>{ let g=by.find(x=>x[0].s===c.s); if(!g){ g=[]; by.push(g); } g.push(c); }); return [bk,by]; }).filter(g=>g[1].length);
-  const start=`<button class="xstart" data-act="ncopen"><i>${ic('plus',18)}</i><span><b>Don’t see your vibe?</b><small>Start a crew for any show · up to 8 people</small></span>${ic('right',16)}</button>`;
-  const body=groups.length?proof+groups.map(([bk,by])=>`<p class="slab">${bk}</p>${by.slice(0,5).map(xGroup).join('')}`).join('')+start
-    :`<div class="xempty"><b>No ${tag>=0?esc(SCENE_LIST[tag][0].toLowerCase())+' ':''}crews yet</b><span>Be the first. We’ll suggest a meetup spot and time.</span><button data-act="ncopen" data-j="${tag>=0?tag:0}">＋ Start the first crew</button></div>`;
+  const note=`<div class="xsolo2"><span class="xav">${[3,5,7].map(k=>`<span>${avi(PEOPLE[k][3])}</span>`).join('')}</span><span>Every show has one open chat. <b>Jump in, meet people</b>, then start a private crew from Chats.</span></div>`;
+  const groups=XB.map(bk=>[bk,shows.filter(x=>xBucket(x.dates[0])===bk).slice(0,8)]).filter(g=>g[1].length);
+  const body=groups.length?note+groups.map(([bk,L])=>`<p class="slab">${bk}</p><div class="pcl">${L.map(pubChat).join('')}</div>`).join('')
+    :`<div class="xempty"><b>No ${tag>=0?esc(SCENE_LIST[tag][0].toLowerCase())+' ':''}show chats yet</b><span>Try another vibe.</span></div>`;
   return `<div class="scroll"><div class="xpg" style="padding-bottom:130px">${top}${body}</div></div>${dock('explore')}`;
 }
 const RECENT0=['Harry Styles','Pit crew','MSG'];
@@ -3206,11 +3244,11 @@ function search(){ const q=(state.sq||'').trim().toLowerCase(), rec=state.recent
   if(!q){ body=`${rec.length?`<div class="srh"><b>Recent</b><button data-act="sclear">Clear</button></div><div class="srec">${rec.map(r=>`<button class="gch" data-act="sfill" data-v="${esc(r)}">${ic('clock',13)} ${esc(r)}</button>`).join('')}</div>`:''}
     ${trendCard()}
     <div class="srh"><b>Browse by vibe</b></div><div class="svibe">${[0,1,2,4,6,7,3,5].map(j=>`<button data-act="svibe" data-v="${j}"><i>${SCENE_EMO[j]}</i><span>${SCENE_LIST[j][0]}</span></button>`).join('')}</div>`; }
-  else { const S=SHOWS.filter(x=>m(x.artist+' '+x.venue)).slice(0,4), C=xCrews().filter(c=>!c.full&&m(c.name+' '+c.s.artist+' '+c.spot)).slice(0,4), Pp=PEOPLE.map((p,i)=>[p,i]).filter(([p])=>m(p[0])).slice(0,4),
+  else { const S=SHOWS.filter(x=>m(x.artist+' '+x.venue)).slice(0,4), C=idFind(q), Pp=PEOPLE.map((p,i)=>[p,i]).filter(([p])=>m(p[0])).slice(0,4),
       Cl=clipList().filter(c=>m([c.s.artist,c.s.venue,VSH(c.loc||c.s.venue),c.cap,c.song,c.me?'You':PEOPLE[c.p][0]].join(' '))).slice(0,8);
     body=(S.length?`<div class="srh"><b>Shows</b></div><div class="wcard flush ssec2">${S.map(feedRow).join('')}</div>`:'')
       +(Cl.length?`<div class="srh"><b>Clips</b></div>${clipThumbs(Cl)}`:'')
-      +(C.length?`<div class="srh"><b>Crews</b></div><div class="xgrp xgs">${C.map(c=>xRow(c).replace('<span class="xmt">📍 ',`<span class="xmt">${esc(c.s.artist)} · `)).join('')}</div>`:'')
+      +(C.length?`<div class="srh"><b>Crew ID</b></div><div class="wcard flush ssec2 kidl">${C.map(kIdRow).join('')}</div>`:'')
       +(Pp.length?`<div class="srh"><b>People</b></div><div class="wcard flush ssec2">${Pp.map(([p,i])=>`<button class="spp" data-act="person" data-v="${i}"><span class="bgav"><span>${avi(p[3])}</span></span><span><b>${p[0]}</b><small>${BUD[i]?'Buddy · ':''}${REL[i][0]} of ${REL[i][1]} shows showed up</small></span>${ic('right',16)}</button>`).join('')}</div>`:'')
       ||`<div class="xempty"><b>No results for “${esc(state.sq)}”</b><span>Try an artist, a venue, or a vibe like “pit crew”.</span></div>`; }
   return `<div class="scroll"><div class="xpg" style="padding-bottom:60px"><div class="xtop shd"><div class="shrow"><label class="sbar"><span hidden>Search</span>${ic('search',20)}<input id="sq" value="${esc(state.sq||'')}" placeholder="Artists, clips, crews, people" autocomplete="off" data-live2="1"></label><button class="scan" data-act="back">Cancel</button></div></div>${body}</div></div>`;
@@ -3322,7 +3360,7 @@ function layWallet(open){ const w=document.getElementById('wal'); if(!w) return;
   w.style.height=(232+(n-2)*14+214)+'px'; }
 const infoB=(k,label)=>`<button class="infob" data-act="info" data-v="${k}" aria-label="${label}">${ic('info',18)}</button>`;
 const INFO={tickets:['How spare tickets work',[['💵','Face value, always','Sellers can’t mark up. You pay face value plus a flat $2 fee.'],['🔒','Held until it lands','Your money sits in escrow and only reaches the seller once the ticket is in your account.'],['👯','You join their crew','Buying a spare adds you to the seller’s crew for this show, so you won’t be going alone.'],['⏱️','Crews get first dibs','Some spares are crew-only for 24 hours before anyone can claim them.']]],
-  crews:['How crews work',[['👥','Up to 8 people','Small enough to actually find each other at the venue.'],['🙋','Invite or ask to join','Hosts invite friends by link, or list the crew and approve each request.'],['➕','Full? We open the next','When a crew fills up, a new one opens with the same plan.'],['📍','One place to meet','Every crew has a time and a spot to meet before doors.'],['✅','Show-up score','Showing up keeps your score high. No-shows are visible to other crews.']]],
+  crews:['How crews work',[['👥','Up to 8 people','Small enough to actually find each other at the venue.'],['🔒','Private by default','Join with an invite, or ask with the crew ID from Chats. The host approves.'],['➕','Full? We open the next','When a crew fills up, a new one opens with the same plan.'],['📍','One place to meet','Every crew has a time and a spot to meet before doors.'],['✅','Show-up score','Showing up keeps your score high. No-shows are visible to other crews.']]],
   clips:['About clips & reviews',[['✦','AI summary','Written from every review of this show and refreshed as new ones come in.'],['★','Ratings','Anyone tagged at the venue can rate the night. Text-only reviews count too.'],['🎬','Clips','Short videos from the crowd. Tap one to watch it full screen.']]]};
 function infoSheet(){ const x=INFO[state.info]; if(!x) return '';
   return `<div class="sheetbg" data-act="infoclose"></div><div class="sheet csheet infos" role="dialog" aria-label="${x[0]}"><div class="cgrab"><i class="grab"></i><h3>${x[0]}</h3></div>
@@ -3366,7 +3404,7 @@ function reviewsView(s){ const R=reviewsFor(s), rated=R.filter(r=>r.rate), k=Mat
 function show(){
   const s=byId[state.id];
   const cs=xCrews().filter(c=>c.s===s);
-  const tabs=[['tickets','Tickets'],['wall','Chat'],['crews','Crews'],['clips','Clips']];
+  const tabs=[['tickets','Tickets'],['wall','Chat'],['clips','Clips']];
   const tabRow=top=>`<div class="shtabs${top?' top':''}">${tabs.map(([k,l],i)=>`<button class="gch" data-act="shtab" data-v="${k}" aria-pressed="${i===0}">${l}</button>`).join('')}</div>`;
   return `<div class="scroll" id="shsc"><div style="padding-bottom:110px">
     <div class="hero">${img(s)}
@@ -3384,9 +3422,6 @@ function show(){
         return `<h2 class="h2 sec">Spare tickets <span class="emo">🎟️</span>${infoB('tickets','How spare tickets work')}</h2>`+(L.length?L.map(x=>spareCard(x,true)).join('')
         :`<div class="spnone"><b>No spares for this show yet</b><span>${4+h(s.id)%30} people are on the waitlist. We’ll ping you the moment one drops.</span><button class="${on?'on':''}" data-act="notify" data-id="${s.id}">${on?ic('check',14)+' You’re on the list':'🔔 Notify me'}</button></div>`); })()}
       <span id="shs-wall" class="shanchor"></span>${wallEntry(s)}
-      <span id="shs-crews" class="shanchor"></span><h2 class="h2 sec">Crews going${infoB('crews','How crews work')}</h2><p class="sub" style="margin:6px 0 4px">Up to 8 · ask to join, the host approves</p>
-      <div class="xgrp xgs">${cs.map(xRow).join('')}</div>
-      <button class="crewrow newcrew" data-act="ncopen" data-id="${s.id}">${ic('plus',20)}<span style="flex:1;font-weight:600;letter-spacing:-.02em">Start your own crew</span></button>
       <span id="shs-clips" class="shanchor"></span>${reviewsView(s)}
     </div></div></div>
     <div class="shbar" id="shbar" aria-hidden="true"><div class="shbr"><button class="nb lt" data-act="back" aria-label="Back" tabindex="-1">${ic('back')}</button><span class="shbt"><b>${esc(s.artist)}</b><small>${sd(s.dates[0])} · ${esc(VSH(s.venue))}</small></span><button class="nb lt" data-act="toast" data-msg="Link copied" aria-label="Share" tabindex="-1">${ic('share',20)}</button></div>${tabRow(true)}</div>
@@ -3517,8 +3552,7 @@ function ncSheet(){ const c=state.nc; if(!c.sid) return ncPick(); const s=byId[c
     <p class="ncl">Vibe</p><div class="ncv">${order.map(j=>`<button class="gch" data-act="ncset" data-k="j" data-v="${j}" aria-pressed="${c.j===j}">${SCENE_EMO[j]} ${SCENE_LIST[j][0]}</button>`).join('')}</div>
     <p class="ncl">Crew size</p><div class="ncsz">${[4,5,6,7,8].map(n=>`<button data-act="ncset" data-k="cap" data-v="${n}" aria-pressed="${c.cap===n}">${n}</button>`).join('')}</div>
     <small class="nch">Small crews actually talk. When yours fills, new people go to the next crew.</small>
-    <p class="ncl">Who can join</p><div class="ncsz two"><button data-act="ncset" data-k="vis" data-v="0" aria-pressed="${!!c.priv}">Invite only</button><button data-act="ncset" data-k="vis" data-v="1" aria-pressed="${!c.priv}">Ask to join</button></div>
-    <small class="nch">${c.priv?'Only people you send the link to can join. Your crew stays off Explore.':'Your crew shows up on Explore and the show page. You approve each request.'}</small>
+    <p class="ncl">Who can join</p><div class="ncinv">${ic('users',18)}<span><b>Private · invite only</b><small>Send invites or share the crew ID. People who use the ID ask to join, and you approve.</small></span></div>
     <p class="ncl">Optional</p>
     ${tg('meet',c.meet,'Suggest a meetup',c.meet?'6:30 PM · '+esc(XSPOT[h(s.id)%XSPOT.length])+' · you can change it later':'Skip it, sort it out in the chat')}
     ${tg('dep',c.dep,'Ask for a $5 hold','Refunded when people show up · good for hot shows')}
@@ -3670,7 +3704,7 @@ function crew(){
     else if(m.d==='out') L.push({id,me:true,t:m.t,rp:m.rp});
     else if(m.d==='img') L.push({id,me:true,img:img(s)});
     else if(m.d==='home') L.push({html:homeCard(t)});
-    else if(m.d==='req'){ const P=PEOPLE[m.p], r=REL[m.p]||[3,3], tk=tixOf(m.p); L.push(m.st?{sys:m.st===1?`You approved ${P0(m.p)} · ${t.who.length+1} of ${t.cap}`:`You declined ${P0(m.p)}’s request`}:{html:`<div class="jreq"><button class="jrp" data-act="person" data-v="${m.p}">${av(P,'style="border:0;width:42px;height:42px"')}<span><b>${P[0]} wants to join</b><small>✓ ID verified · showed up ${r[0]}/${r[1]}${tk?' · '+tk:''}</small></span></button><div class="jrb"><button data-act="jreq" data-v="${i}" data-k="2">Decline</button><button class="ok" data-act="jreq" data-v="${i}" data-k="1">Approve</button></div></div>`}); }
+    else if(m.d==='req'){ const P=PEOPLE[m.p], r=REL[m.p]||[3,3], tk=tixOf(m.p); L.push(m.st?{sys:m.st===1?`You approved ${P0(m.p)} · ${t.who.length+1} of ${t.cap}`:`You declined ${P0(m.p)}’s request`}:{html:`<div class="jreq"><button class="jrp" data-act="person" data-v="${m.p}">${av(P,'style="border:0;width:42px;height:42px"')}<span><b>${P[0]} wants to join</b><small>Found you by crew ID · ✓ ID verified · showed up ${r[0]}/${r[1]}${tk?' · '+tk:''}</small></span></button><div class="jrb"><button data-act="jreq" data-v="${i}" data-k="2">Decline</button><button class="ok" data-act="jreq" data-v="${i}" data-k="1">Approve</button></div></div>`}); }
     else if(m.d==='spare') L.push({html:`<div class="kspare ${claimed?'done':''}"><span class="ksi">${img(s)}</span><span class="ksb"><small>Face value + $2 · verified</small><b>${esc(sp.sec)} · next to the crew</b><span>${sp.seller[0]} can’t make it</span></span><span class="ksr"><b>$${sp.face+FEE}</b>${claimed?'<em>Claimed</em>':`<button data-act="claim" data-id="${s.id}">Claim</button>`}</span></div>`}); });
   if(t.typing!=null) L.push({id:t.id+':ty',p:t.typing,typing:true});
   const lastOut=[...L].reverse().find(x=>x.id&&!x.typing), seen=lastOut&&lastOut.me?(dm?(t.pending?'Sent':'Seen'):`Seen by ${P0(t.who[0])}${t.who.length>1?' + '+(t.who.length-1):''}`):'';
@@ -3686,12 +3720,12 @@ function crew(){
       ${t.pending?`<p class="knote">${t.reqSent?'Request sent · you can send more once '+P0(p)+' accepts':'Your first message is sent as a request · '+dmLeft()+' of '+DM_LIMIT+' left today'}</p>`:''}</div>${foot}</div>`; }
   const n=t.who.length+1, cd=cdText(s), live=xDays(s.dates[0])<1;
   const hd=kHead({title:esc(t.title),sub:`${esc(s.artist)} · ${live?`doors in <span id="kcd" data-sid="${s.id}">${cd[0]}</span>`:'in '+cd[0]} · ${n}/${t.cap}`,av:img(s),act:'show',attr:`data-id="${s.id}"`,
-    right:t.mine?`<button class="kinv2" data-act="toast" data-msg="Invite link copied · only people with the link can join">Invite</button>`:`<button class="kic" data-act="show" data-id="${s.id}" aria-label="Show">${ic('info',22)}</button>`,
+    right:t.mine?`<button class="kinv2" data-act="kinvopen">Invite</button>`:`<button class="kic" data-act="show" data-id="${s.id}" aria-label="Show">${ic('info',22)}</button>`,
     pin:crewPin(t,s,sp,claimed)});
   return `<div class="chat kchat kv2 kpinned">${bg}${hd}
     <div class="inner" id="ci"><div class="msgs">${pollCard(t)}${igList(L,{group:true,whoAct:'person',seen})}</div></div>
     ${state.att?attMenu(t,s,dm):''}${state.att||replying?'':`<div class="kchips">${crewChips(t).join('')}</div>`}${igReplyBar(t.id)}${kComp('composer','msg','Message the crew…')}
-  </div>`;
+    ${state.kinv?kInvSheet(t,s):''}</div>`;
 }
 
 
@@ -3701,7 +3735,7 @@ function crews(){
   const showc=SHOWS.filter(x=>inChat(x)).map(x=>({id:'S'+x.id,k:'show',sid:x.id,ts:(state.joinedChat||{})[x.id]?9e9:60,un:0}));
   const rows=TH.filter(t=>!t.inreq).concat(listed,showc).filter(t=>f==='all'||(f==='shows'&&t.k==='show')||(f==='crews'&&t.k==='crew')||(f==='tickets'&&(t.k==='listing'||(t.spare&&state.claimed&&state.claimed[thShow(t).id])))||(f==='dms'&&t.k==='dm'))
     .filter(t=>!q||(t.k==='listing'||t.k==='show'?byId[t.sid].artist+' show chat':thName(t)+' '+thLast(t)).toLowerCase().includes(q)).sort((a,b)=>b.ts-a.ts);
-  const tabs=[['all','All'],['shows','Shows'],['crews','Crews'],['dms','Direct'],['requests','Requests'+((mreqVisible().length+(REQ.t1?1:0))?' '+(mreqVisible().length+(REQ.t1?1:0)):'')]], req=REQ.t1||[];
+  const tabs=[['all','All'],['shows','Shows'],['crews','Crews'],['dms','Direct'],['requests','Requests'+((mreqVisible().length+(REQ.t1?1:0)+INV0().length)?' '+(mreqVisible().length+(REQ.t1?1:0)+INV0().length):'')]], req=REQ.t1||[];
   const tone=(t,i)=>['dk','w','g2','g1'][i%4];
   const bub=(t,i)=>{ const z=rows.length-i;
     if(t.k==='show'){ const s=byId[t.sid], st=chatStats(s), last=wallPosts(s)[0], lp=last.me?'You':PEOPLE[last.p][0].split(' ')[0];
@@ -3715,15 +3749,17 @@ function crews(){
         <span class="cbm">${t.typing!=null?`<span class="mtyp"><i></i><i></i><i></i></span>`:esc(thLast(t))}</span></span>
       ${t.un?`<span class="cbn">${t.un>9?'9+':t.un}</span>`:''}</button>`; };
   return `<div class="scroll"><div style="padding-bottom:130px">
-    <header class="chead"><h1>Chats</h1>${unreadTotal()?`<span class="chn">${unreadTotal()}</span>`:''}<button class="wicon" data-act="msearch" aria-label="Search">${ic(state.msOpen?'x':'search',20)}</button></header>
-    ${state.msOpen?`<div class="pad" style="margin-top:4px"><label class="sbar">${ic('search',18)}<span hidden>Search</span><input id="mq" value="${esc(state.mq||'')}" placeholder="Search people, crews, shows"></label></div>`:''}
+    <header class="chead"><h1>Chats</h1>${unreadTotal()?`<span class="chn">${unreadTotal()}</span>`:''}<button class="wicon" data-act="msearch" aria-label="Search">${ic(state.msOpen?'x':'search',20)}</button><button class="wicon knewc" data-act="ncopen" aria-label="New crew">${ic('plus',20)}</button></header>
+    ${state.msOpen?`<div class="pad" style="margin-top:4px"><label class="sbar">${ic('search',18)}<span hidden>Search</span><input id="mq" value="${esc(state.mq||'')}" placeholder="Search chats or a crew ID"></label></div>`:''}
+    ${state.msOpen?(()=>{ const ids=q?idFind(q):[]; return ids.length?`<p class="kidh">Crew ID</p><div class="kidl">${ids.map(kIdRow).join('')}</div>`:(!q?`<p class="kidhint">Have a crew ID? Type it here, like <b>#${xCode(xCrews()[0])}</b></p>`:''); })():''}
     <div class="ctabs" role="tablist">${tabs.map(([k,l])=>`<button data-act="mtab" data-v="${k}" aria-selected="${f===k}">${l}</button>`).join('')}</div>
     ${req.length&&f==='requests'?`<div class="creq"><span class="mreqav">${req.map(k=>`<span>${avi(PEOPLE[k][3])}</span>`).join('')}</span><span><b>${req.map(P0).join(' & ')}</b> · want in</span><button class="mdec" data-act="reqno" aria-label="Decline">${ic('x',14)}</button><button data-act="reqyes">Accept</button></div>`:''}
-    ${f==='all'&&!KIT.done?`<button class="ckit" data-act="kitopen"><span class="mreqav">${KIT.who.map(k=>`<span>${avi(PEOPLE[k][3])}</span>`).join('')}</span><span><b>Last night’s crew</b> · keep in touch?</span>${ic('right',16)}</button>`:''}
+    ${f==='all'&&!KIT.done&&!q?`<button class="ckit" data-act="kitopen"><span class="mreqav">${KIT.who.map(k=>`<span>${avi(PEOPLE[k][3])}</span>`).join('')}</span><span><b>Last night’s crew</b> · keep in touch?</span>${ic('right',16)}</button>`:''}
     
+    ${f==='requests'?INV0().map(c=>`<p class="kidh">Crew invites</p><div class="kinvc"><span class="kcrh">${avi(c.host[3])}</span><span class="kcrb"><b>${c.host[0]} invited you</b><small>${esc(c.name)} · ${esc(c.s.artist)} · ${sd(c.s.dates[0])}</small></span><button class="kinx" data-act="invno" aria-label="Decline">${ic('x',16)}</button><button class="kcrj" data-act="invyes" data-v="${c.ix}">Join</button></div>`).join(''):''}
     ${f==='requests'?`<div class="rqset"><span><b>Only verified people</b><small>Hide requests from accounts without ID verification</small></span><button class="tgl" role="switch" aria-checked="${!!state.reqVerOnly}" aria-label="Only verified people" data-act="reqver"><i></i></button></div>
     <p class="creqn">Only people going to the same shows as you can send a request, and just one message until you accept. Ignored requests expire after 7 days. They’re never told you saw, deleted or reported it.</p>${state.reqVerOnly&&MREQ.some(r=>!r.ver&&!(state.blocked||{})[r.p])?`<p class="rqhid">${MREQ.filter(r=>!r.ver&&!(state.blocked||{})[r.p]).length} from unverified accounts hidden</p>`:''}<div class="cbl">${mreqVisible().map((r,j)=>{ const i=MREQ.indexOf(r); return `<div class="cb ${['w','g1'][j%2]} ${j%2?'r':'l'} rq" style="z-index:${9-j}"><span class="cbav">${avi(PEOPLE[r.p][3])}</span><span class="cbb" data-act="mrqopen" data-v="${i}" style="cursor:pointer"><span class="cbt"><b>${PEOPLE[r.p][0]}</b>${r.ver?`<i class="rqv">${ic('check',9)} Verified</i>`:'<i class="rqv no">Not verified</i>'}<em>${r.time}</em></span><span class="cbs">Both going to ${esc(r.show)}${r.crew?' · '+esc(r.crew):''}</span><span class="cbm">${esc(r.t)}</span><span class="rqx">Expires in ${r.exp} day${r.exp>1?'s':''} if you don’t reply</span><span class="rqb"><button class="rep" data-act="mrqrep" data-v="${i}" aria-label="Report or block">Report</button><span class="rqsp"></span><button data-act="mrqno" data-v="${i}">Delete</button><button class="on" data-act="mrqyes" data-v="${i}">Accept</button></span></span></div>`; }).join('')||'<p class="mempty">No message requests.</p>'}</div>`:
-    `<div class="cbl">${rows.map(bub).join('')||`<p class="mempty">${q?'No matches for “'+esc(state.mq)+'”':f==='tickets'?'No ticket updates yet.':'Nothing here yet.'}</p>`}</div>`}
+    `<div class="cbl">${rows.map(bub).join('')||(q&&idFind(q).length?'':`<p class="mempty">${q?'No matches for “'+esc(state.mq)+'”':f==='tickets'?'No ticket updates yet.':'Nothing here yet.'}</p>`)}</div>`}
   </div></div>${dock('crews')}`;
 }
 
@@ -3800,9 +3836,9 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='nccreate'){ const c=state.nc, s=byId[c.sid]; if(c.j===7&&ME.idv!==true){ toast('Women-only crews need a verified ID · verify it on your profile'); return; }
     const name=SCENE_LIST[c.j][2][0], p=(h(s.id)+1)%8;
     const t={id:'t'+(++TSEQ),k:'crew',mine:true,priv:c.priv,show:s.artist,title:name,long:`${name} · ${s.artist}`,host:-1,who:[],cap:c.cap,un:0,ts:++TSEQ,dep:c.dep,plan:c.meet?['6:30 PM',XSPOT[h(s.id)%XSPOT.length]]:null,
-      msgs:[{d:'sys',t:`You started ${name} · 1 of ${c.cap}`}].concat(c.priv?[{d:'sys',t:'Invite only · share the link with friends'}]:[]),replies:[[p,'Sounds good!']]};
-    TH.unshift(t); MINE.push({tid:t.id,s,j:c.j,name}); state.nc=null; openThread(t); toast(c.priv?'Crew created · invite link ready':'Crew created · listed on Explore, you approve who joins');
-    setTimeout(()=>{ if(c.priv){ t.who.push(p); t.msgs.push({d:'sys',t:`${P0(p)} joined via your link · ${t.who.length+1} of ${t.cap}`}); t.msgs.push({d:'in',p,t:`Hey! First time seeing ${s.artist} live 🙌`,time:nowT()}); } else t.msgs.push({d:'req',p,st:0}); t.ts=++TSEQ; if(state.screen==='crew'&&state.tid===t.id) render(); else t.un++; },2600); }
+      msgs:[{d:'sys',t:`You started ${name} · crew ID #${crewCode(name,s.id)}`}],replies:[[p,'Sounds good!']]};
+    TH.unshift(t); MINE.push({tid:t.id,s,j:c.j,name}); state.nc=null; openThread(t); toast('Crew created · invite people or share the crew ID');
+    setTimeout(()=>{ t.msgs.push({d:'req',p,st:0}); t.ts=++TSEQ; if(state.screen==='crew'&&state.tid===t.id) render(); else t.un++; },2600); }
   else if(a==='wallgo'){ state.wtag='All'; state.wtopic=null; state._chBottom=true; go('wall',id); }
   else if(a==='chatjoin'){ (state.joinedChat ||= {})[id]=true; if(state.screen==='wall'){ state._chBottom=true; render(); } else { const sc=document.getElementById('shsc'); (state.shY ||= {})[id]=sc?sc.scrollTop:0; state.wtag='All'; state._chBottom=true; go('wall',id); } toast('You’re in the '+byId[id].artist+' show chat'); }
   else if(a==='iginfo'){ state.igi=true; igKeep(); render(); }
@@ -3819,6 +3855,11 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='dmreq'){ state.dmReq=state.dmReq===false; render(); toast(state.dmReq!==false?'DMs from strangers arrive as requests':'Anyone in this chat can DM you'); }
   else if(a==='chblock'){ (state.blocked ||= {})[v]=true; state.who=null; render(); toast(P0(+v)+' is blocked · their messages are hidden'); }
   else if(a==='chreport'){ state.who=null; render(); toast('Thanks · we’ll review '+P0(+v)+' within 24h'); }
+  else if(a==='invyes'){ const c=xCrews()[+v]; (state.req ||= {})['x'+c.s.id+':'+c.name]='ok'; state.invDone=true; const t=xThread(c); t.msgs[0]={d:'sys',t:`You joined with ${c.host[0].split(' ')[0]}’s invite · ${c.f+1} of ${c.n}`}; openThread(t); }
+  else if(a==='invno'){ state.invDone=true; render(); toast('Invite declined · they won’t be told'); }
+  else if(a==='kinvsend'){ (state.invSent ||= {})[state.tid+':'+v]=true; render(); toast('Invite sent to '+P0(+v)); }
+  else if(a==='kinvopen'){ state.kinv=true; render(); }
+  else if(a==='kinvx'){ state.kinv=false; render(); }
   else if(a==='kcrews'){ state.kcrews=true; render(); }
   else if(a==='kcrewsx'){ state.kcrews=false; render(); }
   else if(a==='wtopic'){ state.wtopic=v; state.rpl=null; state._chBottom=true; render(); }
