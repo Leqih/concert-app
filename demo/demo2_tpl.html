@@ -3226,27 +3226,34 @@ function xGroup(cs){ const s=cs[0].s, sh=v=>v.replace('Madison Square Garden','M
 
 
 // Chats → chat: the tapped bubble grows into the chat screen and its avatar flies into the header (shared element)
-function cbSnap(card){ window._cbS=null; if(!card||matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const av=card.querySelector('.cbav'), cs=getComputedStyle(card);
-  window._cbS={r:card.getBoundingClientRect(),bg:cs.backgroundColor,rad:cs.borderRadius,card:card.cloneNode(true),av:av?av.cloneNode(true):null,ar:av?av.getBoundingClientRect():null,ac:av?getComputedStyle(av).borderRadius:'50%'}; }
-function cbOpen(v){ const S=window._cbS, AP=document.getElementById('app'), V=AP.getBoundingClientRect(), VR=getComputedStyle(AP).borderRadius||'0px', E='cubic-bezier(.2,.85,.25,1)', D=460;
-  v.classList.remove('screen');
-  const fx=(el,r,z)=>{ Object.assign(el.style,{position:'fixed',left:r.left+'px',top:r.top+'px',width:r.width+'px',height:r.height+'px',margin:'0',zIndex:z,pointerEvents:'none',boxSizing:'border-box'}); document.body.appendChild(el); return el; };
-  // 1. the bubble becomes the chat background
-  const g=fx(document.createElement('div'),S.r,9998); g.style.backgroundColor=S.bg; g.style.borderRadius=S.rad; g.style.overflow='hidden';
-  const c=S.card; Object.assign(c.style,{position:'absolute',inset:'0',margin:'0',transform:'none',width:'100%',height:'100%'}); g.appendChild(c);
-  g.animate([{left:S.r.left+'px',top:S.r.top+'px',width:S.r.width+'px',height:S.r.height+'px',borderRadius:S.rad,backgroundColor:S.bg,opacity:1},
-             {left:V.left+'px',top:V.top+'px',width:V.width+'px',height:V.height+'px',borderRadius:VR,backgroundColor:'#0E0E10',opacity:1,offset:.7},
-             {left:V.left+'px',top:V.top+'px',width:V.width+'px',height:V.height+'px',borderRadius:VR,backgroundColor:'#0E0E10',opacity:0}],{duration:D+120,easing:E,fill:'forwards'}).onfinish=()=>g.remove();
-  c.animate([{opacity:1,transform:'translateY(0)'},{opacity:0,transform:'translateY(-14px)'}],{duration:170,easing:'ease-out',fill:'forwards'});
-  // 2. the new chat fades up on top of it
-  v.animate([{opacity:0,transform:'translateY(18px)'},{opacity:0,transform:'translateY(18px)',offset:.32},{opacity:1,transform:'none'}],{duration:D+120,easing:E});
-  // 3. the avatar flies into the header
-  const tgt=v.querySelector('.khd .kava');
-  if(S.av&&tgt){ const T=tgt.getBoundingClientRect(), a=fx(S.av,S.ar,9999); a.style.overflow='hidden';
-    tgt.style.visibility='hidden'; a.style.transformOrigin='0 0';
-    const dx=T.left-S.ar.left, dy=T.top-S.ar.top, k=T.width/S.ar.width, tr=getComputedStyle(tgt).borderRadius;
-    a.animate([{transform:'translate(0,0) scale(1)',borderRadius:S.ac},{transform:`translate(${dx}px,${dy}px) scale(${k})`,borderRadius:tr}],{duration:D,easing:E,fill:'forwards'}).onfinish=()=>{ tgt.style.visibility=''; a.remove(); }; } }
+// Chats → chat, in two beats so the screen is never blank:
+// 1) over the still-visible list, the tapped bubble grows to fill the phone and darkens to the chat colour;
+// 2) the chat renders underneath, the bubble fades away and its avatar settles into the header.
+function cbGo(card,t){ const AP=document.getElementById('app'), V=AP.getBoundingClientRect(), VR=getComputedStyle(AP).borderRadius||'0px', E='cubic-bezier(.32,.72,0,1)';
+  const r=card.getBoundingClientRect(), cs=getComputedStyle(card), av=card.querySelector('.cbav'), ar=av&&av.getBoundingClientRect();
+  const fx=(el,q,z)=>{ Object.assign(el.style,{position:'fixed',left:q.left+'px',top:q.top+'px',width:q.width+'px',height:q.height+'px',margin:'0',zIndex:z,pointerEvents:'none',boxSizing:'border-box'}); document.body.appendChild(el); return el; };
+  window._cbBusy=true;
+  const g=fx(document.createElement('div'),r,9998); Object.assign(g.style,{backgroundColor:cs.backgroundColor,borderRadius:cs.borderRadius,overflow:'hidden',willChange:'left,top,width,height'});
+  const c=card.cloneNode(true); Object.assign(c.style,{position:'absolute',left:'0',top:'0',width:r.width+'px',height:r.height+'px',margin:'0',transform:'none'}); c.querySelectorAll('.cbav').forEach(x=>x.style.visibility='hidden'); g.appendChild(c);
+  const a=av?fx(av.cloneNode(true),ar,9999):null; if(a){ a.style.transformOrigin='0 0'; a.style.willChange='transform'; } if(av) av.style.visibility='hidden';
+  card.style.visibility='hidden';
+  const D1=340;
+  g.animate([{left:r.left+'px',top:r.top+'px',width:r.width+'px',height:r.height+'px',borderRadius:cs.borderRadius,backgroundColor:cs.backgroundColor},
+             {left:V.left+'px',top:V.top+'px',width:V.width+'px',height:V.height+'px',borderRadius:VR,backgroundColor:'#0E0E10'}],{duration:D1,easing:E,fill:'forwards'});
+  c.animate([{opacity:1},{opacity:0}],{duration:140,easing:'linear',fill:'forwards'});
+  // the avatar heads for the header spot (left 52, a little under the status bar) while the bubble grows
+  const st=parseFloat(getComputedStyle(AP).getPropertyValue('--st'))||54, guess={left:V.left+52,top:V.top+st+9,width:38};
+  let ap=null; if(a){ ap=a.animate([{transform:'translate(0,0) scale(1)'},{transform:`translate(${guess.left-ar.left}px,${guess.top-ar.top}px) scale(${guess.width/ar.width})`}],{duration:D1,easing:E,fill:'forwards'}); }
+  setTimeout(()=>{
+    window._cbBusy=false; window._cbNav=true; t.click(); window._cbNav=false;
+    const v=document.getElementById('view'); v.classList.remove('screen');
+    const tgt=v.querySelector('.khd .kava');
+    g.animate([{opacity:1},{opacity:0}],{duration:200,easing:'ease-out',fill:'forwards'}).onfinish=()=>g.remove();
+    if(a&&tgt){ const T=tgt.getBoundingClientRect(); tgt.style.visibility='hidden'; const cur=a.getBoundingClientRect();
+      a.animate([{transform:`translate(${guess.left-ar.left}px,${guess.top-ar.top}px) scale(${guess.width/ar.width})`},{transform:`translate(${T.left-ar.left}px,${T.top-ar.top}px) scale(${T.width/ar.width})`}],{duration:180,easing:E,fill:'forwards'})
+        .onfinish=()=>{ tgt.style.visibility=''; a.animate([{opacity:1},{opacity:0}],{duration:80,fill:'forwards'}).onfinish=()=>a.remove(); }; }
+    else if(a) a.remove();
+  },D1); }
 // Crews are private: join with an invite, or find one by its crew ID in Chats and ask; the host approves.
 // Public show chats are named the way fans name event chats: artist @ venue + date
 // Show chats are official: one per show, named by Plus One, split into numbered groups of 2,000 (Group 1 full → Group 2 …)
@@ -3845,7 +3852,6 @@ function render(anim){ window._dockActive=null; const _ap=document.getElementByI
   const ci=document.getElementById('ci'); if(ci) ci.scrollTop=state._ciKeep!=null?state._ciKeep:ci.scrollHeight;
   if(state.screen==='wall'){ const w=document.getElementById('wci'); if(w&&state._ciKeep!=null) w.scrollTop=state._ciKeep; else if(w&&wKeep!=null&&!state._chBottom) w.scrollTop=wKeep; }
   state._ciKeep=null; if(state.screen==='crew'||state.screen==='wall') igWire();
-  if(window._cbS){ if(state.screen==='crew'||state.screen==='wall') cbOpen(v); window._cbS=null; }
   if(state.sheet) initCitySheet();
   if(document.getElementById('wal')) layWallet(null);
   syncNav(window._dockActive);
@@ -3868,7 +3874,7 @@ document.addEventListener('keydown',e=>{ if(e.key!=='Enter'||e.isComposing||e.ke
 document.getElementById('app').addEventListener('click',e=>{
   const t=e.target.closest('[data-act]'); if(!t) return;
   const a=t.dataset.act, id=t.dataset.id, v=t.dataset.v;
-  if(state.screen==='crews'&&['thread','wallopen','mrqopen'].includes(a)) cbSnap(t.closest('.cb'));
+  if(state.screen==='crews'&&['thread','wallopen','mrqopen'].includes(a)&&!window._cbNav){ if(window._cbBusy) return; const card=t.closest('.cb'); if(card&&!matchMedia('(prefers-reduced-motion: reduce)').matches){ cbGo(card,t); return; } }
   if(t.closest&&t.closest('#psheet')&&t.classList.contains('pk')&&!t.dataset.go){ pkPick(t); return; }
   if(a==='show'){ if(t.classList.contains('urow')) showFly(t,id); else go('show',id); }
   else if(a==='xmode'){ state.xmode=v; state.q=''; render(); }
