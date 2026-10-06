@@ -148,6 +148,7 @@ pip install playwright && python3 demo/tests/m7test.py   # 可选：批量截屏
 | M20 | v118 | 聊天统一成 Instagram 式 | 主人：每个群聊设计不一样 → 做得像 Instagram 群聊、具备相同功能。小队群、私聊、演出大群共用一套（`igHead / igList / igComposer / igInfo / igWire`）：顶部头像（小队=双头像叠放、私聊=单头像、大群=演出方图 + 绿点）+ 名字 + 状态（成员数 / Active / 在线人数）+ 盾牌 Safety + ⓘ 详情；小队有 📌 置顶集合信息条，大群有 # 频道条；对话开头是介绍区。消息：连续消息成组（圆角按首/中/尾变化）、群里首条上方显示发送者名字（大群附 # 频道）、头像只在一组最后一条、日期分隔、表情回应小胶囊、引用回复（Replied to …）、自己最后一条下方 Seen / Seen by。手势：双击 = ❤️（带弹跳动画），长按 = 背景变暗 + 上方 6 个表情 + 下方 Reply / Copy。输入框：白色相机键 + Message… + 语音 / 相册 / 贴纸，输入文字后变 Send；回复时上方显示「Replying to …」。ⓘ 详情页：大头像、Show / Mute / Safety、计划、成员列表、Leave。Chats 列表改为 Instagram 式：56px 头像（类型由头像形状区分）、名字 + 小标签、预览 · 时间、未读加粗 + 黑点，不再按位置轮换黑白灰。背景保留演出大图（相当于 Instagram 的聊天主题） |
 | M20.1 | v119 | 只借鉴 Instagram 的聊天细节，页面保持原样 | 主人纠正：参考 Instagram 的是「不同聊天里的细节」，不是改我们的 chat 页面。已恢复：Chats 列表原来的气泡卡片样式；小队群原来的头部（演出标签、人数、群主、大标题、集合/开门/日期卡、投票）、私聊头部、演出大群原来的标题区和 # 频道、原来的 🛡️ Safety 按钮和输入框。保留的 Instagram 细节（三种聊天一致）：连续消息成组、群里首条上方显示名字、头像只在一组最后一条、日期分隔、表情回应、双击 ❤️、长按表情条 + Reply / Copy、引用回复（输入框上方 Replying to …）、Seen / Seen by。ⓘ 详情页和 Instagram 式列表不再使用 |
 | M20.2 | Removed the Safety buttons and Safety sheets from crew chats and the show chat (Leqi doesn't want this feature) |
+| M21 | Crews: no more walking straight in. Start a crew as **Invite only** (default, link) or **Ask to join** (listed; host approves each request in the chat with Approve/Decline). Explore, show page and scene page buttons are now Ask to join → Requested → Open. Show chat stays open to everyone |
 
 ## 6. 链接（原账号所有，新账号只能查看）
 
