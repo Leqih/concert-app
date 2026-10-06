@@ -2172,6 +2172,31 @@ button.csloc{box-shadow:inset 0 0 0 1.5px #0B0B0C;background:transparent}
 .ktabs button{flex:0 0 auto;height:32px;padding:0 12px;border-radius:16px;font-size:13px;font-weight:600;color:rgba(255,255,255,.75);background:rgba(255,255,255,.1);white-space:nowrap}
 .ktabs button[aria-pressed=true]{background:#fff;color:#0B0B0C}
 .ign .igtk{font-style:normal;font-size:10.5px;font-weight:700;color:#fff;background:rgba(255,255,255,.14);border-radius:999px;padding:1px 7px;margin-left:4px;vertical-align:1px}
+
+/* M22.1 polish */
+.kti{width:30px;height:30px;border-radius:10px;display:grid;place-items:center;background:rgba(255,255,255,.12);color:#fff;flex:0 0 auto}
+.kfind .kti{background:#0B0B0C;color:#fff}
+.ktph{gap:10px}
+.ktpf em{display:flex;align-items:center;gap:5px;background:none;color:#fff;padding:0;font-size:12px}
+.ktpf em i{width:7px;height:7px;border-radius:50%;background:#fff;display:block}
+.ktpc{gap:9px}
+.kpin{gap:6px}.kpin svg{flex:0 0 auto}
+.klive{width:7px;height:7px;border-radius:50%;background:#34C759;display:inline-block;box-shadow:0 0 0 3px rgba(52,199,89,.25)}
+.kacts{justify-content:flex-start;overflow-x:auto;scrollbar-width:none}.kacts::-webkit-scrollbar{display:none}
+.kacts button{flex:0 0 auto;height:34px;padding:0 14px;display:flex;align-items:center;gap:6px;font-size:13px}
+.kacts button svg{flex:0 0 auto}
+.kchat .sysm{background:none;padding:2px 12px;margin:10px 0;font-size:12px;color:rgba(255,255,255,.5);gap:0}
+.kchat .sysm svg{display:none}
+.kchat .igq{background:none;border-left:2px solid rgba(255,255,255,.28);border-radius:0;padding:0 0 0 9px;margin:2px 0 6px 4px;opacity:1}
+.kchat .igq small{font-size:11px;color:rgba(255,255,255,.45)}
+.kchat .igq span{font-size:12.5px;color:rgba(255,255,255,.55);-webkit-line-clamp:1}
+.ign .igtk{display:inline-flex;align-items:center;gap:3px;color:rgba(255,255,255,.85);background:rgba(255,255,255,.12);padding:1px 7px 1px 6px}
+.ksp:before,.ksp:after{display:none}
+.ksp{background-image:none;border-top:1.5px dashed rgba(0,0,0,.14)}
+.kstub{background:#fff}
+.chat.ksc:not(.ktopic) .inner{padding-top:calc(var(--st) + 50px)}
+.klab{padding-top:16px}
+.kxs{}
 </style>
 
 <div class="app framed" id="app">
@@ -2975,7 +3000,7 @@ function wallEntry(x){ const L=wallPosts(x).filter(o=>!(o.p!=null&&(state.blocke
 function wallPage(){ const x=byId[state.id], st=chatStats(x), joined=inChat(x), k=Math.abs(h(x.id)), tp=state.wtopic||null;
   const all=wallPosts(x).filter(o=>!(o.p!=null&&(state.blocked||{})[o.p]));
   const bar=`<div class="kbar"><button class="kbtn" data-act="${tp?'wtopicx':'back'}" aria-label="Back">${ic('back',20)}</button>
-    ${tp?`<span class="ktt"><b>${TOPIC_EMO[tp]||'#'} ${esc(tp)}</b><small>${esc(x.artist)} · ${all.filter(o=>o.tag===tp).reduce((n,o)=>n+(o.r||0),0)+all.filter(o=>o.tag===tp).length} replies · ${8+k%20} talking</small></span>`
+    ${tp?`<span class="ktt"><b># ${esc(tp)}</b><small>${esc(x.artist)} · ${all.filter(o=>o.tag===tp).reduce((n,o)=>n+(o.r||0),0)+all.filter(o=>o.tag===tp).length} replies · ${8+k%20} talking</small></span>`
       :`<span class="ktt ktp"><span class="kav sq">${img(x)}</span><span><b>${esc(x.artist)}</b><small><i class="kon"></i>Show chat · ${st.online} online · ${fmtK(st.going)} going</small></span></span>`}
     <button class="knew" data-act="ncopen" data-id="${x.id}">${ic('plus',14)} Crew</button></div>`;
   if(!tp){
@@ -2983,9 +3008,9 @@ function wallPage(){ const x=byId[state.id], st=chatStats(x), joined=inChat(x), 
     const cs=xCrews().filter(c=>c.s===x&&!c.full).slice(0,3);
     const topics=WTAGS.slice(1).map((tg,j)=>{ const ps=all.filter(o=>o.tag===tg), last=ps[0], n=ps.reduce((a,o)=>a+(o.r||0),0)+ps.length, nw=Math.abs(k>>j)%14;
       if(!last) return ''; const P=last.me?MEP:PEOPLE[last.p], av3=[P].concat(ps.slice(1).map(o=>o.me?MEP:PEOPLE[o.p])).concat([PEOPLE[(k+j+1)%8],PEOPLE[(k+j+4)%8]]);
-      return `<button class="ktpc" data-act="wtopic" data-v="${tg}"><span class="ktph"><i>${TOPIC_EMO[tg]}</i><b>${esc(tg)}</b><small>${last.m<60?last.m+'m':Math.round(last.m/60)+'h'}</small></span>
+      return `<button class="ktpc" data-act="wtopic" data-v="${tg}"><span class="ktph"><i class="kti">${tIc(tg)}</i><b>${esc(tg)}</b><small>${last.m<60?last.m+'m':Math.round(last.m/60)+'h'}</small></span>
         <span class="ktpm"><b>${last.me?'You':P[0]}</b> ${esc(last.t)}</span>
-        <span class="ktpf">${xStack(av3,'')}<span>${n} replies</span>${nw?`<em>${nw} new</em>`:''}</span></button>`; }).join('');
+        <span class="ktpf">${xStack(av3,'')}<span>${n} replies</span>${nw?`<em><i></i>${nw} new</em>`:''}</span></button>`; }).join('');
     return `<div class="chat kchat showchat ksc"><img class="bg" alt="" src="${x.img}"><div class="shade"></div><div class="grain"></div>
       <div class="ktop">${bar}</div>
       <div class="inner" id="wci">
@@ -2993,8 +3018,8 @@ function wallPage(){ const x=byId[state.id], st=chatStats(x), joined=inChat(x), 
         <div class="kpres">${here.map((p,i)=>`<button data-act="chwho" data-v="${p}"><span class="${i<3?'in':''}">${avi(PEOPLE[p][3])}</span>${P0(p)}</button>`).join('')}<button data-act="toast" data-msg="${st.online} people online in this chat"><span class="more">+${st.online-here.length}</span>online</button></div>
         <p class="klab">Topics</p>
         <div class="ktps">
-          <div class="ktpc kfind"><span class="ktph"><i>👥</i><b>Find a crew</b><small>${cs.length} open</small></span>
-            ${cs.map(c=>`<button class="kfc" data-act="xjoin" data-v="${c.ix}"><span><b>${esc(c.name)}</b><small>📍 ${c.time} · ${esc(c.spot)} · ${c.n-c.f} ${c.n-c.f===1?'spot':'spots'} left</small></span><em>${c.mine||xReq(c)==='ok'?'Open':xReq(c)==='wait'?'Requested':'Ask'}</em></button>`).join('')||'<span class="ktpm">No crews yet · start the first one</span>'}
+          <div class="ktpc kfind"><span class="ktph"><i class="kti">${ic('users',16)}</i><b>Find a crew</b><small>${cs.length} open</small></span>
+            ${cs.map(c=>`<button class="kfc" data-act="xjoin" data-v="${c.ix}"><span><b>${esc(c.name)}</b><small>${c.time} · ${esc(c.spot)} · ${c.n-c.f} ${c.n-c.f===1?'spot':'spots'} left</small></span><em>${c.mine||xReq(c)==='ok'?'Open':xReq(c)==='wait'?'Requested':'Ask'}</em></button>`).join('')||'<span class="ktpm">No crews yet · start the first one</span>'}
             <span class="ktpf"><span>Ask to join · the host approves</span><button data-act="ncopen" data-id="${x.id}">Start one</button></span></div>
           ${topics}
         </div>
@@ -3005,10 +3030,10 @@ function wallPage(){ const x=byId[state.id], st=chatStats(x), joined=inChat(x), 
   const posts=all.filter(o=>o.tag===tp);
   const items=[]; posts.forEach((o,i)=>{ items.push({...o,_m:o.m}); if(!o.me&&o.r){ const rp=(k+i+2)%8; if(!(state.blocked||{})[rp]) items.push({id:o.id+'-r',p:rp,t:RT[(k+i)%RT.length],rp:{n:PEOPLE[o.p][0],t:o.t},rx:{},_m:Math.max(0,o.m-4)}); } });
   items.sort((a,b)=>b._m-a._m);
-  const L=[{sep:'Today'}].concat(items.map(o=>({id:o.id,me:!!o.me,p:o.p,t:o.t,img:o.img?img(x):'',badge:o.me?'':(o.p!=null&&tixOf(o.p)?'🎫 '+tixOf(o.p):''),rp:o.rp,rx:o.rx||{'❤️':o.l||0}})));
+  const L=[{sep:'Today'}].concat(items.map(o=>({id:o.id,me:!!o.me,p:o.p,t:o.t,img:o.img?img(x):'',badge:o.me?'':(o.p!=null&&tixOf(o.p)?tixOf(o.p):''),rp:o.rp,rx:o.rx||{'❤️':o.l||0}})));
   const last=L[L.length-1], seen=last&&last.me?'Seen by '+(3+k%40):'';
   return `<div class="chat kchat showchat ksc ktopic"><img class="bg" alt="" src="${x.img}"><div class="shade"></div><div class="grain"></div>
-    <div class="ktop">${bar}<div class="ktabs">${WTAGS.slice(1).map(t=>`<button data-act="wtopic" data-v="${t}" aria-pressed="${tp===t}">${TOPIC_EMO[t]} ${t}</button>`).join('')}</div></div>
+    <div class="ktop">${bar}<div class="ktabs">${WTAGS.slice(1).map(t=>`<button data-act="wtopic" data-v="${t}" aria-pressed="${tp===t}">${t}</button>`).join('')}</div></div>
     <div class="inner" id="wci"><div class="msgs scmsgs">${igList(L,{group:true,whoAct:'chwho',seen})}</div></div>
     <div class="cbfade"></div>${joined?`${igReplyBar('w'+x.id)}<form class="composer kcomp" id="wcomposer" onsubmit="return wallPost(event,'${x.id}')"><button type="button" aria-label="Photo" data-act="toast" data-msg="Photos are coming soon">${ic('plus',20)}</button><label for="wq" hidden>Message</label><input id="wq" placeholder="Message # ${esc(tp)}" autocomplete="off"><button class="send" type="submit" aria-label="Send">${ic('send',18)}</button></form>`
       :`<button class="composer scjoin" data-act="chatjoin" data-id="${x.id}">Join to post in # ${esc(tp)}</button>`}
@@ -3506,7 +3531,7 @@ function igList(L,o){ let out=''; const who=x=>x.me?'me':(x.p!=null?'p'+x.p:x.na
     const bubble=m.typing?`<div class="igb tp"><span class="mtyp"><i></i><i></i><i></i></span></div>`
       :`<div class="igb${m.img?' im':''}" data-mid="${m.id}" data-who="${esc(name)}" data-txt="${esc((m.t||'').slice(0,90))}">${m.img?`<span class="igim">${m.img}</span>`:''}${m.t?esc(m.t):''}</div>`;
     out+=`<div class="igr ${m.me?'out':'in'}${first?' f':''}${last?' l':''}">${m.me?'':`<span class="igav">${last?`<button data-act="${o.whoAct}" data-v="${m.p}" aria-label="${esc(name)}">${avi(P[3])}</button>`:''}</span>`}
-      <div class="igc">${!m.me&&o.group&&first?`<b class="ign">${esc(name)}${m.badge?` <i class="igtk">${esc(m.badge)}</i>`:''}${m.tag?` <i>· # ${esc(m.tag)}</i>`:''}</b>`:''}
+      <div class="igc">${!m.me&&o.group&&first?`<b class="ign">${esc(name)}${m.badge?` <i class="igtk">${m.badge==='Host'?'':ic('ticket',10)}${esc(m.badge)}</i>`:''}${m.tag?` <i>· # ${esc(m.tag)}</i>`:''}</b>`:''}
         ${m.rp?`<div class="igq"><small>${m.me?'You replied to '+esc(m.rp.n):'Replied to '+esc(m.rp.n)}</small><span>${esc(m.rp.t)}</span></div>`:''}
         ${bubble}${rk.length?`<button class="igrxp${mine?' on':''}" data-act="igreact" data-id="${m.id}" data-v="${mine||rk[0]}" aria-label="Reactions">${rk.slice(0,3).join('')}${rk.reduce((n,e)=>n+rx[e],0)>1?' '+rk.reduce((n,e)=>n+rx[e],0):''}</button>`:''}
         ${m.me&&o.seen&&i===L.length-1?`<small class="igseen">${o.seen}</small>`:''}</div></div>`; });
@@ -3553,7 +3578,8 @@ function igBurst(id){ const b=document.querySelector(`.igb[data-mid="${id}"]`); 
 
 // ===== M22 chat pages: Show chat = plaza (find people), Crew = ticket stub (tonight's plan), DM = business card =====
 const VS=v=>v.replace('Madison Square Garden','MSG').replace('Radio City Music Hall','Radio City');
-const TOPIC_EMO={'Getting there':'🚇','Outfits':'✨','Setlist':'🎤','Missed connections':'💌'};
+const TOPIC_IC={'Getting there':'pin','Outfits':'spark','Setlist':'mic','Missed connections':'heart'};
+const tIc=(t,z=16)=>ic(TOPIC_IC[t]||'chat',z);
 const TIXSEC=['Floor','Sec 105','Sec 212','Balcony','Pit','Lower 118','Mezz'];
 const tixOf=p=>(h(PEOPLE[p][0])%5===3)?'':TIXSEC[h(PEOPLE[p][0])%TIXSEC.length];
 const cityOf=p=>['Brooklyn','Queens','Jersey City','Manhattan','Hoboken','the Bronx','Astoria','Harlem'][p%8];
@@ -3569,24 +3595,24 @@ const xStack=(ps,n)=>`<span class="kstk">${ps.slice(0,3).map(p=>`<span>${avi(p[3
 function crewTop(t,s,claimed,sp){
   const ppl=[t.mine?MEP:PEOPLE[t.host]].concat(t.who.filter(k=>k!==t.host).map(k=>PEOPLE[k])), n=t.who.length+1, cd=cdText(s), st=t.hold||'none';
   const pins=[];
-  if(t.plan) pins.push(`<button class="kpin w" data-act="toast" data-msg="Meet ${esc(t.plan[0])} at ${esc(t.plan[1])}">📍 ${esc(t.plan[0].replace(' PM',''))} · ${esc(t.plan[1])}</button>`);
-  else pins.push(`<button class="kpin" data-act="setmeet">📍 Suggest a meetup</button>`);
-  if(t.spare) pins.push(claimed?`<span class="kpin">🎫 Ticket claimed</span>`:`<button class="kpin" data-act="claim" data-id="${s.id}">🎫 1 spare · $${sp.face+FEE}</button>`);
-  if(t.dep) pins.push(st==='in'?`<span class="kpin">✓ $5 released</span>`:st==='held'?`<span class="kpin">🔒 $5 held</span>`:`<button class="kpin" data-act="hold">$5 hold</button>`);
-  if(state.loc&&state.loc[t.id]) pins.push(`<button class="kpin" data-act="loc">📍 Sharing location</button>`);
+  if(t.plan) pins.push(`<button class="kpin w" data-act="toast" data-msg="Meet ${esc(t.plan[0])} at ${esc(t.plan[1])}">${ic('pin',14)}${esc(t.plan[0].replace(' PM',''))} · ${esc(t.plan[1])}</button>`);
+  else pins.push(`<button class="kpin" data-act="setmeet">${ic('plus',14)}Suggest a meetup</button>`);
+  if(t.spare) pins.push(claimed?`<span class="kpin">${ic('check',14)}Ticket claimed</span>`:`<button class="kpin" data-act="claim" data-id="${s.id}">${ic('ticket',14)}1 spare · $${sp.face+FEE}</button>`);
+  if(t.dep) pins.push(st==='in'?`<span class="kpin">${ic('check',14)}$5 released</span>`:st==='held'?`<span class="kpin">${ic('check',14)}$5 held</span>`:`<button class="kpin" data-act="hold">${ic('bolt',14)}$5 hold · refundable</button>`);
+  if(state.loc&&state.loc[t.id]) pins.push(`<button class="kpin" data-act="loc"><i class="klive"></i>Sharing location</button>`);
   return `<div class="ktop kcrew"><div class="kstub">
       <div class="ksi"><img alt="" src="${s.img}"><div class="ksio">
-        <div class="ksn"><button class="kbtn" data-act="back" aria-label="Back">${ic('back',20)}</button><span class="ksr">${t.mine?`<button class="kinv" data-act="toast" data-msg="Invite link copied · only people with the link can join">🔗 Invite</button>`:''}<button class="kbtn" data-act="show" data-id="${s.id}" aria-label="Show details">${ic('ticket',18)}</button></span></div>
+        <div class="ksn"><button class="kbtn" data-act="back" aria-label="Back">${ic('back',20)}</button><span class="ksr">${t.mine?`<button class="kinv" data-act="toast" data-msg="Invite link copied · only people with the link can join">🔗 Invite</button>`:''}<button class="kbtn" data-act="show" data-id="${s.id}" aria-label="Show details">${ic('info',18)}</button></span></div>
         <div class="kst"><b>${esc(t.title)}</b><small>${t.mine?'You’re hosting · '+(t.priv?'Invite only':'Ask to join'):esc(s.artist)+' · '+sd(s.dates[0])+' · '+esc(VS(s.venue))}</small></div></div></div>
       <div class="ksp"><span class="kcd" id="kcd" data-sid="${xDays(s.dates[0])>=1?'':s.id}">${cd[0]}</span><small>${cd[1].replace(' ','<br>')}</small>
         <button class="kmem" data-act="${t.mine?'toast':'person'}" ${t.mine?`data-msg="${n} of ${t.cap} in · ${t.cap-n} spots left"`:`data-v="${t.host}"`}>${xStack(ppl.map(p=>p),`${n} of ${t.cap}`)}</button></div>
     </div><div class="kpins">${pins.join('')}</div></div>`; }
 function crewActs(t){ const st=t.hold||'none';
   const b=(l,a,x='',w='')=>`<button class="${w}" data-act="${a}" ${x}>${l}</button>`;
-  if(st==='in') return [b('📸 Send a photo','attsend','data-v="photo"','w'),b('🎉 Best night','xq','data-v="Best night ever 🎉"'),b('🤝 Keep in touch','kitopen')];
+  if(st==='in') return [b(ic('camera',15)+'Send a photo','attsend','data-v="photo"','w'),b('Best night ever','xq','data-v="Best night ever 🎉"'),b(ic('users',15)+'Keep in touch','kitopen')];
   const loc=state.loc&&state.loc[t.id];
-  return [b(loc?'📍 Sharing':'📍 Share spot','loc','',loc?'':'w'),b('🏃 On my way','xq','data-v="On my way 🏃"'),
-    t.plan?(t.dep&&st!=='held'?b('Hold $5','hold'):b('I’m here','checkin')):b('📍 Meetup','setmeet')]; }
+  return [b(loc?'<i class="klive"></i>Sharing spot':ic('pin',15)+'Share spot','loc','',loc?'':'w'),b('On my way','xq','data-v="On my way 🏃"'),
+    t.plan?(t.dep&&st!=='held'?b('Hold $5','hold'):b(ic('check',15)+'I’m here','checkin')):b(ic('pin',15)+'Suggest meetup','setmeet')]; }
 function dmCard(t,p){ const P=PEOPLE[p], r=REL[p]||[3,3], s=thShow(t);
   return `<div class="kcard"><button class="kct" data-act="person" data-v="${p}"><span class="kcav">${avi(P[3])}</span><b>${P[0]}</b>
       <small>${cityOf(p)} · ${(MREQ.find(x=>x.p===p)||{ver:true}).ver===false?'Not verified':'✓ ID verified'}${BUD[p]?' · Buddy':''}</small>
@@ -3604,16 +3630,16 @@ function crew(){
     else if(m.d==='out') L.push({id,me:true,t:m.t,rp:m.rp});
     else if(m.d==='img') L.push({id,me:true,img:img(s)});
     else if(m.d==='home') L.push({html:homeCard(t)});
-    else if(m.d==='req'){ const P=PEOPLE[m.p], r=REL[m.p]||[3,3], tk=tixOf(m.p); L.push(m.st?{sys:m.st===1?`You approved ${P0(m.p)} · ${t.who.length+1} of ${t.cap}`:`You declined ${P0(m.p)}’s request`}:{html:`<div class="jreq"><button class="jrp" data-act="person" data-v="${m.p}">${av(P,'style="border:0;width:42px;height:42px"')}<span><b>${P[0]} wants to join</b><small>✓ ID verified · showed up ${r[0]}/${r[1]}${tk?' · 🎫 '+tk:''}</small></span></button><div class="jrb"><button data-act="jreq" data-v="${i}" data-k="2">Decline</button><button class="ok" data-act="jreq" data-v="${i}" data-k="1">Approve</button></div></div>`}); }
+    else if(m.d==='req'){ const P=PEOPLE[m.p], r=REL[m.p]||[3,3], tk=tixOf(m.p); L.push(m.st?{sys:m.st===1?`You approved ${P0(m.p)} · ${t.who.length+1} of ${t.cap}`:`You declined ${P0(m.p)}’s request`}:{html:`<div class="jreq"><button class="jrp" data-act="person" data-v="${m.p}">${av(P,'style="border:0;width:42px;height:42px"')}<span><b>${P[0]} wants to join</b><small>✓ ID verified · showed up ${r[0]}/${r[1]}${tk?' · '+tk:''}</small></span></button><div class="jrb"><button data-act="jreq" data-v="${i}" data-k="2">Decline</button><button class="ok" data-act="jreq" data-v="${i}" data-k="1">Approve</button></div></div>`}); }
     else if(m.d==='spare'){ if(claimed) L.push({sys:'Spare ticket claimed · transfer in progress'}); else L.push({sys:`${sp.seller[0].split(' ')[0]} listed a spare · $${sp.face+FEE} · pinned at the top`}); } });
   if(t.typing!=null) L.push({id:t.id+':ty',p:t.typing,typing:true});
   const lastOut=[...L].reverse().find(x=>x.id&&!x.typing), seen=lastOut&&lastOut.me?(dm?(t.pending?'Sent':'Seen'):`Seen by ${P0(t.who[0])}${t.who.length>1?' + '+(t.who.length-1):''}`):'';
   const replying=state.rpl&&state.rpl.key===t.id;
   if(dm){ const p=t.person, P=PEOPLE[p], rq=t.inreq;
     const top=`<div class="ktop"><div class="kbar"><button class="kbtn" data-act="back" aria-label="Back">${ic('back',20)}</button>
-      ${rq?`<span class="ktt"><b>Message request</b><small>From the ${esc(t.show)} show chat</small></span>`:`<button class="ktt ktp" data-act="person" data-v="${p}"><span class="kav">${avi(P[3])}</span><span><b>${P[0]}</b><small>${t.pending?'Request sent':`<i class="kon"></i>Active now`} · going to ${esc(t.show)}</small></span></button>`}</div></div>`;
+      ${rq?`<span class="ktt"><b>Message request</b><small>From the ${esc(t.show)} show chat</small></span>`:`<button class="ktt ktp" data-act="person" data-v="${p}"><span class="kav">${avi(P[3])}</span><span><b>${P[0]}</b><small>${t.pending?'Request sent':`<i class="kon"></i>Active now`}</small></span></button>`}</div></div>`;
     const foot=rq?`<div class="krq"><p>${P0(p)} won’t know you’ve seen this until you accept.</p><div class="krqb"><button data-act="dmrqno">Delete</button><button class="ok" data-act="dmrqyes">Accept</button></div><button class="krqr" data-act="dmrqrep">Block · Report</button></div>`
-      :`${state.att?attMenu(t,s,dm):''}${state.att||replying||t.pending?'':`<div class="kacts"><button class="w" data-act="chinvite" data-v="${p}">👥 Invite to my crew</button><button data-act="attsend" data-v="ticket">🎫 Share ticket</button></div>`}${igReplyBar(t.id)}<form class="composer kcomp" id="composer"><button type="button" aria-label="Attach" data-act="attach" aria-expanded="${!!state.att}">${ic('plus',20)}</button><label for="msg" hidden>Message</label><input id="msg" placeholder="${t.pending&&t.reqSent?'Waiting for '+P0(p)+' to accept':'Message '+P0(p)}" autocomplete="off"${t.pending&&t.reqSent?' disabled':''}><button class="send" type="submit" aria-label="Send">${ic('send',18)}</button></form>`;
+      :`${state.att?attMenu(t,s,dm):''}${state.att||replying||t.pending?'':`<div class="kacts"><button class="w" data-act="chinvite" data-v="${p}">${ic('users',15)}Invite to my crew</button><button data-act="attsend" data-v="ticket">${ic('ticket',15)}Share ticket</button></div>`}${igReplyBar(t.id)}<form class="composer kcomp" id="composer"><button type="button" aria-label="Attach" data-act="attach" aria-expanded="${!!state.att}">${ic('plus',20)}</button><label for="msg" hidden>Message</label><input id="msg" placeholder="${t.pending&&t.reqSent?'Waiting for '+P0(p)+' to accept':'Message '+P0(p)}" autocomplete="off"${t.pending&&t.reqSent?' disabled':''}><button class="send" type="submit" aria-label="Send">${ic('send',18)}</button></form>`;
     return `<div class="chat kchat kdm${rq?' kreqv':''}"><img class="bg" alt="" src="${s.img}"><div class="shade"></div><div class="grain"></div>${top}
       <div class="inner" id="ci">${dmCard(t,p)}<div class="msgs">${igList(L,{group:false,whoAct:'person',seen})}</div>
       ${t.pending?`<p class="knote">${t.reqSent?'Request sent · you can send more once '+P0(p)+' accepts':'Your first message is sent as a request · '+dmLeft()+' of '+DM_LIMIT+' left today'}</p>`:''}</div>

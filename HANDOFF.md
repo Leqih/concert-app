@@ -150,6 +150,7 @@ pip install playwright && python3 demo/tests/m7test.py   # 可选：批量截屏
 | M20.2 | Removed the Safety buttons and Safety sheets from crew chats and the show chat (Leqi doesn't want this feature) |
 | M21 | Crews: no more walking straight in. Start a crew as **Invite only** (default, link) or **Ask to join** (listed; host approves each request in the chat with Approve/Decline). Explore, show page and scene page buttons are now Ask to join → Requested → Open. Show chat stays open to everyone |
 | M22 | Chat pages redesigned (one skeleton, three roles). **Show chat = plaza**: header + “At the venue now” avatars + topic cards (Find a crew first); tap a topic for its chat (topic tabs, 🎫 seat badges, “Message # topic”). **Crew = ticket stub**: photo stub with countdown + members, pinned meet / spare / $5 pills, quick actions that change after check-in, host Invite + join-request cards. **DM = business card**: profile card (city, verified, shows, show-up, mutual, “You’re both going”), quick actions Invite to my crew / Share ticket; tapping a request opens it with Accept / Delete / Block · Report. Classes prefixed `k` (`.ktop`, `.kstub`, `.ktpc`, `.kcard`…) |
+| M22.1 | Chat polish: emoji swapped for line icons (topic tiles, pins, quick actions, seat badges); quick actions are compact pills; system lines are quiet grey text; reply quotes are a thin left bar; ticket stub uses a dashed tear line; DM header shows just Active now |
 
 ## 6. 链接（原账号所有，新账号只能查看）
 
