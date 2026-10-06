@@ -2307,6 +2307,19 @@ button.csloc{box-shadow:inset 0 0 0 1.5px #0B0B0C;background:transparent}
 .kgav>span:first-child{left:0;top:0}.kgav>span:last-child{right:0;bottom:0}
 .kgav img,.kgav .avimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .kpt small .kcdn{font-variant-numeric:tabular-nums}
+
+/* M27 Chats: search + new crew in one row */
+.ksrow{display:flex;align-items:center;gap:10px;padding:14px 16px 4px}
+.ksb{flex:1;min-width:0;display:flex!important;flex-direction:row!important;align-items:center;gap:8px;height:46px;padding:0 8px 0 14px;border-radius:23px;background:var(--card);color:var(--muted);transition:box-shadow .2s}
+.ksb.on{box-shadow:inset 0 0 0 1.5px var(--text)}
+.ksb svg{flex:0 0 auto}
+.ksb input{flex:1;min-width:0;background:none;border:0;outline:0;color:var(--text);font:inherit;font-size:16px;letter-spacing:-.01em}
+.ksb input::placeholder{color:var(--muted)}
+.ksx{width:22px;height:22px;border-radius:50%;background:var(--card2);color:var(--text);display:grid;place-items:center;flex:0 0 auto}
+.ksadd{width:46px;height:46px;border-radius:50%;background:var(--text);color:#fff;display:grid;place-items:center;flex:0 0 auto;transition:transform .15s}
+.ksadd:active{transform:scale(.92)}
+.kscancel{flex:0 0 auto;height:46px;padding:0 4px;font-size:15px;font-weight:600;color:var(--text);animation:fadein .18s}
+.chead{padding-bottom:0}
 </style>
 
 <div class="app framed" id="app">
@@ -3825,8 +3838,10 @@ function crews(){
         <span class="cbm">${t.typing!=null?`<span class="mtyp"><i></i><i></i><i></i></span>`:esc(thLast(t))}</span></span>
       ${t.un?`<span class="cbn">${t.un>9?'9+':t.un}</span>`:''}</button>`; };
   return `<div class="scroll"><div style="padding-bottom:130px">
-    <header class="chead"><h1>Chats</h1>${unreadTotal()?`<span class="chn">${unreadTotal()}</span>`:''}<button class="wicon" data-act="msearch" aria-label="Search">${ic(state.msOpen?'x':'search',20)}</button><button class="wicon knewc" data-act="ncopen" aria-label="New crew">${ic('plus',20)}</button></header>
-    ${state.msOpen?`<div class="pad" style="margin-top:4px"><label class="sbar">${ic('search',18)}<span hidden>Search</span><input id="mq" value="${esc(state.mq||'')}" placeholder="Search chats or a crew ID"></label></div>`:''}
+    <header class="chead"><h1>Chats</h1>${unreadTotal()?`<span class="chn">${unreadTotal()}</span>`:''}</header>
+    <div class="ksrow"><label class="ksb${state.msOpen?' on':''}">${ic('search',18)}<span hidden>Search</span><input id="mq" value="${esc(state.mq||'')}" placeholder="Search chats or a crew ID" autocomplete="off">${q?`<button type="button" class="ksx" data-act="mqclear" aria-label="Clear">${ic('x',12)}</button>`:''}</label>
+      ${state.msOpen?`<button class="kscancel" data-act="mqcancel">Cancel</button>`:`<button class="ksadd" data-act="ncopen" aria-label="New crew">${ic('plus',22)}</button>`}</div>
+    
     ${state.msOpen?(()=>{ const ids=q?idFind(q):[]; return ids.length?`<p class="kidh">Crew ID</p><div class="kidl">${ids.map(kIdRow).join('')}</div>`:(!q?`<p class="kidhint">Have a crew ID? Type it here, like <b>#${xCode(xCrews()[0])}</b></p>`:''); })():''}
     <div class="ctabs" role="tablist">${tabs.map(([k,l])=>`<button data-act="mtab" data-v="${k}" aria-selected="${f===k}">${l}</button>`).join('')}</div>
     ${req.length&&f==='requests'?`<div class="creq"><span class="mreqav">${req.map(k=>`<span>${avi(PEOPLE[k][3])}</span>`).join('')}</span><span><b>${req.map(P0).join(' & ')}</b> · want in</span><button class="mdec" data-act="reqno" aria-label="Decline">${ic('x',14)}</button><button data-act="reqyes">Accept</button></div>`:''}
@@ -3886,7 +3901,8 @@ function render(anim){ window._dockActive=null; const _ap=document.getElementByI
   const xs=document.querySelector('.xtop'); if(xs){ const sc=xs.closest('.scroll'), f=()=>xs.classList.toggle('stuck',sc.scrollTop>2); sc&&sc.addEventListener('scroll',f,{passive:true}); f(); } if(state.screen==='search'&&!state._sqf){ const i=document.getElementById('sq'); if(i){ i.focus(); state._sqf=true; } }
   const form=document.getElementById('composer');
   if(form) form.addEventListener('submit',e=>{ e.preventDefault(); const i=document.getElementById('msg'); const t=i.value.trim(); if(!t) return; sendMsg(t); const m2=document.getElementById('msg'); m2&&m2.focus(); });
-  const mq=document.getElementById('mq'); if(mq){ mq.addEventListener('input',()=>{ state.mq=mq.value; const pos=mq.selectionStart; render(); const n=document.getElementById('mq'); n.focus(); n.setSelectionRange(pos,pos); }); if(state.msFocus){ mq.focus(); state.msFocus=false; } }
+  const mq=document.getElementById('mq'); if(mq){ mq.addEventListener('input',()=>{ state.mq=mq.value; const pos=mq.selectionStart; render(); const n=document.getElementById('mq'); n.focus(); n.setSelectionRange(pos,pos); }); if(state.msFocus){ mq.focus(); state.msFocus=false; }
+    mq.addEventListener('focus',()=>{ if(!state.msOpen){ state.msOpen=true; render(); const n=document.getElementById('mq'); n&&n.focus(); } }); }
 }
 // Sandboxed previews (e.g. Claude's panel, no allow-forms) never fire native form submission, so every form here is submitted
 // by hand: Enter in a text field or a click on a submit button dispatches a synthetic submit event (native one is cancelled).
@@ -4067,6 +4083,8 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='kitsend'){ const ps=KIT.who.filter(k=>KIT.pick[k]); ps.forEach(addBuddy); KIT.done=true; state.kit=false; render(); toast(ps.length?`Sent ${ps.length} buddy request${ps.length>1?'s':''}`:'No one selected'); }
   else if(a==='thread'){ openThread(thById(id)); }
   else if(a==='dm'){ const ctx=['wall','show'].includes(state.screen)&&byId[state.id]?byId[state.id]:null; state.who=null; dmStart(+v,ctx); }
+  else if(a==='mqclear'){ state.mq=''; state.msFocus=true; render(); }
+  else if(a==='mqcancel'){ state.mq=''; state.msOpen=false; render(); }
   else if(a==='msearch'){ state.msOpen=!state.msOpen; if(!state.msOpen) state.mq=''; else state.msFocus=true; render(); }
   else if(a==='reqyes'){ const t=thById('t1'); (REQ.t1||[]).forEach(k=>t.who.push(k)); t.msgs.push({d:'sys',t:`${REQ.t1.map(P0).join(' & ')} joined · crew is full`}); t.ts=++TSEQ; delete REQ.t1; render(); toast('Crew is full · 6 of 6'); }
   else if(a==='reqno'){ delete REQ.t1; render(); toast('Requests declined'); }
