@@ -158,6 +158,7 @@ pip install playwright && python3 demo/tests/m7test.py   # 可选：批量截屏
 | M25 | Chat types are obvious everywhere: **Official show chat** (badge icon next to the name, square cover), **Private crew** (lock icon, two-face group avatar, “Private crew · Artist · 4/6”), **Direct message** (chat icon, round avatar). Same labels in the Chats list; tab Shows → Official. Crew countdown moved into the pinned plan bar. New icons: `lock`, `badge` |
 | M25.1 | Crew names start with a capital letter (Harry pit people 🤘, Rail or die …); names typed in the create sheet are capitalised too |
 | M26 | Chats → chat open animation (shared element), `cbGo()` in two beats so nothing flashes white: over the still-visible list the tapped bubble grows to the phone frame and darkens to the chat colour (340ms) while its avatar heads for the header; then the chat renders underneath, the ghost fades and the avatar settles onto the header avatar. Checked frame by frame from a recorded video (brightness never jumps). Works for crews, DMs, show chats and requests; skipped with reduced motion |
+| M26.1 | Back animation (chat → Chats), `cbBack()`: the list renders underneath, the chat shrinks back into its bubble while fading and turning the bubble’s colour, and the header avatar flies back to the bubble’s avatar. Falls back to a fade when the bubble is off screen |
 
 ## 6. 链接（原账号所有，新账号只能查看）
 

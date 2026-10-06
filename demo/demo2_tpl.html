@@ -3254,6 +3254,28 @@ function cbGo(card,t){ const AP=document.getElementById('app'), V=AP.getBounding
         .onfinish=()=>{ tgt.style.visibility=''; a.animate([{opacity:1},{opacity:0}],{duration:80,fill:'forwards'}).onfinish=()=>a.remove(); }; }
     else if(a) a.remove();
   },D1); }
+
+// Chat → Chats: the reverse. The list renders underneath, the chat (as a dark sheet) shrinks back into its bubble
+// and turns into the bubble's colour, and the header avatar flies back to the bubble's avatar.
+function cbBack(){ const AP=document.getElementById('app'), V=AP.getBoundingClientRect(), VR=getComputedStyle(AP).borderRadius||'0px', E='cubic-bezier(.45,0,.2,1)', D=440;
+  const scr=state.screen, key=scr==='wall'?`.cb[data-act="wallopen"][data-id="${state.id}"]`:`.cb[data-act="thread"][data-id="${state.tid}"]`;
+  const hav=document.querySelector('.khd .kava'), hr=hav&&hav.getBoundingClientRect(), chat=document.querySelector('#view .chat');
+  const fx=(el,q,z)=>{ Object.assign(el.style,{position:'fixed',left:q.left+'px',top:q.top+'px',width:q.width+'px',height:q.height+'px',margin:'0',zIndex:z,pointerEvents:'none',boxSizing:'border-box'}); document.body.appendChild(el); return el; };
+  const g=fx(document.createElement('div'),V,9998); Object.assign(g.style,{backgroundColor:'#0E0E10',borderRadius:VR,overflow:'hidden'});
+  if(chat){ const c=chat.cloneNode(true); c.querySelectorAll('.khd .kava').forEach(x=>x.style.visibility='hidden'); Object.assign(c.style,{position:'absolute',left:'0',top:'0',width:V.width+'px',height:V.height+'px'}); g.appendChild(c); c.animate([{opacity:1,transform:'scale(1)'},{opacity:0,transform:'scale(.92)'}],{duration:280,easing:'cubic-bezier(.4,0,.2,1)',fill:'forwards'}); c.style.transformOrigin='50% 40%'; }
+  const a=hav?fx(hav.cloneNode(true),hr,9999):null; if(a){ a.style.transformOrigin='0 0'; a.style.borderRadius=getComputedStyle(hav).borderRadius; a.style.overflow=hav.classList.contains('g')?'visible':'hidden'; }
+  back(); const v=document.getElementById('view'); v.classList.remove('screen');
+  const card=v.querySelector(key), cr=card&&card.getBoundingClientRect();
+  if(!card||cr.bottom<V.top+40||cr.top>V.bottom-40){ g.animate([{opacity:1},{opacity:0}],{duration:220,fill:'forwards'}).onfinish=()=>g.remove(); if(a) a.remove(); return; }
+  const cs=getComputedStyle(card), cav=card.querySelector('.cbav'), car=cav&&cav.getBoundingClientRect();
+  card.style.visibility='hidden';
+  g.animate([{left:V.left+'px',top:V.top+'px',width:V.width+'px',height:V.height+'px',borderRadius:VR,backgroundColor:'#0E0E10',opacity:1},
+             {left:cr.left+'px',top:cr.top+'px',width:cr.width+'px',height:cr.height+'px',borderRadius:cs.borderRadius,backgroundColor:cs.backgroundColor,opacity:1}],{duration:D,easing:E,fill:'forwards'})
+    .onfinish=()=>{ card.style.visibility=''; g.animate([{opacity:1},{opacity:0}],{duration:90,fill:'forwards'}).onfinish=()=>g.remove(); };
+  if(a&&car){ if(cav) cav.style.visibility='hidden'; const k=car.width/hr.width;
+    a.animate([{transform:'translate(0,0) scale(1)'},{transform:`translate(${car.left-hr.left}px,${car.top-hr.top}px) scale(${k})`}],{duration:D,easing:E,fill:'forwards'})
+      .onfinish=()=>{ if(cav) cav.style.visibility=''; a.remove(); }; }
+  else if(a) a.remove(); }
 // Crews are private: join with an invite, or find one by its crew ID in Chats and ask; the host approves.
 // Public show chats are named the way fans name event chats: artist @ venue + date
 // Show chats are official: one per show, named by Plus One, split into numbered groups of 2,000 (Group 1 full → Group 2 …)
@@ -4061,7 +4083,7 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='person'&&state.who!=null){ state.who=null; state.pid=+v; go('person'); }
   else if(a==='person'){ state.pid=v!=null?+v:0; go('person'); }
   else if(a==='back'&&state.screen==='search'&&state.history.length){ const from=sbSnap(document.querySelector('.shrow .sbar')), gh=sbGhost(), top=state.history.pop(); state.screen=top[0]; state.id=top[1]; render(); sbGhostFade(gh); sbMorph(from,document.querySelector('[data-act=search]'),false); }
-  else if(a==='back'){ const top=state.history[state.history.length-1]; if(state.screen==='show'&&state.showFly===state.id&&top&&top[0]==='home'){ state.showFly=null; showBack(); } else if(state.screen==='scene'&&top&&top[0]==='home'&&document.getElementById('sfan')) sceneBack(); else back(); }
+  else if(a==='back'){ const top=state.history[state.history.length-1]; if(['crew','wall'].includes(state.screen)&&top&&top[0]==='crews'&&!matchMedia('(prefers-reduced-motion: reduce)').matches){ cbBack(); return; } if(state.screen==='show'&&state.showFly===state.id&&top&&top[0]==='home'){ state.showFly=null; showBack(); } else if(state.screen==='scene'&&top&&top[0]==='home'&&document.getElementById('sfan')) sceneBack(); else back(); }
   else if(a==='home'){ state.history=[]; state.screen='home'; render(); }
   else if(a==='crews'){ state.history=[]; state.screen='crews'; render(); }
   else if(a==='explore'){ state.history=[]; state.screen='explore'; render(); }
