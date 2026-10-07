@@ -2092,6 +2092,26 @@ i.tw{font-style:normal;opacity:0}
 .cmin .cmsend svg{transform:rotate(-90deg)}.cmin .cmsend:disabled{opacity:0;transform:scale(.4);pointer-events:none}.cmin .cmsend.sent{opacity:1!important;transform:none;pointer-events:none}
 .cmgh{position:absolute;z-index:5;pointer-events:none;padding:8px 14px;border-radius:18px;background:#0B0B0C;color:#fff;font-size:15px;line-height:20px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-shadow:0 8px 24px rgba(0,0,0,.18);transform-origin:0 50%}
 .cmfl{position:absolute;z-index:6;pointer-events:none;font-style:normal;font-size:24px;line-height:1}
+/* comments v2: sort, pinned creator note, reply threads, lighter "Was there" */
+.cmsort{display:inline-flex;gap:2px;margin-top:8px;padding:3px;border-radius:var(--r-pill);background:var(--card2)}
+.cmsort button{height:26px;padding:0 12px;border-radius:var(--r-pill);font-size:12.5px;font-weight:600;color:var(--muted);transition:background var(--dur) ease,color var(--dur) ease}
+.cmsort button[aria-pressed=true]{background:#fff;color:var(--text);box-shadow:var(--sh-1)}
+.cms .cmtag{background:var(--card2);color:#55555A;font-weight:600}.cms .cmtag svg{stroke:currentColor}
+.cms .cmtag.cr{background:#0B0B0C;color:#fff;padding:0 7px}
+.cms .cmr.pin{margin:0 -16px 4px;padding:12px 16px;background:var(--bg)}
+.cmpin{display:inline-flex;align-items:center;gap:3px;font-weight:600;color:var(--text)!important}.cmpin svg{stroke-width:2.2}
+.cmlbc{display:inline-flex;align-items:center;gap:4px}.cmlbc span{width:14px;height:14px;border-radius:50%;overflow:hidden;box-shadow:0 0 0 1.5px #fff}.cmlbc img{width:100%;height:100%;object-fit:cover;display:block}
+.cmlbc span{position:relative;overflow:visible}.cmlbc span img{border-radius:50%}.cmlbc i{position:absolute;right:-4px;bottom:-3px;width:11px;height:11px;border-radius:50%;background:#fff;display:grid;place-items:center}.cmlbc i svg{fill:var(--like);stroke:var(--like)}
+.cms .cmr{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.cmrp{display:flex;flex-direction:column;align-items:flex-start}.cmrp:empty{display:none}
+.cmrl{display:flex;flex-direction:column;align-self:stretch;margin-top:4px}
+.cms .cmr.sub{padding:8px 0 4px;gap:10px}.cms .cmr.sub .bgav span{width:26px;height:26px}.cms .cmr.sub .cmt{font-size:14.5px}
+.cmvr{display:inline-flex;align-items:center;gap:8px;margin-top:6px;padding:2px 0;font-size:12px;font-weight:600;color:var(--muted)}.cmvr i{width:20px;height:1px;background:var(--dim)}
+.cmrb{display:flex;align-items:center;justify-content:space-between;margin:0 -16px 8px;padding:8px 10px 8px 16px;background:var(--bg);font-size:12.5px;color:var(--muted)}.cmrb b{color:var(--text)}
+.cmrb button{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;color:var(--muted)}
+.cmdh{position:absolute;z-index:6;pointer-events:none;color:var(--like);animation:cmdh .75s var(--ease-spring) forwards}.cmdh svg{fill:var(--like);stroke:var(--like)}
+@keyframes cmdh{0%{transform:scale(0) rotate(-12deg);opacity:0}35%{transform:scale(1.25) rotate(6deg);opacity:1}70%{transform:scale(1) rotate(0)}100%{transform:translateY(-22px) scale(.9);opacity:0}}
+@media (prefers-reduced-motion:reduce){.cmdh{animation:none;opacity:0}}
 /* rail heart burst */
 .clrail button[data-act=cllike]{position:relative}.clrail button[data-act=cllike] svg{transform-origin:50% 55%}
 .lkfx{position:absolute;left:50%;top:13px;width:0;height:0;pointer-events:none}
@@ -3164,11 +3184,28 @@ function cmText(t){ let o=esc(t); const T=[];
   PEOPLE.forEach((p,i)=>{ T.push(['@'+esc(p[0]),i,'@'+esc(p[0])]); T.push(['@'+PH(i),i,'@'+PH(i)]); }); T.sort((a,b)=>b[0].length-a[0].length);
   T.forEach(([k,i,l],n)=>{ o=o.split(k).join('\u0001'+n+'\u0002'); });
   return o.replace(/\u0001(\d+)\u0002/g,(_,n)=>{ const x=T[+n]; return `<button type="button" class="cmat" data-act="cmperson" data-v="${x[1]}">${x[2]}</button>`; }); }
-function cmRow(r,c,lk,nw){ const p=r.me?MEP:PEOPLE[r.p], on=!!lk[r.id], nm=r.me?'You':p[0];
-  return `<div class="cmr${nw?' new':''}" data-id="${r.id}"><button type="button" class="bgav" data-act="cmperson" data-v="${r.me?'me':r.p}" aria-label="${esc(nm)}"><span>${avi(p[3])}</span></button><span class="cmb"><b><button type="button" class="cmnm" data-act="cmperson" data-v="${r.me?'me':r.p}">${nm}</button>${(r.me?hasTix(c.s):r.was)?` <em class="cmtag">${ic('ticket',11)}Was there</em>`:''}</b><span class="cmc">${r.t?`<span class="cmt">${cmText(r.t)}</span>`:''}${r.stk?`<span class="cmsk">${cmStk(r.stk)}</span>`:''}${r.img?`<button class="cmimg" data-act="cmview" aria-label="Open photo"><img alt="" src="${r.img}"></button>`:''}</span><span class="cmm"><small>${r.ago==='now'?'Just now':r.ago}</small>${r.me?'':`<button data-act="cmreply" data-v="${PH(r.p)}">Reply</button>`}</span></span><button class="cml" data-act="cmlike" data-v="${r.id}" aria-pressed="${on}" aria-label="Like comment">${ic('heart',16)}<small>${r.l+(on?1:0)}</small></button></div>`; }
-function cmCount(c){ return c.com+((state.cmMine||{})[c.id]||[]).length; }
+function cmRow(r,c,lk,nw,root){ const p=r.me?MEP:PEOPLE[r.p], on=!!lk[r.id], nm=r.me?'You':p[0], cr=!r.me&&!c.me&&r.p===c.p, rt=root||r.id;
+  const tag=cr?` <em class="cmtag cr">Creator</em>`:(r.me?hasTix(c.s):r.was)?` <em class="cmtag">${ic('ticket',11)}Was there</em>`:'';
+  const cpw=c.me?MEP:PEOPLE[c.p];
+  return `<div class="cmr${nw?' new':''}${r.pin?' pin':''}${root?' sub':''}" data-id="${r.id}"><button type="button" class="bgav" data-act="cmperson" data-v="${r.me?'me':r.p}" aria-label="${esc(nm)}"><span>${avi(p[3])}</span></button><span class="cmb"><b><button type="button" class="cmnm" data-act="cmperson" data-v="${r.me?'me':r.p}">${nm}</button>${tag}</b><span class="cmc">${r.t?`<span class="cmt">${cmText(r.t)}</span>`:''}${r.stk?`<span class="cmsk">${cmStk(r.stk)}</span>`:''}${r.img?`<button class="cmimg" data-act="cmview" aria-label="Open photo"><img alt="" src="${r.img}"></button>`:''}</span><span class="cmm">${r.pin?`<small class="cmpin">Pinned</small>`:''}<small>${r.ago==='now'?'Just now':r.ago}</small>${r.me?'':`<button data-act="cmreply" data-v="${PH(r.p)}" data-id="${rt}" data-k="${esc(p[0].split(' ')[0])}">Reply</button>`}${r.lbc?`<small class="cmlbc"><span>${avi(cpw[3])}<i>${ic('heart',8)}</i></span>Creator liked</small>`:''}</span>${root?'':cmThread(c,r,lk)}</span><button class="cml" data-act="cmlike" data-v="${r.id}" aria-pressed="${on}" aria-label="Like comment">${ic('heart',16)}<small>${r.l+(on?1:0)}</small></button></div>`; }
+// replies under a comment: seeded ones + yours; collapsed behind "View n replies" until opened
+function cmReps(c,r){ const k=Math.abs(h(r.id)), S=[];
+  if(r.seedI===0) S.push({id:r.id+'-r0',p:c.me?(r.p+1)%8:c.p,t:'Right?! I still get chills',l:12,ago:'5m'},{id:r.id+'-r1',p:(r.p+2)%8,t:'Same!! Section 105 was shaking',l:3,ago:'4m',was:true});
+  if(r.seedI===3) S.push({id:r.id+'-r0',p:(r.p+5)%8,t:'This angle is unreal 😍',l:6,ago:'20m',was:k%2===0});
+  return S.concat(((state.cmRep||{})[r.id]||[])); }
+function cmThread(c,r,lk){ const L=cmReps(c,r); if(!L.length) return `<span class="cmrp" data-for="${r.id}"></span>`; const open=!!(state.cmo||{})[r.id];
+  return `<span class="cmrp" data-for="${r.id}">${open?`<span class="cmrl">${L.map(x=>cmRow(x,c,lk,x.fresh,r.id)).join('')}</span>`:''}<button type="button" class="cmvr" data-act="cmthread" data-v="${r.id}" aria-expanded="${open}"><i></i>${open?'Hide replies':`View ${L.length} repl${L.length>1?'ies':'y'}`}</button></span>`; }
+function cmThreadDraw(c,id){ const el=document.querySelector(`#cmsh .cmrp[data-for="${id}"]`), r=cmTops(c).find(x=>x.id===id); if(el&&r) el.outerHTML=cmThread(c,r,state.cml||{}); }
+// top-level comments: the creator's pinned note first, then by likes (Top) or newest first
+function cmTops(c){ const pin=c.me||(state.cmt&&state.cmt.post)?[]:[{id:c.id+'-pin',p:c.p,t:'Thanks for watching 🙏 Who else was in the pit? Tag your crew',l:48,ago:'1h',pin:true}];
+  return pin.concat(((state.cmMine||{})[c.id]||[]).slice().reverse(),cmSeed(c)); }
+function cmListHTML(c){ const d=state.cmd||{}, lk=state.cml||{}, T=cmTops(c), pin=T.filter(x=>x.pin), rest=T.filter(x=>!x.pin);
+  if(d.sort!=='new') rest.sort((a,b)=>(b.me?1e6:b.l)-(a.me?1e6:a.l)); else rest.sort((a,b)=>cmAge(a)-cmAge(b));
+  return pin.concat(rest).map(r=>cmRow(r,c,lk)).join(''); }
+const cmAge=r=>r.ago==='now'?-1:parseInt(r.ago)*(/h/.test(r.ago)?60:1);
+function cmCount(c){ const rp=Object.entries(state.cmRep||{}).filter(([k])=>k.startsWith(c.id+'-')).reduce((n,[,v])=>n+v.length,0); return c.com+((state.cmMine||{})[c.id]||[]).length+rp; }
 function cmSeed(c){ const k=Math.abs(h(c.id+'m')), T=['That encore was insane','I was two rows behind you!!','The crowd sang louder than the band','Same crew next show?','Goosebumps rewatching this','Where were you standing?'];
-  return [0,1,2,3,4].map(i=>{ const r={id:c.id+'-'+i,p:(k+i*3)%8,t:T[(k+i)%T.length],l:3+((k>>>i)%60),ago:(i+1)*7+'m',was:(k+i)%3!==1};
+  return [0,1,2,3,4].map(i=>{ let pp=(k+i*3)%8; if(!c.me&&pp===c.p) pp=(pp+1)%8; const r={id:c.id+'-'+i,seedI:i,p:pp,t:T[(k+i)%T.length],l:3+((k>>>i)%60),ago:(i+1)*7+'m',was:(k+i)%3!==1,lbc:i===1&&!c.me};
     if(i===1) r.t='@'+PH(k%8)+' '+r.t; if(i===2){ r.stk=['encore','goat','ten','frontrow'][k%4]; r.t=''; } if(i===3){ r.img=cmPics()[(k+3)%8]; r.t='My view from the floor'; } return r; }); }
 function cmPanel(){ const d=state.cmd||{}; if(d.panel==='stk') return `<div class="cmtabs"><button type="button" data-act="cmtab" data-v="stk" aria-pressed="${d.tab!=='emo'}">Stickers</button><button type="button" data-act="cmtab" data-v="emo" aria-pressed="${d.tab==='emo'}">Emoji</button></div>`+
     (d.tab==='emo'?`<div class="cmemg">${CM_EMO.map(e=>`<button type="button" data-act="cmemo" data-v="${e}">${e}</button>`).join('')}</div>`:`<div class="cmstg">${CM_STK.map(x=>`<button type="button" data-act="cmsticker" data-v="${x[0]}" aria-label="Send sticker ${esc(x[1])}">${cmStk(x[0])}</button>`).join('')}</div>`);
@@ -3178,14 +3215,13 @@ function cmTop(){ const d=state.cmd||{}; if(d.panel&&d.panel!=='at'&&d.q==null) 
     const L=PEOPLE.map((p,i)=>({p,i,hd:PH(i),b:!!BUD[i],t:inTh.has(i)})).filter(x=>!q||x.hd.includes(q)||x.p[0].toLowerCase().split(/[\s.]+/).some(w=>w&&w.startsWith(q))||x.p[0].toLowerCase().startsWith(q))
       .sort((a,b)=>(b.b-a.b)||(b.t-a.t)||a.p[0].localeCompare(b.p[0]));
     return `<div class="cmath"><span>${q?`Results for “@${esc(d.q)}”`:'Mention someone'}</span><small>Search a name or @id</small></div>`+(L.length?`<div class="cmats">${L.map(x=>`<button type="button" data-act="cmmention" data-v="${x.hd}"><span class="bgav"><span>${avi(x.p[3])}</span></span><span><b>${hit(x.p[0])}</b><small>@${hit(x.hd)}${x.b?' · Buddy':x.t?' · In thread':''}</small></span></button>`).join('')}</div>`:`<p class="cmnone">No one matches “@${esc(d.q)}”</p>`); }
-  return `<div class="cmemo">${['🔥','🙌','😭','🎶','❤️','👏','🤘'].map(e=>`<button type="button" data-act="cmemo" data-v="${e}" aria-label="Add ${e}">${e}</button>`).join('')}</div>`; }
+  return (d.rep?`<div class="cmrb"><span>Replying to <b>${esc(d.rep.name)}</b></span><button type="button" data-act="cmrepx" aria-label="Cancel reply">${ic('x',14)}</button></div>`:'')+`<div class="cmemo">${['🔥','🙌','😭','🎶','❤️','👏','🤘'].map(e=>`<button type="button" data-act="cmemo" data-v="${e}" aria-label="Add ${e}">${e}</button>`).join('')}</div>`; }
 function cmAtt(){ const d=state.cmd||{}; return d.img?`<div class="cmatt"><span><img alt="" src="${d.img}"><button type="button" data-act="cmunpic" aria-label="Remove photo">${ic('x',12)}</button></span></div>`:''; }
 function cmSheet(){ const c=clipAny(state.cmt.id); if(!c) return ''; const lk=state.cml||{}, d=state.cmd=state.cmd||{};
-  const R=((state.cmMine||{})[c.id]||[]).slice().reverse().concat(cmSeed(c));
-  const pw=c.me?MEP:PEOPLE[c.p], post=state.cmt.post?`<div class="cmpost"><div class="rvh"><span class="bgav"><span>${avi(pw[3])}</span></span><span class="rvw"><b>${c.me?'You':pw[0]} <em class="cmtag">${ic('ticket',11)}Was there</em></b><small>${c.ago==='now'?'Just now':c.ago+' ago'}${c.sec?' · '+esc(c.sec):''}</small></span>${c.rate?stars(c.rate,'sm'):''}</div><p>${esc(c.cap)}</p></div>`:'';
+    const pw=c.me?MEP:PEOPLE[c.p], post=state.cmt.post?`<div class="cmpost"><div class="rvh"><span class="bgav"><span>${avi(pw[3])}</span></span><span class="rvw"><b>${c.me?'You':pw[0]} <em class="cmtag">${ic('ticket',11)}Was there</em></b><small>${c.ago==='now'?'Just now':c.ago+' ago'}${c.sec?' · '+esc(c.sec):''}</small></span>${c.rate?stars(c.rate,'sm'):''}</div><p>${esc(c.cap)}</p></div>`:'';
   const n=cmCount(c);
-  return `<div class="sheetbg" data-act="cmclose"></div><div class="sheet csheet cms" id="cmsh" role="dialog" aria-label="${state.cmt.post?'Review':'Comments'}">${post?`<i class="grab cmgr"></i>`:''}${post}<div class="cgrab"${post?' style="padding-top:0"':''}>${post?'':'<i class="grab"></i>'}<h3><span id="cmn">${fmtK(n)}</span> comment${n===1?'':'s'}</h3></div>
-  <div class="ufb" id="cmlist">${R.map(r=>cmRow(r,c,lk)).join('')}</div>
+  return `<div class="sheetbg" data-act="cmclose"></div><div class="sheet csheet cms" id="cmsh" role="dialog" aria-label="${state.cmt.post?'Review':'Comments'}">${post?`<i class="grab cmgr"></i>`:''}${post}<div class="cgrab"${post?' style="padding-top:0"':''}>${post?'':'<i class="grab"></i>'}<h3><span id="cmn">${fmtK(n)}</span> comment${n===1?'':'s'}</h3><div class="cmsort">${[['top','Top'],['new','Newest']].map(([k,l])=>`<button type="button" data-act="cmsort" data-v="${k}" aria-pressed="${(d.sort||'top')===k}">${l}</button>`).join('')}</div></div>
+  <div class="ufb" id="cmlist">${cmListHTML(c)}</div>
   <div class="cmf"><div id="cmtop">${cmTop()}</div><div id="cmattw">${cmAtt()}</div>
   <form class="cmform" onsubmit="return cmPost(event,'${c.id}')"><span class="bgav"><span>${avi(MEP[3])}</span></span><label class="cmin"><span hidden>Comment</span><input id="cmin" placeholder="Add a comment…" autocomplete="off" maxlength="200" enterkeyhint="send" oninput="cmIn()" onclick="cmIn()" onfocus="cmFocus()"><span class="cmtools">${['at','stk','pic'].map(k=>`<button type="button" data-act="cmtool" data-v="${k}" aria-label="${{at:'Mention someone',stk:'Stickers and emoji',pic:'Add a photo'}[k]}" aria-pressed="${d.panel===k}">${CM_ICO[k]}</button>`).join('')}</span><button type="submit" class="cmsend" disabled aria-label="Post comment">${ic('send',18)}</button></label></form>
   <div class="cmpanel" id="cmpanel"${d.panel&&d.panel!=='at'?'':' hidden'}>${cmPanel()}</div></div></div>`; }
@@ -3205,13 +3241,18 @@ function cmInsert(txt,replaceQ){ const i=document.getElementById('cmin'); if(!i)
 // the top while the rows below slide down; the avatar pops, the count rolls, emojis float up, mentioned people get a heads-up.
 function cmPost(e,id,stk){ e&&e.preventDefault&&e.preventDefault(); const i=document.getElementById('cmin'); if(!i) return false; const d=state.cmd=state.cmd||{}, v=i.value.trim(); if(!v&&!d.img&&!stk) return false;
   const c=clipAny(id), sh=document.getElementById('cmsh'), btn=sh.querySelector('.cmsend'), L=document.getElementById('cmlist'), E='cubic-bezier(.2,.8,.2,1)';
+  if(d.rep&&!stk){ const pr=d.rep, rr={id:pr.id+'-me'+Date.now(),me:true,t:v,img:d.img||null,l:0,ago:'now',fresh:true}; state.cmRep=state.cmRep||{}; (state.cmRep[pr.id]=state.cmRep[pr.id]||[]).push(rr);
+    (state.cmo=state.cmo||{})[pr.id]=true; cmThreadDraw(c,pr.id); rr.fresh=false; const row=sh.querySelector(`.cmr[data-id="${rr.id}"]`); row&&row.scrollIntoView({block:'nearest',behavior:'smooth'});
+    try{ navigator.vibrate&&navigator.vibrate(8); }catch(_){} btn.animate([{transform:'scale(1)'},{transform:'scale(.86)',offset:.25},{transform:'scale(1)'}],{duration:420,easing:E});
+    const n=document.getElementById('cmn'); if(n) n.textContent=fmtK(cmCount(c)); const rc=document.querySelector(`.clp[data-id="${id}"] [data-act=clcom] small`); if(rc) rc.textContent=fmtK(cmCount(c));
+    i.value=''; i.placeholder='Add a comment…'; d.img=null; d.q=null; d.rep=null; cmDraw(['top','att']); return false; }
   const r={id:id+'-me'+Date.now(),me:true,t:v,img:d.img||null,stk:stk||null,l:0,ago:'now'}; state.cmMine=state.cmMine||{}; (state.cmMine[id]=state.cmMine[id]||[]).push(r);
   try{ navigator.vibrate&&navigator.vibrate(8); }catch(_){}
   const sr=sh.getBoundingClientRect(), ir=i.getBoundingClientRect(), from=stk?(sh.querySelector(`[data-act=cmsticker][data-v="${stk}"]`)||i).getBoundingClientRect():ir;
   btn.classList.add('sent'); btn.querySelector('svg').animate([{transform:'rotate(-90deg) translateX(0)',opacity:1},{transform:'rotate(-90deg) translateX(20px)',opacity:0,offset:.4},{transform:'rotate(-90deg) translateX(-12px)',opacity:0,offset:.41},{transform:'rotate(-90deg) translateX(0)',opacity:1}],{duration:560,easing:'cubic-bezier(.3,.7,.3,1)'});
   btn.animate([{transform:'scale(1)'},{transform:'scale(.86)',offset:.25},{transform:'scale(1)'}],{duration:420,easing:E}); setTimeout(()=>{ btn.classList.remove('sent'); cmIn(true); },600);
   L.scrollTop=0; const old=[...L.querySelectorAll('.cmr')].slice(0,7), y0=old.map(x=>x.getBoundingClientRect().top);
-  L.insertAdjacentHTML('afterbegin',cmRow(r,c,state.cml||{},true)); const row=L.firstElementChild, tx=row.querySelector('.cmc'); row.style.animation='cmhl 1.8s ease .4s both';
+  const pinEl=L.querySelector(':scope > .cmr.pin'); if(pinEl) pinEl.insertAdjacentHTML('afterend',cmRow(r,c,state.cml||{},true)); else L.insertAdjacentHTML('afterbegin',cmRow(r,c,state.cml||{},true)); const row=pinEl?pinEl.nextElementSibling:L.firstElementChild, tx=row.querySelector('.cmc'); row.style.animation='cmhl 1.8s ease .4s both';
   old.forEach((x,k)=>{ const dd=y0[k]-x.getBoundingClientRect().top; if(dd) x.animate([{transform:`translateY(${dd}px)`},{transform:'none'}],{duration:420,easing:E}); });
   tx.style.opacity='0'; row.querySelector('.bgav').animate([{transform:'scale(0)'},{transform:'scale(1.12)',offset:.7},{transform:'none'}],{duration:420,delay:260,easing:E,fill:'backwards'});
   const tr=tx.getBoundingClientRect(); let g;
@@ -3232,6 +3273,10 @@ function cmPost(e,id,stk){ e&&e.preventDefault&&e.preventDefault(); const i=docu
 function cmView(src,from){ const o=document.createElement('div'); o.className='cmlb'; o.innerHTML=`<img alt="" src="${src}"><p>Tap to close</p>`; document.getElementById('view').appendChild(o);
   const im=o.querySelector('img'), f=from.getBoundingClientRect(), t=im.getBoundingClientRect(); im.animate([{transform:`translate(${f.left+f.width/2-(t.left+t.width/2)}px,${f.top+f.height/2-(t.top+t.height/2)}px) scale(${f.width/t.width})`,borderRadius:'24px'},{transform:'none',borderRadius:'16px'}],{duration:380,easing:'cubic-bezier(.2,.8,.2,1)'});
   o.addEventListener('click',()=>{ o.classList.add('out'); setTimeout(()=>o.remove(),220); }); }
+// double-tap a comment to like it (like Clips): heart pops where you tapped
+document.addEventListener('dblclick',e=>{ const row=e.target.closest&&e.target.closest('#cmsh .cmr'); if(!row||e.target.closest('button')) return; try{ getSelection().removeAllRanges(); }catch(_){} const b=row.querySelector(':scope > .cml');
+  if(b&&b.getAttribute('aria-pressed')!=='true') b.click(); const sh=document.getElementById('cmsh'), sr=sh.getBoundingClientRect(), f=document.createElement('i'); f.className='cmdh'; f.innerHTML=ic('heart',30);
+  f.style.cssText=`left:${e.clientX-sr.left-15}px;top:${e.clientY-sr.top-15}px`; sh.appendChild(f); setTimeout(()=>f.remove(),760); });
 // drag the comments sheet down to close it (grab handle or header)
 document.addEventListener('pointerdown',e=>{ const g=e.target.closest&&e.target.closest('#cmsh .cgrab,#cmsh .cmgr,#cmsh .cmpost'); if(!g) return; const sh=document.getElementById('cmsh'), y0=e.clientY; let dy=0; sh.style.transition='none';
   const mv=ev=>{ dy=Math.max(0,ev.clientY-y0); sh.style.transform=`translateY(${dy}px)`; const bg=sh.previousElementSibling; if(bg&&bg.classList.contains('sheetbg')) bg.style.opacity=String(Math.max(0,1-dy/400)); },
@@ -4390,7 +4435,10 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='cllike'){ state.clk=state.clk||{}; state.clk[v]=!state.clk[v]; clUpd(v,true); }
   else if(a==='clcom'){ if(document.getElementById('cmsh')) return; state.cmt={id:v}; state.cmd={}; sheetMount(cmSheet()); }
   else if(a==='cmclose'){ state.cmt=null; state.cmd=null; const i=document.getElementById('cmin'); i&&i.blur(); sheetDrop(document.getElementById('cmsh')); }
-  else if(a==='cmreply'){ const i=document.getElementById('cmin'); if(i){ i.value='@'+v+' '; state.cmd.q=null; cmDraw(['top']); i.focus(); i.setSelectionRange(i.value.length,i.value.length); } }
+  else if(a==='cmreply'){ const i=document.getElementById('cmin'); if(i){ const d=state.cmd; d.rep={id:t.dataset.id,name:t.dataset.k}; i.value='@'+v+' '; i.placeholder='Reply to '+t.dataset.k+'…'; d.q=null; cmDraw(['top']); i.focus(); i.setSelectionRange(i.value.length,i.value.length); } }
+  else if(a==='cmrepx'){ const i=document.getElementById('cmin'), d=state.cmd; if(i){ i.value=i.value.replace(/^@\S+\s/,''); i.placeholder='Add a comment…'; } d.rep=null; cmDraw(['top']); i&&i.focus(); }
+  else if(a==='cmthread'){ const c=clipAny(state.cmt.id), o=state.cmo=state.cmo||{}; o[v]=!o[v]; cmThreadDraw(c,v); const l=document.querySelector(`#cmsh .cmrp[data-for="${v}"] .cmrl`); l&&l.animate([{opacity:0,transform:'translateY(-6px)'},{opacity:1,transform:'none'}],{duration:260,easing:'cubic-bezier(.2,.8,.2,1)'}); }
+  else if(a==='cmsort'){ const c=clipAny(state.cmt.id); state.cmd.sort=v; document.querySelectorAll('#cmsh [data-act=cmsort]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===v)); const L=document.getElementById('cmlist'); L.innerHTML=cmListHTML(c); L.scrollTop=0; L.animate([{opacity:.3},{opacity:1}],{duration:220}); }
   else if(a==='cmemo'){ cmInsert(v); t.animate([{transform:'scale(1)'},{transform:'scale(1.35) translateY(-4px)'},{transform:'scale(1)'}],{duration:320,easing:'cubic-bezier(.34,1.6,.5,1)'}); }
   else if(a==='cmtool'){ const d=state.cmd=state.cmd||{};
     if(v==='at'){ d.panel=null; cmDraw(['panel']); const i=document.getElementById('cmin'), p=i.selectionStart??i.value.length, pre=i.value.slice(0,p); cmInsert((pre&&!/\s$/.test(pre)?' ':'')+'@'); }
