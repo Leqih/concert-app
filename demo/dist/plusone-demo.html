@@ -1942,6 +1942,16 @@ i.tw{font-style:normal;opacity:0}
 .shav>span{width:26px;height:26px;border-radius:50%;overflow:hidden;box-shadow:0 0 0 2px #0B0B0C;margin-left:-6px}.shav>span:first-child{margin-left:0}
 .shav img{width:100%;height:100%;object-fit:cover;display:block}
 .shav em{width:26px;height:26px;margin-left:-6px;border-radius:50%;background:#fff;color:#0B0B0C;font:700 15px/26px var(--body);font-style:normal;text-align:center;box-shadow:0 0 0 2px #0B0B0C}
+/* hover v3: pick the sticker up (lift, half-straighten, deeper shadow); the others recede */
+.pk.sh,.pk.sh.hot,.pk.sh.dealt.hot,.pk.sh:focus-visible,.pk.sh:active{transform:rotate(var(--r))}
+.pk.sh{translate:0 0;rotate:0deg;scale:1;transition:translate .5s cubic-bezier(.34,1.4,.5,1),rotate .5s cubic-bezier(.34,1.4,.5,1),scale .5s cubic-bezier(.34,1.4,.5,1),opacity .3s ease,box-shadow .4s ease}
+.pk.sh.hot,.pk.sh:focus-visible{translate:0 -10px;rotate:calc(var(--r) * -.5);scale:1.05;z-index:6}
+.pk.sh:active{scale:.97;transition-duration:.15s}
+#psheet:has(.pk.sh.hot) .pk.sh:not(.hot){opacity:.65;scale:.97}
+.pk.sh.sc.hot{box-shadow:0 40px 70px rgba(0,0,0,.3)}
+.pk.sh.sq::before{transition:filter .4s ease}.pk.sh.sq.hot::before{filter:drop-shadow(0 26px 34px rgba(0,0,0,.16))}
+.pk.sh.st svg{transition:fill .3s ease}.pk.sh.st.hot svg{fill:#C9C9C4}
+@media (prefers-reduced-motion:reduce){.pk.sh{transition:opacity .2s}.pk.sh.hot{translate:none;rotate:none;scale:none}}
 .p4n{color:var(--muted);font-size:var(--t-meta)}
 
 /* ---------- Clips */
