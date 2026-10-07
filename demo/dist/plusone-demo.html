@@ -2436,21 +2436,51 @@ button.csloc{box-shadow:inset 0 0 0 1.5px #0B0B0C;background:transparent}
 .onbopt span{flex:1;display:flex;flex-direction:column}.onbopt b{font-size:15px}.onbopt small{font-size:12.5px;color:var(--muted)}
 .onbopt i{width:20px;height:20px;border-radius:50%;box-shadow:inset 0 0 0 1.5px var(--muted);flex:0 0 auto}
 .onbopt button[aria-pressed=true] i{box-shadow:inset 0 0 0 6px var(--text)}
-.onb{position:absolute;inset:0;z-index:60;background:var(--card);color:var(--text);display:flex;flex-direction:column;padding:calc(var(--st) + 14px) 20px calc(20px + var(--sb));animation:fadein .25s}
-.onbback{position:absolute;left:14px;top:calc(var(--st) + 6px);width:40px;height:40px;border-radius:50%;background:var(--bg);display:grid;place-items:center}
-.onbskip{position:absolute;right:18px;top:calc(var(--st) + 12px);font-weight:600;font-size:15px;color:var(--muted)}
-.onbd{display:flex;gap:6px;justify-content:center;margin-top:16px}.onbd i{width:6px;height:6px;border-radius:3px;background:var(--card2);transition:width .2s}.onbd i.on{width:20px;background:var(--text)}
-.onbb{flex:1;display:flex;flex-direction:column;gap:16px;margin-top:28px;overflow-y:auto;scrollbar-width:none}
-.onbb>.cgo{margin-top:auto;width:100%}
-.onbh b{font:800 15px var(--display);letter-spacing:.08em;text-transform:uppercase}
-.onbh h2{font:800 32px/1.08 var(--display);letter-spacing:-.035em;margin-top:10px}
-.onbh p{font-size:15.5px;line-height:1.45;color:var(--muted);margin-top:10px}
-.onbart{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.onbart button{display:flex;flex-direction:column;gap:6px;text-align:left;color:var(--text)}
-.onbart span{position:relative;aspect-ratio:1;border-radius:var(--r-md);overflow:hidden;box-shadow:inset 0 0 0 0 var(--text);transition:transform .15s}
-.onbart span img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.onbart button[aria-pressed=true] span{outline:3px solid var(--text);outline-offset:2px}
-.onbart b{font-size:12.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.onb{position:absolute;inset:0;z-index:60;background:var(--card);color:var(--text);display:flex;flex-direction:column;padding:calc(var(--st) + 4px) 0 calc(12px + var(--sb));animation:fadein .25s}
+.onbtop{display:grid;grid-template-columns:64px 1fr 64px;align-items:center;height:44px;padding:0 12px;flex:0 0 auto}
+.onbback{width:40px;height:40px;border-radius:50%;background:var(--bg);display:grid;place-items:center}
+.onbskip{justify-self:end;height:40px;padding:0 6px;font-weight:600;font-size:var(--t-body);color:var(--muted)}
+.onbd{display:flex;gap:6px;justify-content:center}.onbd i{width:6px;height:6px;border-radius:3px;background:var(--card2);transition:width .25s,background .25s}.onbd i.on{width:20px;background:var(--text)}
+.onbb{flex:1;min-height:0;display:flex;flex-direction:column;gap:20px;padding:20px 20px 24px;overflow-y:auto;scrollbar-width:none}.onbb::-webkit-scrollbar{display:none}
+.onbcta{flex:0 0 auto;padding:12px 16px 0;position:relative}.onbcta::before{content:"";position:absolute;left:0;right:0;bottom:100%;height:28px;background:linear-gradient(180deg,rgba(255,255,255,0),var(--card));pointer-events:none}
+.onbcta .cgo{margin:0;width:100%;border-radius:var(--r-md)}
+.onbh{text-align:center}
+.onbh b{display:block;font:600 var(--t-label) var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.onbh h2{margin:0;font:800 var(--t-page)/1.08 var(--display);letter-spacing:-.045em;text-wrap:balance}
+.onbh p{margin:8px auto 0;max-width:310px;font-size:var(--t-body);line-height:1.45;color:var(--muted);text-wrap:pretty}
+.onbh.lead h2{font-size:var(--t-hero);line-height:.98;letter-spacing:-.055em;margin-top:10px}
+.onbh.lead p{margin-top:12px}
+.onb.s0 .onbb{justify-content:center;gap:28px;padding-top:4px}
+.onbfan{position:relative;height:300px;flex:0 0 auto}
+.onbcd{position:absolute;top:24px;left:50%;width:150px;height:210px;margin-left:-75px;border-radius:var(--r-lg);overflow:hidden;background:var(--card2);box-shadow:0 18px 40px rgba(0,0,0,.16)}
+.onbcd .cover{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.onbcd.c0{transform:translateX(-96px) rotate(-9deg) scale(.88)}.onbcd.c2{transform:translateX(96px) rotate(9deg) scale(.88)}
+.onbcd.c0::after,.onbcd.c2::after{content:"";position:absolute;inset:0;background:rgba(255,255,255,.18)}
+.onbcd.c1{top:0;width:190px;height:266px;margin-left:-95px;z-index:1;box-shadow:0 24px 50px rgba(0,0,0,.28)}
+.onbcd.c1::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 45%,rgba(0,0,0,.78))}
+.onbcl{position:absolute;left:14px;right:14px;bottom:14px;z-index:1;display:flex;flex-direction:column;gap:2px;color:#fff;text-align:left}
+.onbcl b{font:700 var(--t-card) var(--display);letter-spacing:-.025em}.onbcl small{font-size:12px;color:rgba(255,255,255,.8)}.onbcl .cstrip{margin-top:8px;padding-left:7px}
+.onbopt{display:flex;flex-direction:column;gap:8px}
+.onbopt button{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:var(--r-lg);background:var(--bg);text-align:left;color:var(--text);box-shadow:inset 0 0 0 1.5px transparent;transition:box-shadow .2s}
+.onbopt button[aria-pressed=true]{box-shadow:inset 0 0 0 1.5px var(--text)}
+.onbopt span{flex:1;display:flex;flex-direction:column}.onbopt b{font-size:var(--t-body)}.onbopt small{font-size:12.5px;color:var(--muted)}
+.onbopt i{width:20px;height:20px;border-radius:50%;box-shadow:inset 0 0 0 1.5px var(--dim);flex:0 0 auto;transition:box-shadow .2s}
+.onbopt button[aria-pressed=true] i{box-shadow:inset 0 0 0 6px var(--text)}
+.onbopt button.go[aria-pressed=true]{box-shadow:none}
+.onbb>.ncl{margin:4px 0 -12px}
+.onbart{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px 10px}
+.onbart button{display:flex;flex-direction:column;align-items:center;gap:8px;min-width:0;color:var(--text)}
+.onbart span{position:relative;display:block;width:100%;aspect-ratio:1;border-radius:var(--r-md);overflow:hidden;background:var(--card2);transition:transform .15s}
+.onbart button:active span{transform:scale(.96)}
+.onbart span .cover{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.onbart span::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 3px var(--text);opacity:0;transition:opacity .15s}
+.onbart span i{position:absolute;top:6px;right:6px;z-index:1;width:24px;height:24px;border-radius:50%;background:var(--text);color:#fff;display:grid;place-items:center;opacity:0;transform:scale(.6);transition:opacity .15s,transform .2s cubic-bezier(.2,.8,.2,1)}
+.onbart button[aria-pressed=true] span::after,.onbart button[aria-pressed=true] span i{opacity:1;transform:none}
+.onbart b{max-width:100%;font-size:12.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media (prefers-reduced-motion:no-preference){
+.onbb.enter>*{animation:sin .4s cubic-bezier(.2,.8,.2,1) both}.onbb.enter>*:nth-child(2){animation-delay:.05s}.onbb.enter>*:nth-child(3){animation-delay:.1s}.onbb.enter>*:nth-child(n+4){animation-delay:.14s}
+.onb.s0 .onbb.enter .onbcd{animation:onbfan .6s cubic-bezier(.2,.8,.2,1) both}.onb.s0 .onbb.enter .onbcd.c1{animation-name:onbmid}
+@keyframes onbfan{from{opacity:0;transform:none}}@keyframes onbmid{from{opacity:0;transform:translateY(14px)}}}
 </style>
 
 <div class="app framed" id="app">
@@ -3922,16 +3952,26 @@ function kPlanSheet(){ const P=state.kplan, t=thById(state.tid);
   <button class="cgo new" data-act="kplango" style="width:100%;margin-top:14px">Save meetup</button></div></div>`; }
 
 // ---- onboarding (first run) ----
-const ONB_ART=()=>[...new Set(SHOWS.map(x=>x.artist))].slice(0,12);
-function onbView(){ const o=state.onb, st=o.step, dots=`<div class="onbd">${[0,1,2,3].map(i=>`<i class="${i===st?'on':''}"></i>`).join('')}</div>`;
-  const body=st===0?`<div class="onbh"><b>Plus One</b><h2>Never go to a show alone.</h2><p>Every show has an open chat. Meet people going, start a private crew, swap spare tickets at face value.</p></div><button class="cgo new" data-act="onbnext">Get started</button>`
-   :st===1?`<div class="onbh"><h2>Where do you go to shows?</h2><p>We’ll show you chats for shows near you.</p></div><div class="kchipg onbc">${['New York','Los Angeles','Chicago','London','Toronto','Austin'].map(c=>`<button class="gch" data-act="onbcity" data-v="${c}" aria-pressed="${o.city===c}">${c}</button>`).join('')}</div><button class="cgo new" data-act="onbnext">Continue</button>`
-   :st===2?`<div class="onbh"><h2>Who are you seeing?</h2><p>Pick a few. We’ll add their show chats to your Chats.</p></div><div class="onbart">${ONB_ART().map(a=>{ const x=A(a); return `<button data-act="onbart" data-v="${esc(a)}" aria-pressed="${!!o.art[a]}"><span>${img(x)}</span><b>${esc(a)}</b></button>`; }).join('')}</div><button class="cgo new" data-act="onbnext">${Object.keys(o.art).length?`Continue · ${Object.keys(o.art).length} picked`:'Skip for now'}</button>`
-   :`<div class="onbh"><h2>Who can message you?</h2><p>You can change this any time in your profile.</p></div>
+const ONB_FAN=['Doja Cat','Harry Styles','Gorillaz'];
+const onbShows=c=>{ const seen={}; return (CITIES[c]||SHOWS).filter(x=>!seen[x.artist]&&(seen[x.artist]=1)).slice(0,12); };
+function onbView(){ const o=state.onb, st=o.step, enter=o.seen!==st; o.seen=st;
+  const top=`<div class="onbtop">${st?`<button class="onbback" data-act="onbback" aria-label="Back">${ic('back',20)}</button>`:'<span></span>'}<div class="onbd" aria-label="Step ${st+1} of 4">${[0,1,2,3].map(i=>`<i class="${i===st?'on':''}"></i>`).join('')}</div><button class="onbskip" data-act="onbdone">Skip</button></div>`;
+  const head=(h,p)=>`<div class="onbh"><h2>${h}</h2><p>${p}</p></div>`;
+  let body, cta;
+  if(st===0){ const fan=ONB_FAN.map(A), x=fan[1], cs=chatStats(x);
+    body=`<div class="onbfan" aria-hidden="true">${fan.map((y,i)=>`<span class="onbcd c${i}">${img(y)}${i===1?`<span class="onbcl"><b>${esc(y.artist)}</b><small><i class="chdot"></i>${fmtK(cs.going)} going · show chat</small><span class="cstrip">${[0,4,13,5].map(k=>`<span>${avi(k)}</span>`).join('')}</span></span>`:''}</span>`).join('')}</div>
+      <div class="onbh lead"><b>Plus One</b><h2>Never go to a show alone.</h2><p>Every show has an open chat. Meet people going, start a private crew, swap spare tickets at face value.</p></div>`;
+    cta=`<button class="cgo new" data-act="onbnext">Get started</button>`; }
+  else if(st===1){ body=head('Where do you go to shows?','We’ll show you chats for shows near you.')+`<div class="onbopt">${Object.keys(CITIES).map(c=>`<button data-act="onbcity" data-v="${c}" aria-pressed="${o.city===c}"><span><b>${c}</b><small>${CITIES[c].length} upcoming shows</small></span><i></i></button>`).join('')}</div>`;
+    cta=`<button class="cgo new" data-act="onbnext">Continue</button>`; }
+  else if(st===2){ const n=Object.keys(o.art).length;
+    body=head('Who are you seeing?',`Pick a few in ${esc(o.city)}. We’ll add their show chats to your Chats.`)+`<div class="onbart">${onbShows(o.city).map(x=>`<button data-act="onbart" data-v="${esc(x.artist)}" aria-pressed="${!!o.art[x.artist]}"><span>${img(x)}<i>${ic('check',14)}</i></span><b>${esc(x.artist)}</b></button>`).join('')}</div>`;
+    cta=`<button class="cgo new" data-act="onbnext">${n?`Continue · ${n} picked`:'Skip for now'}</button>`; }
+  else { body=head('Who can message you?','You can change this any time in your profile.')+`
      <div class="onbopt">${[['shows','People going to the same shows','A first message arrives as a request'],['crew','Only people in my crews','Nobody else can start a DM']].map(([k,b,sm])=>`<button data-act="onbdm" data-v="${k}" aria-pressed="${o.dm===k}"><span><b>${b}</b><small>${sm}</small></span><i></i></button>`).join('')}</div>
-     <div class="onbopt"><button data-act="idv" aria-pressed="${ME.idv===true}"><span><b>${ME.idv===true?'ID verified':'Verify your ID'}</b><small>${ME.idv===true?'You can join women-only crews':'Optional · hosts trust verified people more'}</small></span>${ME.idv==='busy'?'<i class="spin sm"></i>':ME.idv===true?ic('check',16):ic('right',16)}</button></div>
-     <button class="cgo new" data-act="onbdone">Start exploring</button>`;
-  return `<div class="onb">${st?`<button class="onbback" data-act="onbback" aria-label="Back">${ic('back',20)}</button>`:''}<button class="onbskip" data-act="onbdone">Skip</button>${dots}<div class="onbb">${body}</div></div>`; }
+     <p class="ncl">Optional</p><div class="onbopt"><button class="go" data-act="idv" aria-pressed="${ME.idv===true}"><span><b>${ME.idv===true?'ID verified':'Verify your ID'}</b><small>${ME.idv===true?'You can join women-only crews':'Hosts trust verified people more'}</small></span>${ME.idv==='busy'?'<i class="spin sm"></i>':ME.idv===true?ic('check',16):ic('right',16)}</button></div>`;
+    cta=`<button class="cgo new" data-act="onbdone">Start exploring</button>`; }
+  return `<div class="onb${st===0?' s0':''}" role="dialog" aria-label="Welcome to Plus One">${top}<div class="onbb${enter?' enter':''}">${body}</div><div class="onbcta">${cta}</div></div>`; }
 
 // ---- privacy ----
 function privSheet(){ const bl=Object.keys(state.blocked||{}).filter(k=>state.blocked[k]).map(Number), dm=state.dmRule||'shows';
@@ -4222,10 +4262,11 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='onbopen'){ state.onb={step:0,city:state.city||'New York',art:{},dm:state.dmRule||'shows'}; render(); }
   else if(a==='onbnext'){ state.onb.step++; render(); }
   else if(a==='onbback'){ state.onb.step--; render(); }
-  else if(a==='onbcity'){ state.onb.city=v; render(); }
+  else if(a==='onbcity'){ if(state.onb.city!==v) state.onb.art={}; state.onb.city=v; render(); }
   else if(a==='onbart'){ const o=state.onb.art; if(o[v]) delete o[v]; else o[v]=1; render(); }
   else if(a==='onbdm'){ state.onb.dm=v; render(); }
-  else if(a==='onbdone'){ const o=state.onb; state.dmRule=o.dm; Object.keys(o.art).forEach(n=>{ const x=A(n); if(x) (state.joinedChat ||= {})[x.id]=true; }); state.onb=null; try{ localStorage.setItem('po_onb','1'); }catch(_){} render(); toast(Object.keys(o.art).length?`Added ${Object.keys(o.art).length} show chat${Object.keys(o.art).length>1?'s':''} to Chats`:'You’re all set'); }
+  else if(a==='onbdone'){ const o=state.onb, picks=Object.keys(o.art); state.onb=null; state.dmRule=o.dm; try{ localStorage.setItem('po_onb','1'); }catch(_){}
+    if(o.city!==state.city) setCity(o.city); picks.forEach(n=>{ const x=(CITIES[o.city]||SHOWS).find(y=>y.artist===n); if(x) (state.joinedChat ||= {})[x.id]=true; }); render(); toast(picks.length?`Added ${picks.length} show chat${picks.length>1?'s':''} to Chats`:'You’re all set'); }
   else if(a==='kinfo'){ state.kinfo=true; render(); }
   else if(a==='kinfox'){ state.kinfo=false; render(); }
   else if(a==='kmute'){ const k=kKey(); (state.kmute ||= {})[k]=!state.kmute[k]; state.kinfo=false; render(); toast(state.kmute[k]?'Muted · no notifications from this chat':'Unmuted'); }
