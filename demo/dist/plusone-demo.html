@@ -2144,6 +2144,9 @@ i.tw{font-style:normal;opacity:0}
 button.csloc{box-shadow:inset 0 0 0 1.5px #0B0B0C;background:transparent}
 .csloc .ub b{font-size:15px}.csloc .ufx{height:auto;font-size:13.5px}
 .cslocs{display:flex;flex-direction:column}
+/* every bottom sheet: leaves a band of the page visible to tap to close (no close button), no desktop scrollbars */
+.sheet.csheet{max-height:calc(100% - var(--st) - 64px)}
+.sheet,.sheet *{scrollbar-width:none}.sheet::-webkit-scrollbar,.sheet ::-webkit-scrollbar{display:none;width:0;height:0}
 /* flow context card: the show (or venue) this flow is about, same look in Start a crew and Share a clip */
 .fctx .fctxi{position:relative;width:44px;height:44px;border-radius:var(--r-xs);overflow:hidden;flex-shrink:0;background:var(--card2)}
 .fctx .fctxi .cover{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
