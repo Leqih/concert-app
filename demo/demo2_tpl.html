@@ -921,7 +921,7 @@ i.tw{font-style:normal;opacity:0}
 .eb{font-style:normal;display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:var(--card2);font-size:13px;flex-shrink:0;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif}
 .eb.dk{background:rgba(255,255,255,.16);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 .ttrust li{gap:10px}
-.gch{font-variant-emoji:emoji}
+.gch{font-variant-emoji:normal}
 
 /* floating capsule nav */
 .wnav{display:none}
@@ -1139,7 +1139,12 @@ i.tw{font-style:normal;opacity:0}
 .sphint{text-align:center;font-size:13px;color:var(--muted);margin:10px 24px 0;line-height:1.4}
 .sphint.big{font-size:15px;color:#3A3A3E}.sphint.big b{font-family:var(--display);font-size:22px;color:#0B0B0C;font-variant-numeric:tabular-nums}
 .spanel .sgrp{margin-top:0}
-.spanel .swhy{margin-top:12px;justify-content:center}
+.spanel .swhy{margin-top:8px;justify-content:flex-start}
+.swl{margin:16px 16px 0;font-size:var(--t-label);font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.sphint svg{vertical-align:-2px;margin-right:2px}
+.hw .eb svg{stroke-width:1.8}
+.ncchg{font:inherit;font-weight:600;color:var(--text);text-decoration:underline;text-underline-offset:2px;margin-left:4px}
+.ncb>.ncl:first-child{margin-top:4px}
 .crewav{display:flex;margin-left:auto;margin-right:4px}
 .crewav span{width:22px;height:22px;border-radius:50%;overflow:hidden;border:2px solid #fff;margin-left:-8px;opacity:0;transform:translateX(10px) scale(.6);transition:all .35s cubic-bezier(.2,1.3,.4,1)}
 .crewav.on span{opacity:1;transform:none}.crewav.on span:nth-child(2){transition-delay:.06s}.crewav.on span:nth-child(3){transition-delay:.12s}
@@ -3290,15 +3295,17 @@ const VENUES=()=>[...new Set(SHOWS.map(x=>x.venue))].slice(0,8);
 function csShows(v){ return SHOWS.filter(x=>x.venue===v).sort((a,b)=>Math.abs(xDays(a.dates[0])+1)-Math.abs(xDays(b.dates[0])+1)); }
 function csSheet(){ const k=state.cs, loc=k.loc, sh=loc?csShows(loc):[], sel=k.sid?byId[k.sid]:sh[0], txt=k.v===-1;
   const head=`<div class="sheetbg" data-act="csclose"></div><div class="sheet csheet ufs css" id="cssh" role="dialog" aria-label="${k.fromShow?'Review this show':'Share a clip'}"><div class="cgrab"><i class="grab"></i><h3>${k.fromShow?'How was '+esc(sel.artist)+'?':'Share a clip'}</h3><p>${k.fromShow?'Rate it, add a clip, or just a few words':'Every clip carries the venue it was filmed at'}</p></div><div class="ufb">`;
-  let b=`<p class="ncl">Your rating <em class="csopt">Optional</em></p><div class="csrate">${[1,2,3,4,5].map(n=>`<button data-act="csrate" data-v="${n}" aria-pressed="${n<=(k.rate||0)}" aria-label="${n} star${n>1?'s':''}">★</button>`).join('')}<span>${['Tap to rate','Not great','It was okay','Good night','Great night','Unforgettable'][k.rate||0]}</span></div>
-    <p class="ncl">${txt?'Your take':'Caption'}<em class="cscnt" id="cscnt">${(k.cap||'').length}/${txt?280:80}</em></p>${txt?`<textarea id="cscap" class="eptx" rows="3" maxlength="280" oninput="csCnt(this)" placeholder="What made the night? Setlist, sound, the crowd…">${esc(k.cap||'')}</textarea>`:`<input id="cscap" class="eptx" style="height:46px" maxlength="80" oninput="csCnt(this)" placeholder="What was the moment?" value="${esc(k.cap||'')}">`}
-    <p class="ncl">Add a clip <em class="csopt">${k.fromShow?'Optional':''}</em></p><div class="csvid"><button data-act="cspick" data-v="-1" aria-label="Text only" aria-pressed="${txt}"><span class="cstxt"><b>Aa</b><small>Text only</small></span></button>${CSVID.map((x,i)=>`<button data-act="cspick" data-v="${i}" aria-pressed="${k.v===i}"><span><img class="cover" alt="" src="${CLIPV[x.vid].p}"></span>${x.geo?`<i class="csgeo">${ic('pin',10)}</i>`:''}<em>${mmss(CLIPV[x.vid].d)}</em></button>`).join('')}</div>`;
+  const rateH=`<p class="ncl">Your rating <em class="csopt">Optional</em></p><div class="csrate">${[1,2,3,4,5].map(n=>`<button data-act="csrate" data-v="${n}" aria-pressed="${n<=(k.rate||0)}" aria-label="${n} star${n>1?'s':''}">★</button>`).join('')}<span>${['Tap to rate','Not great','It was okay','Good night','Great night','Unforgettable'][k.rate||0]}</span></div>`;
+  const capH=`<p class="ncl">${txt?'Your take':'Caption'}<em class="cscnt" id="cscnt">${(k.cap||'').length}/${txt?280:80}</em></p>${txt?`<textarea id="cscap" class="eptx" rows="3" maxlength="280" oninput="csCnt(this)" placeholder="What made the night? Setlist, sound, the crowd…">${esc(k.cap||'')}</textarea>`:`<input id="cscap" class="eptx" style="height:46px" maxlength="80" oninput="csCnt(this)" placeholder="What was the moment?" value="${esc(k.cap||'')}">`}`;
+  const clipH=`<p class="ncl">Add a clip <em class="csopt">${k.fromShow?'Optional':''}</em></p><div class="csvid"><button data-act="cspick" data-v="-1" aria-label="Text only" aria-pressed="${txt}"><span class="cstxt"><b>Aa</b><small>Text only</small></span></button>${CSVID.map((x,i)=>`<button data-act="cspick" data-v="${i}" aria-pressed="${k.v===i}"><span><img class="cover" alt="" src="${CLIPV[x.vid].p}"></span>${x.geo?`<i class="csgeo">${ic('pin',10)}</i>`:''}<em>${mmss(CLIPV[x.vid].d)}</em></button>`).join('')}</div>`;
+  let b=k.fromShow?rateH+capH+clipH:clipH;
   if(k.fromShow) b+=`<p class="ncl">Show</p><div class="itrow" style="border:0"><span class="uthumb">${img(sel)}</span><span class="ub"><b>${esc(sel.artist)}</b><span class="um">${sd(sel.dates[0])} · ${esc(VSH(sel.venue))} · Tagged</span></span></div>`;
   else { b+=`<p class="ncl">Location <em class="csreq">Required</em></p>`;
     if(k.pickLoc) b+=`<div class="cslocs">${VENUES().map(v=>`<button class="itrow" data-act="csloc" data-v="${esc(v)}">${ic('pin',16)}<span class="ub"><b>${esc(VSH(v))}</b><span class="um">${esc(v)}</span></span>${ic('right',14)}</button>`).join('')}</div>`;
     else if(loc) b+=`<div class="csloc on">${ic('pin',18)}<span class="ub"><b>${esc(VSH(loc))}</b><span class="um">${k.src==='geo'?'From your video’s location · On-site':'Tagged by you'}</span></span><button class="ufx" data-act="csedit">Change</button></div>`;
     else b+=`<button class="csloc" data-act="csedit">${ic('pin',18)}<span class="ub"><b>Add the venue</b><span class="um">${txt?'Where was the show? Pick the venue':'This video has no location · pick where you filmed it'}</span></span>${ic('right',14)}</button>`;
     if(loc&&!k.pickLoc&&sh.length) b+=`<p class="ncl">Show</p>${sh.length>1?`<div class="ncv">${sh.slice(0,4).map(x=>`<button class="gch" data-act="csshow" data-id="${x.id}" aria-pressed="${sel===x}">${esc(x.artist)} · ${sd(x.dates[0])}</button>`).join('')}</div>`:`<div class="itrow" style="border:0"><span class="uthumb">${img(sel)}</span><span class="ub"><b>${esc(sel.artist)}</b><span class="um">${sd(sel.dates[0])} · matched by venue and date</span></span></div>`}`; }
+  if(!k.fromShow) b+=capH+rateH;
   const ok=!!loc&&!k.pickLoc;
   return head+b+`</div><div class="uff"><button class="ufx" data-act="csclose">Cancel</button><button class="cgo new cspb" id="cspb" data-act="cspost" ${ok?'':'disabled'}><span class="cslb">${ok?(txt?'Post review':'Post clip'):'Add a location to post'}</span></button></div></div>`; }
 function csCnt(el){ const n=document.getElementById('cscnt'); if(n) n.textContent=el.value.length+'/'+el.maxLength; n&&n.classList.toggle('max',el.value.length>=el.maxLength); }
@@ -3617,13 +3624,13 @@ function sell(){
   </div>`;
 }
 function sellPanel(n){ const S=state.sell, pick=S.id&&MYTIX().find(t=>t[0].id===S.id);
-  if(n===1) return `<p class="sphint">${MYTIX().length} verified tickets in your wallet <span class="emo">🔒</span></p>`;
+  if(n===1) return `<p class="sphint">${ic('lock',13)} ${MYTIX().length} verified tickets in your wallet</p>`;
   if(n===2){ const [s,sec,seat,max]=pick; return `<div class="sgrp"><div class="srow"><span><b>How many?</b><small>You have ${max}</small></span><span class="step"><button data-act="sellqty" data-v="-1" ${S.qty<=1?'disabled':''}>−</button><b id="sqty">${S.qty}</b><button data-act="sellqty" data-v="1" ${S.qty>=max?'disabled':''}>+</button></span></div>
     <div class="srow"><span><b>Offer to my crews first</b><small>They see it 24h before everyone else</small></span><span class="crewav ${S.crew?'on':''}" id="crewav">${[3,4,5].map(k=>`<span>${avi(PEOPLE[k][3])}</span>`).join('')}</span><button class="tog ${S.crew?'on':''}" data-act="sellcrew" aria-pressed="${S.crew}"><i></i></button></div></div>
-    <div class="swhy">${['Can’t make it','Friend bailed','Bought extra','Schedule clash'].map(w=>`<button data-act="sellwhy" data-v="${w}" aria-pressed="${S.why===w}">${w}</button>`).join('')}</div>`; }
-  if(n===3) return `<div class="howrow">${[['📣','Listed'],['🤝','Claimed'],['📲','Transfer'],['💸','Paid']].map(([e,t],k)=>`<span class="hw" style="--d:${k*.07}s"><i class="eb">${e}</i><small>${t}</small></span>${k<3?'<i class="hwl"></i>':''}`).join('')}</div>
+    <p class="swl">Why are you selling?</p><div class="swhy">${['Can’t make it','Friend bailed','Bought extra','Schedule clash'].map(w=>`<button data-act="sellwhy" data-v="${w}" aria-pressed="${S.why===w}">${w}</button>`).join('')}</div>`; }
+  if(n===3) return `<div class="howrow">${[['ticket','Listed'],['user','Claimed'],['send','Transfer'],['check','Paid']].map(([e,t],k)=>`<span class="hw" style="--d:${k*.07}s"><i class="eb">${ic(e,17)}</i><small>${t}</small></span>${k<3?'<i class="hwl"></i>':''}`).join('')}</div>
     <p class="sphint">${S.crew?'Your crews get first dibs for 24h':'Verified fans for this show can claim it'} · ${S.why}</p>`;
-  const [s]=pick; return `<p class="sphint big"><b id="fanct">0</b> fans in crews for ${esc(s.artist)} are looking for a ticket</p><p class="sphint">We’ll ping you the moment someone claims it <span class="emo">🔔</span></p>`;
+  const [s]=pick; return `<p class="sphint big"><b id="fanct">0</b> fans in crews for ${esc(s.artist)} are looking for a ticket</p><p class="sphint">We’ll ping you the moment someone claims it</p>`;
 }
 function sellCta(n){
   if(n===1) return `<button class="wpill big" data-act="sellnext" id="sellnx" ${state.sell.id?'':'disabled'}>Continue</button>`;
@@ -3882,13 +3889,14 @@ function splitCard(){ const s=A(SPLIT.show); if(!s) return ''; const tot=spareOf
 function lockedCard(s){ return `<h2 class="h2 sec">Spare tickets <span class="emo">🎟️</span></h2><div class="spnone lk"><b>🔒 Transfers are locked for this show</b><span>The artist only allows resale through Ticketmaster’s Face Value Exchange. Crews still work as usual.</span><a href="https://help.ticketmaster.com/hc/en-us/articles/9781464415249-How-does-Ticketmaster-s-Face-Value-Exchange-work" target="_blank" rel="noopener">Face Value Exchange ↗</a></div>`; }
 const bState=p=>BUD[p]?'buddy':BREQ[p]?'sent':'none';
 function addBuddy(p){ if(BUD[p]||BREQ[p]) return; BREQ[p]=true; setTimeout(()=>{ delete BREQ[p]; BUD[p]=true; toast(`${P0(p)} accepted · you’re buddies 🤝`); if(['person','crews','crew'].includes(state.screen)) render(); },2200); }
-function ncPick(){ const L=SHOWS.filter(x=>xDays(x.dates[0])>=0).sort((a,b)=>a.dates[0].localeCompare(b.dates[0])).slice(0,10);
-  return `<div class="sheetbg" data-act="ncclose"></div><div class="sheet csheet ncs" role="dialog" aria-label="Pick a show"><div class="cgrab"><i class="grab"></i><h3>Start a crew</h3><p>Which show?</p></div>
-  <div class="ncb">${L.map(x=>`<button class="itrow" data-act="ncshow" data-id="${x.id}"><span class="uthumb">${img(x)}</span><span class="ub"><b>${esc(x.artist)}</b><span class="um">${sd(x.dates[0])} · ${esc(VSH(x.venue))}</span></span>${ic('right',16)}</button>`).join('')}</div></div>`; }
+function ncPick(){ const up=SHOWS.filter(x=>xDays(x.dates[0])>=0).sort((a,b)=>a.dates[0].localeCompare(b.dates[0])), mine=[...new Set(MYTIX().map(t=>t[0]))].filter(x=>x&&xDays(x.dates[0])>=0), ids=new Set(mine.map(x=>x.id));
+  const row=x=>{ const n=xCrews().filter(c=>c.s===x).length; return `<button class="itrow" data-act="ncshow" data-id="${x.id}"><span class="uthumb">${img(x)}</span><span class="ub"><b>${esc(x.artist)}</b><span class="um">${sd(x.dates[0])} · ${esc(VSH(x.venue))}${n?` · ${n} crew${n>1?'s':''} going`:''}</span></span>${ic('right',16)}</button>`; };
+  return `<div class="sheetbg" data-act="ncclose"></div><div class="sheet csheet ncs" role="dialog" aria-label="Pick a show"><div class="cgrab"><i class="grab"></i><h3>Start a crew</h3><p>Which show are you going to?</p></div>
+  <div class="ncb">${mine.length?`<p class="ncl">You have tickets</p>${mine.map(row).join('')}<p class="ncl">Upcoming in ${esc(state.city)}</p>`:''}${up.filter(x=>!ids.has(x.id)).slice(0,10).map(row).join('')}</div></div>`; }
 function ncSheet(){ const c=state.nc; if(!c.sid) return ncPick(); const s=byId[c.sid], order=[0,1,2,4,6,7,3,5], wo=c.j===7, lock=wo&&ME.idv!==true;
   const tg=(k,on,b,sm)=>`<div class="nct"><span><b>${b}</b><small>${sm}</small></span><button class="tgl" role="switch" aria-checked="${on}" aria-label="${b}" data-act="ncset" data-k="${k}" data-v="${on?0:1}"><i></i></button></div>`;
   return `<div class="sheetbg" data-act="ncclose"></div><div class="sheet csheet ncs" role="dialog" aria-label="Start a crew">
-  <div class="cgrab"><i class="grab"></i><h3>Start a crew</h3><p>${esc(s.artist)} · ${sd(s.dates[0])} · ${esc(s.venue.replace('Madison Square Garden','MSG').replace('Radio City Music Hall','Radio City'))}</p></div>
+  <div class="cgrab"><i class="grab"></i><h3>Start a crew</h3><p>${esc(s.artist)} · ${sd(s.dates[0])} · ${esc(s.venue.replace('Madison Square Garden','MSG').replace('Radio City Music Hall','Radio City'))} <button class="ncchg" data-act="ncrepick">Change</button></p></div>
   <div class="ncb">
     <p class="ncl">Name</p><input class="ncname" id="ncname" maxlength="32" autocomplete="off" placeholder="${esc(SCENE_LIST[c.j][2][0])}" value="${esc(c.name||'')}" oninput="state.nc.name=this.value">
     <p class="ncl">Vibe</p><div class="ncv">${order.map(j=>`<button class="gch" data-act="ncset" data-k="j" data-v="${j}" aria-pressed="${c.j===j}">${SCENE_EMO[j]} ${SCENE_LIST[j][0]}</button>`).join('')}</div>
@@ -4303,12 +4311,13 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='ncopen'){ if(document.getElementById('psheet')) closePlus(); state.nc={sid:id||null,j:t.dataset.j!=null?+t.dataset.j:0,cap:6,priv:true,meet:true,dep:false}; render(); }
   else if(a==='ncshow'){ state.nc.sid=id; render(); const sh=document.querySelector('.ncs'); if(sh) sh.style.animation='none'; }
   else if(a==='ncclose'){ state.nc=null; render(); }
+  else if(a==='ncrepick'){ state.nc.sid=null; render(); }
   else if(a==='ncset'){ const k=t.dataset.k, n=+v; if(k==='vis') state.nc.priv=!n; else if(k==='meet'||k==='dep') state.nc[k]=!!n; else state.nc[k]=n; render(); }
   else if(a==='nccreate'){ const c=state.nc, s=byId[c.sid]; if(c.j===7&&ME.idv!==true){ toast('Women-only crews need a verified ID · verify it on your profile'); return; }
     const nm=(c.name||'').trim()||SCENE_LIST[c.j][2][0], name=nm[0].toUpperCase()+nm.slice(1), p=(h(s.id)+1)%8;
     const t={id:'t'+(++TSEQ),k:'crew',mine:true,priv:c.priv,show:s.artist,title:name,long:`${name} · ${s.artist}`,host:-1,who:[],cap:c.cap,un:0,ts:++TSEQ,dep:c.dep,plan:c.meet?['6:30 PM',XSPOT[h(s.id)%XSPOT.length]]:null,
       msgs:[{d:'sys',t:`You started ${name} · crew ID #${crewCode(name,s.id)}`}],replies:[[p,'Sounds good!']]};
-    TH.unshift(t); MINE.push({tid:t.id,s,j:c.j,name}); state.nc=null; openThread(t); toast('Crew created · invite people or share the crew ID');
+    TH.unshift(t); MINE.push({tid:t.id,s,j:c.j,name}); state.nc=null; openThread(t); state.kinv=true; render(); toast('Crew created');
     setTimeout(()=>{ t.msgs.push({d:'req',p,st:0}); t.ts=++TSEQ; kNote('req',`${P0(p)} asked to join ${name}`,'thread',t.id,null,PEOPLE[p][3],'Found you by crew ID · approve in the chat'); if(state.screen==='crew'&&state.tid===t.id) render(); else t.un++; },2600); }
   else if(a==='wallgo'){ state.wtag='All'; state.wtopic=null; state._chBottom=true; go('wall',id); }
   else if(a==='chatjoin'){ (state.joinedChat ||= {})[id]=true; if(state.screen==='wall'){ state._chBottom=true; render(); } else { const sc=document.getElementById('shsc'); (state.shY ||= {})[id]=sc?sc.scrollTop:0; state.wtag='All'; state._chBottom=true; go('wall',id); } toast('You’re in the '+byId[id].artist+' show chat'); }
