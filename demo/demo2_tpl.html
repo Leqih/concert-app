@@ -2436,7 +2436,7 @@ button.csloc{box-shadow:inset 0 0 0 1.5px #0B0B0C;background:transparent}
 .onbopt span{flex:1;display:flex;flex-direction:column}.onbopt b{font-size:15px}.onbopt small{font-size:12.5px;color:var(--muted)}
 .onbopt i{width:20px;height:20px;border-radius:50%;box-shadow:inset 0 0 0 1.5px var(--muted);flex:0 0 auto}
 .onbopt button[aria-pressed=true] i{box-shadow:inset 0 0 0 6px var(--text)}
-.onb{position:absolute;inset:0;z-index:60;background:var(--card);color:var(--text);display:flex;flex-direction:column;padding:calc(var(--st) + 4px) 0 calc(12px + var(--sb));animation:fadein .25s}
+.onb{position:absolute;inset:0;z-index:60;background:var(--card);color:var(--text);display:flex;flex-direction:column;padding:calc(var(--st) + 4px) 0 calc(12px + var(--sb))}.onb.open{animation:fadein .25s}
 .onbtop{display:grid;grid-template-columns:64px 1fr 64px;align-items:center;height:44px;padding:0 12px;flex:0 0 auto}
 .onbback{width:40px;height:40px;border-radius:50%;background:var(--bg);display:grid;place-items:center}
 .onbskip{justify-self:end;height:40px;padding:0 6px;font-weight:600;font-size:var(--t-body);color:var(--muted)}
@@ -3954,7 +3954,7 @@ function kPlanSheet(){ const P=state.kplan, t=thById(state.tid);
 // ---- onboarding (first run) ----
 const ONB_FAN=['Doja Cat','Harry Styles','Gorillaz'];
 const onbShows=c=>{ const seen={}; return (CITIES[c]||SHOWS).filter(x=>!seen[x.artist]&&(seen[x.artist]=1)).slice(0,12); };
-function onbView(){ const o=state.onb, st=o.step, enter=o.seen!==st; o.seen=st;
+function onbView(){ const o=state.onb, st=o.step, enter=o.seen!==st, first=o.seen==null; o.seen=st;
   const top=`<div class="onbtop">${st?`<button class="onbback" data-act="onbback" aria-label="Back">${ic('back',20)}</button>`:'<span></span>'}<div class="onbd" aria-label="Step ${st+1} of 4">${[0,1,2,3].map(i=>`<i class="${i===st?'on':''}"></i>`).join('')}</div><button class="onbskip" data-act="onbdone">Skip</button></div>`;
   const head=(h,p)=>`<div class="onbh"><h2>${h}</h2><p>${p}</p></div>`;
   let body, cta;
@@ -3971,7 +3971,7 @@ function onbView(){ const o=state.onb, st=o.step, enter=o.seen!==st; o.seen=st;
      <div class="onbopt">${[['shows','People going to the same shows','A first message arrives as a request'],['crew','Only people in my crews','Nobody else can start a DM']].map(([k,b,sm])=>`<button data-act="onbdm" data-v="${k}" aria-pressed="${o.dm===k}"><span><b>${b}</b><small>${sm}</small></span><i></i></button>`).join('')}</div>
      <p class="ncl">Optional</p><div class="onbopt"><button class="go" data-act="idv" aria-pressed="${ME.idv===true}"><span><b>${ME.idv===true?'ID verified':'Verify your ID'}</b><small>${ME.idv===true?'You can join women-only crews':'Hosts trust verified people more'}</small></span>${ME.idv==='busy'?'<i class="spin sm"></i>':ME.idv===true?ic('check',16):ic('right',16)}</button></div>`;
     cta=`<button class="cgo new" data-act="onbdone">Start exploring</button>`; }
-  return `<div class="onb${st===0?' s0':''}" role="dialog" aria-label="Welcome to Plus One">${top}<div class="onbb${enter?' enter':''}">${body}</div><div class="onbcta">${cta}</div></div>`; }
+  return `<div class="onb${st===0?' s0':''}${first?' open':''}" role="dialog" aria-label="Welcome to Plus One">${top}<div class="onbb${enter?' enter':''}">${body}</div><div class="onbcta">${cta}</div></div>`; }
 
 // ---- privacy ----
 function privSheet(){ const bl=Object.keys(state.blocked||{}).filter(k=>state.blocked[k]).map(Number), dm=state.dmRule||'shows';
