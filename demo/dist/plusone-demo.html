@@ -2142,7 +2142,14 @@ i.tw{font-style:normal;opacity:0}
 .csloc{display:flex;align-items:center;gap:12px;width:100%;padding:12px 14px;border-radius:var(--r-lg);background:var(--card2);text-align:left;color:var(--text);box-shadow:inset 0 0 0 1.5px transparent}
 button.csloc{box-shadow:inset 0 0 0 1.5px #0B0B0C;background:transparent}
 .csloc .ub b{font-size:15px}.csloc .ufx{height:auto;font-size:13.5px}
-.cslocs{display:flex;flex-direction:column}.cslocs .itrow{gap:10px}
+.cslocs{display:flex;flex-direction:column}
+/* flow context card: the show (or venue) this flow is about, same look in Start a crew and Share a clip */
+.fctx .fctxi{position:relative;width:44px;height:44px;border-radius:var(--r-xs);overflow:hidden;flex-shrink:0;background:var(--card2)}
+.fctx .fctxi .cover{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.fctx .ub{flex:1;min-width:0}.fctx .ub b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fctx .fctxi.pin{display:grid;place-items:center;background:#fff;color:var(--text)}button.fctx .fctxi.pin{background:var(--card2)}
+.csoth{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:10px}.csoth small{font-size:var(--t-meta);color:var(--muted);margin-right:2px}
+.css .uff .cgo{flex:1}.cslocs .itrow{gap:10px}
 .clloc svg{margin-right:1px}
 
 /* ===== M22 chat pages (stub · plaza · card) ===== */
@@ -2361,9 +2368,9 @@ button.csloc{box-shadow:inset 0 0 0 1.5px #0B0B0C;background:transparent}
 .kcode small{font-size:12px;color:var(--muted)}.kcode b{font:800 22px var(--display);letter-spacing:.02em;margin-right:auto}
 .kcode button{height:32px;padding:0 14px;border-radius:16px;background:var(--text);color:#fff;font-weight:700;font-size:13px}
 .klink{display:flex;align-items:center;gap:10px;width:100%;margin-top:10px;padding:14px 16px;border-radius:var(--r-lg);background:var(--bg);font-weight:600;font-size:15px;color:var(--text)}
-.ncinv{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;border-radius:var(--r-md);background:var(--bg)}
+.ncinv{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;border-radius:var(--r-lg);background:none;box-shadow:inset 0 0 0 1px var(--line)}
 .ncinv span{display:flex;flex-direction:column;gap:2px}.ncinv b{font-size:15px}.ncinv small{font-size:13px;color:var(--muted);line-height:1.4}
-.ncname{width:100%;height:48px;padding:0 16px;border:0;outline:0;border-radius:var(--r-md);background:var(--bg);font:600 16px var(--body);color:var(--text)}.ncname::placeholder{color:var(--muted);font-weight:500}
+.ncname{width:100%;height:48px;padding:0 16px;border:0;outline:0;border-radius:var(--r-md);background:var(--card2);font:600 16px var(--body);color:var(--text)}.ncname::placeholder{color:var(--muted);font-weight:500}
 
 /* M25 chat types: official · private crew · direct */
 .ktype{display:flex;align-items:center;gap:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -3300,14 +3307,14 @@ function csSheet(){ const k=state.cs, loc=k.loc, sh=loc?csShows(loc):[], sel=k.s
   const clipH=`<p class="ncl">Add a clip <em class="csopt">${k.fromShow?'Optional':''}</em></p><div class="csvid"><button data-act="cspick" data-v="-1" aria-label="Text only" aria-pressed="${txt}"><span class="cstxt"><b>Aa</b><small>Text only</small></span></button>${CSVID.map((x,i)=>`<button data-act="cspick" data-v="${i}" aria-pressed="${k.v===i}"><span><img class="cover" alt="" src="${CLIPV[x.vid].p}"></span>${x.geo?`<i class="csgeo">${ic('pin',10)}</i>`:''}<em>${mmss(CLIPV[x.vid].d)}</em></button>`).join('')}</div>`;
   let b=k.fromShow?rateH+capH+clipH:clipH;
   if(k.fromShow) b+=`<p class="ncl">Show</p><div class="itrow" style="border:0"><span class="uthumb">${img(sel)}</span><span class="ub"><b>${esc(sel.artist)}</b><span class="um">${sd(sel.dates[0])} · ${esc(VSH(sel.venue))} · Tagged</span></span></div>`;
-  else { b+=`<p class="ncl">Location <em class="csreq">Required</em></p>`;
+  else { b+=`<p class="ncl">Location <em class="csopt">Required</em></p>`;
     if(k.pickLoc) b+=`<div class="cslocs">${VENUES().map(v=>`<button class="itrow" data-act="csloc" data-v="${esc(v)}">${ic('pin',16)}<span class="ub"><b>${esc(VSH(v))}</b><span class="um">${esc(v)}</span></span>${ic('right',14)}</button>`).join('')}</div>`;
-    else if(loc) b+=`<div class="csloc on">${ic('pin',18)}<span class="ub"><b>${esc(VSH(loc))}</b><span class="um">${k.src==='geo'?'From your video’s location · On-site':'Tagged by you'}</span></span><button class="ufx" data-act="csedit">Change</button></div>`;
-    else b+=`<button class="csloc" data-act="csedit">${ic('pin',18)}<span class="ub"><b>Add the venue</b><span class="um">${txt?'Where was the show? Pick the venue':'This video has no location · pick where you filmed it'}</span></span>${ic('right',14)}</button>`;
-    if(loc&&!k.pickLoc&&sh.length) b+=`<p class="ncl">Show</p>${sh.length>1?`<div class="ncv">${sh.slice(0,4).map(x=>`<button class="gch" data-act="csshow" data-id="${x.id}" aria-pressed="${sel===x}">${esc(x.artist)} · ${sd(x.dates[0])}</button>`).join('')}</div>`:`<div class="itrow" style="border:0"><span class="uthumb">${img(sel)}</span><span class="ub"><b>${esc(sel.artist)}</b><span class="um">${sd(sel.dates[0])} · matched by venue and date</span></span></div>`}`; }
+    else if(loc) b+=`<div class="csloc on fctx"><span class="fctxi pin">${ic('pin',18)}</span><span class="ub"><b>${esc(VSH(loc))}</b><span class="um">${k.src==='geo'?'From your video’s location · On-site':'Tagged by you'}</span></span><button class="ufx" data-act="csedit">Change</button></div>`;
+    else b+=`<button class="csloc fctx" data-act="csedit"><span class="fctxi pin">${ic('pin',18)}</span><span class="ub"><b>Add the venue</b><span class="um">${txt?'Where was the show? Pick the venue':'This video has no location · pick where you filmed it'}</span></span>${ic('right',14)}</button>`;
+    if(loc&&!k.pickLoc&&sh.length){ const oth=sh.slice(0,4).filter(x=>x!==sel); b+=`<p class="ncl">Show</p><div class="csloc fctx"><span class="fctxi">${img(sel)}</span><span class="ub"><b>${esc(sel.artist)}</b><span class="um">${lng(sel.dates[0])} · matched by venue and date</span></span></div>${oth.length?`<div class="csoth"><small>Not this one?</small>${oth.map(x=>`<button class="gch" data-act="csshow" data-id="${x.id}">${esc(x.artist)} · ${sd(x.dates[0])}</button>`).join('')}</div>`:''}`; } }
   if(!k.fromShow) b+=capH+rateH;
   const ok=!!loc&&!k.pickLoc;
-  return head+b+`</div><div class="uff"><button class="ufx" data-act="csclose">Cancel</button><button class="cgo new cspb" id="cspb" data-act="cspost" ${ok?'':'disabled'}><span class="cslb">${ok?(txt?'Post review':'Post clip'):'Add a location to post'}</span></button></div></div>`; }
+  return head+b+`</div><div class="uff"><button class="cgo new cspb" id="cspb" data-act="cspost" ${ok?'':'disabled'}><span class="cslb">${ok?(txt?'Post review':'Post clip'):'Add a location to post'}</span></button></div></div>`; }
 function csCnt(el){ const n=document.getElementById('cscnt'); if(n) n.textContent=el.value.length+'/'+el.maxLength; n&&n.classList.toggle('max',el.value.length>=el.maxLength); }
 // Share sheet: every option redraws only the sheet (keeps scroll, no slide-up replay, clip underneath keeps playing)
 function csStash(){ const c=document.getElementById('cscap'); if(c&&state.cs) state.cs.cap=c.value; }
@@ -3896,8 +3903,9 @@ function ncPick(){ const up=SHOWS.filter(x=>xDays(x.dates[0])>=0).sort((a,b)=>a.
 function ncSheet(){ const c=state.nc; if(!c.sid) return ncPick(); const s=byId[c.sid], order=[0,1,2,4,6,7,3,5], wo=c.j===7, lock=wo&&ME.idv!==true;
   const tg=(k,on,b,sm)=>`<div class="nct"><span><b>${b}</b><small>${sm}</small></span><button class="tgl" role="switch" aria-checked="${on}" aria-label="${b}" data-act="ncset" data-k="${k}" data-v="${on?0:1}"><i></i></button></div>`;
   return `<div class="sheetbg" data-act="ncclose"></div><div class="sheet csheet ncs" role="dialog" aria-label="Start a crew">
-  <div class="cgrab"><i class="grab"></i><h3>Start a crew</h3><p>${esc(s.artist)} · ${sd(s.dates[0])} · ${esc(s.venue.replace('Madison Square Garden','MSG').replace('Radio City Music Hall','Radio City'))} <button class="ncchg" data-act="ncrepick">Change</button></p></div>
+  <div class="cgrab"><i class="grab"></i><h3>Start a crew</h3><p>Private · you approve who joins</p></div>
   <div class="ncb">
+    <p class="ncl">Show</p><div class="csloc fctx"><span class="fctxi">${img(s)}</span><span class="ub"><b>${esc(s.artist)}</b><span class="um">${lng(s.dates[0])} · ${esc(VSH(s.venue))}</span></span><button class="ufx" data-act="ncrepick">Change</button></div>
     <p class="ncl">Name</p><input class="ncname" id="ncname" maxlength="32" autocomplete="off" placeholder="${esc(SCENE_LIST[c.j][2][0])}" value="${esc(c.name||'')}" oninput="state.nc.name=this.value">
     <p class="ncl">Vibe</p><div class="ncv">${order.map(j=>`<button class="gch" data-act="ncset" data-k="j" data-v="${j}" aria-pressed="${c.j===j}">${SCENE_EMO[j]} ${SCENE_LIST[j][0]}</button>`).join('')}</div>
     <p class="ncl">Crew size</p><div class="ncsz">${[4,5,6,7,8].map(n=>`<button data-act="ncset" data-k="cap" data-v="${n}" aria-pressed="${c.cap===n}">${n}</button>`).join('')}</div>
