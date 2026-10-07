@@ -2145,6 +2145,7 @@ button.csloc{box-shadow:inset 0 0 0 1.5px #0B0B0C;background:transparent}
 .csloc .ub b{font-size:15px}.csloc .ufx{height:auto;font-size:13.5px}
 .cslocs{display:flex;flex-direction:column}
 /* every bottom sheet: leaves a band of the page visible to tap to close (no close button), no desktop scrollbars */
+.sheet.still,.sheetbg.still{animation:none!important}
 .sheet.csheet{max-height:calc(100% - var(--st) - 64px)}
 .sheet,.sheet *{scrollbar-width:none}.sheet::-webkit-scrollbar,.sheet ::-webkit-scrollbar{display:none;width:0;height:0}
 /* flow context card: the show (or venue) this flow is about, same look in Start a crew and Share a clip */
@@ -2682,7 +2683,8 @@ const going = s => 900 + h(s.id)%9000;
 const cleanTitle = s => { const t=s.title.replace(s.artist,'').replace(/^[\s:–\-]+/,'').replace(/\s*Presented by.*$/i,'').replace(/[.\s]+$/,'').trim(); return t || 'Live in New York'; };
 const PT=s=>esc(s.artist.replace(/[^A-Za-z0-9À-ÿ ]/g,'').split(' ').filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase());
 const IMGERR=s=>`onerror="this.outerHTML='<span class=&quot;cover ptile&quot;>${PT(s)}</span>'"`;
-const img = (s,extra='') => `<img class="cover" alt="" decoding="${s.img.startsWith('data:')?'sync':'async'}" src="${s.img}" ${s.img.startsWith('data:')?'':IMGERR(s)} ${extra}>`;
+// decoding="sync": re-rendered pages recreate their <img>s; with async decode a cached photo paints blank for a frame (the flash when switching pages)
+const img = (s,extra='') => `<img class="cover" alt="" decoding="sync" src="${s.img}" ${s.img.startsWith('data:')?'':IMGERR(s)} ${extra}>`;
 const I = {
   right:'<path d="M9 6l6 6-6 6"/>',
   search:'<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>', plus:'<path d="M12 5v14M5 12h14"/>', back:'<path d="M19 12H5M11 6l-6 6 6 6"/>',
@@ -4274,8 +4276,11 @@ function person(){ return profileView(false); }
 function render(anim){ window._dockActive=null; const _ap=document.getElementById('app'); _ap.classList.toggle('dk',['crew','me','person','clips','wall'].includes(state.screen)); _ap.classList.toggle('framed',!(matchMedia('(pointer:coarse)').matches&&innerWidth<500));
   const v=document.getElementById('view');
   const shPrev=document.getElementById('shsc'), shKeep=shPrev&&!anim&&state.screen==='show'&&state._last==='show'&&state.id===state._lastId?shPrev.scrollTop:0; state._prevScreen=state._last; state._lastId=state.id;
+  // sheets already open (same flow = same backdrop close action) must not slide up / fade in again on every re-render: that replay was the white flash
+  const shKey=sh=>{ const bg=sh.previousElementSibling; return (bg&&bg.classList.contains('sheetbg')&&bg.dataset.act)||sh.id||sh.getAttribute('aria-label'); }, shHad=new Set([...v.querySelectorAll('.sheet')].map(shKey));
   const wPrev=document.getElementById('wci'), wKeep=wPrev&&state.screen==='wall'&&state._last==='wall'?wPrev.scrollTop:null; const prev=document.getElementById('sc'); const keep=prev&&state.screen==='home'&&state._last==='home'?prev.scrollTop:0; state._last=state.screen;
   v.innerHTML={home,show,crew,crews,me,person,explore,tickets,scene,sell,search,clips,wall:wallPage}[state.screen]()+(state.sheet?citySheet():'')+(state.tsheet?ticketSheet():'')+(state.psheet?plusSheet():'')+(state.kit?kitSheet():'')+(state.nc?ncSheet():'')+(state.ufo?ufSheet():'')+(state.itk?itSheet():'')+(state.ep?epSheet():'')+(state.secO?secSheet():'')+(state.cs?csSheet():'')+(state.cmt?cmSheet():'')+(state.info?infoSheet():'')+(state.kinfo&&['crew','wall'].includes(state.screen)?kInfoSheet():'')+(state.kpoll&&state.screen==='crew'?kPollSheet():'')+(state.actOpen?actSheet():'')+(state.kplan&&state.screen==='crew'?kPlanSheet():'')+(state.privOpen?privSheet():'')+(state.onb?onbView():'');
+  v.querySelectorAll('.sheet').forEach(sh=>{ if(!shHad.has(shKey(sh))) return; sh.classList.add('still'); const bg=sh.previousElementSibling; if(bg&&bg.classList.contains('sheetbg')) bg.classList.add('still'); });
   const nsc=document.getElementById('sc'); if(nsc&&keep) nsc.scrollTop=keep;
   const nsh=document.getElementById('shsc'); if(nsh&&shKeep) nsh.scrollTop=shKeep;
   if(nsh&&!shKeep&&state._prevScreen==='wall'&&(state.shY||{})[state.id]) nsh.scrollTop=state.shY[state.id];
