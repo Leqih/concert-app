@@ -1,5 +1,5 @@
 """Full design-rule audit: every screen + sheets, whole scroll height. See DESIGN.md.
-Rules: radii in {30,20,18,14,12} or pill/circle (+ listed exceptions); grayscale only (+ --like heart);
+Rules: radii in {30,20,18,14,12} or pill/circle (+ listed exceptions); grayscale only (+ --like heart, --live green dot);
 Inter / Inter Tight; chips 34 high; sheet titles 24; no emoji on page or sheet titles.
 Usage: python3 demo/tests/audit_full.py [out.json]   (PW_CHROMIUM=/path/to/chrome to pick a browser)"""
 from playwright.sync_api import sync_playwright
@@ -19,7 +19,7 @@ JS=r'''(()=>{ const bad=[], T=[]; const ok=[30,20,18,14,12];
  // documented exceptions (DESIGN.md §3): Home Scenes quad 32, chat bubble 22, city-map pins 6, scene fan photos 12
  const okx={quad:32,igb:22,cs:6};
  const gray=c=>{ const m=c.match(/rgba?\(([^)]+)\)/); if(!m) return true; const [r,g,b,a]=m[1].split(',').map(parseFloat); if(a===0) return true; return Math.max(r,g,b)-Math.min(r,g,b)<=12; };
- const like=c=>/254, 44, 85/.test(c);
+ const like=c=>/254, 44, 85|52, 199, 89/.test(c); // --like heart, --live online dot
  const emo=/\p{Extended_Pictographic}/u;
  document.querySelectorAll('#view *, #app .toast').forEach(e=>{ const c=getComputedStyle(e), r=e.getBoundingClientRect(); if(r.width<2||r.height<2||c.display==='none'||c.visibility==='hidden') return;
    const id=(e.className&&e.className.baseVal===undefined?e.className:e.tagName)+'';
