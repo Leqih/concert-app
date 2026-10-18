@@ -9,7 +9,7 @@ ST=[('home',"0"),('explore',"go('explore')"),('search',"go('search')"),('search-
 ('me',"go('me')"),('person',"state.pid=1;go('person')"),('show',"go('show',A('Gorillaz').id)"),('show-locked',"go('show',SHOWS.find(LOCKED).id)"),('scene',"go('scene','1')"),
 ('crew',"go('crew','t1')"),('dm',"openThread(dmFor(4))"),('sell',"%s;setTimeout(()=>{%s},600)"%(C%'plusmenu',C%'sellstart')),
 ('plus',C%'plusmenu'),('city',C%'citysheet'),('filters',C%'ufopen'),('newcrew',"go('show',A('Gorillaz').id);setTimeout(()=>{%s},200)"%(C%'ncopen')),
-('safety',"go('crew','t3');setTimeout(()=>{%s},200)"%(C%'safety')),('kit',"go('crews');setTimeout(()=>{%s},200)"%(C%'kitopen')),
+('crewinfo',"go('crew','t3');setTimeout(()=>{%s},200)"%(C%'iginfo')),('kit',"go('crews');setTimeout(()=>{%s},200)"%(C%'kitopen')),
 ('ticketsheet',"go('crew','t1');setTimeout(()=>{%s},200)"%(C%'claim'))]
 JS=r'''(()=>{ const bad=[], T=[]; const ok=[30,20,18,14,12];
  const gray=c=>{ const m=c.match(/rgba?\(([^)]+)\)/); if(!m) return true; const [r,g,b,a]=m[1].split(',').map(parseFloat); if(a===0) return true; return Math.max(r,g,b)-Math.min(r,g,b)<=12; };

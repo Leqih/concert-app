@@ -148,6 +148,7 @@ pip install playwright && python3 demo/tests/m7test.py   # 可选：批量截屏
 | M20 | v118 | 聊天统一成 Instagram 式 | 主人：每个群聊设计不一样 → 做得像 Instagram 群聊、具备相同功能。小队群、私聊、演出大群共用一套（`igHead / igList / igComposer / igInfo / igWire`）：顶部头像（小队=双头像叠放、私聊=单头像、大群=演出方图 + 绿点）+ 名字 + 状态（成员数 / Active / 在线人数）+ 盾牌 Safety + ⓘ 详情；小队有 📌 置顶集合信息条，大群有 # 频道条；对话开头是介绍区。消息：连续消息成组（圆角按首/中/尾变化）、群里首条上方显示发送者名字（大群附 # 频道）、头像只在一组最后一条、日期分隔、表情回应小胶囊、引用回复（Replied to …）、自己最后一条下方 Seen / Seen by。手势：双击 = ❤️（带弹跳动画），长按 = 背景变暗 + 上方 6 个表情 + 下方 Reply / Copy。输入框：白色相机键 + Message… + 语音 / 相册 / 贴纸，输入文字后变 Send；回复时上方显示「Replying to …」。ⓘ 详情页：大头像、Show / Mute / Safety、计划、成员列表、Leave。Chats 列表改为 Instagram 式：56px 头像（类型由头像形状区分）、名字 + 小标签、预览 · 时间、未读加粗 + 黑点，不再按位置轮换黑白灰。背景保留演出大图（相当于 Instagram 的聊天主题） |
 | M20.1 | v119 | 只借鉴 Instagram 的聊天细节，页面保持原样 | 主人纠正：参考 Instagram 的是「不同聊天里的细节」，不是改我们的 chat 页面。已恢复：Chats 列表原来的气泡卡片样式；小队群原来的头部（演出标签、人数、群主、大标题、集合/开门/日期卡、投票）、私聊头部、演出大群原来的标题区和 # 频道、原来的 🛡️ Safety 按钮和输入框。保留的 Instagram 细节（三种聊天一致）：连续消息成组、群里首条上方显示名字、头像只在一组最后一条、日期分隔、表情回应、双击 ❤️、长按表情条 + Reply / Copy、引用回复（输入框上方 Replying to …）、Seen / Seen by。ⓘ 详情页和 Instagram 式列表不再使用 |
 | M20.2 | Removed the Safety buttons and Safety sheets from crew chats and the show chat (Leqi doesn't want this feature) |
+| M21 | v120 | 流程补全 + 可读性 + 轻量网页版 | 主人同意按审查清单修改。**流程**：Explore / 演出页点 Join 先弹预览（谁在队里、到场记录、集合计划、你有没有票；没票可直接认领余票或开提醒），再加入；没票时群聊底部不再写「所有人都已验证持票」；小队和演出群右上角加 ⓘ 详情（成员、静音、退出；房主可结束小队，退出会真正离开）——**不含安全工具**，遵守 M20.2；挂出的余票有完整状态：有人认领 → 你在 Ticketmaster 转出点「I’ve sent it」→ 对方收到、到账，挂着时可下架；首页铃铛改为 Activity 面板（入队申请、余票提醒、评论回复、私信、过户，点哪条去哪里，可全部已读）；个人页加到场记录（showed up 8/8）、Crews/Tickets 数字可点、新增 Your clips；片段只能挂到今晚或最近 3 晚的演出（新增「昨晚 Wave To Earth 首场 9/26 @ Radio City」，9/29 是第二场）；认领余票后不在小队时文案改为「XX is sending it now」+ Find a crew；分享在剪贴板被禁时不再报错。**可读性**：次要灰 #86868C → #6E6E73（浅底对比度 3.2 → 4.5:1）；最小字号 11px；Chats 标签、Report/Block、城市切换、附件、搜索清空等小按钮点击区 ≥44px（外观不变）。**规范**：在线绿点改黑/白；城市卡片、Scenes 缩略图和扇形照片圆角改用 --r-xs。**性能**：Vercel 改为轻量网页版（`demo/dist-web/index.html` 0.6MB，图片和视频为独立文件，图片长期缓存），原 10.7MB 单文件保留在 `/offline` |
 
 ## 6. 链接（原账号所有，新账号只能查看）
 
@@ -181,10 +182,13 @@ pip install playwright && python3 demo/tests/m7test.py   # 可选：批量截屏
 1. **Figma**：把 M6 截图上传到 M6 分区的空矩形；新增 M7 分区并上传截图。
 2. **迭代对比页**：加入 M7（`iterations/` 下新增 `m7.html`，并更新 `index.html`）。
 3. **PPT**：M7 页（`deck/slides/m7.html`）可随后续迭代更新；fit 评分页（`fit`）在 M6 时是 7 个满足 / 4 个部分满足 / 3 个未满足，M7 之后可以重新打分。
-4. 可选方向：＋菜单里建小队时可选演出（目前默认 Harry Styles）；Explore 中「Find a ticket」与 Tickets 页的 Spares 合并；把 demo 迁到 `app-expo/` 做成真实 App。
+4. **首次使用流程**（注册、关联票务账号、选城市和偏好）尚未设计；demo 直接以 Jordan 已登录进入。
+5. **Figma 可编辑版**：页面「Plus One — v96 editable」只建好 01 首页；其余页面需按最新版本重新抓取后再建（工具在 `figma/`）。
+6. 可选方向：＋菜单里建小队时可选演出（目前默认 Harry Styles）；Explore 中「Find a ticket」与 Tickets 页的 Spares 合并；把 demo 迁到 `app-expo/` 做成真实 App。
 
 ## 8. 安全与注意事项
 
 - **Ticketmaster API key 不在仓库里**，也绝不能放进任何发布的页面。需要实时数据时，新账号去 https://developer.ticketmaster.com 申请自己的 key，放进 `app-expo/.env`（根目录 .gitignore 已忽略 .env），或作为本地环境变量使用。
+- **两个构建**：`python3 demo/build.py` → `demo/dist/plusone-demo.html`（单文件 10.7MB，含视频，可离线/在 Claude 预览里打开）；`python3 demo/build.py --web` → `demo/dist-web/index.html`（0.6MB）+ `img/`（提交到仓库）+ `clips/`（不提交，Vercel 用 `/clips/*` 重写到 `demo/clips/`）。线上 Vercel 用的是网页版，改完模板两个都要重新构建。
 - `demo/` 的演出数据是静态快照（2026 年 9 月抓取；如何刷新见 data/merge_tm.py：用自己的 key 调 Discovery API，按列写入 .psv 再运行脚本），日期以 2026-09-27 为「今天」计算（见 `xDays`）。
 - 头像为 Unsplash 图片，仅用于作品集演示。

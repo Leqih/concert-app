@@ -21,6 +21,15 @@ out = (s.replace('/*SHOWS*/', shows)
         .replace('/*MAP*/', json.dumps(mp))
         .replace('/*CLIPV*/', json.dumps(clipv)))
 if WEB:
+    # bundled photos (posters, avatars, city cards) become files too, so the page itself stays small
+    import re, hashlib
+    os.makedirs(p('dist-web/img'), exist_ok=True)
+    def ext(m):
+        raw = base64.b64decode(m.group(2)); name = hashlib.md5(raw).hexdigest()[:12] + '.' + ('jpg' if m.group(1) == 'jpeg' else m.group(1))
+        f = p('dist-web/img/' + name)
+        if not os.path.exists(f): open(f, 'wb').write(raw)
+        return 'img/' + name
+    out = re.sub(r'data:image/(jpeg|png|webp);base64,([A-Za-z0-9+/=]{1500,})', ext, out)
     os.makedirs(p('dist-web/clips'), exist_ok=True)
     for x in json.load(open(p('clips/index.json'))):
         for ext in ('.mp4', '.jpg'): shutil.copy(p('clips/'+x['n']+ext), p('dist-web/clips/'+x['n']+ext))
