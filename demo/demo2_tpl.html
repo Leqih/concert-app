@@ -1425,11 +1425,11 @@ i.tw{font-style:normal;opacity:0}
 :root{--st:12px;--sb:env(safe-area-inset-bottom,0px)}
 .app.framed{--st:54px;--sb:22px}
 .iosbar,.ioshome{display:none}
-.app.framed .iosbar{display:flex;position:absolute;left:0;right:0;top:0;height:54px;align-items:center;justify-content:space-between;padding:4px 30px 0 40px;z-index:40;pointer-events:none;color:#0B0B0C;background:linear-gradient(180deg,var(--bg) 62%,rgba(242,242,244,0));transition:color .3s,background .3s}
-.app.framed.dk .iosbar{color:#fff;background:linear-gradient(180deg,rgba(11,11,12,.9) 55%,rgba(11,11,12,0))}
-.ist{font-family:var(--body);font-weight:600;font-size:16px;letter-spacing:-.01em;width:54px}
-.isl{position:absolute;left:50%;top:11px;width:122px;height:35px;margin-left:-61px;border-radius:20px;background:#000}
-.isr{display:flex;align-items:center;gap:6px;fill:currentColor}
+.app.framed .iosbar{display:grid;grid-template-columns:1fr 126px 1fr;align-items:center;position:absolute;left:0;right:0;top:0;height:54px;padding-top:5px;box-sizing:border-box;z-index:41;pointer-events:none;color:#0B0B0C;background:none;transition:color .3s}
+.app.framed.dk .iosbar{color:#fff}
+.ist{justify-self:center;padding-left:6px;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Inter",sans-serif;font-weight:600;font-size:17px;letter-spacing:-.4px;font-variant-numeric:tabular-nums}
+.isl{position:absolute;left:50%;top:11px;width:126px;height:37px;margin-left:-63px;border-radius:18.5px;background:#000}
+.isr{grid-column:3;justify-self:center;display:flex;align-items:center;gap:6px;padding-right:4px;fill:currentColor}
 .app.framed .ioshome{display:block;position:absolute;left:50%;bottom:8px;width:134px;height:5px;margin-left:-67px;border-radius:3px;background:#0B0B0C;z-index:40;pointer-events:none;opacity:.9}
 .app.framed.dk .ioshome{background:#fff}
 .scroll>div:first-child{padding-top:var(--st)}
@@ -1447,7 +1447,13 @@ i.tw{font-style:normal;opacity:0}
 
 /* ===== device: iPhone 16 / 15 · 393×852 pt ===== */
 .app.framed{--st:54px;--sb:34px;width:393px;max-width:100%;height:852px;max-height:none}
-@media (min-width:600px){body{display:flex;align-items:center;justify-content:center;min-height:100%;padding-block:24px;box-sizing:border-box}.app.framed{margin:0 auto;border-radius:55px;box-shadow:0 0 0 10px #0B0B0C,0 0 0 11px #3A3A3E}}
+.device{position:relative}.db{display:none}
+@media (min-width:600px){body{display:flex;align-items:center;justify-content:center;min-height:100%;padding-block:40px;box-sizing:border-box}
+.device{margin:0 auto;border-radius:68px;padding:13px;background:#0B0B0C;box-shadow:inset 0 0 0 1px #2A2A2E,0 0 0 2.5px #6E6E73,0 0 0 3.5px #2C2C30,0 0 0 4px #9A9AA0,0 30px 60px -10px rgba(10,20,40,.35),0 60px 120px -30px rgba(10,20,40,.35)}
+.app.framed{margin:0;border-radius:55px}
+.db{display:block;position:absolute;width:4px;border-radius:2px;background:linear-gradient(90deg,#3A3A3E,#8E8E93 45%,#4A4A4E)}
+.db.act{left:-7.5px;top:132px;height:32px}.db.vu{left:-7.5px;top:196px;height:62px}.db.vd{left:-7.5px;top:274px;height:62px}
+.db.pw{right:-7.5px;top:226px;height:100px;background:linear-gradient(270deg,#3A3A3E,#8E8E93 45%,#4A4A4E)}.db.cc{right:-6px;top:590px;height:66px;width:2.5px;background:linear-gradient(270deg,#2A2A2E,#5A5A60)}}
 @media (max-width:599px){.app.framed{width:100%;height:100%}}
 .bnav{bottom:calc(4px + var(--sb))}
 .app.framed .ioshome{bottom:8px}
@@ -1521,6 +1527,7 @@ i.tw{font-style:normal;opacity:0}
 /* M37 Explore: header + search scroll away; vibe chips stick above the crew list */
 .xtop.xtop2{position:relative}.xsrow{display:flex;gap:8px;align-items:center}.xsrow .sbar{flex:1;min-width:0}.xsrow .xfind{flex-shrink:0;height:44px;padding:0 14px;border-radius:var(--r-pill);background:#0B0B0C;color:#fff;font-size:13px;font-weight:700;white-space:nowrap}
 .xhd2{padding-bottom:0}.xtop2+.tseg{margin-top:6px}.xsrow{margin-top:12px}
+.xcf{margin-top:12px}.xcf+.xcgrid{margin-top:10px}
 .xcgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 16px 0}
 .xcg{position:relative;aspect-ratio:9/14;border-radius:var(--r-md);overflow:hidden;background:#0B0B0C;color:#fff;text-align:left}.xcg img.cover{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .xcg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 55%,rgba(0,0,0,.8))}
@@ -2155,6 +2162,7 @@ button.cprow:active{opacity:.6}
 .clhd>*{pointer-events:auto}
 .clseg{justify-self:center;display:flex;gap:18px}.clseg button{font-family:var(--display);font-size:17px;font-weight:700;letter-spacing:-.02em;color:rgba(255,255,255,.55);padding:6px 0;position:relative}
 .clseg button[aria-pressed=true]{color:#fff}.clseg button[aria-pressed=true]::after{content:'';position:absolute;left:30%;right:30%;bottom:0;height:2px;border-radius:2px;background:#fff}
+.clhd .clbk{pointer-events:auto}.clttl{justify-self:center;font-family:var(--display);font-size:17px;font-weight:700;letter-spacing:-.02em;color:#fff;max-width:220px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:0 1px 8px rgba(0,0,0,.35)}
 .clmute{width:40px;height:40px;border-radius:50%;background:rgba(0,0,0,.28);backdrop-filter:blur(10px);color:#fff;display:grid;place-items:center}
 .clpost{position:absolute;left:14px;top:calc(var(--st) + 6px);width:40px;height:40px;border-radius:50%;background:rgba(0,0,0,.28);backdrop-filter:blur(10px);color:#fff;display:grid;place-items:center;z-index:5}
 .csvid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.csvid button{position:relative;aspect-ratio:9/14;border-radius:var(--r-md);overflow:hidden;box-shadow:0 0 0 0 #0B0B0C;transition:box-shadow .2s}
@@ -2803,14 +2811,15 @@ button.csloc{box-shadow:inset 0 0 0 1.5px #0B0B0C;background:transparent}
 @media (prefers-reduced-motion:reduce){.n3card,.n3st,.n3pol,.n3sticky,.n3num>i,.n3.fwd>*,.n3.bwd>*,.n3card.pick,.n3pol.pick{animation:none!important}.n3num .n3o{display:none}.n3seg>i{transition:none}.n3li{animation:none}}
 </style>
 
+<div class="device"><i class="db act"></i><i class="db vu"></i><i class="db vd"></i><i class="db pw"></i><i class="db cc"></i>
 <div class="app framed" id="app">
-  <div class="iosbar" aria-hidden="true"><span class="ist">9:41</span><span class="isl"></span><span class="isr"><svg width="18" height="12" viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg><svg width="16" height="12" viewBox="0 0 16 12"><path d="M8 2.2c2.3 0 4.4.9 6 2.4l1.2-1.3A10.4 10.4 0 0 0 8 .4 10.4 10.4 0 0 0 .8 3.3L2 4.6a8.6 8.6 0 0 1 6-2.4zm0 3.6c1.3 0 2.5.5 3.4 1.3l1.2-1.3A6.7 6.7 0 0 0 8 4a6.7 6.7 0 0 0-4.6 1.8l1.2 1.3A4.9 4.9 0 0 1 8 5.8zm0 3.4L6 10.5 8 12l2-1.5z"/></svg><svg width="27" height="13" viewBox="0 0 27 13"><rect x=".5" y=".5" width="23" height="12" rx="3.5" fill="none" stroke="currentColor" opacity=".4"/><rect x="2" y="2" width="20" height="9" rx="2"/><path d="M25 4.5v4c.8-.3 1.3-1.1 1.3-2s-.5-1.7-1.3-2z" opacity=".45"/></svg></span></div>
+  <div class="iosbar" aria-hidden="true"><span class="ist">9:41</span><span class="isl"></span><span class="isr"><svg width="19" height="12" viewBox="0 0 19 12" aria-hidden="true"><rect x="0" y="7.5" width="3.2" height="4.5" rx="1"/><rect x="5" y="5" width="3.2" height="7" rx="1"/><rect x="10" y="2.5" width="3.2" height="9.5" rx="1"/><rect x="15" y="0" width="3.2" height="12" rx="1"/></svg><svg width="17" height="12" viewBox="0 0 17 12" aria-hidden="true"><path d="M8.5 2.3c2.4 0 4.6.9 6.3 2.5.1.1.3.1.4 0l1.2-1.2c.1-.1.1-.3 0-.4A11.2 11.2 0 0 0 8.5 0 11.2 11.2 0 0 0 .6 3.2c-.1.1-.1.3 0 .4l1.2 1.2c.1.1.3.1.4 0A9 9 0 0 1 8.5 2.3zm0 3.8c1.3 0 2.6.5 3.6 1.4.1.1.3.1.4 0l1.2-1.2c.1-.1.1-.3 0-.4a7.4 7.4 0 0 0-10.4 0c-.1.1-.1.3 0 .4l1.2 1.2c.1.1.3.1.4 0 1-.9 2.3-1.4 3.6-1.4zm2.3 2.8c.1-.1.1-.3 0-.4a3.3 3.3 0 0 0-4.6 0c-.1.1-.1.3 0 .4l2.1 2.1c.1.1.3.1.4 0z"/></svg><svg width="28" height="13" viewBox="0 0 28 13" aria-hidden="true"><rect x=".5" y=".5" width="24" height="12" rx="3.8" fill="none" stroke="currentColor" opacity=".35"/><rect x="2" y="2" width="21" height="9" rx="2.4"/><path d="M26 4.4v4.2c.8-.3 1.4-1.1 1.4-2.1s-.6-1.8-1.4-2.1z" opacity=".4"/></svg></span></div>
   <div class="ioshome" aria-hidden="true"></div>
   <div class="splash" id="splash"><b>PLUS ONE</b></div>
   <div id="view" class="screen"></div>
   <div class="nbar" id="nbar" aria-hidden="true"><b></b></div>
   <div class="toast" id="toast" role="status" hidden></div>
-</div>
+</div></div>
 
 <script>
 /*SHOWS*/
@@ -3407,7 +3416,8 @@ function clipList(){ const base=NYC_SHOWS.filter(x=>LOCALIMG(x.img)).slice(0,8).
     return {id:'x'+i,vid:(si+j*2+3)%CLIPV.length,s:x,p:(k+i*3)%8,cap:CAPS[(k+j+3)%CAPS.length],song:songsFor(x.artist)[(k+j+1)%3],likes:60+k%2400,com:4+k%120,ago:[3,7,11,16,22,28,35,47][i]+'h',sec:['Floor GA','Section 105','Balcony','Pit'][(k+j)%4]}; }).filter(Boolean);
   return (state.myClips||[]).concat(base,extra); }
 const fmtK=n=>n>=1000?(n/1000).toFixed(n>=10000?0:1)+'k':''+n;
-function clips(){ const L0=clipList(), L=state.clFeed==='fo'?L0.filter(c=>c.me||BUD[c.p]||[1,3,4,7].includes(c.p)):L0, lk=state.clk||{}, mute=state.clMute!==false;
+const clFo=c=>c.me||BUD[c.p]||[1,3,4,7].includes(c.p);
+function clips(){ const ctx=state.clCtx, L0=clipList(), L=ctx?ctx.ids.map(clipAny).filter(Boolean):L0, lk=state.clk||{}, mute=state.clMute!==false;
   return `<div class="clips" id="clv">${L.map((c,i)=>{ const p=c.me?MEP:PEOPLE[c.p], on=!!lk[c.id], cv=c.vid!=null?CLIPV[c.vid]:null;
     return `<section class="clp${i===0?' act':''}${cv?' hv':' tx'}${c.id===state.clNew?' nw':''}" data-i="${i}" data-id="${c.id}"><div class="clm" data-act="cltap" data-v="${c.id}">${!cv&&c.cap?`<div class="cltx"><p>“${esc(c.cap)}”</p>${c.rate?stars(c.rate):''}</div>`:''}${cv?CL_FB?`<canvas width="720" height="1280" data-k="${c.vid}" style="background:#000 url(${cv.p}) center/cover${c.fx?';filter:'+CS_FX[c.fx][1]:''}" aria-label="Clip of ${esc(c.s.artist)}"></canvas>`:`<video src="${cv.u}" data-k="${c.vid}"${c.fx?` style="filter:${CS_FX[c.fx][1]}"`:''} poster="${cv.p}" muted playsinline webkit-playsinline ${i===0?'autoplay ':''}loop preload="${i<2?'auto':'metadata'}" aria-label="Clip of ${esc(c.s.artist)}"></video>`:img(c.s)}${cv&&c.me?csLayer(c):''}</div><span class="clsh"></span><span class="clgr"></span><i class="clbig">${ic('play',40)}</i>
       <div class="clrail"><button class="clav" ${c.me?'':`data-act="person" data-v="${c.p}"`} aria-label="${p[0]}"><span>${avi(p[3])}</span>${c.me?'':`<i>${ic('plus',10)}</i>`}</button>
@@ -3418,8 +3428,7 @@ function clips(){ const L0=clipList(), L=state.clFeed==='fo'?L0.filter(c=>c.me||
         <p>${esc(c.cap)}</p><span class="clsong"><span class="clmq"><i>♪ ${esc(c.song)} · ${esc(c.s.artist)}&nbsp;&nbsp;&nbsp;♪ ${esc(c.song)} · ${esc(c.s.artist)}&nbsp;&nbsp;&nbsp;</i></span></span>
         <button class="clshow" data-act="show" data-id="${c.s.next||c.s.id}"><span class="xth">${img(c.s)}</span><span><b>${esc(c.s.artist)}</b><small>${xDays(c.s.dates[0])<0?(c.s.next&&byId[c.s.next]?'Plays again '+sd(byId[c.s.next].dates[0]):'Last night'):sd(c.s.dates[0])} · ${esc(VSH(c.s.venue))}</small></span><em>Find a crew</em></button></div>
       <span class="clbar" role="slider" aria-label="Seek" aria-valuemin="0" aria-valuemax="${cv?cv.d:14}" aria-valuenow="0"><i></i></span><span class="cldisc">${img(c.s)}</span><span class="cldur">${cv?'0:00 / '+mmss(cv.d):'0:'+['14','22','31','09','18','26','12','40'][i%8]}</span></section>`; }).join('')}</div>
-    <header class="clhd"><span></span><div class="clseg"><button data-act="clfeed" data-v="fy" aria-pressed="${(state.clFeed||'fy')==='fy'}">For you</button><button data-act="clfeed" data-v="fo" aria-pressed="${state.clFeed==='fo'}">Following</button></div><button class="clmute" data-act="clmute" aria-label="${mute?'Unmute':'Mute'}">${ic(mute?'mute':'sound',20)}</button></header>
-    <button class="clpost" data-act="clback" aria-label="Back">${ic('back',20)}</button>${dock('explore')}`; }
+    <header class="clhd"><button class="clmute clbk" data-act="clback" aria-label="Back">${ic('back',20)}</button><b class="clttl">${esc(ctx?ctx.title:'Clips')}</b><button class="clmute" data-act="clmute" aria-label="${mute?'Unmute':'Mute'}">${ic(mute?'mute':'sound',20)}</button></header>${dock(null)}`; }
 // Some viewers block <video> outright (Claude's preview panel refuses every media source, even with H.264 support).
 // There the same .mp4 bytes are decoded with WebCodecs and drawn to a canvas: the build ships each clip's packet
 // table (offset, size, keyframe) and avcC config, so no demuxer is needed. CodecPlayer mimics the <video> API we use.
@@ -3840,8 +3849,9 @@ function explore(){
   const L=all.filter(c=>tag<0||c.j===tag);
   const xv=state.xview||'crews', CL=clipList();
   const seg=`<div class="tseg" role="tablist"><button data-act="xview" data-v="crews" aria-selected="${xv==='crews'}">Crews</button><button data-act="xview" data-v="clips" aria-selected="${xv==='clips'}">Clips</button><span class="tsegi s-${xv}"></span></div>`;
-  const head=`<div class="xtop xtop2"><header class="whead xhd2"><button class="wicon" data-act="search" aria-label="Search">${ic('search',20)}</button><div class="wtitle"><h1 class="sh1">Explore</h1><span class="wcity">${xv==='clips'?`${CL.length} clips from shows in ${state.city}`:`${L.length} crews forming in ${state.city}`}</span></div>${xv==='clips'?`<button class="wicon" data-act="clshare" aria-label="Share a clip">${ic('camera',20)}</button>`:'<button class="xfind" data-act="ncopen">Find a crew</button>'}</header></div>`;
-  if(xv==='clips') return `<div class="scroll" id="xsc"><div class="xpg" style="padding-bottom:130px">${head}${seg}<div class="xcgrid">${CL.map(c=>{ const cv=c.vid!=null?CLIPV[c.vid]:null; return `<button class="xcg" data-act="clopen" data-id="${c.id}" aria-label="Clip of ${esc(c.s.artist)}">${cv?`<img class="cover" alt="" src="${cv.p}">`:img(c.s)}<em>${cv?mmss(cv.d):'0:14'}</em><span><b>${esc(c.s.artist)}</b><small>${ic('heart',11)} ${fmtK(c.likes)} · ${esc(VSH(c.s.venue))}</small></span></button>`; }).join('')}</div></div></div>${dock('explore')}`;
+  const head=`<div class="xtop xtop2"><header class="whead xhd2"><button class="wicon" data-act="search" aria-label="Search">${ic('search',20)}</button><div class="wtitle"><h1 class="sh1">Explore</h1><span class="wcity">${xv==='clips'?`${(state.clFeed==='fo'?CL.filter(clFo):CL).length} clips ${state.clFeed==='fo'?'from people you follow':'from shows in '+state.city}`:`${L.length} crews forming in ${state.city}`}</span></div>${xv==='clips'?`<button class="wicon" data-act="clshare" aria-label="Share a clip">${ic('camera',20)}</button>`:'<button class="xfind" data-act="ncopen">Find a crew</button>'}</header></div>`;
+  const cf=state.clFeed==='fo'?'fo':'fy', CF=cf==='fo'?CL.filter(clFo):CL;
+  if(xv==='clips') return `<div class="scroll" id="xsc"><div class="xpg" style="padding-bottom:130px">${head}${seg}<div class="hs xchips xcf"><button class="gch" data-act="clfeed" data-v="fy" aria-pressed="${cf==='fy'}">For you</button><button class="gch" data-act="clfeed" data-v="fo" aria-pressed="${cf==='fo'}">Following</button></div><div class="xcgrid" data-clctx="${cf==='fo'?'Following':'For you'}">${CF.map(c=>{ const cv=c.vid!=null?CLIPV[c.vid]:null; return `<button class="xcg" data-act="clopen" data-id="${c.id}" aria-label="Clip of ${esc(c.s.artist)}">${cv?`<img class="cover" alt="" src="${cv.p}">`:img(c.s)}<em>${cv?mmss(cv.d):'0:14'}</em><span><b>${esc(c.s.artist)}</b><small>${ic('heart',11)} ${fmtK(c.likes)} · ${esc(VSH(c.s.venue))}</small></span></button>`; }).join('')}</div></div></div>${dock('explore')}`;
   const top=`${head}${seg}
     <div class="xbar" id="xbar"><div class="hs xchips"><button class="gch" data-act="xtag" data-v="-1" aria-pressed="${tag<0}">All</button>${order.map(j=>`<button class="gch" data-act="xtag" data-v="${j}" aria-pressed="${tag===j}">${SCENE_EMO[j]} ${SCENE_LIST[j][0]}</button>`).join('')}</div></div>`;
   const groups=XB.map(bk=>{ const cs=L.filter(c=>xBucket(c.s.dates[0])===bk); const by=[]; cs.forEach(c=>{ let g=by.find(x=>x[0].s===c.s); if(!g){ g=[]; by.push(g); } g.push(c); }); return [bk,by]; }).filter(g=>g[1].length);
@@ -3852,7 +3862,7 @@ function explore(){
 }
 const RECENT0=['Harry Styles','Pit crew','MSG'];
 // Vertical clip thumbnails (search results, show page). byWho: label with the poster instead of the artist
-function clipThumbs(L,byWho){ return `<div class="sclips">${L.map(c=>{ const cv=c.vid!=null?CLIPV[c.vid]:null, on=!!(state.clk||{})[c.id], who=c.me?'You':PEOPLE[c.p][0];
+function clipThumbs(L,byWho){ return `<div class="sclips" data-clctx="${esc(L.length&&L.every(c=>c.s===L[0].s)?L[0].s.artist:'Clips')}">${L.map(c=>{ const cv=c.vid!=null?CLIPV[c.vid]:null, on=!!(state.clk||{})[c.id], who=c.me?'You':PEOPLE[c.p][0];
     return `<button class="sclip" data-act="clopen" data-id="${c.id}" aria-label="Clip of ${esc(c.s.artist)} by ${c.me?'you':who}">${cv?`<img class="cover" alt="" src="${cv.p}">`:img(c.s)}<em>${cv?mmss(cv.d):'0:14'}</em><span><b>${esc(byWho?who:c.s.artist)}</b><small>${ic('heart',11)} ${fmtK(c.likes+(on?1:0))} · ${esc(byWho?c.ago:VSH(c.loc||c.s.venue))}</small></span></button>`; }).join('')}</div>`; }
 function search(){ const q=(state.sq||'').trim().toLowerCase(), rec=state.recent||RECENT0, m=t=>t.toLowerCase().includes(q);
   let body='';
@@ -4998,7 +5008,7 @@ document.getElementById('app').addEventListener('click',e=>{
         const ct=!k.fromShow&&k.toCrew!==false&&TH.find(x=>x.k==='crew'&&x.show===sel.artist); if(ct){ ct.msgs.push({d:'out',t:(k.v===-1?'':'🎬 ')+(txt||'What a night'),time:nowT()}); ct.ts=++TSEQ; }
         sheetDrop(document.getElementById('cssh'),()=>{
           if(k.fromShow){ render(); toast(k.v===-1?'Review posted':'Clip posted'); setTimeout(()=>shGo('clips'),60); }
-          else { state.history=[]; state.screen='clips'; state.clFeed='fy'; state.clY=0; render(); toast('Posted · '+VSH(k.loc)); } }); },520); },k.v===-1?520:1100); }
+          else { state.history=[]; state.screen='clips'; state.clCtx=null; state.clY=0; render(); toast('Posted · '+VSH(k.loc)); } }); },520); },k.v===-1?520:1100); }
   else if(a==='xtag'){ state.xtag=+v<0?null:+v; render(); }
   else if(a==='hold'){ const t=thById(state.tid); t.hold='held'; render(); toast('$5 held · it comes back when you check in'); }
   else if(a==='checkin'&&!thById(state.tid).dep){ const t=thById(state.tid); t.hold='in'; t.msgs.push({d:'sys',t:`You’re at ${t.plan[1]}`}); t.ts=++TSEQ; render(); toast('Nice · this counts toward your show-up record'); }
@@ -5069,7 +5079,7 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='crews'){ state.history=[]; state.screen='crews'; render(); }
   else if(a==='explore'){ state.history=[]; state.screen='explore'; render(); }
   else if(a==='clback'){ if(!state.history.length) state.history=[['explore',null]]; back(); }
-  else if(a==='clips'){ state.history=state.screen==='clips'?[]:[[state.screen,state.id]]; state.screen='clips'; render(); }
+  else if(a==='clips'){ state.clCtx=null; state.history=state.screen==='clips'?[]:[[state.screen,state.id]]; state.screen='clips'; render(); }
   else if(a==='shtab'){ shGo(v); }
   else if(a==='info'){ state.info=v; render(); }
   else if(a==='infoclose'){ state.info=null; render(); }
@@ -5078,7 +5088,8 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='rvmore'){ (state.rvMore ||= {})[id]=true; render(); }
   else if(a==='rvnew'){ const sh=byId[id]; state.cs={v:-1,loc:sh.venue,src:'show',sid:sh.id,fromShow:true,rate:0}; render(); setTimeout(()=>{ const c=document.getElementById('cscap'); c&&c.focus(); },300); }
   else if(a==='csrate'){ csStash(); const r=state.cs.rate=state.cs.rate===+v?0:+v, w=t.parentElement; w.querySelectorAll('button').forEach((b,j)=>{ const was=b.getAttribute('aria-pressed')==='true', on=j<r; b.setAttribute('aria-pressed',on); if(on&&!was) b.animate([{transform:'scale(.5) rotate(-20deg)'},{transform:'scale(1.3) rotate(8deg)',offset:.6},{transform:'none'}],{duration:380,delay:j*35,easing:'cubic-bezier(.2,.8,.2,1)',fill:'backwards'}); }); w.querySelector('span').textContent=['Tap to rate','Not great','It was okay','Good night','Great night','Unforgettable'][r]; const um=w.closest('.csrow')&&w.closest('.csrow').querySelector('.um'); if(um) um.textContent=r?w.querySelector('span').textContent:'Optional'; }
-  else if(a==='clopen'){ state.history=state.screen==='clips'?[]:[[state.screen,state.id]]; state.screen='clips'; state.clFeed='fy'; state.clJump=t.dataset.id; state.clY=0; render(); }
+  else if(a==='clopen'){ const box=t.closest('[data-clctx]')||t.parentElement, ids=[...box.querySelectorAll('[data-act=clopen]')].map(b=>b.dataset.id), cs=ids.map(clipAny).filter(Boolean), one=cs.length&&cs.every(c=>c.s===cs[0].s);
+    state.clCtx={ids,title:box.dataset.clctx||(one?cs[0].s.artist:'Clips')}; state.history=state.screen==='clips'?[]:[[state.screen,state.id]]; state.screen='clips'; state.clJump=t.dataset.id; state.clY=0; state._nav='push'; render(); }
   else if(a==='tickets'){ state.history=[]; state.screen='tickets'; render(); }
   else if(a==='shuffle'){ state.drop++; render(); }
   else if(a==='dropto'){ const nv=+v, dir=nv===(state.drop+1)%3?1:-1; state.drop=nv; paintDrop(dir); armDrop(); }
