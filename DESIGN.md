@@ -7,7 +7,7 @@
 | 项目 | 规范 |
 |---|---|
 | 颜色 | 只用黑、白、灰。强调色为 `#0B0B0C`，页面背景 `--bg #F2F2F4`，卡片 `--card #FFF`，次级底色 `--card2 #ECECEF`，分隔线 `--line rgba(0,0,0,.07)`，次要文字 `--muted`。**唯一例外**：Clips 的点赞红心 `--like #FE2C55`（双击出现的心 + 已点赞状态，主人要求） |
-| 字体 | 标题用 Inter Tight（`--display`），正文用 Inter（`--body`）。票面上的信息字段（日期、座位、场馆、小队人数、集合点、余票的日期 · 区域）用 JetBrains Mono（`--mono`，500 / 700），只用于票面信息，不用来写装饰性标签 |
+| 字体 | iOS 系统字体（M43）：标题 `--display` = SF Pro Display，正文 `--body` = SF Pro Text；没有 SF 的设备（如 Windows）回退到 Inter。标题字重 700、字距约 -0.02em，不再用紧排超粗的 Inter Tight。票面上的信息字段（日期、座位、场馆、小队人数、集合点、余票的日期 · 区域）用 JetBrains Mono（`--mono`，500 / 700），只用于票面信息，不用来写装饰性标签 |
 | 画布 | iPhone 16，393×852；状态栏安全区 `--st` 54px，Home 指示条安全区 `--sb` 34px。宽屏上显示为 iPhone 外观：屏幕圆角 55px、13px 黑色边框、金属边、左侧动作键和音量键、右侧电源键和相机控制键。状态栏透明，时间 17/600 居中在灵动岛左侧，右侧信号、Wi-Fi、电池；灵动岛 126×37；深色页面状态栏变白 |
 | 页面左右边距 | 卡片离屏幕边缘 12px，卡片内边距 12–16px，纯文字内容 16–20px |
 
@@ -15,9 +15,9 @@
 
 | Token | 字号 / 字重 | 字体 | 对齐 | 用在哪里 |
 |---|---|---|---|---|
-| `--t-brand` | 32 / 800 | Inter Tight | 居中 | 只用于首页顶部的 PLUS ONE 字标 |
+| `--t-brand` | 34 / 700 | SF Pro Display | 左对齐 | 首页大标题 Plus One（iOS 大标题样式） |
 | `--t-hero` | 44 / 800 | Inter Tight | 跟随大图 | 全出血大图上的标题（演出页艺人名、场景页名称） |
-| `--t-page` | 26 / 800 | Inter Tight | 居中 | 页面标题：Explore、Tickets、List a spare。**唯一例外：Chats 左对齐** |
+| `--t-page` | 34 / 700 | SF Pro Display | 左对齐 | 页面大标题（iOS large title）：Home、Explore、Tickets、Chats、List a spare。导航按钮在标题上方一行，副标题 15px 灰色 #8E8E93 |
 | 页面副标题 | 13 / 400 | Inter | 与标题对齐 | 页面标题下方一行，灰色（`.wcity`） |
 | `--t-section` | 26 / 700 | Inter Tight | 居中 | 页面里的板块标题（This week's drop、Scenes、Spare tickets、Crews going、Show wall、Going to） |
 | 板块副标题 | 14 / 400 | Inter | 居中 | 板块标题下方，灰色（`.sub`），间距 3–4px |
@@ -108,4 +108,8 @@
 - **小队招募**：列表顶部居中的一行系统提示“N crews forming for this show. Start a crew”。
 - **输入栏**：左边相机（分享视频），中间描边输入框“Message”，右边发送。
 - Clips 播放页隐藏底栏后，说明、按钮、Find a crew 条和进度条整体下移，进度条在 Home 指示条上方约 56px。
+
+## 13. iOS 原生化范围（M43）
+
+只改字体、字重、字距和大标题位置。底部菜单（黑色胶囊 + 单独的「+」）和 Chats 的叠放卡片保持原设计不变（主人明确要求）。
 
