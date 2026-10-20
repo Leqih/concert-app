@@ -3750,7 +3750,7 @@ function search(){ const q=(state.sq||'').trim().toLowerCase(), rec=state.recent
   return `<div class="scroll"><div class="xpg" style="padding-bottom:60px"><div class="xtop shd"><div class="shrow"><label class="sbar"><span hidden>Search</span>${ic('search',20)}<input id="sq" value="${esc(state.sq||'')}" placeholder="Artists, clips, crews, people" autocomplete="off" data-live2="1"></label><button class="scan" data-act="back">Cancel</button></div></div>${body}</div></div>`;
 }
 
-const MYTIX=()=>[[A('Gorillaz'),'Floor GA','General admission',2],[A('Doja Cat'),'Section 105','Row 12 · Seats 8–9',2]].concat((state.extraTix||[]).map(t=>[t[0],t[1],t[2],t[3]]));
+const MYTIX=()=>[[A('Gorillaz'),'Floor GA','General admission',2],[A('Steve Lacy'),'Balcony','Row C · Seat 14',1],[A('Beck'),'Floor GA','General admission',1],[A('Stevie Wonder'),'Section 224','Row 4 · Seat 11',1],[A('Doja Cat'),'Section 105','Row 12 · Seats 8–9',2]].filter(r=>r[0]).concat((state.extraTix||[]).map(t=>[t[0],t[1],t[2],t[3]]));
 const SELL_HEAD={1:['List a spare','Tap the ticket you can’t use'],2:['Set it up','Face value is locked in'],3:['Review','Swipe to go live'],4:['You’re live','Fans are being notified']};
 function sell(){
   const S=state.sell, T=MYTIX();
@@ -3837,7 +3837,7 @@ function sparesView(){
   </div></div>${dock('tickets')}`;
 }
 function tickets(){
-  const mine=[[A('Gorillaz'),'Floor GA','General admission','crew of 4','Gate B'],[A('Doja Cat'),'Section 105','Row 12 · Seat 8','crew of 3','Gate D'],[A('Steve Lacy'),'Balcony','Row C · Seat 14','crew of 5','Main']];
+  const mine=[[A('Gorillaz'),'Floor GA','General admission','crew of 4','Gate B'],[A('Doja Cat'),'Section 105','Row 12 · Seat 8','crew of 3','Gate D'],[A('Steve Lacy'),'Balcony','Row C · Seat 14','crew of 5','Main'],[A('Beck'),'Floor GA','General admission','no crew yet','Main'],[A('Stevie Wonder'),'Section 224','Row 4 · Seat 11','no crew yet','Gate C']].filter(r=>r[0]);
   const claimed=Object.keys(state.claimed||{}).map(id=>byId[id]).filter(Boolean).map(s=>[s,spareOf(s).sec,'Next to your crew','crew','Gate A',true]);
   const all=claimed.concat(mine,(state.extraTix||[]).map(t=>[t[0],t[1],t[2],'imported',t[4]])).sort((x,y)=>x[0].dates[0].localeCompare(y[0].dates[0]));
   const days=d=>{ const n=Math.round((Date.UTC(...d.split('-').map((v,i)=>i===1?v-1:+v))-Date.UTC(2026,8,27))/864e5); return n<=0?'today':n===1?'tomorrow':'in '+n+' days'; };
@@ -4284,7 +4284,7 @@ function crews(){
 
 function profileView(mine){
   const f=state.followed;
-  const P = mine ? {ini:'JL',cls:'a2',ph:10,name:'Jordan Lee',handle:'@jordanlive · 4.9 buddy rating · showed up '+MESU(),stats:[[23,'Shows'],[MECR(),'Crews'],[14,'Buddies'],[2,'Tickets']],quote:'"Always down to be someone\'s plus one."',bio:'Indie, R&B, anything live.<br>Usually by the soundboard.',tags:['#indie','#soundboard','#dinnerfirst'],cells:[A('Harry Styles'),A('Doja Cat'),A('Gorillaz'),A('Steve Lacy')],title:'Going to'}
+  const P = mine ? {ini:'JL',cls:'a2',ph:10,name:'Jordan Lee',handle:'@jordanlive · 4.9 buddy rating · showed up '+MESU(),stats:[[23,'Shows'],[MECR(),'Crews'],[14,'Buddies'],[MYTIX().length,'Tickets']],quote:'"Always down to be someone\'s plus one."',bio:'Indie, R&B, anything live.<br>Usually by the soundboard.',tags:['#indie','#soundboard','#dinnerfirst'],cells:[A('Harry Styles'),A('Doja Cat'),A('Gorillaz'),A('Steve Lacy')],title:'Going to'}
                  : (state.pid&&state.pid!==0)?{ini:PEOPLE[state.pid][1],cls:PEOPLE[state.pid][2],ph:PEOPLE[state.pid][3],name:PEOPLE[state.pid][0],handle:'@'+P0(state.pid).toLowerCase()+'live · 4.8 buddy rating',stats:[[12+h(PEOPLE[state.pid][0])%40,'Shows'],[3+h(PEOPLE[state.pid][0])%9,'Crews'],[10+h(PEOPLE[state.pid][0])%60,'Buddies']],spot:'the pit',quote:'"Here for the music, stayed for the people."',bio:'Usually early. Always down for food after.',tags:['#singalong','#dinnerfirst'],cells:PGO(state.pid).map(A).filter(Boolean),title:'Going to'}
                  : {ini:'MR',cls:'a1',ph:0,name:'Maya Rivera',handle:'@mayalive · 4.9 buddy rating',stats:[[63,'Shows'],[21,'Crews'],[148,'Buddies']],spot:'the rail',quote:'"Front row or nothing."',bio:'Indie, pop, anything loud.<br>Always early, always knows the setlist.<br>Brooklyn → wherever the tour goes',tags:['#frontrow','#singalong','#afterparty'],cells:[A('Harry Styles'),A('Dave Matthews Band'),A('Sombr'),A('beabadoobee')],title:'Hosting'};
   if(mine&&state.prof){ P.bio=esc(state.prof.bio||'')+(state.prof.spot?`<br>Usually by the ${esc(state.prof.spot.toLowerCase())}.`:''); P.tags=state.prof.tags.map(t=>'#'+t); }
