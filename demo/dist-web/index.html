@@ -1,6 +1,6 @@
 <meta charset="utf-8">
 <title>Plus One Demo</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,600;0,700;0,800;1,300;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,600;0,700;0,800;1,300;1,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>
 /* Single committed dark look (as in the reference), same in any host theme. */
 :root{
@@ -445,7 +445,7 @@ h1,h2,h3{margin:0;letter-spacing:-.045em;font-weight:700;line-height:1.02}
 @media (prefers-reduced-motion:no-preference){.screen{animation:in .22s cubic-bezier(.2,.8,.2,1)}@keyframes in{from{transform:translateY(6px)}to{transform:none}}}
 
 /* ===== Type system: 1 display face for headings, 1 body face for everything else ===== */
-:root{--display:"Inter Tight","Inter",-apple-system,"Helvetica Neue",Arial,sans-serif;--body:"Inter",-apple-system,"Helvetica Neue",Arial,sans-serif;
+:root{--display:"Inter Tight","Inter",-apple-system,"Helvetica Neue",Arial,sans-serif;--mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;--body:"Inter",-apple-system,"Helvetica Neue",Arial,sans-serif;
   --t-title:40px;--t-hero:44px;--t-h1:32px;--t-h2:22px;--t-h3:17px;--t-body:15px;--t-small:13px;--t-cap:11px}
 html,body,button,input,textarea,select{font-family:var(--body);font-feature-settings:"cv11","ss01"}
 body{font-size:var(--t-body);font-weight:400;letter-spacing:-.011em}
@@ -1647,11 +1647,6 @@ i.tw{font-style:normal;opacity:0}
 .flys{box-shadow:0 12px 30px rgba(0,0,0,.18);background:#111}
 .shEnter .hero{transform-origin:0 0;will-change:transform,clip-path}
 .uback{animation:none}
-.ptr{position:absolute;left:50%;top:calc(var(--st) + 6px);z-index:8;width:34px;height:34px;border-radius:50%;background:#fff;box-shadow:0 4px 14px rgba(0,0,0,.12);display:grid;place-items:center;opacity:0;transform:translate(-50%,-40px);pointer-events:none;color:#6B6B70}
-.ptr.ready{color:#0B0B0C}.ptr.spin{animation:ptrs .7s linear infinite;opacity:1!important}
-@keyframes ptrs{from{transform:translate(-50%,16px) rotate(0)}to{transform:translate(-50%,16px) rotate(360deg)}}
-.ptrb{position:absolute;left:50%;top:calc(var(--st) + 8px);z-index:8;margin:0;transform:translate(-50%,-12px);opacity:0;height:32px;padding:0 14px;border-radius:16px;background:#0B0B0C;color:#fff;font-size:12.5px;font-weight:600;display:flex;align-items:center;gap:6px;white-space:nowrap;pointer-events:none;transition:opacity .3s,transform .3s cubic-bezier(.2,.8,.2,1)}
-.ptrb.on{opacity:1;transform:translate(-50%,0)}
 
 .uin{animation:uin2 .32s cubic-bezier(.2,.8,.2,1) both}
 @keyframes uin2{from{opacity:0;transform:translate3d(0,8px,0)}to{opacity:1;transform:none}}
@@ -2507,7 +2502,55 @@ button.csloc{box-shadow:inset 0 0 0 1.5px #0B0B0C;background:transparent}
 @media (prefers-reduced-motion:reduce){.wrslide,.wrcol span{animation:none}.wrbars i.now::after{animation:none;transform:scaleX(1)}}
 /* M30 editorial home */
 .nxcar{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -20px;padding:0 20px;scroll-padding:0 20px;scrollbar-width:none}.nxcar::-webkit-scrollbar{display:none}
-.nxcar>.nxcv{flex:0 0 100%;scroll-snap-align:start;scroll-snap-stop:always}
+.nxcar>.tkw{flex:0 0 100%;scroll-snap-align:start;scroll-snap-stop:always}
+/* M32 ticket-stub home: Up next is a real ticket (photo, tear line, stub), with the rest of your wallet stacked behind */
+.tkw{position:relative;display:flex;flex-direction:column;perspective:1400px;transform-origin:50% 50%;will-change:transform}
+.tkfl{position:relative;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.2,.8,.2,1)}.tkfl.on{transform:rotateY(180deg)}
+.tkfl>.tk,.tkback{-webkit-backface-visibility:hidden;backface-visibility:hidden}.tkfl.on>.tk,.tkfl:not(.on)>.tkback{pointer-events:none}
+.tkback{position:absolute;inset:0;display:flex;flex-direction:column;padding:20px 16px 16px;border-radius:var(--r-lg);background:#fff;color:#0B0B0C;transform:rotateY(180deg)}
+.tkbh{display:flex;flex-direction:column;gap:4px}.tkbh b{font-family:var(--display);font-size:var(--t-h1);font-weight:800;letter-spacing:-.045em;line-height:1}.tkbh small{font-family:var(--mono);font-size:var(--t-cap);color:var(--muted)}
+.tkbc{flex:1;display:flex;flex-direction:column;justify-content:center;gap:8px;padding:16px 0}.tkbc svg{display:block;width:100%;height:110px;fill:#0B0B0C}.tkbc small{font-family:var(--mono);font-size:var(--t-small);letter-spacing:.2em;text-align:center}
+.tkback .tkcols{padding-top:0}.tkback .tkcols small{color:var(--muted)}.tkback .nxp{background:#0B0B0C;color:#fff}.tkback .nxg{background:var(--card2);color:#0B0B0C}
+@media (prefers-reduced-motion:reduce){.tkfl{transition:none}}
+.nxcv.tk{height:auto;padding-top:240px;border-radius:var(--r-lg)}
+.tk>img.cover{position:absolute;left:0;right:0;top:0;width:100%;height:240px;object-fit:cover}
+.tk .nxgr,.tk .nxhit{bottom:auto;height:240px}
+.tk .nxgr{background:linear-gradient(180deg,rgba(0,0,0,.35) 0%,rgba(0,0,0,0) 30%,rgba(0,0,0,0) 45%,rgba(0,0,0,.9) 100%)}
+.tkph{position:absolute;left:16px;right:16px;top:240px;transform:translateY(-100%);padding-bottom:12px;pointer-events:none}
+.tkph h3{margin:0;font-family:var(--display);font-size:var(--t-hero);font-weight:800;letter-spacing:-.05em;line-height:.95}
+.tkph p{display:flex;align-items:center;gap:10px;margin:8px 0 0;font-size:14px;color:rgba(255,255,255,.85)}.tkph .nxav span{box-shadow:0 0 0 2px rgba(0,0,0,.6)}.tkph .nxav span:first-child{margin-left:0}
+.tkstub{position:relative;background:#0B0B0C;padding:0 16px 16px}
+.tkstub::before,.tkstub::after{content:"";position:absolute;top:-11px;width:22px;height:22px;border-radius:50%;background:var(--bg)}.tkstub::before{left:-11px}.tkstub::after{right:-11px}
+.tkperf{display:block;border-top:2px dashed rgba(255,255,255,.25)}
+.tkcols{display:grid;grid-template-columns:1.15fr 1fr .6fr;gap:10px;padding-top:14px}.tkcols span{display:flex;flex-direction:column;gap:3px;min-width:0}
+.tkcols small{font-family:var(--mono);font-size:var(--t-cap);font-weight:500;letter-spacing:.12em;text-transform:uppercase}
+.tkcols small{color:rgba(255,255,255,.45)}.tkcols b{font-family:var(--mono);font-size:var(--t-small);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tkmeet{margin:10px 0 0;font-family:var(--mono);font-size:var(--t-cap);color:rgba(255,255,255,.6);letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tk .nxbtns{margin-top:14px}.tk .nxg{background:rgba(255,255,255,.14)}
+.tksec>.h2,.tksec>.sub{text-align:left}
+.fvc.fvstub{width:152px;border-radius:var(--r-md);box-shadow:0 1px 0 rgba(0,0,0,.04)}
+.fvstub>span,.fvst>i{align-self:stretch}.fvph{position:relative;display:block;height:104px}.fvph img.cover{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.fvstub .fvsave{position:absolute;left:8px;top:8px;padding:4px 8px;border-radius:var(--r-pill);background:#fff;color:#0B0B0C;font-style:normal;font-size:var(--t-cap);font-weight:800}
+.fvst{position:relative;display:flex;flex-direction:column;gap:2px;padding:0 12px 12px}
+.fvst::before,.fvst::after{content:"";position:absolute;top:-9px;width:18px;height:18px;border-radius:50%;background:var(--bg)}.fvst::before{left:-9px}.fvst::after{right:-9px}
+.fvst .tkperf{border-top-color:rgba(11,11,12,.18);margin:0 0 10px}
+.fvstub .fvbig{display:flex;align-items:baseline;gap:6px}.fvstub .fvbig b{font-family:var(--display);font-size:32px;font-weight:800;letter-spacing:-.05em;line-height:1}.fvstub .fvbig s{font-size:12px;color:var(--muted)}
+.fva{margin-top:4px;font-size:14px;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.fvst small{font-family:var(--mono);font-size:var(--t-cap);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bc{display:block;height:16px;margin-top:10px;background:repeating-linear-gradient(90deg,#0B0B0C 0 2px,transparent 2px 4px,#0B0B0C 4px 5px,transparent 5px 8px,#0B0B0C 8px 11px,transparent 11px 12px)}
+.fvc.fvmore{height:auto;min-height:230px;border-radius:var(--r-md)}
+.fvstub.tear{overflow:visible;pointer-events:none}.fvstub.tear .fvph{border-radius:var(--r-md) var(--r-md) 0 0;overflow:hidden}
+.fvstub.tear .fvst{background:#fff;border-radius:0 0 var(--r-md) var(--r-md);transform-origin:12% 0;animation:fvtear .5s cubic-bezier(.5,0,.75,0) forwards}
+@keyframes fvtear{30%{transform:rotate(-4deg)}100%{transform:translate(18px,90px) rotate(14deg);opacity:0}}
+.fvstub.fin{animation:fvin .6s cubic-bezier(.2,.9,.3,1.2) both,fvflash 1.6s .2s ease-out}
+@keyframes fvin{from{opacity:0;transform:translateX(-40px) scale(.9)}}@keyframes fvflash{0%,40%{box-shadow:0 0 0 3px #0B0B0C}100%{box-shadow:0 0 0 0 rgba(11,11,12,0)}}
+#fvn{display:inline-block}#fvn.bump{animation:fvbump .5s ease-out}@keyframes fvbump{40%{transform:scale(1.35);font-weight:700;color:#0B0B0C}}
+@media (prefers-reduced-motion:reduce){.fvstub.fin,#fvn.bump{animation:none}}
+.tksec .hch{gap:8px}.tksec .hcr{position:relative;overflow:hidden;padding:12px 14px 12px 0;border-bottom:0;border-radius:var(--r-sm);background:var(--card)}
+.tksec .hcr::before,.tksec .hcr::after{content:"";position:absolute;left:47px;width:14px;height:14px;border-radius:50%;background:var(--bg)}.tksec .hcr::before{top:-7px}.tksec .hcr::after{bottom:-7px}
+.tksec .hcr .hcn{width:54px;align-self:stretch;display:flex;align-items:center;justify-content:center;border-right:2px dashed var(--line);font-family:var(--mono);font-size:18px;font-weight:700;letter-spacing:0}
+.tksec .hc1{border-radius:var(--r-lg)}
+
+
 .nxhit{position:absolute;inset:0;background:none}.nxhit:active{background:rgba(0,0,0,.12)}
 .nxtp,.nxbt{pointer-events:none}.nxbt button{pointer-events:auto}
 .nxdots{display:flex;justify-content:center;gap:4px;margin-top:10px}.nxdots button{width:5px;height:5px;padding:0;border-radius:3px;background:rgba(11,11,12,.2);transition:width .3s,background .3s}.nxdots button.on{width:16px;background:#0B0B0C}
@@ -2978,7 +3021,7 @@ function scene(){
       <div class="sback">${avi(SCENE_POOL[i*4+1])}</div>
       <header class="whead"><button class="wicon glass" data-act="back" aria-label="Back">${ic('back',20)}</button><span></span><button class="wicon glass" data-act="toast" data-msg="Link copied" aria-label="Share">${ic('share',18)}</button></header>
       <div class="sfan" id="sfan">${[0,1,2,3].map(k=>`<span class="sf s${k}">${avi(SCENE_POOL[i*4+k])}</span>`).join('')}</div>
-      <div class="stitle sin"><span class="skick">Scene · ${state.city}</span><h1>${sc[0]} <span class="emo">${SCENE_EMO[i]}</span></h1><p>${SC_DESC[i](tonight)}</p></div>
+      <div class="stitle sin"><h1>${sc[0]} <span class="emo">${SCENE_EMO[i]}</span></h1><p>${SC_DESC[i](tonight)}</p></div>
       <div class="smem sin"><span class="smav">${members.map(p=>`<span>${avi(p[3])}</span>`).join('')}</span><span class="smt"><b>${sc[3]} in this scene</b> · ${sceneN(i)} crews open</span></div>
     </div>
     <div class="scbar" id="scbar"><div class="scmini"><button class="wicon" data-act="back" aria-label="Back">${ic('back',18)}</button><b>${sc[0]} <span class="emo">${SCENE_EMO[i]}</span></b><span></span></div>
@@ -3227,15 +3270,6 @@ function showBack(){ const id=state.id, hero=document.querySelector('.hero'), hi
   ti.style.visibility='hidden'; row.classList.add('uback'); flyBox(src,from,to,32,14,()=>{ ti.style.visibility=''; row.classList.remove('uback'); }); }
 
 // ---- pull to refresh (home)
-function ptrAttach(){ const sc=document.getElementById('sc'); if(!sc||sc._ptr) return; sc._ptr=1; const inner=sc.firstElementChild, ind=document.getElementById('ptr'); let y0=null, dy=0, busy=false, wheel=0, wt;
-  const set=d=>{ dy=d; inner.style.transform=d?`translateY(${d}px)`:''; ind.style.opacity=Math.min(1,d/60); ind.style.transform=`translate(-50%,${Math.min(d,70)-40}px) rotate(${d*4}deg)`; ind.classList.toggle('ready',d>=64); };
-  const go=()=>{ busy=true; inner.style.transition='transform .25s'; set(56); ind.classList.add('spin');
-    setTimeout(()=>{ ind.classList.remove('spin','ready'); set(0); setTimeout(()=>{ inner.style.transition=''; },260); busy=false; state.rf=(state.rf||0)+1; upSwap(true);
-      const b=document.getElementById('ptrb'); if(b){ const nn=2+state.rf%3; b.innerHTML=`${ic('check',13)} Updated · ${nn} new crews and ${nn*4+3} more people looking`; b.classList.add('on'); setTimeout(()=>b.classList.remove('on'),2600); } },950); };
-  sc.addEventListener('touchstart',e=>{ if(sc.scrollTop<=0&&!busy) y0=e.touches[0].clientY; },{passive:true});
-  sc.addEventListener('touchmove',e=>{ if(y0==null) return; const d=e.touches[0].clientY-y0; if(d>0){ set(Math.min(110,d*.5)); } },{passive:true});
-  sc.addEventListener('touchend',()=>{ if(y0==null) return; y0=null; if(dy>=64) go(); else { inner.style.transition='transform .25s'; set(0); setTimeout(()=>inner.style.transition='',260); } });
-  sc.addEventListener('wheel',e=>{ if(busy||sc.scrollTop>0||e.deltaY>=0) return; wheel+=-e.deltaY; set(Math.min(110,wheel*.35)); clearTimeout(wt); wt=setTimeout(()=>{ if(dy>=64) go(); else { inner.style.transition='transform .25s'; set(0); setTimeout(()=>inner.style.transition='',260); } wheel=0; },160); },{passive:true}); }
 const KINDS=[['concert','🎤','Concerts','One artist, one night'],['classical','🎻','Classical & orchestra','Symphonies, opera, film scores'],['festival','🎪','Festivals & lineups','Many artists, one ticket'],['residency','🔁','Residencies','Multi-night runs']];
 const ARENAS=['Madison Square Garden','Barclays Center','UBS Arena','Prudential Center','MetLife Stadium'];
 const skind=s=>s.kind||(s.genre==='Classical'?'classical':s.dates.length>=4?'residency':'concert'), ssize=s=>s.size||(ARENAS.includes(s.venue)?'arena':'theatre');
@@ -3658,7 +3692,7 @@ function home(){
   const commImgs = g => SHOWS.filter(s=>s.genre===g).slice(0,4);
   const short=v=>v.replace('Madison Square Garden','MSG').replace('Radio City Music Hall','Radio City');
   const looking=s=>6+h(s.id)%60;
-  return `<div class="ptr" id="ptr" aria-hidden="true">${ic('shuffle',16)}</div><p class="ptrb" id="ptrb" role="status"></p><div class="scroll" id="sc"><div style="padding-bottom:110px">
+  return `<div class="scroll" id="sc"><div style="padding-bottom:110px">
     <header class="whead hh">
       <button class="wme" data-act="me" aria-label="Your profile">${avi(10)}</button>
       <div class="wtitle"><h1>Plus One</h1><button class="wcity" data-act="citysheet" aria-haspopup="dialog">${ic('pin',13)}${state.city} ${ic('chev',12)}</button></div>
@@ -3667,11 +3701,11 @@ function home(){
 
     ${nxHome()}
     ${fvHome()}
-    <section class="sec pad hsec"><h2 class="h2">Hot this week</h2>
+    <section class="sec pad hsec tksec"><h2 class="h2">Hot this week</h2>
       ${hotChart()}
     </section>
 
-    <section class="sec pad hsec"><h2 class="h2">Scenes</h2>
+    <section class="sec pad hsec tksec"><h2 class="h2">Scenes</h2>
       <div class="hs" style="margin-top:16px">
         ${SCENE_LIST.map((sc,i)=>{ const L=sceneCrews(i); const sh=[...new Set(L.map(c=>c.s))]; const cells=[0,1,2,3].map(k=>`<span>${avi(SCENE_POOL[i*4+k])}</span>`).join('');
           return `<button class="comm" data-act="scene" data-v="${i}"><div class="quad">${cells}</div><b>${sc[0]} <span class="emo">${SCENE_EMO[i]}</span></b><em class="cnt"><b>${sceneN(i)}</b> crews · <b>${sc[3]}</b> people</em></button>`; }).join('')}
@@ -3750,7 +3784,7 @@ function search(){ const q=(state.sq||'').trim().toLowerCase(), rec=state.recent
   return `<div class="scroll"><div class="xpg" style="padding-bottom:60px"><div class="xtop shd"><div class="shrow"><label class="sbar"><span hidden>Search</span>${ic('search',20)}<input id="sq" value="${esc(state.sq||'')}" placeholder="Artists, clips, crews, people" autocomplete="off" data-live2="1"></label><button class="scan" data-act="back">Cancel</button></div></div>${body}</div></div>`;
 }
 
-const MYTIX=()=>[[A('Gorillaz'),'Floor GA','General admission',2],[A('Steve Lacy'),'Balcony','Row C · Seat 14',1],[A('Beck'),'Floor GA','General admission',1],[A('Stevie Wonder'),'Section 224','Row 4 · Seat 11',1],[A('Doja Cat'),'Section 105','Row 12 · Seats 8–9',2]].filter(r=>r[0]).concat((state.extraTix||[]).map(t=>[t[0],t[1],t[2],t[3]]));
+const MYTIX=()=>[[A('Gorillaz'),'Floor GA','General admission',2,'Gate B'],[A('Steve Lacy'),'Balcony','Row C · Seat 14',1,'Main'],[A('Beck'),'Floor GA','General admission',1,'Main'],[A('Stevie Wonder'),'Section 224','Row 4 · Seat 11',1,'Gate C'],[A('Doja Cat'),'Section 105','Row 12 · Seats 8–9',2,'Gate D']].filter(r=>r[0]).concat((state.extraTix||[]).map(t=>[t[0],t[1],t[2],t[3]]));
 const SELL_HEAD={1:['List a spare','Tap the ticket you can’t use'],2:['Set it up','Face value is locked in'],3:['Review','Swipe to go live'],4:['You’re live','Fans are being notified']};
 function sell(){
   const S=state.sell, T=MYTIX();
@@ -3949,7 +3983,6 @@ const REQN=s=>4+h(s.id)%30;   // fans who already requested a ticket for this sh
 // M28 home: the one thing that matters most to you right now, then anything waiting on you
 function nxHome(){ const up=MYTIX().map(r=>r[0]).filter(s=>s&&xDays(s.dates[0])>=0).sort((a,b)=>a.dates[0].localeCompare(b.dates[0]));
   const s=up[0], todo=[]; const m=state.match;
-  if(!KIT.attDone) todo.push(`<button class="nxt" data-act="kitopen">${ic('check',14)}Who made it? · ${esc(KIT.show)}</button>`);
   if(m&&m.phase==='pool'){ const need=MT_NEED-1-(m.joined||[]).length; todo.push(`<button class="nxt" data-act="mtopen"><i class="nxdot"></i>Pool · ${need} more to go</button>`); }
   if(m&&m.phase==='formed') todo.push(`<button class="nxt on" data-act="mtopen">${ic('users',14)}Crew ready · ${esc(byId[m.sid].artist)}</button>`);
   const rq=SHOWS.filter(x=>(state.notify||{})[x.id]).length; if(rq) todo.push(`<button class="nxt" data-act="fvall">${ic('ticket',14)}${rq} ticket request${rq>1?'s':''}</button>`);
@@ -3957,31 +3990,58 @@ function nxHome(){ const up=MYTIX().map(r=>r[0]).filter(s=>s&&xDays(s.dates[0])>
   if(!s) return `<section class="sec pad hsec nxsec"><button class="nxsearch" data-act="ncopen">${ic('search',18)}<span>Which show are you going to?</span></button>${chips}</section>`;
   const k=Math.min(state.nxi||0,up.length-1);
   const slide=(s,i)=>{ const n=xDays(s.dates[0]), cd=n===0?['Tonight','']:n===1?['1','DAY']:[String(n),'DAYS'];
-    const t=crewFor(s), plan=t&&t.plan, who=t?[MEP[3]].concat((t.who||[]).slice(0,3).map(k=>PEOPLE[k][3])):[];
-    return `<div class="nxcv">${img(s,'style="object-position:50% 30%"')}<span class="nxgr"></span><button class="nxhit" data-act="show" data-id="${s.id}" aria-label="Open ${esc(s.artist)}"></button>
+    const t=crewFor(s), plan=t&&t.plan, who=t?[MEP[3]].concat((t.who||[]).slice(0,3).map(k=>PEOPLE[k][3])):[], my=MYTIX().find(r=>r[0]===s)||[s,'GA','',1];
+    return `<div class="tkw"><div class="tkfl"><div class="nxcv tk">${img(s,'style="object-position:50% 30%"')}<span class="nxgr"></span><button class="nxhit" data-act="show" data-id="${s.id}" aria-label="Open ${esc(s.artist)}"></button>
     <div class="nxtp"><span class="nxk">${i?'Coming up':'Up next'}</span><span class="nxcd${cd[1]?'':' w'}"><b>${cd[0]}</b>${cd[1]?`<small>${cd[1]}</small>`:''}</span></div>
-    <div class="nxbt"><h3>${esc(s.artist)}</h3><p>${t?`<span class="nxav">${who.map(a=>`<span>${avi(a)}</span>`).join('')}</span>${esc(t.title)}`:'No crew yet'}</p>
-      ${plan?`<div class="nxmeet">${ic('pin',14)}<b>${esc(plan[0])}</b><span>${esc(plan[1])}</span></div>`:''}
-      <div class="nxbtns">${t?`<button class="nxp" data-act="thread" data-id="${t.id}">Crew chat</button>`:`<button class="nxp" data-act="mtstart" data-id="${s.id}">Find me a crew</button>`}<button class="nxg" data-act="tickets">Ticket</button></div></div></div>`; };
+    <div class="tkph"><h3>${esc(s.artist)}</h3><p>${t?`<span class="nxav">${who.map(a=>`<span>${avi(a)}</span>`).join('')}</span>${esc(t.title)}`:'No crew yet'}</p></div>
+    <div class="tkstub"><i class="tkperf"></i>
+      <div class="tkcols"><span><small>Date</small><b>${sd(s.dates[0])}</b></span><span><small>Seat</small><b>${esc(my[1])}</b></span><span><small>Crew</small><b>${t?`${(t.who||[]).length+1}/${t.cap}`:'—'}</b></span></div>
+      ${plan?`<p class="tkmeet">Meet ${esc(plan[0])} · ${esc(plan[1])}</p>`:`<p class="tkmeet">${esc(VSH(s.venue))} · ${my[3]>1?my[3]+' tickets':'1 ticket'}</p>`}
+      <div class="nxbtns">${t?`<button class="nxp" data-act="thread" data-id="${t.id}">Crew chat</button>`:`<button class="nxp" data-act="mtstart" data-id="${s.id}">Find me a crew</button>`}<button class="nxg" data-act="nxflip">Ticket</button></div></div></div>
+    <div class="tkback" aria-label="Entry ticket for ${esc(s.artist)}"><div class="tkbh"><b>${esc(s.artist)}</b><small>${sd(s.dates[0])} · ${esc(VSH(s.venue))}</small></div>
+      <div class="tkbc">${bcSvg(s.id)}<small>${String(h(s.id)).padStart(10,'0').replace(/(\d{4})(\d{3})(\d+)/,'$1 $2 $3')}</small></div>
+      <div class="tkcols"><span><small>Section</small><b>${esc(my[1])}</b></span><span><small>Seat</small><b>${esc(/General/.test(my[2])?'GA':my[2].replace(/^Row /,'R').replace(' · Seats ',' · ').replace(' · Seat ',' · '))}</b></span><span><small>Entry</small><b>${esc(my[4]||'Main')}</b></span></div>
+      <div class="nxbtns"><button class="nxp" data-act="nxflip">Done</button><button class="nxg" data-act="tickets">All tickets</button></div></div></div></div>`; };
   const dots=up.length>1?`<div class="nxdots">${up.map((_,i)=>`<button class="${i===k?'on':''}" data-act="nxgo" data-v="${i}" aria-label="Show ${i+1} of ${up.length}"></button>`).join('')}</div>`:'';
   return `<section class="sec pad hsec nxsec"><div class="nxcar" id="nxcar" onscroll="nxDot(this)">${up.map(slide).join('')}</div>${dots}${chips}</section>`; }
 // M31 Up next carousel: swipe between your ticketed shows; dots follow the scroll
-function nxDot(el){ const w=el.firstElementChild.offsetWidth+10, i=Math.round(el.scrollLeft/w); if(i===state.nxi) return; state.nxi=i;
-  el.parentNode.querySelectorAll('.nxdots button').forEach((d,j)=>d.classList.toggle('on',j===i)); }
+function nxDot(el){ nxDepth(el); const w=el.firstElementChild.offsetWidth+10, i=Math.round(el.scrollLeft/w); if(i===state.nxi) return; state.nxi=i;
+  el.parentNode.querySelectorAll('.nxdots button').forEach((d,j)=>d.classList.toggle('on',j===i));
+  el.querySelectorAll('.tkfl.on').forEach(f=>f.classList.remove('on')); }
+// M32 depth: tickets beside the current one shrink, tilt and dim; the photo drifts against the swipe
+const NX_RM=matchMedia('(prefers-reduced-motion: reduce)');
+function nxDepth(el){ if(NX_RM.matches) return; const er=el.getBoundingClientRect(), w=el.firstElementChild.offsetWidth+10;
+  for(const k of el.children){ const d=Math.max(-1,Math.min(1,(k.getBoundingClientRect().left-er.left-20)/w)), a=Math.abs(d);
+    k.style.transform=a<.01?'':`scale(${1-.07*a}) rotateY(${-d*12}deg)`; k.style.filter=a<.01?'':`brightness(${1-.4*a})`;
+    const im=k.querySelector('.tk>img.cover'); if(im) im.style.objectPosition=`${50+d*25}% 30%`; } }
+// entry barcode: bar widths come from the ticket id, so each ticket keeps its own code
+function bcSvg(seed){ let x=0, r=h(String(seed))||1, out=''; while(x<300){ r=(r*1103515245+12345)>>>0; const bw=1+(r>>>8)%4, gap=1+(r>>>16)%3; out+=`<rect x="${x}" width="${bw}" height="60"/>`; x+=bw+gap; }
+  return `<svg viewBox="0 0 300 60" preserveAspectRatio="none" aria-hidden="true">${out}</svg>`; }
 // M30 Hot this week as a chart: #1 as a big image, 02–05 as a numbered list
 function hotChart(){ const lk=s=>6+h(s.id)%60, L=SHOWS.filter(s=>xDays(s.dates[0])>=0).sort((a,b)=>lk(b)-lk(a)).slice(0,4), top=L[0]; // ranked by the number we show
   return `<div class="hch"><button class="hc1" data-act="show" data-id="${top.id}">${img(top,'style="object-position:50% 25%"')}<span class="hcg"></span><span class="hcn">01</span><span class="hcb"><b>${esc(top.artist)}</b><small>${sd(top.dates[0])} · ${esc(VSH(top.venue))} · ${lk(top)} looking</small></span></button>
     ${L.slice(1).map((s,i)=>`<button class="hcr" data-act="show" data-id="${s.id}"><span class="hcn">0${i+2}</span><span class="hct">${img(s)}</span><span class="hcb"><b>${esc(s.artist)}</b><small>${sd(s.dates[0])} · ${esc(VSH(s.venue))}</small></span><span class="hcl"><b>${lk(s)}</b><small>looking</small></span></button>`).join('')}</div>`; }
-function fvHome(){ const L=allSpares().slice().sort((a,b)=>a.mins-b.mins).slice(0,8); if(!L.length) return '';
-  const save=L.reduce((t,x)=>t+RESALE(x.face,x.id)-x.face-FEE,0), avg=Math.round(save/L.length);
-  return `<section class="sec pad hsec fvsec" style="margin-top:18px"><h2 class="h2">Never pay double</h2><p class="sub">${allSpares().length} live now ${infoB('tickets','How spare tickets work')}</p>
-    <div class="hs fvrow">${L.map(x=>{ const s=byId[x.sid], est=RESALE(x.face,x.id), tot=x.face+FEE; return `<button class="fvc fvp2" data-act="claimspare" data-v="${x.id}">${img(s)}<span class="fvgr"></span><em class="fvsave">Save $${est-tot}</em><span class="fvbig"><b>$${tot}</b><s>~$${est}</s></span><span class="fvb2"><b>${esc(s.artist)}</b><small>${sd(s.dates[0])} · ${esc(x.sec)}</small></span></button>`; }).join('')}<button class="fvc fvmore" data-act="fvall"><b>See all</b><small>${allSpares().length} spares</small>${ic('right',16)}</button></div></section>`; }
+function claimSpare(v){ state.tsheet=v.split('-')[0]; state.tspare=v; state.tstep='review'; render(); }
+function fvCard(x,fresh){ const s=byId[x.sid], est=RESALE(x.face,x.id), tot=x.face+FEE;
+  return `<button class="fvc fvstub${fresh?' fin':''}" data-act="claimspare" data-v="${x.id}"><span class="fvph">${img(s)}<em class="fvsave">Save $${est-tot}</em></span><span class="fvst"><i class="tkperf"></i><span class="fvbig"><b>$${tot}</b><s>~$${est}</s></span><b class="fva">${esc(s.artist)}</b><small>${sd(s.dates[0])} · ${esc(x.sec)}</small><i class="bc"></i></span></button>`; }
+function fvHome(){ const A0=allSpares(), fr=FV_FRESH(), rk=x=>{ const i=fr.indexOf(x.id); return i<0?1e3+x.mins:i; }, L=A0.slice().sort((a,b)=>rk(a)-rk(b)).slice(0,8); if(!L.length) return '';
+  return `<section class="sec pad hsec fvsec tksec" style="margin-top:22px"><h2 class="h2">Never pay double</h2>
+    <div class="hs fvrow" id="fvrow">${L.map(x=>fvCard(x)).join('')}<button class="fvc fvmore" data-act="fvall"><b>See all</b><small>${A0.length} spares</small>${ic('right',16)}</button></div></section>`; }
+function fvDrop(){ if(state.screen!=='home'||document.hidden||state.tsheet||state.sheet) return; const hold=FV_HOLD(), row=document.getElementById('fvrow'); if(!hold.length||!row) return;
+  const id=hold.shift(), x=SHOWS.flatMap(sparesFor).find(y=>y.id===id); FV_FRESH().unshift(id); if(!x||(state.claimedIds||{})[id]||(state.listed||{})[x.sid]) return;
+  row.insertAdjacentHTML('afterbegin',fvCard(x,true)); if(row.scrollLeft<40) row.scrollTo({left:0,behavior:'smooth'});
+  const n=allSpares().length, c=document.getElementById('fvn'); if(c){ c.textContent=n; c.classList.remove('bump'); void c.offsetWidth; c.classList.add('bump'); }
+  const m=row.querySelector('.fvmore small'); if(m) m.textContent=n+' spares'; }
+setInterval(fvDrop,9000);
 function fvHero(L){ const x=L.slice().sort((a,b)=>a.face-b.face)[0], tot=x.face+FEE, est=RESALE(x.face,x.id);
   return `<div class="fvhero"><span><b>Never pay double</b></span><span class="fvsv"><s>~$${est}</s><b>$${tot}</b><em>vs est. resale</em></span></div>`; }
 function sparesFor(s){ if(!s||LOCKED(s)) return []; const k=h(s.id); const n=s.artist==='Harry Styles'?2:[0,1,0,2,1,0,1][k%7];
   return Array.from({length:n},(_,i)=>({id:s.id+'-'+i,sid:s.id,seller:PEOPLE[s.artist==='Harry Styles'&&i===0?3:(k+i*3)%8],face:79+(Math.abs(k>>i)%140),sec:s.artist==='Harry Styles'&&i===0?'Floor GA':SECS[(k+i)%SECS.length],qty:1+((k>>(i+2))%2),crews:1+(k+i)%4,mins:[8,26,52,95,140][(k+i)%5],crewFirst:i===1}))
    ; }
-const allSpares=()=>SHOWS.flatMap(sparesFor).filter(x=>!(state.claimedIds||{})[x.id]&&!(state.listed||{})[x.sid]);
+// M32 live drops: the 4 oldest listings are held back and released one by one while you're on Home, so spares appear in real time
+const FV_HOLD=()=>{ const c=state.city; state.held=state.held||{}; if(!state.held[c]) state.held[c]=SHOWS.flatMap(sparesFor).filter(x=>byId[x.sid].artist!=='Harry Styles').sort((a,b)=>b.mins-a.mins).slice(0,4).map(x=>x.id); return state.held[c]; };
+const FV_FRESH=()=>{ state.fresh=state.fresh||{}; return state.fresh[state.city]||(state.fresh[state.city]=[]); };
+const allSpares=()=>{ const hold=FV_HOLD(); return SHOWS.flatMap(sparesFor).filter(x=>!hold.includes(x.id)&&!(state.claimedIds||{})[x.id]&&!(state.listed||{})[x.sid]); };
 const spareOf=s=>{ const sp=sparesFor(s)[0]; return sp?{seller:sp.seller,face:sp.face,sec:sp.sec,id:sp.id}:{seller:PEOPLE[3],face:79+h(s.id)%140,sec:'Floor GA'}; };
 const ago=m=>m<60?m+' min ago':Math.round(m/60)+' h ago';
 // Show page: every spare is for the same show, so the photo is replaced by a black ticket stub that says where you'd stand
@@ -4405,7 +4465,7 @@ function wrSched(){ clearTimeout(state.wrT); const w=state.wr; if(w&&w.i<WR_N-1)
 function wrGo(n){ if(state.screen!=='wr'||!state.wr) return; state.wr.i=Math.max(0,Math.min(WR_N-1,n)); render(); wrSched(); }
 function wrPage(){ const w=state.wr; if(!w) return home(); const i=w.i, cov=[A('Harry Styles'),A('Doja Cat'),A('Gorillaz'),A('Steve Lacy')].filter(Boolean), sc=(state.obScenes||[])[0]??0, mate=KIT.who[0], nx=MYTIX().map(r=>r[0]).find(s=>s&&xDays(s.dates[0])>=0);
   const S=[
-    `<p class="wrk">Plus One · 2026</p><h2 class="wrh">Your year,<br><i>live.</i></h2><div class="wrcol">${cov.map((s,k)=>`<span>${img(s)}</span>`).join('')}</div><p class="wrs">Tap to keep going</p>`,
+    `<h2 class="wrh">Your year,<br><i>live.</i></h2><div class="wrcol">${cov.map((s,k)=>`<span>${img(s)}</span>`).join('')}</div><p class="wrs">Tap to keep going</p>`,
     `<p class="wrk">Shows</p><div class="wrbig">23</div><p class="wrs">nights out this year. That’s about one every two weeks.</p>`,
     `<p class="wrk">Crews</p><div class="wrbig">${MECR()}</div><p class="wrs">crews joined, and you showed up to every one.</p><span class="wrrec">🤝 Showed up ${MESU()}</span>`,
     `<p class="wrk">Your vibe</p><div class="wremo">${SCENE_EMO[sc]}</div><h3 class="wrm">${SCENE_LIST[sc][0]}</h3><p class="wrs">The way most of your crews went.</p>`,
@@ -4642,7 +4702,7 @@ function render(anim){ window._dockActive=null; const _ap=document.getElementByI
   const prev=document.getElementById('sc'); const keep=prev&&state.screen==='home'&&state._last==='home'?prev.scrollTop:0; state._last=state.screen;
   v.innerHTML={nc:ncPage,mt:mtPage,wr:wrPage,cp:cpPage,cs:csPage,onb,home,show,crew,crews,me,person,explore,tickets,scene,sell,search,clips,wall:wallPage}[state.screen]()+(state.sheet?citySheet():'')+(state.tsheet?ticketSheet():'')+(state.psheet?plusSheet():'')+(state.kit?kitSheet():'')+(state.igi&&(state.screen==='crew'||state.screen==='wall')?igInfo():'')+(state.act?actSheet():'')+(state.ufo?ufSheet():'')+(state.itk?itSheet():'')+(state.ep?epSheet():'')+(state.secO?secSheet():'')+(state.cs&&state.screen!=='cs'?csSheet():'')+(state.cmt?cmSheet():'')+(state.info?infoSheet():'')+(state.screen==='cs'&&state.cs&&state.cs.pickClip?csClipSheet():'')+(state.screen==='cs'&&state.cs&&state.cs.confirm?csConfirm():'');
   const nsc=document.getElementById('sc'); if(nsc&&keep) nsc.scrollTop=keep;
-  const nxc=document.getElementById('nxcar'); if(nxc&&state.nxi) nxc.scrollLeft=state.nxi*(nxc.firstElementChild.offsetWidth+10);
+  const nxc=document.getElementById('nxcar'); if(nxc){ if(state.nxi) nxc.scrollLeft=state.nxi*(nxc.firstElementChild.offsetWidth+10); nxDepth(nxc); }
   const nsh=document.getElementById('shsc'); if(nsh&&shKeep) nsh.scrollTop=shKeep;
   if(nsh&&!shKeep&&state._prevScreen==='wall'&&(state.shY||{})[state.id]) nsh.scrollTop=state.shY[state.id];
   if(anim){ v.classList.remove('screen'); void v.offsetWidth; v.classList.add('screen'); }
@@ -4657,7 +4717,7 @@ function render(anim){ window._dockActive=null; const _ap=document.getElementByI
   if(state.screen==='show'){ rvBalance(); shWatch(); }
   if(state.screen==='scene'){ const sc=document.getElementById('scsc'), bar=document.getElementById('scbar'); if(sc&&bar){ const f=()=>bar.classList.toggle('stuck',bar.getBoundingClientRect().top-sc.getBoundingClientRect().top<=0.5); sc.addEventListener('scroll',f,{passive:true}); f(); const on=bar.querySelector('.gch[aria-pressed=true]'), fl=bar.querySelector('.scfl'); if(on&&fl) fl.scrollLeft=Math.max(0,on.offsetLeft-fl.clientWidth/2+on.offsetWidth/2); } }
   if(state.screen==='wall'){ const c=document.getElementById('wci'); if(c&&state._chBottom){ c.scrollTop=c.scrollHeight; state._chBottom=false; } }
-  state._ufAnim=false; if(state.screen==='home'){ upWatch(); ptrAttach(); }
+  state._ufAnim=false; if(state.screen==='home'){ upWatch(); }
   const xs=document.querySelector('.xtop'); if(xs){ const sc=xs.closest('.scroll'), f=()=>xs.classList.toggle('stuck',sc.scrollTop>2); sc&&sc.addEventListener('scroll',f,{passive:true}); f(); } if(state.screen==='search'&&!state._sqf){ const i=document.getElementById('sq'); if(i){ i.focus(); state._sqf=true; } }
   const form=document.getElementById('composer');
   if(form) form.addEventListener('submit',e=>{ e.preventDefault(); const i=document.getElementById('msg'); const t=i.value.trim(); if(!t) return; sendMsg(t); const m2=document.getElementById('msg'); m2&&m2.focus(); });
@@ -4672,6 +4732,7 @@ document.getElementById('app').addEventListener('click',e=>{
   const t=e.target.closest('[data-act]'); if(!t) return;
   const a=t.dataset.act, id=t.dataset.id, v=t.dataset.v;
   if(t.closest&&t.closest('#psheet')&&t.classList.contains('pk')&&!t.dataset.go){ pkPick(t); return; }
+  if(a==='claimspare'&&t.classList.contains('fvstub')&&!t.dataset.torn&&!NX_RM.matches){ t.dataset.torn=1; t.classList.add('tear'); setTimeout(()=>claimSpare(v),520); return; }
   if(a==='show'){ if(t.classList.contains('urow')) showFly(t,id); else { go('show',id); if(t.dataset.sec){ const k=t.dataset.sec; setTimeout(()=>shGo(k),400); } } }
   else if(a==='xmode'){ state.xmode=v; state.q=''; render(); }
   else if(a==='xjoin'){ const c=xCrews()[+v]; if(c.mine){ openThread(thById(c.tid)); return; }
@@ -4896,6 +4957,7 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='obcity'){ state.obCity=v; render(); }
   else if(a==='obscene'){ const L=state.obScenes=(state.obScenes||[]), i=+v, at=L.indexOf(i); if(at>=0) L.splice(at,1); else if(L.length<3) L.push(i); else toast('Pick up to 3 · tap one to swap it out'); render(); }
   else if(a==='obdone'){ obFinish(true); }
+  else if(a==='nxflip'){ const fl=t.closest('.tkfl'); if(fl) fl.classList.toggle('on'); }
   else if(a==='nxgo'){ const c=document.getElementById('nxcar'); if(c) c.scrollTo({left:+v*(c.firstElementChild.offsetWidth+10),behavior:'smooth'}); }
   else if(a==='obreplay'){ state.ob=0; state.obLink=null; state.history=[]; state.screen='onb'; render(true); }
   else if(a==='cpin'){ if(t.dataset.grp&&t.classList.contains('grp')){ const cs2=[v,...t.dataset.grp.split('|')], pts=cs2.map(mxy), xs=pts.map(p=>p[0]), ys=pts.map(p=>p[1]); const sc=Math.min(1.3,Math.max(1.05,Math.min((VW-150)/(Math.max(...xs)-Math.min(...xs)+1),(VH-170)/(Math.max(...ys)-Math.min(...ys)+1)))); flyTo(viewFor((Math.min(...xs)+Math.max(...xs))/2,(Math.min(...ys)+Math.max(...ys))/2,sc)); } else { state.csel=v; paintSel(true); } }
@@ -4929,7 +4991,7 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='tab'){ state.tab=v; render(); }
   else if(a==='rsvp'){ state.rsvp[id]= state.rsvp[id]===v ? '' : v; render(); toast(state.rsvp[id]? (v==='Going'?'You’re going. Pick a crew to head in together.':v==='Maybe'?'Marked as maybe':'Got it, not going') : 'RSVP cleared'); }
   else if(a==='follow'){ state.followed=!state.followed; render(); toast(state.followed?'Following Maya':'Unfollowed'); }
-  else if(a==='claimspare'){ const sid=v.split('-')[0]; state.tsheet=sid; state.tspare=v; state.tstep='review'; render(); }
+  else if(a==='claimspare') claimSpare(v);
   else if(a==='tfind'){ const sid=state.tsheet; closeTSheet(()=>{ go('show',sid); setTimeout(()=>shGo('crews'),400); }); }
   else if(a==='tchat'){ const sid=state.tsheet; closeTSheet(()=>{ openThread(threadFor(sid)); }); }
   else if(a==='tview'){ state.tview=v; render(true); }
