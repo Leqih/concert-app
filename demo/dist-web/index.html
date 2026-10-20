@@ -360,8 +360,31 @@ h1,h2,h3{margin:0;letter-spacing:-.045em;font-weight:700;line-height:1.02}
 .wenf{display:flex;align-items:center;gap:8px;padding-top:10px;border-top:1px solid var(--line)}.wenf>span{flex:1;min-width:0;display:flex;gap:4px;overflow:hidden;-webkit-mask:linear-gradient(90deg,#000 80%,transparent);mask:linear-gradient(90deg,#000 80%,transparent)}
 .wenf em{font-style:normal;flex-shrink:0;height:24px;padding:0 9px;border-radius:12px;background:var(--card2);font-size:11.5px;font-weight:600;display:inline-flex;align-items:center;color:#55555A}.wenf>b{display:inline-flex;align-items:center;gap:2px;font-size:13.5px;flex-shrink:0}
 .xtop.wphd{padding:calc(var(--st) + 2px) 14px 10px}
-.showchat{color:#fff}.showchat .sctop{position:absolute;left:0;right:0;top:0;height:calc(136px + var(--st));background:linear-gradient(180deg,#0B0B0C 74%,rgba(10,10,11,0));z-index:2;pointer-events:none}
-.showchat .chch{position:absolute;left:0;right:0;top:calc(var(--st) + 60px);z-index:3;margin:0!important;padding:0 14px!important}
+.showchat{color:#fff}
+/* M42 show chat as an iMessage-style group chat: solid background, frosted header, solid bubbles, time separators */
+.chat.showchat{background:#000}.showchat .bg,.showchat .shade,.showchat .grain{display:none}
+.showchat .sctop{background:rgba(22,22,24,.86)!important;-webkit-backdrop-filter:saturate(1.8) blur(20px);backdrop-filter:saturate(1.8) blur(20px);box-shadow:0 .5px 0 rgba(255,255,255,.12)}
+.sca{position:relative;width:28px;height:28px;border-radius:50%;overflow:hidden;margin-bottom:2px}.sca img{width:100%;height:100%;object-fit:cover}
+.showchat .nb{background:none!important;box-shadow:none!important}
+.scnote{display:block;margin:6px auto 4px;padding:6px 12px;border-radius:12px;background:#1C1C1E;color:rgba(255,255,255,.7);font-size:12.5px;text-align:center;line-height:1.35}.scnote b{color:#fff;font-weight:600}
+.showchat .igsep{margin:16px 0 8px;font-size:11.5px;font-weight:500;color:rgba(255,255,255,.45)}
+.showchat .igb{background:#262628;-webkit-backdrop-filter:none;backdrop-filter:none}.showchat .igr.out .igb{background:#fff}
+.showchat .igrxp{background:#3A3A3C;box-shadow:0 0 0 2px #000}
+.showchat .igb{z-index:0}.showchat .igr.in.l .igb{border-bottom-left-radius:18px}.showchat .igr.out.l .igb{border-bottom-right-radius:18px}
+.showchat .igr.l .igb:not(.im)::before,.showchat .igr.l .igb:not(.im)::after{content:"";position:absolute;z-index:-1;bottom:0;height:20px}
+.showchat .igr.in.l .igb:not(.im)::before{left:-7px;width:20px;background:#262628;border-bottom-right-radius:15px}.showchat .igr.in.l .igb:not(.im)::after{left:-10px;width:10px;background:#000;border-bottom-right-radius:10px}
+.showchat .igr.out.l .igb:not(.im)::before{right:-7px;width:20px;background:#fff;border-bottom-left-radius:15px}.showchat .igr.out.l .igb:not(.im)::after{right:-10px;width:10px;background:#000;border-bottom-left-radius:10px}
+.showchat .cbfade{background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,.92) 35%,#000 100%);height:calc(110px + var(--sb))}
+.showchat .composer{left:10px;right:10px;height:44px;padding:0 4px 0 4px;gap:6px;border-radius:22px;background:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+.showchat .composer input{height:36px;padding:0 14px;border-radius:18px;background:#000;box-shadow:inset 0 0 0 1px rgba(255,255,255,.2);font-size:16px}
+.cmcam{flex-shrink:0;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:rgba(255,255,255,.75);background:#262628}
+/* M41 show chat: compact header, inline reply quotes */
+.cnav{align-items:center}.sct{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:1px;padding:0 8px;text-align:center}.sct b{max-width:100%;font-family:var(--display);font-size:17px;font-weight:700;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.sct small{font-size:12px;color:rgba(255,255,255,.65)}.sct small{font-size:11.5px}
+.chat.showchat .inner{padding-top:calc(122px + var(--st))!important}
+.showchat .scpin{margin:4px 0 6px;padding:8px 8px 8px 12px}.showchat .scpin b{font-size:13.5px;font-weight:600}
+.igqi{display:flex;flex-direction:column;gap:1px;margin:-1px -4px 6px;padding:5px 9px 6px;border-left:2.5px solid rgba(255,255,255,.55);border-radius:4px 12px 12px 4px;background:rgba(255,255,255,.1);font-size:12.5px;line-height:1.3}.igqi b{font-weight:600;color:rgba(255,255,255,.9)}.igqi span{color:rgba(255,255,255,.65);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:240px}
+.igr.out .igqi{border-left-color:rgba(11,11,12,.35);background:rgba(11,11,12,.07)}.igr.out .igqi b{color:#0B0B0C}.igr.out .igqi span{color:rgba(11,11,12,.6)}.showchat .sctop{position:absolute;left:0;right:0;top:0;height:calc(118px + var(--st));background:linear-gradient(180deg,#0B0B0C 74%,rgba(10,10,11,0));z-index:2;pointer-events:none}
+.showchat .chch{position:absolute;left:0;right:0;top:calc(var(--st) + 74px);z-index:3;margin:0!important;padding:0 14px!important}
 .showchat .chch .gch{height:32px;padding:0 12px;font-size:13px;color:#fff;border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.06)}.showchat .chch .gch[aria-pressed=true]{background:#fff;color:#0B0B0C;border-color:#fff}
 .chat.showchat .inner{padding-top:calc(112px + var(--st))}
 .scmeta{margin-top:8px;font-size:13.5px;color:rgba(255,255,255,.7)}
@@ -2149,14 +2172,14 @@ button.cprow:active{opacity:.6}
 .clrail button.pop svg{animation:hpop .35s cubic-bezier(.34,1.6,.5,1)}@keyframes hpop{0%{transform:scale(.6)}100%{transform:scale(1)}}
 .clav{position:relative;margin-bottom:4px}.clav>span{display:block;width:44px;height:44px;border-radius:50%;overflow:hidden;border:2px solid #fff;position:relative}.clav img{width:100%;height:100%;object-fit:cover}
 .clav i{position:absolute;left:50%;bottom:-8px;margin-left:-9px;width:18px;height:18px;border-radius:50%;background:#fff;color:#0B0B0C;display:grid;place-items:center}
-.clinfo{position:absolute;left:14px;right:78px;bottom:calc(96px + var(--sb));z-index:2;display:flex;flex-direction:column;gap:6px}
+.clinfo{position:absolute;left:14px;right:78px;bottom:calc(36px + var(--sb));z-index:2;display:flex;flex-direction:column;gap:6px}
 .clwho{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13px}.clwho b{font-size:15px;letter-spacing:-.02em}.clwho em{font-style:normal;height:20px;padding:0 8px;border-radius:var(--r-pill);background:rgba(255,255,255,.18);backdrop-filter:blur(8px);font-size:11px;font-weight:600;display:inline-flex;align-items:center;gap:3px}.clwho>span{opacity:.6}
 .clinfo p{margin:0;font-size:15px;line-height:1.35;letter-spacing:-.01em}
 .clsong{font-size:12.5px;opacity:.8}
 .clshow{display:flex;align-items:center;gap:10px;margin-top:6px;padding:6px 6px 6px 6px;border-radius:var(--r-lg);background:rgba(255,255,255,.14);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:#fff;text-align:left}
 .clshow .xth{width:40px;height:40px;border-radius:12px;position:relative}.clshow>span:nth-child(2){flex:1;min-width:0;display:flex;flex-direction:column}.clshow b{font-size:14px}.clshow small{font-size:11.5px;opacity:.7;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .clshow em{font-style:normal;flex-shrink:0;height:32px;padding:0 12px;border-radius:var(--r-pill);background:#fff;color:#0B0B0C;font-size:12.5px;font-weight:700;display:inline-flex;align-items:center}
-.clbar{position:absolute;left:14px;right:14px;bottom:calc(82px + var(--sb));height:2px;border-radius:2px;background:rgba(255,255,255,.25);overflow:hidden;z-index:2}.clbar i{display:block;height:100%;width:0;background:#fff}
+.clbar{position:absolute;left:14px;right:14px;bottom:calc(22px + var(--sb));height:2px;border-radius:2px;background:rgba(255,255,255,.25);overflow:hidden;z-index:2}.clbar i{display:block;height:100%;width:0;background:#fff}
 .clp.act .clbar i{animation:clprog 14s linear infinite}.clp.paused .clbar i{animation-play-state:paused}@keyframes clprog{to{width:100%}}
 .clhd{position:absolute;left:0;right:0;top:0;padding:calc(var(--st) + 6px) 14px 0;display:grid;grid-template-columns:44px 1fr 44px;align-items:center;z-index:4;pointer-events:none}
 .clhd>*{pointer-events:auto}
@@ -2181,15 +2204,15 @@ button.cprow:active{opacity:.6}
 .clsong{display:block;width:170px;overflow:hidden;-webkit-mask:linear-gradient(90deg,#000 80%,transparent);mask:linear-gradient(90deg,#000 80%,transparent)}
 .clmq{display:inline-block;white-space:nowrap}.clmq i{font-style:normal;display:inline-block;animation:mq 9s linear infinite;animation-play-state:paused}
 .clp.act .clmq i{animation-play-state:running}.clp.paused .clmq i{animation-play-state:paused}@keyframes mq{to{transform:translateX(-50%)}}
-.cldisc{position:absolute;right:12px;bottom:calc(98px + var(--sb));width:40px;height:40px;border-radius:50%;overflow:hidden;z-index:2;box-shadow:0 0 0 6px rgba(20,20,22,.85);animation:spin 5s linear infinite;animation-play-state:paused}
+.cldisc{position:absolute;right:12px;bottom:calc(38px + var(--sb));width:40px;height:40px;border-radius:50%;overflow:hidden;z-index:2;box-shadow:0 0 0 6px rgba(20,20,22,.85);animation:spin 5s linear infinite;animation-play-state:paused}
 .cldisc::after{content:'';position:absolute;left:50%;top:50%;width:8px;height:8px;margin:-4px;border-radius:50%;background:#141416}
 .clp.act .cldisc{animation-play-state:running}.clp.paused .cldisc{animation-play-state:paused}
-.clrail{bottom:calc(160px + var(--sb))}
+.clrail{bottom:calc(100px + var(--sb))}
 .clbar{transition:height .2s;touch-action:none;overflow:visible}.clbar::before{content:'';position:absolute;left:0;right:0;top:-12px;bottom:-12px}.clbar i{position:relative;border-radius:2px}
 .clp.paused .clbar,.clp.scrub .clbar{height:4px}.clp.hv.paused .clbar i::after,.clp.scrub .clbar i::after{content:'';position:absolute;right:-6px;top:50%;width:12px;height:12px;margin-top:-6px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.4)}
-.cldur{position:absolute;left:14px;bottom:calc(64px + var(--sb));font-size:11px;font-weight:600;font-variant-numeric:tabular-nums;opacity:0;transition:opacity .2s;z-index:2;pointer-events:none}
+.cldur{position:absolute;left:14px;bottom:calc(6px + var(--sb));font-size:11px;font-weight:600;font-variant-numeric:tabular-nums;opacity:0;transition:opacity .2s;z-index:2;pointer-events:none}
 .clinfo,.clrail,.cldisc{transition:opacity .2s}.clp.scrub .clinfo,.clp.scrub .clrail,.clp.clp.scrub .cldisc,.clp.scrub .clbig{opacity:0}
-.clp.scrub .cldur{left:50%;bottom:calc(150px + var(--sb));transform:translateX(-50%);font-family:var(--display);font-size:30px;font-weight:700;letter-spacing:-.02em;opacity:1;text-shadow:0 2px 12px rgba(0,0,0,.5)}.clp.paused .cldur,.clp.scrub .cldur{opacity:.85}
+.clp.scrub .cldur{left:50%;bottom:calc(90px + var(--sb));transform:translateX(-50%);font-family:var(--display);font-size:30px;font-weight:700;letter-spacing:-.02em;opacity:1;text-shadow:0 2px 12px rgba(0,0,0,.5)}.clp.paused .cldur,.clp.scrub .cldur{opacity:.85}
 .clp.paused .cldisc{opacity:.9}
 .cms{max-height:72%;display:flex;flex-direction:column}.cms .ufb{flex:1}
 .cmr{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--line)}.cmr:first-child{border-top:0}.cmr .bgav span{width:32px;height:32px;border:0}
@@ -3727,18 +3750,17 @@ function wallPage(){ const x=byId[state.id], tag=state.wtag||'All', st=chatStats
   const RT=['Same! See you there','Count me in','Saving this','Where exactly?','I’ll be on the 6 train around then'];
   const items=[]; posts.forEach((o,i)=>{ items.push({...o,_m:o.m}); if(!o.me&&o.r){ const rp=(k+i+2)%8; if(!(state.blocked||{})[rp]) items.push({id:o.id+'-r',p:rp,t:RT[(k+i)%RT.length],rp:{n:PEOPLE[o.p][0],t:o.t},rx:{},tag:o.tag,_m:Math.max(0,o.m-4)}); } });
   items.sort((a,b)=>b._m-a._m);
-  const L=[{sep:'Today'}].concat(items.map(o=>({id:o.id,me:!!o.me,p:o.p,t:o.t,img:o.img?img(x):'',tag:tag==='All'?o.tag:null,rp:o.rp,rx:o.rx||{'❤️':o.l||0}})));
+  const T0=9*60+41, tl=m=>{ const y=m>T0, t=((T0-m)%1440+1440)%1440, hh=Math.floor(t/60), mm=t%60; return `${y?'Yesterday':'Today'} ${(hh%12)||12}:${String(mm).padStart(2,'0')} ${hh<12?'AM':'PM'}`; };
+  const L=[]; let pm=null; items.forEach((o,i)=>{ if(pm==null||pm-o._m>=15) L.push({sep:tl(o._m)}); pm=o._m; L.push({id:o.id,me:!!o.me,p:o.p,t:o.t,img:o.img?`<img class="cover" alt="" src="${CLIPV[(k+i)%CLIPV.length].p}">`:'',tag:null,rp:o.rp,rx:o.rx||{'❤️':o.l||0}}); });
   const last=L[L.length-1], seen=last&&last.me?'Seen by '+(3+k%40):'';
   return `<div class="chat showchat"><img class="bg" alt="" src="${x.img}"><div class="shade"></div><div class="grain"></div>
-    <div class="sctop"></div><div class="nav cnav"><button class="nb" data-act="back" aria-label="Back">${ic('back')}</button><button class="nb" data-act="iginfo" aria-label="Show chat details · mute, leave">${ic('info')}</button></div>
+    <div class="sctop"></div><div class="nav cnav"><button class="nb" data-act="back" aria-label="Back">${ic('back')}</button><div class="sct"><span class="sca">${img(x)}</span><b>${esc(x.artist)}</b><small>${fmtK(st.going)} members · ${st.online} online</small></div><button class="nb" data-act="iginfo" aria-label="Show chat details · mute, leave">${ic('info')}</button></div>
     <div class="hs wtg chch">${WTAGS.map(t=>`<button class="gch" data-act="wtag" data-v="${t}" aria-pressed="${tag===t}">${t==='All'?'All':'# '+t}</button>`).join('')}</div>
     <div class="inner crewpad" id="wci">
-      <div class="ctitle">${esc(x.artist)} · Show chat</div>
-      <div class="scmeta"><i class="chdot"></i>${fmtK(st.going)} going · ${st.online} online · ${sd(x.dates[0])} · ${esc(VSH(x.venue))}</div>
-      <button class="chpin" data-act="ncopen" data-id="${x.id}"><i>👥</i><span><b>Want a smaller group?</b><small>${crewsN} crew${crewsN===1?'':'s'} forming · start one from this chat</small></span><em>Start a crew</em></button>
+      <button class="scnote" data-act="ncopen" data-id="${x.id}">${crewsN?`${crewsN} crew${crewsN===1?'':'s'} forming for this show.`:'Want a smaller group?'} <b>Start a crew</b></button>
       <div class="msgs scmsgs">${igList(L,{group:true,whoAct:'chwho',seen})}</div>
     </div>
-    <div class="cbfade"></div>${joined?`${igReplyBar('w'+x.id)}<form class="composer" id="wcomposer" onsubmit="return wallPost(event,'${x.id}')"><label for="wq" hidden>Message</label><input id="wq" placeholder="Message ${tag==='All'?'everyone':'# '+tag}" autocomplete="off"><button class="send" type="submit" aria-label="Send">${ic('send',18)}</button></form>`
+    <div class="cbfade"></div>${joined?`${igReplyBar('w'+x.id)}<form class="composer" id="wcomposer" onsubmit="return wallPost(event,'${x.id}')"><button type="button" class="cmcam" data-act="clshare" aria-label="Share a clip">${ic('camera',20)}</button><label for="wq" hidden>Message</label><input id="wq" placeholder="${tag==='All'?'Message':'Message # '+tag}" autocomplete="off"><button class="send" type="submit" aria-label="Send">${ic('send',18)}</button></form>`
       :`<button class="composer scjoin" data-act="chatjoin" data-id="${x.id}">Join the show chat</button>`}
     ${state.who!=null?whoSheet(x):''}</div>`; }
 // Safety in the big group: it's full of strangers, so mute / DM rules / report / blocked are one tap away
@@ -4343,10 +4365,9 @@ function igList(L,o){ let out=''; const who=x=>x.me?'me':(x.p!=null?'p'+x.p:x.na
     const pv=L[i-1], nx=L[i+1], same=x=>x&&!x.sep&&!x.sys&&!x.html&&who(x)===who(m), first=!same(pv), last=!same(nx);
     const P=m.me?MEP:PEOPLE[m.p], name=m.me?'You':(m.p!=null?P[0]:m.name), rx=igRx(m.id,m.rx), rk=Object.keys(rx).filter(e=>rx[e]>0), mine=(state.rx||{})[m.id];
     const bubble=m.typing?`<div class="igb tp"><span class="mtyp"><i></i><i></i><i></i></span></div>`
-      :`<div class="igb${m.img?' im':''}" data-mid="${m.id}" data-who="${esc(name)}" data-txt="${esc((m.t||'').slice(0,90))}">${m.img?`<span class="igim">${m.img}</span>`:''}${m.t?esc(m.t):''}</div>`;
+      :`<div class="igb${m.img?' im':''}" data-mid="${m.id}" data-who="${esc(name)}" data-txt="${esc((m.t||'').slice(0,90))}">${m.rp?`<span class="igqi"><b>${esc(m.rp.n)}</b><span>${esc(m.rp.t)}</span></span>`:''}${m.img?`<span class="igim">${m.img}</span>`:''}${m.t?esc(m.t):''}</div>`;
     out+=`<div class="igr ${m.me?'out':'in'}${first?' f':''}${last?' l':''}">${m.me?'':`<span class="igav">${last?`<button data-act="${o.whoAct}" data-v="${m.p}" aria-label="${esc(name)}">${avi(P[3])}</button>`:''}</span>`}
       <div class="igc">${!m.me&&o.group&&first?`<b class="ign">${esc(name)}${m.tag?` <i>· # ${esc(m.tag)}</i>`:''}</b>`:''}
-        ${m.rp?`<div class="igq"><small>${m.me?'You replied to '+esc(m.rp.n):'Replied to '+esc(m.rp.n)}</small><span>${esc(m.rp.t)}</span></div>`:''}
         ${bubble}${rk.length?`<button class="igrxp${mine?' on':''}" data-act="igreact" data-id="${m.id}" data-v="${mine||rk[0]}" aria-label="Reactions">${rk.slice(0,3).join('')}${rk.reduce((n,e)=>n+rx[e],0)>1?' '+rk.reduce((n,e)=>n+rx[e],0):''}</button>`:''}
         ${m.me&&o.seen&&i===L.length-1?`<small class="igseen">${o.seen}</small>`:''}</div></div>`; });
   return `<div class="igl">${out}</div>`; }
