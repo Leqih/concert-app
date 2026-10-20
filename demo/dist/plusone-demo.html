@@ -3857,6 +3857,14 @@ function lsStrip(){ const ids=Object.keys(state.listed||{}); if(!ids.length) ret
    :[`Sold · $${amt} paid out`,`${b} has the ticket · thanks for keeping it face value`,`${ic('check',16)}`];
   return `<div class="lsx ${L.st}"><span class="lsimg">${img(s)}</span><span class="lsb"><small>Your spare · ${esc(s.artist)}</small><b>${t[0]}</b><span>${t[1]}</span></span>${t[2]}</div>`; }).join(''); }
 
+// M35 My tickets <-> Spares: slide the pill in place, fade the old list out, then slide the new one in from the side you tapped
+function tSwitch(v){ const seg=document.querySelector('.tseg'), rm=NX_RM.matches, dir=v==='spares'?1:-1;
+  const below=()=>{ const out=[]; let e=seg&&seg.nextElementSibling; while(e){ if(!e.matches('script')) out.push(e); e=e.nextElementSibling; } return out; };
+  if(!seg||rm){ state.tview=v; render(); return; }
+  seg.querySelector('.tsegi').className='tsegi '+v; seg.querySelectorAll('button').forEach(b=>b.setAttribute('aria-selected',b.dataset.v===v));
+  below().forEach(e=>e.animate([{opacity:1,transform:'none'},{opacity:0,transform:`translateX(${-dir*18}px)`}],{duration:160,easing:'ease-in',fill:'forwards'}));
+  setTimeout(()=>{ state.tview=v; render(); const sc=document.querySelector('#view .scroll'); if(sc) sc.scrollTop=0;
+    below().forEach((e,i)=>e.animate([{opacity:0,transform:`translateX(${dir*28}px)`},{opacity:1,transform:'none'}],{duration:320,delay:i*30,easing:'cubic-bezier(.2,.8,.2,1)',fill:'backwards'})); },170); }
 function tSeg(k){ const n=allSpares().length; return `<div class="tseg" role="tablist"><button data-act="tview" data-v="mine" aria-selected="${k==='mine'}">My tickets</button><button data-act="tview" data-v="spares" aria-selected="${k==='spares'}">Spares <i>${n}</i></button><span class="tsegi ${k}"></span></div>`; }
 function sparesView(){
   const f=state.spf||'all'; let L=allSpares();
@@ -5000,7 +5008,7 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='fvview'){ state.hlSpare=v; go('show',id); setTimeout(()=>{ shGo('tickets'); setTimeout(()=>{ state.hlSpare=null; },2500); },420); }
   else if(a==='tfind'){ const sid=state.tsheet; closeTSheet(()=>{ go('show',sid); setTimeout(()=>shGo('crews'),400); }); }
   else if(a==='tchat'){ const sid=state.tsheet; closeTSheet(()=>{ openThread(threadFor(sid)); }); }
-  else if(a==='tview'){ state.tview=v; render(true); }
+  else if(a==='tview'){ if((state.tview||'mine')===v) return; tSwitch(v); }
   else if(a==='spf'){ state.spf=v; render(); }
   else if(a==='notify'){ (state.notify ||= {})[id]=!state.notify[id]; render(); toast(state.notify[id]?`Requested · you’re #${REQN(byId[id])+1} in line · we’ll ping you when a spare drops`:'Request cancelled'); }
   else if(a==='claim'){ state.tspare=null; state.tsheet=id; state.tstep='review'; render(); }
