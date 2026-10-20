@@ -2506,6 +2506,11 @@ button.csloc{box-shadow:inset 0 0 0 1.5px #0B0B0C;background:transparent}
 .wrcb{flex:1;min-width:0;display:flex;flex-direction:column;margin-left:10px}.wrcb b{font-size:15px;letter-spacing:-.02em}.wrcb small{font-size:12px;color:var(--muted)}
 @media (prefers-reduced-motion:reduce){.wrslide,.wrcol span{animation:none}.wrbars i.now::after{animation:none;transform:scaleX(1)}}
 /* M30 editorial home */
+.nxcar{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -20px;padding:0 20px;scroll-padding:0 20px;scrollbar-width:none}.nxcar::-webkit-scrollbar{display:none}
+.nxcar>.nxcv{flex:0 0 100%;scroll-snap-align:start;scroll-snap-stop:always}
+.nxhit{position:absolute;inset:0;background:none}.nxhit:active{background:rgba(0,0,0,.12)}
+.nxtp,.nxbt{pointer-events:none}.nxbt button{pointer-events:auto}
+.nxdots{display:flex;justify-content:center;gap:4px;margin-top:10px}.nxdots button{width:5px;height:5px;padding:0;border-radius:3px;background:rgba(11,11,12,.2);transition:width .3s,background .3s}.nxdots button.on{width:16px;background:#0B0B0C}
 .nxcv{position:relative;height:380px;border-radius:28px;overflow:hidden;background:#0B0B0C;color:#fff}
 .nxcv>img.cover{animation:kb 16s ease-in-out infinite alternate}
 .nxgr{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.4) 0%,rgba(0,0,0,0) 28%,rgba(0,0,0,0) 42%,rgba(0,0,0,.88) 100%)}
@@ -3950,13 +3955,19 @@ function nxHome(){ const up=MYTIX().map(r=>r[0]).filter(s=>s&&xDays(s.dates[0])>
   const rq=SHOWS.filter(x=>(state.notify||{})[x.id]).length; if(rq) todo.push(`<button class="nxt" data-act="fvall">${ic('ticket',14)}${rq} ticket request${rq>1?'s':''}</button>`);
   const chips=todo.length?`<div class="nxtodo hs">${todo.join('')}</div>`:'';
   if(!s) return `<section class="sec pad hsec nxsec"><button class="nxsearch" data-act="ncopen">${ic('search',18)}<span>Which show are you going to?</span></button>${chips}</section>`;
-  const n=xDays(s.dates[0]), cd=n===0?['Tonight','']:n===1?['1','DAY']:[String(n),'DAYS'];
-  const t=crewFor(s), plan=t&&t.plan, who=t?[MEP[3]].concat((t.who||[]).slice(0,3).map(k=>PEOPLE[k][3])):[];
-  return `<section class="sec pad hsec nxsec"><div class="nxcv">${img(s,'style="object-position:50% 30%"')}<span class="nxgr"></span>
-    <div class="nxtp"><span class="nxk">Up next</span><span class="nxcd${cd[1]?'':' w'}"><b>${cd[0]}</b>${cd[1]?`<small>${cd[1]}</small>`:''}</span></div>
+  const k=Math.min(state.nxi||0,up.length-1);
+  const slide=(s,i)=>{ const n=xDays(s.dates[0]), cd=n===0?['Tonight','']:n===1?['1','DAY']:[String(n),'DAYS'];
+    const t=crewFor(s), plan=t&&t.plan, who=t?[MEP[3]].concat((t.who||[]).slice(0,3).map(k=>PEOPLE[k][3])):[];
+    return `<div class="nxcv">${img(s,'style="object-position:50% 30%"')}<span class="nxgr"></span><button class="nxhit" data-act="show" data-id="${s.id}" aria-label="Open ${esc(s.artist)}"></button>
+    <div class="nxtp"><span class="nxk">${i?'Coming up':'Up next'}</span><span class="nxcd${cd[1]?'':' w'}"><b>${cd[0]}</b>${cd[1]?`<small>${cd[1]}</small>`:''}</span></div>
     <div class="nxbt"><h3>${esc(s.artist)}</h3><p>${t?`<span class="nxav">${who.map(a=>`<span>${avi(a)}</span>`).join('')}</span>${esc(t.title)}`:'No crew yet'}</p>
       ${plan?`<div class="nxmeet">${ic('pin',14)}<b>${esc(plan[0])}</b><span>${esc(plan[1])}</span></div>`:''}
-      <div class="nxbtns">${t?`<button class="nxp" data-act="thread" data-id="${t.id}">Crew chat</button>`:`<button class="nxp" data-act="mtstart" data-id="${s.id}">Find me a crew</button>`}<button class="nxg" data-act="tickets">Ticket</button></div></div></div>${chips}</section>`; }
+      <div class="nxbtns">${t?`<button class="nxp" data-act="thread" data-id="${t.id}">Crew chat</button>`:`<button class="nxp" data-act="mtstart" data-id="${s.id}">Find me a crew</button>`}<button class="nxg" data-act="tickets">Ticket</button></div></div></div>`; };
+  const dots=up.length>1?`<div class="nxdots">${up.map((_,i)=>`<button class="${i===k?'on':''}" data-act="nxgo" data-v="${i}" aria-label="Show ${i+1} of ${up.length}"></button>`).join('')}</div>`:'';
+  return `<section class="sec pad hsec nxsec"><div class="nxcar" id="nxcar" onscroll="nxDot(this)">${up.map(slide).join('')}</div>${dots}${chips}</section>`; }
+// M31 Up next carousel: swipe between your ticketed shows; dots follow the scroll
+function nxDot(el){ const w=el.firstElementChild.offsetWidth+10, i=Math.round(el.scrollLeft/w); if(i===state.nxi) return; state.nxi=i;
+  el.parentNode.querySelectorAll('.nxdots button').forEach((d,j)=>d.classList.toggle('on',j===i)); }
 // M30 Hot this week as a chart: #1 as a big image, 02–05 as a numbered list
 function hotChart(){ const lk=s=>6+h(s.id)%60, L=SHOWS.filter(s=>xDays(s.dates[0])>=0).sort((a,b)=>lk(b)-lk(a)).slice(0,4), top=L[0]; // ranked by the number we show
   return `<div class="hch"><button class="hc1" data-act="show" data-id="${top.id}">${img(top,'style="object-position:50% 25%"')}<span class="hcg"></span><span class="hcn">01</span><span class="hcb"><b>${esc(top.artist)}</b><small>${sd(top.dates[0])} · ${esc(VSH(top.venue))} · ${lk(top)} looking</small></span></button>
@@ -4631,6 +4642,7 @@ function render(anim){ window._dockActive=null; const _ap=document.getElementByI
   const prev=document.getElementById('sc'); const keep=prev&&state.screen==='home'&&state._last==='home'?prev.scrollTop:0; state._last=state.screen;
   v.innerHTML={nc:ncPage,mt:mtPage,wr:wrPage,cp:cpPage,cs:csPage,onb,home,show,crew,crews,me,person,explore,tickets,scene,sell,search,clips,wall:wallPage}[state.screen]()+(state.sheet?citySheet():'')+(state.tsheet?ticketSheet():'')+(state.psheet?plusSheet():'')+(state.kit?kitSheet():'')+(state.igi&&(state.screen==='crew'||state.screen==='wall')?igInfo():'')+(state.act?actSheet():'')+(state.ufo?ufSheet():'')+(state.itk?itSheet():'')+(state.ep?epSheet():'')+(state.secO?secSheet():'')+(state.cs&&state.screen!=='cs'?csSheet():'')+(state.cmt?cmSheet():'')+(state.info?infoSheet():'')+(state.screen==='cs'&&state.cs&&state.cs.pickClip?csClipSheet():'')+(state.screen==='cs'&&state.cs&&state.cs.confirm?csConfirm():'');
   const nsc=document.getElementById('sc'); if(nsc&&keep) nsc.scrollTop=keep;
+  const nxc=document.getElementById('nxcar'); if(nxc&&state.nxi) nxc.scrollLeft=state.nxi*(nxc.firstElementChild.offsetWidth+10);
   const nsh=document.getElementById('shsc'); if(nsh&&shKeep) nsh.scrollTop=shKeep;
   if(nsh&&!shKeep&&state._prevScreen==='wall'&&(state.shY||{})[state.id]) nsh.scrollTop=state.shY[state.id];
   if(anim){ v.classList.remove('screen'); void v.offsetWidth; v.classList.add('screen'); }
@@ -4884,6 +4896,7 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='obcity'){ state.obCity=v; render(); }
   else if(a==='obscene'){ const L=state.obScenes=(state.obScenes||[]), i=+v, at=L.indexOf(i); if(at>=0) L.splice(at,1); else if(L.length<3) L.push(i); else toast('Pick up to 3 · tap one to swap it out'); render(); }
   else if(a==='obdone'){ obFinish(true); }
+  else if(a==='nxgo'){ const c=document.getElementById('nxcar'); if(c) c.scrollTo({left:+v*(c.firstElementChild.offsetWidth+10),behavior:'smooth'}); }
   else if(a==='obreplay'){ state.ob=0; state.obLink=null; state.history=[]; state.screen='onb'; render(true); }
   else if(a==='cpin'){ if(t.dataset.grp&&t.classList.contains('grp')){ const cs2=[v,...t.dataset.grp.split('|')], pts=cs2.map(mxy), xs=pts.map(p=>p[0]), ys=pts.map(p=>p[1]); const sc=Math.min(1.3,Math.max(1.05,Math.min((VW-150)/(Math.max(...xs)-Math.min(...xs)+1),(VH-170)/(Math.max(...ys)-Math.min(...ys)+1)))); flyTo(viewFor((Math.min(...xs)+Math.max(...xs))/2,(Math.min(...ys)+Math.max(...ys))/2,sc)); } else { state.csel=v; paintSel(true); } }
   else if(a==='zin'){ zoomAt(1.45,VW/2,VH/2); }
