@@ -1166,7 +1166,7 @@ i.tw{font-style:normal;opacity:0}
 .upr .eb{width:22px;height:22px;font-size:11px;background:rgba(255,255,255,.14)}
 .upr .eb:not(:first-child){margin-left:8px}
 .wal{position:relative;margin:16px 16px 0;transition:height .55s cubic-bezier(.32,.72,0,1)}
-.wc{position:absolute;left:0;right:0;top:0;height:214px;transition:transform .55s cubic-bezier(.32,.72,0,1),filter .4s;will-change:transform}
+.wc{position:absolute;left:0;right:0;top:0;height:172px;transition:transform .55s cubic-bezier(.32,.72,0,1),filter .4s;will-change:transform}
 .wcin{display:block;width:100%;height:100%;perspective:1100px;text-align:left}
 .wc .tflip{height:100%}
 .wc .tface{border-radius:22px;box-shadow:0 -1px 0 rgba(255,255,255,.25) inset,0 -8px 24px rgba(0,0,0,.14)}
@@ -1175,9 +1175,9 @@ i.tw{font-style:normal;opacity:0}
 .wtop{position:absolute;left:16px;right:16px;top:14px;display:flex;align-items:baseline;justify-content:space-between;gap:8px}
 .wtop b{font-family:var(--display);font-size:22px;font-weight:800;letter-spacing:-.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .wtop span{font-size:11.5px;font-weight:600;letter-spacing:.1em;opacity:.85;flex-shrink:0}
-.wc .tchips{top:auto;bottom:72px;left:16px;opacity:0;transition:opacity .3s}
+.wc .tchips{top:auto;bottom:58px;left:16px;opacity:0;transition:opacity .3s}
 .wc.op .tchips,.wal[data-open=""] .wc:last-child .tchips{opacity:1}
-.wstub{position:absolute;left:0;right:0;bottom:0;height:60px;display:flex;align-items:center;justify-content:space-around;border-top:1.5px dashed rgba(255,255,255,.35);background:rgba(11,11,12,.35);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.wstub{position:absolute;left:0;right:0;bottom:0;height:48px;display:flex;align-items:center;justify-content:space-around;border-top:1.5px dashed rgba(255,255,255,.35);background:rgba(11,11,12,.35);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
 .wstub>span{display:flex;flex-direction:column;align-items:center}
 .wstub small{font-size:11px;letter-spacing:.12em;text-transform:uppercase;opacity:.65}
 .wstub b{font-size:13.5px;font-weight:600;margin-top:2px}
@@ -1187,6 +1187,7 @@ i.tw{font-style:normal;opacity:0}
 .wc .tbk>span{margin-top:3px}
 .wall{display:block;margin:0 auto;height:34px;padding:0 14px;border-radius:17px;background:var(--card);font-size:12.5px;font-weight:600;color:#55555A;opacity:0;transform:translateY(-6px);pointer-events:none;transition:all .35s}
 .wall.on{opacity:1;transform:none;pointer-events:auto}
+.wacts{display:flex;justify-content:center;gap:8px;margin-top:6px}.wacts .wall{margin:0}
 
 .wc .tface.b{background:#fff;color:#0B0B0C;flex-direction:row;justify-content:flex-start;align-items:center;gap:16px;padding:18px;box-shadow:inset 0 0 0 1px var(--line),0 -8px 24px rgba(0,0,0,.1)}
 .wc .tface.b .qr{width:132px;height:132px}
@@ -1300,6 +1301,11 @@ i.tw{font-style:normal;opacity:0}
 .spfl button{height:32px;padding:0 12px;border-radius:16px;border:1px solid var(--line);background:transparent;font-size:12.5px;font-weight:600;color:#55555A}
 .spfl button[aria-pressed="true"]{background:#0B0B0C;color:#fff;border-color:#0B0B0C}
 .splist{display:flex;flex-direction:column;gap:10px;margin:12px 16px 0}
+.spfl{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}.spfl button{flex-shrink:0}.spfl .infob{margin-left:auto;align-self:center;border:0}
+.spk.sprow{padding:10px 12px 10px 10px;gap:10px;align-items:center}.sprow .spkimg{width:60px;min-height:0;height:80px}
+.sprow .spkn{left:79px}.spk.sprow::after{left:85px}.sprow .spkb{gap:2px;padding-left:12px!important}.sprow .spkw{margin-top:3px}
+.sprow .spkm{font-family:var(--mono);font-size:var(--t-cap);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sprow .spkr{align-self:stretch;justify-content:space-between;gap:8px}.sprow .spkr button{margin-top:0}
 .spk{position:relative;display:flex;gap:12px;padding:10px;border-radius:20px;background:var(--card);align-items:stretch;animation:sin .45s cubic-bezier(.2,.8,.2,1) both}
 .spkimg{position:relative;width:74px;border-radius:12px;overflow:hidden;flex-shrink:0;min-height:96px}
 .spkn{position:absolute;left:94px;width:14px;height:14px;border-radius:50%;background:var(--bg)}
@@ -1470,6 +1476,7 @@ i.tw{font-style:normal;opacity:0}
 .vcard.busy{opacity:.85}
 .vci{font-size:22px}.vcb{flex:1;display:flex;flex-direction:column;gap:2px}.vcb b{font-size:15px;letter-spacing:-.02em}.vcb small{font-size:12.5px;color:rgba(255,255,255,.65)}
 .rpt{display:flex;gap:8px;align-items:center;margin-top:18px;font-size:13px;color:var(--muted)}.rpt button{color:var(--muted);font-size:13px;text-decoration:underline;text-underline-offset:3px}
+.splitc.one{padding:10px 12px 10px 14px}.spr2.sp1 button.spt{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;height:auto;padding:0;border-radius:0;background:none;color:#0B0B0C;text-align:left;font-weight:400}.sp1 .spt small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
 .splitc{margin:14px 16px 6px;padding:14px;border-radius:20px;background:#fff;box-shadow:0 1px 0 var(--line),0 10px 30px rgba(0,0,0,.06);display:flex;flex-direction:column;gap:10px}
 .sph{display:flex;align-items:baseline;justify-content:space-between;gap:8px}.sph b{font-size:15px;letter-spacing:-.02em}.sph span{font-size:12.5px;color:var(--muted)}
 .spr2{display:flex;align-items:center;gap:10px}.spr2>span.spt{flex:1;display:flex;flex-direction:column;text-align:left}.spr2 b{font-size:14px}.spr2 small{font-size:12.5px;color:var(--muted)}
@@ -2531,9 +2538,13 @@ button.csloc{box-shadow:inset 0 0 0 1.5px #0B0B0C;background:transparent}
 .fva{margin-top:4px;font-size:14px;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.fvst small{font-family:var(--mono);font-size:var(--t-cap);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .bc{display:block;height:16px;margin-top:10px;background:repeating-linear-gradient(90deg,#0B0B0C 0 2px,transparent 2px 4px,#0B0B0C 4px 5px,transparent 5px 8px,#0B0B0C 8px 11px,transparent 11px 12px)}
 .fvc.fvmore{height:auto;min-height:230px;border-radius:var(--r-md)}
-.fvstub.tear{overflow:visible;pointer-events:none}.fvstub.tear .fvph{border-radius:var(--r-md) var(--r-md) 0 0;overflow:hidden}
-.fvstub.tear .fvst{background:#fff;border-radius:0 0 var(--r-md) var(--r-md);transform-origin:12% 0;animation:fvtear .5s cubic-bezier(.5,0,.75,0) forwards}
 @keyframes fvtear{30%{transform:rotate(-4deg)}100%{transform:translate(18px,90px) rotate(14deg);opacity:0}}
+.spk.hl{animation:spkhl 2.2s ease-out}@keyframes spkhl{0%,35%{box-shadow:0 0 0 3px #0B0B0C}100%{box-shadow:0 0 0 0 rgba(11,11,12,0)}}
+.tpstub{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 10px;padding:12px 14px 12px;border-top:2px dashed rgba(11,11,12,.18);border-radius:0 0 var(--r-xs) var(--r-xs);background:var(--card2);transform-origin:12% 0}
+.tpstub::before,.tpstub::after{content:"";position:absolute;top:-8px;width:14px;height:14px;border-radius:50%;background:#fff}.tpstub::before{left:-7px}.tpstub::after{right:-7px}
+.tpstub span{display:flex;flex-direction:column;gap:2px;min-width:0}.tpstub small{font-family:var(--mono);font-size:var(--t-cap);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}.tpstub b{font-family:var(--mono);font-size:var(--t-small);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tpstub.torn{animation:fvtear .5s cubic-bezier(.5,0,.75,0) forwards}
+.tsheet:not(.tcompact) .tpstub:not(.torn){display:none}
 .fvstub.fin{animation:fvin .6s cubic-bezier(.2,.9,.3,1.2) both,fvflash 1.6s .2s ease-out}
 @keyframes fvin{from{opacity:0;transform:translateX(-40px) scale(.9)}}@keyframes fvflash{0%,40%{box-shadow:0 0 0 3px #0B0B0C}100%{box-shadow:0 0 0 0 rgba(11,11,12,0)}}
 #fvn{display:inline-block}#fvn.bump{animation:fvbump .5s ease-out}@keyframes fvbump{40%{transform:scale(1.35);font-weight:700;color:#0B0B0C}}
@@ -3592,7 +3603,7 @@ function feedRow(s){ const sp=sparesFor(s).filter(x=>!(state.claimedIds||{})[x.i
     <span class="ug2">${hasTix(s)?`<i class="upg">${ic('check',11)} Going</i>`:''}${sp?`<i class="ups">${ic('ticket',12)} ${sp} spare${sp>1?'s':''}</i>`:''}<em>${n} looking</em></span></span>${ic('right',16)}</button>`;
 }
 
-const VSH=v=>v.replace('Madison Square Garden','MSG').replace('Radio City Music Hall','Radio City').replace('Barclays Center','Barclays').replace(' Theatre','').replace(' Theater','');
+const VSH=v=>v.replace('Madison Square Garden','MSG').replace('Radio City Music Hall','Radio City').replace('Barclays Center','Barclays').replace('New Jersey Performing Arts Center','NJPAC').replace(' Theatre','').replace(' Theater','');
 function trending(){ const c=SHOWS.filter(x=>xDays(x.dates[0])>=0&&xDays(x.dates[0])<=31).sort((a,b)=>(h(b.id)%97+(XOV[b.artist]?60:0))-(h(a.id)%97+(XOV[a.artist]?60:0))).slice(0,5);
   return c.map((x,i)=>{ const k=Math.abs(h(x.id)), song=songsFor(x.artist)[k%3];
     const T=[[`${x.artist} · ${18+k%30} crews forming`,'Hot','show',`${(1.2+(k%30)/10).toFixed(1)}k going`],
@@ -3855,9 +3866,8 @@ function sparesView(){
   return `<div class="scroll"><div style="padding-bottom:130px">
     <header class="whead"><span></span><div class="wtitle"><h1 class="sh1">Tickets <span class="tico">${ic('ticket',24)}</span></h1><span class="wcity">Spares in ${state.city} · face value only</span></div><button class="wicon" data-act="sellstart" aria-label="List a spare">${ic('plus',20)}</button></header>
     ${tSeg('spares')}
-    <div class="sprule"><span><i class="eb">🔒</i>Face value + $2 flat</span><span><i class="eb">👯</i>Crews get 24h first</span><span><i class="eb">✌️</i>Max 2 per show</span>${infoB('tickets','How spare tickets work')}</div>
     ${(()=>{ const R=SHOWS.filter(s=>(state.notify||{})[s.id]); return R.length?`<div class="spreq"><p class="slab">Your requests</p><div class="spwait">${R.map(s=>`<div class="spwr"><span class="spwi">${img(s)}</span><span class="spwb"><b>${esc(s.artist)}</b><small>${sd(s.dates[0])} · #${REQN(s)+1} in line</small></span><button class="on" data-act="notify" data-id="${s.id}">Cancel</button></div>`).join('')}</div></div>`:''; })()}
-    <div class="spfl">${[['all','All'],['week','This week'],['under','Under $150'],['open','Open to all']].map(([k,l])=>`<button data-act="spf" data-v="${k}" aria-pressed="${f===k}">${l}</button>`).join('')}</div>
+    <div class="spfl">${[['all','All'],['week','This week'],['under','Under $150'],['open','Open to all']].map(([k,l])=>`<button data-act="spf" data-v="${k}" aria-pressed="${f===k}">${l}</button>`).join('')}${infoB('tickets','How spare tickets work')}</div>
     <div class="splist">${L.map(x=>spareCard(x)).join('')||'<p class="mempty">No spares match. Try another filter.</p>'}</div>
     <p class="slab" style="margin-top:26px">No spares yet</p>
     <div class="spwait">${none.map(s=>`<div class="spwr"><span class="spwi">${img(s)}</span><span class="spwb"><b>${esc(s.artist)}</b><small>${sd(s.dates[0])} · ${LOCKED(s)?'Official exchange only':REQN(s)+' requested'}</small></span><button class="${(state.notify||{})[s.id]?'on':''}" data-act="notify" data-id="${s.id}">${(state.notify||{})[s.id]?ic('check',13)+' #'+(REQN(s)+1):'Request'}</button></div>`).join('')}</div>
@@ -3870,7 +3880,7 @@ function tickets(){
   const days=d=>{ const n=Math.round((Date.UTC(...d.split('-').map((v,i)=>i===1?v-1:+v))-Date.UTC(2026,8,27))/864e5); return n<=0?'today':n===1?'tomorrow':'in '+n+' days'; };
   const nx=all[0];
   const chip=(s,pending)=>{ const L=state.listed&&state.listed[s.id]; return pending?'<em class="pend"><i class="spin sm"></i>Transfer pending</em>':L?(L.st==='paid'?`<em>${ic('check',12)}Spare sold</em>`:`<em class="live"><i class="ldot"></i>${L.st==='live'?'Listed · $'+spareOf(s).face:'Spare '+LS_TXT[L.st]}</em>`):`<em>${ic('check',12)}Verified</em>`; };
-  const card=([s,sec,seat,sub,gate,pending],i)=>`<div class="wc" data-i="${i}" style="--i:${i}"><button class="wcin" data-act="wtap" data-i="${i}" aria-label="${esc(s.artist)} ticket"><span class="tflip">
+  const card=([s,sec,seat,sub,gate,pending],i)=>`<div class="wc" data-i="${i}" data-sid="${s.id}"${pending?' data-pend="1"':''} style="--i:${i}"><button class="wcin" data-act="wtap" data-i="${i}" aria-label="${esc(s.artist)} ticket"><span class="tflip">
       <span class="tface f">${img(s)}<span class="wsh"></span>
         <span class="wtop"><b>${esc(s.artist)}</b><span>${sd(s.dates[0]).toUpperCase()}</span></span>
         <span class="tchips">${chip(s,pending)}</span>
@@ -3881,16 +3891,16 @@ function tickets(){
   if(state.tview==='spares') return sparesView();
   return `<div class="scroll"><div style="padding-bottom:130px">
     <header class="whead"><span></span><div class="wtitle"><h1 class="sh1">Tickets <span class="tico">${ic('ticket',24)}</span></h1><span class="wcity">${all.length} upcoming · tap to open</span></div><button class="wicon" data-act="itopen" aria-label="Add ticket">${ic('plus',20)}</button></header>${tSeg('mine')}
-    <div class="upnx"><span class="upk">Up next</span><b>${esc(nx[0].artist)}</b><span class="upd">${days(nx[0].dates[0])}</span><span class="upr"><i class="eb">🚪</i>Doors 7:00${(()=>{ const t=crewFor(nx[0]); return t&&t.plan?`<i class="eb">👯</i>Meet ${esc(t.plan[0])}`:''; })()}</span></div>
-    ${lsStrip()}${splitCard()}<button class="cantgo" data-act="sellstart">${ic('ticket',20)}<span><b>Can’t make a show?</b><small>Offer it to your crew first</small></span>${ic('right',14)}</button><div class="wal" id="wal" data-n="${all.length}">${all.map(card).join('')}</div>
-    <button class="wall" id="wall" data-act="wclose">Show all tickets</button>
+    ${lsStrip()}${splitCard()}<div class="wal" id="wal" data-n="${all.length}">${all.map(card).join('')}</div>
+    <div class="wacts"><button class="wall" id="wall" data-act="wclose">Show all tickets</button><button class="wall" id="wcant" data-act="sellstart">Can’t make it? Offer to your crew</button></div>
   </div></div>${dock('tickets')}`;
 }
 function layWallet(open){ const w=document.getElementById('wal'); if(!w) return; const cs=[...w.querySelectorAll('.wc')], n=cs.length;
   w.dataset.open=open==null?'':open; document.getElementById('wall').classList.toggle('on',open!=null);
-  if(open==null){ cs.forEach((c,i)=>{ c.style.transform=`translateY(${i*76}px)`; c.style.zIndex=i+1; c.classList.remove('op','bk'); c.querySelector('.tflip').classList.remove('on'); }); w.style.height=(76*(n-1)+214)+'px'; return; }
-  let j=0; cs.forEach((c,i)=>{ if(i===open){ c.style.transform='translateY(0)'; c.style.zIndex=50; c.classList.add('op'); c.classList.remove('bk'); } else { c.style.transform=`translateY(${232+j*14}px) scale(${1-(n-1-j)*.035})`; c.style.zIndex=j+1; c.classList.remove('op'); c.classList.add('bk'); c.querySelector('.tflip').classList.remove('on'); j++; } });
-  w.style.height=(232+(n-2)*14+214)+'px'; }
+  const cg=document.getElementById('wcant'); if(cg){ const c=open!=null&&cs[open]; cg.classList.toggle('on',!!c&&!c.dataset.pend); if(c) cg.dataset.v=c.dataset.sid; }
+  if(open==null){ cs.forEach((c,i)=>{ c.style.transform=`translateY(${i*58}px)`; c.style.zIndex=i+1; c.classList.remove('op','bk'); c.querySelector('.tflip').classList.remove('on'); }); w.style.height=(58*(n-1)+172)+'px'; return; }
+  let j=0; cs.forEach((c,i)=>{ if(i===open){ c.style.transform='translateY(0)'; c.style.zIndex=50; c.classList.add('op'); c.classList.remove('bk'); } else { c.style.transform=`translateY(${190+j*14}px) scale(${1-(n-1-j)*.035})`; c.style.zIndex=j+1; c.classList.remove('op'); c.classList.add('bk'); c.querySelector('.tflip').classList.remove('on'); j++; } });
+  w.style.height=(190+(n-2)*14+172)+'px'; }
 const infoB=(k,label)=>`<button class="infob" data-act="info" data-v="${k}" aria-label="${label}">${ic('info',18)}</button>`;
 const INFO={tickets:['How spare tickets work',[['💵','Face value, always','Sellers can’t mark up. You pay face value plus a flat $2 fee.'],['🔒','Held until it lands','Your money sits in escrow and only reaches the seller once the ticket is in your account.'],['👯','You join their crew','Buying a spare adds you to the seller’s crew for this show, so you won’t be going alone.'],['⏱️','Crews get first dibs','Some spares are crew-only for 24 hours before anyone can claim them.'],['💸','$2 flat, nothing else','Typical resale sites add 20–30% in fees on top of marked-up prices. Resale prices shown here are estimates.'],['📲','Your real ticket stays put','It lives in the official ticketing app. Plus One mirrors it to verify you and unlock crews.']]],
   match:['How matching works',[['🎯','Same show, same vibe','We look for an open crew that goes the way you do.'],['⏳','Or a pool','No match yet? You wait in a pool. Three people make a crew, then the chat opens.'],['🔔','Close anytime','You stay in the pool and get a ping when your crew is ready.']]],
@@ -4012,7 +4022,7 @@ function hotChart(){ const lk=HOT_LK, L=HOT().slice(0,4), top=L[0]; // ranked by
     ${L.slice(1).map((s,i)=>`<button class="hcr" data-act="show" data-id="${s.id}"><span class="hcn">0${i+2}</span><span class="hct">${img(s)}</span><span class="hcb"><b>${esc(s.artist)}</b><small>${sd(s.dates[0])} · ${esc(VSH(s.venue))}</small></span><span class="hcl"><b>${lk(s)}</b><small>looking</small></span></button>`).join('')}</div>`; }
 function claimSpare(v){ state.tsheet=v.split('-')[0]; state.tspare=v; state.tstep='review'; render(); }
 function fvCard(x,fresh){ const s=byId[x.sid], est=RESALE(x.face,x.id), tot=x.face+FEE;
-  return `<button class="fvc fvstub${fresh?' fin':''}" data-act="claimspare" data-v="${x.id}"><span class="fvph">${img(s)}<em class="fvsave">Save $${est-tot}</em></span><span class="fvst"><i class="tkperf"></i><span class="fvbig"><b>$${tot}</b><s>~$${est}</s></span><b class="fva">${esc(s.artist)}</b><small>${sd(s.dates[0])} · ${esc(x.sec)}</small><i class="bc"></i></span></button>`; }
+  return `<button class="fvc fvstub${fresh?' fin':''}" data-act="fvview" data-id="${x.sid}" data-v="${x.id}"><span class="fvph">${img(s)}<em class="fvsave">Save $${est-tot}</em></span><span class="fvst"><i class="tkperf"></i><span class="fvbig"><b>$${tot}</b><s>~$${est}</s></span><b class="fva">${esc(s.artist)}</b><small>${sd(s.dates[0])} · ${esc(x.sec)}</small><i class="bc"></i></span></button>`; }
 function fvHome(){ const A0=allSpares(), fr=FV_FRESH(), rk=x=>{ const i=fr.indexOf(x.id); return i<0?1e3+x.mins:i; }, L=A0.slice().sort((a,b)=>rk(a)-rk(b)).slice(0,8); if(!L.length) return '';
   return `<section class="sec pad hsec fvsec tksec" style="margin-top:22px"><h2 class="h2">Never pay double</h2>
     <div class="hs fvrow" id="fvrow">${L.map(x=>fvCard(x)).join('')}<button class="fvc fvmore" data-act="fvall"><b>See all</b><small>${A0.length} spares</small>${ic('right',16)}</button></div></section>`; }
@@ -4036,7 +4046,12 @@ const ago=m=>m<60?m+' min ago':Math.round(m/60)+' h ago';
 // Show page: every spare is for the same show, so the photo is replaced by a black ticket stub that says where you'd stand
 const secCode=sec=>/GA/.test(sec)?['Floor','GA']:/Balcony/i.test(sec)?['Balcony','BAL']:/Mezz/i.test(sec)?['Mezzanine','MEZ']:/Pit/i.test(sec)?['Floor','PIT']:(m=>m?[sec.replace(/\s*\d+.*/,''),m[1]]:['Seat',sec.slice(0,3).toUpperCase()])(sec.match(/(\d+)/));
 function spareCard(x,compact){ const s=byId[x.sid], sc=secCode(x.sec);
-  return `<div class="spk ${compact?'cmp':''}">${compact?`<span class="spstub" aria-label="${esc(x.sec)}, ${x.qty} ticket${x.qty>1?'s':''}"><small>${esc(sc[0])}</small><b>${esc(sc[1])}</b><small>${x.qty>1?x.qty+' tickets':'1 ticket'}</small></span>`:`<button class="spkimg" data-act="show" data-id="${s.id}" aria-label="${esc(s.artist)}">${img(s)}</button>`}<i class="spkn t"></i><i class="spkn b"></i>
+  if(!compact){ const cf=x.crewFirst&&!inCrewFor(s);
+    return `<div class="spk sprow${state.hlSpare===x.id?' hl':''}"><button class="spkimg" data-act="show" data-id="${s.id}" aria-label="${esc(s.artist)}">${img(s)}</button><i class="spkn t"></i><i class="spkn b"></i>
+    <span class="spkb"><b>${esc(s.artist)}</b><span class="spkm">${sd(s.dates[0])} · ${esc(VSH(s.venue))}</span><span class="spkm">${esc(x.sec)}${x.qty>1?` · ${x.qty} tickets`:''}</span>
+      <span class="spkw"><span class="spkav">${avi(x.seller[3])}<i>${ic('check',8)}</i></span>${x.seller[0]} · ${ago(x.mins)}</span></span>
+    <span class="spkr"><b>$${x.face+FEE}</b>${cf?`<button class="ghost" data-act="crewfirst" data-id="${s.id}" data-v="${x.id}">Join a crew</button>`:`<button data-act="claimspare" data-v="${x.id}">Claim</button>`}</span></div>`; }
+  return `<div class="spk ${compact?'cmp':''}${state.hlSpare===x.id?' hl':''}">${compact?`<span class="spstub" aria-label="${esc(x.sec)}, ${x.qty} ticket${x.qty>1?'s':''}"><small>${esc(sc[0])}</small><b>${esc(sc[1])}</b><small>${x.qty>1?x.qty+' tickets':'1 ticket'}</small></span>`:`<button class="spkimg" data-act="show" data-id="${s.id}" aria-label="${esc(s.artist)}">${img(s)}</button>`}<i class="spkn t"></i><i class="spkn b"></i>
     <span class="spkb">${compact?'':`<b>${esc(s.artist)}</b><span class="spkm">${sd(s.dates[0])} · ${esc(s.venue.replace('Madison Square Garden','MSG').replace('Radio City Music Hall','Radio City'))}</span>`}
       ${compact?`<b class="spkt">${esc(x.sec)}</b>`:`<span class="spks"><em>${x.sec}</em>${x.qty>1?`<em>${x.qty} tickets</em>`:''}</span>`}
       <span class="spkw"><span class="spkav">${avi(x.seller[3])}<i>${ic('check',8)}</i></span>${x.seller[0]} · ${ago(x.mins)}</span>
@@ -4052,7 +4067,8 @@ function qrSvg(seed){ let x=h(seed)||7; const n=21, r=()=>{ x=(x*1103515245+1234
 function ticketSheet(){
   const s=byId[state.tsheet], sp=state.tspare?sparesFor(s).find(x=>x.id===state.tspare)||spareOf(s):spareOf(s), fee=FEE, tot=sp.face+fee, st=state.tstep||'review';
   const card=`<div class="tpv"><div class="tflip ${st==='done'?'on':''}"><div class="tface f">${img(s)}<span class="tsh"></span><span class="tpvt"><em>${sp.sec} · 1 ticket</em><b>${esc(s.artist)}</b><span>${lng(s.dates[0])} · ${esc(s.venue.replace('Madison Square Garden','MSG'))}</span></span></div>
-     <div class="tface b"><span class="tok">${ic('check',18)}</span><b>You’re in</b><span>${sp.seller[0]} is sending it through the official ticketing app</span></div></div></div>`;
+     <div class="tface b"><span class="tok">${ic('check',18)}</span><b>You’re in</b><span>${sp.seller[0]} is sending it through the official ticketing app</span></div></div>
+     <div class="tpstub"><span><small>Section</small><b>${esc(sp.sec)}</b></span><span><small>Seller</small><b>${esc(sp.seller[0].split(' ')[0])}</b></span></div></div>`;
   let body='';
   if(st!=='done'){
     body=`<div class="tmini"><span><b>${money2(tot)}</b><small>${money2(sp.face)} face value + ${money2(fee)} flat fee · the price ${sp.seller[0].split(' ')[0]} paid · about ${money2(RESALE(sp.face,sp.id||s.id)-tot)} less than resale (est.)</small></span></div>
@@ -4135,10 +4151,12 @@ const MESU=()=>{ const n=8+(KIT.attDone?1:0); return n+'/'+n; };
 function vCard(){ const st=ME.idv; return st===true?`<div class="vbadges"><span>${ic('check',12)} ID + ticket verified</span><span>🤝 Showed up ${MESU()}</span></div>`
   :`<button class="vcard ${st==='busy'?'busy':''}" data-act="idv" ${st==='busy'?'disabled':''}><span class="vci">🪪</span><span class="vcb"><b>${st==='busy'?'Checking your ID…':'Verify your ID · 1 min'}</b><small>Ticket ✓ · ID not yet · unlocks women-only crews</small></span>${st==='busy'?'<i class="spin sm"></i>':ic('right',16)}</button>`; }
 function rptRow(p){ return `<div class="rpt"><button data-act="report" data-v="${p}">Report</button><span>·</span><button data-act="block" data-v="${p}">${(state.blocked||{})[p]?'Blocked':'Block'}</button></div>`; }
-function splitCard(){ const s=A(SPLIT.show); if(!s) return ''; const tot=spareOf(s).face+FEE;
-  return `<div class="splitc"><div class="sph"><b>Split · ${esc(s.artist)}</b><span>3 tickets · you paid upfront</span></div>
+function splitCard(){ const s=A(SPLIT.show); if(!s) return ''; const tot=spareOf(s).face+FEE, j=PEOPLE[6][0].split(' ')[0];
+  const row=`<div class="spr2 sp1"><button class="spt" data-act="splittog" aria-expanded="${!!state.splitOpen}"><b>Split · ${esc(s.artist)}</b><small>${SPLIT.released?'Seat listed · your crew gets 24h first':`${j} owes $${tot} · due in 2 days`}</small></button>${SPLIT.released?'<em>Listed</em>':'<button data-act="nudge">Nudge</button>'}</div>`;
+  if(!state.splitOpen) return `<div class="splitc one">${row}</div>`;
+  return `<div class="splitc">${row}
   <div class="spr2"><span class="spav">${avi(PEOPLE[1][3])}</span><span class="spt"><b>${PEOPLE[1][0]}</b><small>Paid $${tot}</small></span><em>${ic('check',12)} Paid</em></div>
-  <div class="spr2"><span class="spav">${avi(PEOPLE[6][3])}</span><span class="spt"><b>${PEOPLE[6][0]}</b><small>${SPLIT.released?'Seat listed · your crew gets 24h first':'$'+tot+' due in 2 days'}</small></span>${SPLIT.released?'<em>Listed</em>':'<button data-act="nudge">Nudge</button>'}</div>
+  <div class="spr2"><span class="spav">${avi(PEOPLE[6][3])}</span><span class="spt"><b>${PEOPLE[6][0]}</b><small>${SPLIT.released?'Seat listed · your crew gets 24h first':'$'+tot+' due in 2 days'}</small></span>${SPLIT.released?'<em>Listed</em>':''}</div>
   ${SPLIT.released?'':'<button class="sprel" data-act="release">Unpaid by the deadline? Release the seat to your crew</button>'}</div>`; }
 function lockedCard(s){ return `<h2 class="h2 sec">Spare tickets <span class="tico">${ic('ticket',24)}</span></h2><div class="spnone lk"><b>🔒 Transfers are locked for this show</b><span>The artist only allows resale through Ticketmaster’s Face Value Exchange. Crews still work as usual.</span><a href="https://help.ticketmaster.com/hc/en-us/articles/9781464415249-How-does-Ticketmaster-s-Face-Value-Exchange-work" target="_blank" rel="noopener">Face Value Exchange ↗</a></div>`; }
 const bState=p=>BUD[p]?'buddy':BREQ[p]?'sent':'none';
@@ -4721,7 +4739,6 @@ document.getElementById('app').addEventListener('click',e=>{
   const t=e.target.closest('[data-act]'); if(!t) return;
   const a=t.dataset.act, id=t.dataset.id, v=t.dataset.v;
   if(t.closest&&t.closest('#psheet')&&t.classList.contains('pk')&&!t.dataset.go){ pkPick(t); return; }
-  if(a==='claimspare'&&t.classList.contains('fvstub')&&!t.dataset.torn&&!NX_RM.matches){ t.dataset.torn=1; t.classList.add('tear'); setTimeout(()=>claimSpare(v),520); return; }
   if(a==='show'){ if(t.classList.contains('urow')) showFly(t,id); else { go('show',id); if(t.dataset.sec){ const k=t.dataset.sec; setTimeout(()=>shGo(k),400); } } }
   else if(a==='xmode'){ state.xmode=v; state.q=''; render(); }
   else if(a==='xjoin'){ const c=xCrews()[+v]; if(c.mine){ openThread(thById(c.tid)); return; }
@@ -4980,13 +4997,14 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='rsvp'){ state.rsvp[id]= state.rsvp[id]===v ? '' : v; render(); toast(state.rsvp[id]? (v==='Going'?'You’re going. Pick a crew to head in together.':v==='Maybe'?'Marked as maybe':'Got it, not going') : 'RSVP cleared'); }
   else if(a==='follow'){ state.followed=!state.followed; render(); toast(state.followed?'Following Maya':'Unfollowed'); }
   else if(a==='claimspare') claimSpare(v);
+  else if(a==='fvview'){ state.hlSpare=v; go('show',id); setTimeout(()=>{ shGo('tickets'); setTimeout(()=>{ state.hlSpare=null; },2500); },420); }
   else if(a==='tfind'){ const sid=state.tsheet; closeTSheet(()=>{ go('show',sid); setTimeout(()=>shGo('crews'),400); }); }
   else if(a==='tchat'){ const sid=state.tsheet; closeTSheet(()=>{ openThread(threadFor(sid)); }); }
   else if(a==='tview'){ state.tview=v; render(true); }
   else if(a==='spf'){ state.spf=v; render(); }
   else if(a==='notify'){ (state.notify ||= {})[id]=!state.notify[id]; render(); toast(state.notify[id]?`Requested · you’re #${REQN(byId[id])+1} in line · we’ll ping you when a spare drops`:'Request cancelled'); }
   else if(a==='claim'){ state.tspare=null; state.tsheet=id; state.tstep='review'; render(); }
-  else if(a==='tpay'){ state.tstep='paying'; render(); setTimeout(()=>{ if(!state.tsheet) return; (state.claimed ||= {})[state.tsheet]=true; const spx=state.tspare||spareOf(byId[state.tsheet]).id; (state.claimedIds ||= {})[spx]=true; const th=threadFor(state.tsheet); if(!th.spare) th.msgs.push({d:'sys',t:'You claimed a spare ticket · seat next to the crew'}); th.ts=++TSEQ; state.tstep='done'; render(); requestAnimationFrame(()=>{ const f=document.querySelector('#tsheet .tflip'); f&&f.classList.add('go'); }); },1300); }
+  else if(a==='tpay'){ state.tstep='paying'; render(); setTimeout(()=>{ if(!state.tsheet) return; (state.claimed ||= {})[state.tsheet]=true; const spx=state.tspare||spareOf(byId[state.tsheet]).id; (state.claimedIds ||= {})[spx]=true; const th=threadFor(state.tsheet); if(!th.spare) th.msgs.push({d:'sys',t:'You claimed a spare ticket · seat next to the crew'}); th.ts=++TSEQ; state.tstep='done'; render(); requestAnimationFrame(()=>{ const st=document.querySelector('#tsheet .tpstub'), f=document.querySelector('#tsheet .tflip'); st&&(st.addEventListener('animationend',()=>{ st.style.display='none'; }),st.classList.add('torn')); setTimeout(()=>{ f&&f.classList.add('go'); },NX_RM.matches?0:480); }); },1300); }
   else if(a==='tclose'){ closeTSheet(); }
   else if(a==='tgo'){ closeTSheet(()=>{ state.history=[]; state.screen='tickets'; render(true); }); }
   else if(a==='wtap'){ const w=document.getElementById('wal'), i=+t.dataset.i, o=w.dataset.open; if(o===''||+o!==i) layWallet(i); else t.querySelector('.tflip').classList.toggle('on'); }
@@ -4994,7 +5012,8 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='tflip'){ t.querySelector('.tflip').classList.toggle('on'); }
   else if(a==='plusmenu'){ if(Date.now()-(window._pfT||0)<700) return; if(state.psheet){ closePlus(); return; } plusOpen(); }
   else if(a==='plusclose'){ closePlus(); }
-  else if(a==='sellstart'){ const pb=document.querySelector('#navroot .bcir[data-act=plusmenu]'); pb&&pb.classList.remove('open'); state.psheet=false; state.sell={step:1,id:null,qty:1,why:'Can’t make it',crew:true}; go('sell'); }
+  else if(a==='splittog'){ state.splitOpen=!state.splitOpen; render(); }
+  else if(a==='sellstart'){ const pb=document.querySelector('#navroot .bcir[data-act=plusmenu]'); pb&&pb.classList.remove('open'); state.psheet=false; const pre=(v&&MYTIX().some(r=>r[0]&&r[0].id===v))?v:null; state.sell={step:1,id:null,qty:1,why:'Can’t make it',crew:true}; go('sell'); if(pre) setTimeout(()=>{ const c=document.querySelector(`.skc[data-id="${pre}"]`); c&&c.click(); },60); }
   else if(a==='sellpick'){ if(state.sell.step!==1) return; if(state.sell.id===id){ state.sell.id=null; document.querySelectorAll('.skc').forEach(c=>c.classList.remove('sel','dim')); const b0=document.getElementById('sellnx'); b0&&b0.setAttribute('disabled',''); return; } state.sell.id=id; ncBuzz(6); document.querySelectorAll('.skc').forEach(c=>{ c.classList.toggle('sel',c.dataset.id===id); c.classList.toggle('dim',c.dataset.id!==id); }); const b=document.getElementById('sellnx'); b&&b.removeAttribute('disabled'); }
   else if(a==='sellnext'){ const S=state.sell; if(!S||!S.id||S._lock) return; S._lock=1; setTimeout(()=>{ S._lock=0; },420); ncBuzz(6); sellSet(S.step+1,1); }
   else if(a==='sellback'){ const S=state.sell; if(!S){ back(); return; } if(S._lock) return; const n=S.step; if(n>1&&n<4){ S._lock=1; setTimeout(()=>{ S._lock=0; },420); sellSet(n-1,-1); } else { state.sell=null; back(); } }
