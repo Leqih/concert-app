@@ -2141,7 +2141,7 @@ button.cprow:active{opacity:.6}
 .pk.sh.dealt{visibility:visible;animation:shfloat 6s ease-in-out infinite}
 .pk.sh.hot{animation:none}
 .pfan4.out .pk.sh{animation:none}
-.pfbg.out{animation:fadeout .45s ease .1s both}
+.pfbg.out{animation:fadeout .24s ease both}
 
 /* hover v2: keep float + angle; only scale and lift via independent properties */
 .pk.sh{transition:scale .38s cubic-bezier(.34,1.56,.5,1),filter .3s ease;will-change:transform}
@@ -3341,7 +3341,7 @@ function shDrop(){ const L=[...document.querySelectorAll('#psheet .pk.sh')]; if(
     if(alive) requestAnimationFrame(step); }
   requestAnimationFrame(step); }
 function shFallOut(){ const L=[...document.querySelectorAll('#psheet .pk.sh')]; L.forEach((c,i)=>{ const r=c.getBoundingClientRect(), dy=innerHeight-r.top+60, tg=parseFloat(getComputedStyle(c).getPropertyValue('--r'))||0;
-  c.classList.remove('dealt','hot'); c.style.transition=`transform .5s cubic-bezier(.55,0,.9,.5) ${i*40}ms`; c.style.transform=`translateY(${dy}px) rotate(${tg+(i%2?40:-40)}deg)`; }); }
+  c.classList.remove('dealt','hot'); c.style.transition=`transform .3s cubic-bezier(.55,0,.9,.5) ${i*25}ms`; c.style.transform=`translateY(${dy}px) rotate(${tg+(i%2?40:-40)}deg)`; }); }
 function plusOpen(){ state.psheet=true; const v=document.getElementById('view'); v.querySelectorAll('.pfbg,#psheet').forEach(x=>x.remove()); v.insertAdjacentHTML('beforeend',plusSheet()); plusAim(); shDrop(); const pb=document.querySelector('#navroot .bcir[data-act=plusmenu]'); pb&&pb.classList.add('open'); }
 function pkHot(x,y){ const el=document.elementFromPoint(x,y), c=el&&el.closest&&el.closest('#psheet .pk'); document.querySelectorAll('#psheet .pk.hot').forEach(k=>{ if(k!==c) k.classList.remove('hot'); }); if(c) c.classList.add('hot'); return c; }
 function pkPick(c){ const f=document.getElementById('psheet'); if(!f||f.classList.contains('pick')) return; if(c.dataset.act==='lookon'){ c.dataset.go='1'; c.click(); return; }
@@ -3354,12 +3354,12 @@ function pkPick(c){ const f=document.getElementById('psheet'); if(!f||f.classLis
   setTimeout(()=>f.classList.add('go'),160+300);
   setTimeout(()=>{ c.dataset.go='1'; c.click(); if(w.isConnected){ w.classList.add('done'); setTimeout(()=>w.remove(),280); } },160+460); }
 (function(){ let drag=false, sx=0, sy=0;
-  document.addEventListener('pointerdown',e=>{ const pb=e.target.closest&&e.target.closest('#navroot .bcir[data-act=plusmenu]'); if(pb&&!state.psheet){ plusOpen(); window._pfT=Date.now(); drag=true; sx=e.clientX; sy=e.clientY; } else if(e.target.closest&&e.target.closest('#psheet .pk')) pkHot(e.clientX,e.clientY); });
+  document.addEventListener('pointerdown',e=>{ const pb=e.target.closest&&e.target.closest('#navroot .bcir[data-act=plusmenu]'); if(pb&&!state.psheet){ plusOpen(); window._pfT=Date.now(); window._pfSkip=true; document.addEventListener('pointerup',()=>setTimeout(()=>{ window._pfSkip=false; },0),{once:true}); drag=true; sx=e.clientX; sy=e.clientY; } else if(e.target.closest&&e.target.closest('#psheet .pk')) pkHot(e.clientX,e.clientY); });
   document.addEventListener('pointermove',e=>{ if(state.psheet&&(drag||e.pointerType==='mouse')) pkHot(e.clientX,e.clientY); });
   document.addEventListener('pointerup',e=>{ if(!drag) return; drag=false; const c=pkHot(e.clientX,e.clientY); if(c&&Math.hypot(e.clientX-sx,e.clientY-sy)>24){ window._pfT=Date.now(); pkPick(c); } });
 })();
 function closePlus(after){ const f=document.getElementById('psheet'), bg=document.querySelector('.pfbg'), pb=document.querySelector('#navroot .bcir[data-act=plusmenu]'); pb&&pb.classList.remove('open'); state.psheet=false;
-  if(!f){ after&&after(); return; } const fall=f.classList.contains('pfan4')&&!f.classList.contains('pick'); if(fall) shFallOut(); f.classList.add('out'); bg&&bg.classList.add('out'); setTimeout(()=>{ f.remove(); bg&&bg.remove(); after&&after(); },fall?520:280); }
+  if(!f){ after&&after(); return; } const fall=f.classList.contains('pfan4')&&!f.classList.contains('pick'); if(fall) shFallOut(); f.classList.add('out'); bg&&bg.classList.add('out'); setTimeout(()=>{ f.remove(); bg&&bg.remove(); after&&after(); },fall?360:240); }
 
 const MONF=['January','February','March','April','May','June','July','August','September','October','November','December'];
 function upRows(arr,prevM,anim,d0){ let out='', pm=prevM, k=0; arr.forEach(x=>{ const m=new Date(x.dates[0]+'T12:00:00Z').getUTCMonth(), st=anim?` style="animation-delay:${(d0||0)+Math.min(k++,7)*35}ms"`:'';
@@ -5151,7 +5151,7 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='wtap'){ const w=document.getElementById('wal'), i=+t.dataset.i, o=w.dataset.open; if(o===''||+o!==i) layWallet(i); else t.querySelector('.tflip').classList.toggle('on'); }
   else if(a==='wclose'){ layWallet(null); }
   else if(a==='tflip'){ t.querySelector('.tflip').classList.toggle('on'); }
-  else if(a==='plusmenu'){ if(Date.now()-(window._pfT||0)<700) return; if(state.psheet){ closePlus(); return; } plusOpen(); }
+  else if(a==='plusmenu'){ if(window._pfSkip){ window._pfSkip=false; return; } if(state.psheet){ closePlus(); return; } plusOpen(); }
   else if(a==='plusclose'){ closePlus(); }
   else if(a==='splittog'){ state.splitOpen=!state.splitOpen; render(); }
   else if(a==='sellstart'){ const pb=document.querySelector('#navroot .bcir[data-act=plusmenu]'); pb&&pb.classList.remove('open'); state.psheet=false; const pre=(v&&MYTIX().some(r=>r[0]&&r[0].id===v))?v:null; state.sell={step:1,id:null,qty:1,why:'Can’t make it',crew:true}; go('sell'); if(pre) setTimeout(()=>{ const c=document.querySelector(`.skc[data-id="${pre}"]`); c&&c.click(); },60); }
