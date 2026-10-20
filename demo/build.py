@@ -14,9 +14,11 @@ import sys, shutil
 WEB = '--web' in sys.argv   # web build: page + separate clip files (for the hosted artifact); default: one self-contained file
 clipv = [{('src' if WEB else 'v'): ('clips/'+x['n']+'.mp4' if WEB else b64(x['n']+'.mp4','video/mp4')), 'p': ('clips/'+x['n']+'.jpg' if WEB else b64(x['n']+'.jpg','image/jpeg')), 'd': x['d'],
           'k': {'c': x['c'], 'dsc': x['dsc'], 'fps': x['fps'], 'pk': x['pk']}} for x in json.load(open(p('clips/index.json')))]
+onb = json.load(open(p('onb.json')))  # onboarding card photos (hi-res portrait crops)
 av = json.load(open(p('avatars.json'))); ci = json.load(open(p('cities.json'))); mp = json.load(open(p('mapdots.json')))
 out = (s.replace('/*SHOWS*/', shows)
         .replace('/*AVATARS*/', json.dumps([x['img'] for x in av]))
+        .replace('/*ONB*/', json.dumps(onb))
         .replace('/*CITIES*/', json.dumps(ci))
         .replace('/*MAP*/', json.dumps(mp))
         .replace('/*CLIPV*/', json.dumps(clipv)))

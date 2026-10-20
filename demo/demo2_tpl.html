@@ -2853,6 +2853,7 @@ const I = {
 };
 const ic = (n,sz=22) => `<svg class="icon" viewBox="0 0 24 24" style="width:${sz}px;height:${sz}px" aria-hidden="true">${I[n]}</svg>`;
 const AV=/*AVATARS*/;
+const ONB=/*ONB*/; // onboarding cards: 504x648 portrait crops of the Ticketmaster 2048px event art (onb.json)
 // Clip videos: inlined as data URIs at build time, turned into blob URLs once so each re-render reuses them
 const CLIPV=/*CLIPV*/; CLIPV.forEach(x=>{ if(!x.v){ x.u=x.src; return; } /* web build: clips are separate files */ try{ const b=atob(x.v.slice(x.v.indexOf(',')+1)), u=new Uint8Array(b.length); for(let i=0;i<b.length;i++) u[i]=b.charCodeAt(i); x.b=u; x.u=URL.createObjectURL(new Blob([u],{type:'video/mp4'})); }catch(_){ x.u=x.v; } });
 const mmss=t=>{ t=Math.max(0,Math.floor(t||0)); return Math.floor(t/60)+':'+String(t%60).padStart(2,'0'); };
@@ -4299,12 +4300,12 @@ function onb(){ const k=state.ob||0, N=5;
   const top=`<div class="obtop2">${k?`<button class="obic" data-act="obback" aria-label="Back">${ic('back',18)}</button>`:'<i></i>'}<span class="obwm">plus one</span><button class="obic sk" data-act="obskip">Skip</button></div>${dots}`;
   const h=(a,em,b)=>`<h1 class="obh2">${a} <em>${em}</em>${b?' '+b:''}</h1>`;
   let mid='', cta='', foot='';
-  if(k===0){ const hs=A('Harry Styles')||SHOWS[0], dc=A('Doja Cat')||SHOWS[1];
+  if(k===0){ const hs=A('Harry Styles')||SHOWS[0];
     mid=`${h('Never go','alone.')}<p class="obp2">Find a crew for the same show. Swap spare tickets at face value.</p>
       <div class="obstage" aria-hidden="true">
         <span class="obq">Anyone doing the pit? I can get there by 6</span>
-        <div class="obcard back">${img(dc)}</div>
-        <div class="obcard front">${img(hs)}<span class="obcb"><small>Pit crew · Sep 30 · MSG</small><b>Harry Styles</b><span class="obav3">${[0,1,3].map(i=>`<span>${avi(PEOPLE[i][3])}</span>`).join('')}<em>3 of 6 · you?</em></span></span></div>
+        <div class="obcard back"><img class="cover" alt="" decoding="sync" src="${ONB.cc}"></div>
+        <div class="obcard front"><img class="cover" alt="" decoding="sync" src="${ONB.hs}"><span class="obcb"><small>Pit crew · Sep 30 · MSG</small><b>Harry Styles</b><span class="obav3">${[0,1,3].map(i=>`<span>${avi(PEOPLE[i][3])}</span>`).join('')}<em>3 of 6 · you?</em></span></span></div>
         <span class="obtix">${ic('ticket',14)} Floor GA · $135 face value</span>
       </div>`;
     cta=`<button class="obgo" data-act="obnext">Continue with Apple</button>`; foot=`<button class="obskip3" data-act="obnext">Use email instead</button>`; }
