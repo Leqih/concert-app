@@ -2848,6 +2848,9 @@ button.csloc{box-shadow:inset 0 0 0 1.5px #0B0B0C;background:transparent}
 
 /* M45 the + menu sits above every page header (Explore's header keeps a z-index from its sticky days) */
 .pfbg{z-index:30!important}#psheet,.pfan{z-index:31!important}.xtop.xtop2{z-index:1}.app:has(.pfbg) .bnav{z-index:32!important}
+
+/* M46 Home has no page title: avatar, city and actions share one row */
+.whead.hh{grid-template-areas:"l t r"!important;grid-template-rows:auto}.whead.hh>.wtitle{align-items:center!important;text-align:center!important}.whead.hh .wcity{margin-top:0;font-size:15px;font-weight:600;color:#0B0B0C}
 </style>
 
 <div class="device"><i class="db act"></i><i class="db vu"></i><i class="db vd"></i><i class="db pw"></i><i class="db cc"></i>
@@ -3816,7 +3819,7 @@ function home(){
   return `<div class="scroll" id="sc"><div style="padding-bottom:110px">
     <header class="whead hh">
       <button class="wme" data-act="me" aria-label="Your profile">${avi(10)}</button>
-      <div class="wtitle"><h1>Plus One</h1><button class="wcity" data-act="citysheet" aria-haspopup="dialog">${ic('pin',13)}${state.city} ${ic('chev',12)}</button></div>
+      <div class="wtitle"><button class="wcity" data-act="citysheet" aria-haspopup="dialog">${ic('pin',13)}${state.city} ${ic('chev',12)}</button></div>
       <span class="whr"><button class="wicon" data-act="search" aria-label="Search">${ic('search',20)}</button><button class="wicon" data-act="actopen" aria-label="Activity${actUnread()?`, ${actUnread()} new`:''}">${ic('bell',20)}${actUnread()?'<span class="wdot"></span>':''}</button></span>
     </header>
 

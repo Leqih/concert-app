@@ -15,9 +15,9 @@
 
 | Token | 字号 / 字重 | 字体 | 对齐 | 用在哪里 |
 |---|---|---|---|---|
-| `--t-brand` | 34 / 700 | SF Pro Display | 左对齐 | 首页大标题 Plus One（iOS 大标题样式） |
+| `--t-brand` | — | — | — | 首页不放标题（M46）：顶部一行是左边头像、中间城市切换（15/600）、右边搜索和通知 |
 | `--t-hero` | 44 / 800 | Inter Tight | 跟随大图 | 全出血大图上的标题（演出页艺人名、场景页名称） |
-| `--t-page` | 34 / 700 | SF Pro Display | 左对齐 | 页面大标题（iOS large title）：Home、Explore、Tickets、Chats、List a spare。导航按钮在标题上方一行，副标题 15px 灰色 #8E8E93 |
+| `--t-page` | 34 / 700 | SF Pro Display | 左对齐 | 页面大标题（iOS large title）：Explore、Tickets、Chats、List a spare（首页没有标题）。导航按钮在标题上方一行，副标题 15px 灰色 #8E8E93 |
 | 页面副标题 | 13 / 400 | Inter | 与标题对齐 | 页面标题下方一行，灰色（`.wcity`） |
 | `--t-section` | 26 / 700 | Inter Tight | 居中 | 页面里的板块标题（This week's drop、Scenes、Spare tickets、Crews going、Show wall、Going to） |
 | 板块副标题 | 14 / 400 | Inter | 居中 | 板块标题下方，灰色（`.sub`），间距 3–4px |
