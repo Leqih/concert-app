@@ -4245,7 +4245,7 @@ function fvDrop(){ if(state.screen!=='home'||document.hidden||state.tsheet||stat
   row.insertAdjacentHTML('afterbegin',fvCard(x,true)); if(row.scrollLeft<40) row.scrollTo({left:0,behavior:'smooth'});
   const n=allSpares().length, c=document.getElementById('fvn'); if(c){ c.textContent=n; c.classList.remove('bump'); void c.offsetWidth; c.classList.add('bump'); }
   const m=row.querySelector('.fvmore small'); if(m) m.textContent=n+' spares'; }
-setInterval(fvDrop,9000);
+// M54: no live spare drops on Home — the row stays still (owner asked to remove the update animation)
 function fvHero(L){ const x=L.slice().sort((a,b)=>a.face-b.face)[0], tot=x.face+FEE, est=RESALE(x.face,x.id);
   return `<div class="fvhero"><span><b>Never pay double</b></span><span class="fvsv"><s>~$${est}</s><b>$${tot}</b><em>vs est. resale</em></span></div>`; }
 function sparesFor(s){ if(!s||LOCKED(s)) return []; const k=h(s.id); const n=s.artist==='Harry Styles'?2:[0,1,0,2,1,0,1][k%7];
