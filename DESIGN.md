@@ -135,7 +135,7 @@
 - **「+」菜单掉落动画**：背景用 96% 不透明的实色，不用实时模糊（模糊会在动画的每一帧重新计算）；卡片用 translate3d 移动；阴影滤镜只在悬停时出现。
 - **首页 Never pay double**：不再自动插入新的余票卡片（原来每 9 秒插入一张），这一行保持静止。
 
-## 17. 开屏引导（M55–M61）
+## 17. 开屏引导（M55–M69）
 
 参照 iOS 系统设置流程，不做花哨效果：
 - **整体**：纯黑背景，不放星空和渐变。顶部是 iOS 导航行（左「‹ Back」，右「Skip」），不放品牌字标。标题 34px / 700，只用一种颜色（不再把某个词标成灰色）。说明文字 17px，用次级灰。底部是页码点，下面是 50px 高、14px 圆角的主按钮。
@@ -144,6 +144,16 @@
 - **欢迎页**：一张竖直的卡片居中，另一张卡片藏在后面；消息气泡在卡片右上角，票价标签横跨卡片底边。「Continue with Apple」按钮带 Apple 标志。
 - **名字和照片**：点「Edit Photo」弹出 iOS 操作菜单（拍照、从相册选择、使用 Apple 账户照片、移除照片）；「从相册选择」打开「最近项目」网格。
 - **连接票务**：先选购票平台（Ticketmaster、AXS、SeatGeek、Dice），然后依次是：系统登录提示 → 网页登录 → 授权页（列出能做和不能做的事）→ 回到 App 后逐场显示已验证。另有「上传票的截图」和「转发确认邮件」两种方式。只读，不能转让、出售，也看不到支付信息。
-- **城市**：「Use Current Location」是一个操作，不算一个选项。点击后先弹出系统定位权限提示；允许后在下面的城市列表里选中对应城市，整页只有一个勾。拒绝后提示「Location is off · choose a city below」。
+- **城市**：只有没连接票务时才出现这一步（连了票就从场馆得知城市）。「Use Current Location」是一个操作，不算一个选项。点击后先弹出系统定位权限提示；允许后在下面的城市列表里选中对应城市，整页只有一个勾。拒绝后提示「Location is off · choose a city below」。
 - **偏好**：每项一行简短说明，右侧是圆形勾选，列表标题实时显示「n of 3 selected」，原地切换，不刷新整页。
 - **演示**：点设备边框右侧的电源键可以从头开始引导。
+
+### 17.1 流程与认证（M62–M69）
+
+- **顺序**：欢迎 → 连接票务 → 名字和照片 → 城市（仅在没连票时）→ 偏好。页码点数量跟着实际步骤数变化。
+- **Skip**：只跳过当前这一步；欢迎页没有 Skip；在最后一步按 Skip 则结束引导。
+- **Sign in with Apple**：点「Continue with Apple」弹出系统面板，里面有 App 图标、「Create a Plus One account using your Apple Account」、名字，以及「Share My Email / Hide My Email」两个选项。点 Continue 后，**Face ID 在灵动岛里进行**：灵动岛弹开 → 扫描 → 出现对勾 → 收起，然后面板关闭。之后名字自动带入，名字那一步写明「Filled in from your Apple Account」。
+- **票务网站的登录页**：在 Sign In 下面加「or」分隔，然后是「Continue with Google」（打开 Google 选择账户页，对应 accounts.google.com）和「Continue with Apple」。
+- **授权页**：仿照真实的授权页面。顶部是票务网站名称，下面是 App 图标、开发者和「Verified app」，再下面一行「Logged in as … · Not you?」。只列出 Plus One **能做**的两项（带线条图标），限制和撤销访问的方法写在说明小字里。按钮是整宽的 Agree 和纯文字的 Cancel，底部是网站页脚。
+- **验证结果**：沿用这一步的标题，副标题写「N upcoming shows verified」。下面是「Accounts」分组（已连接账户，最后一行「Add Account」）和「Upcoming shows」列表。每场一行，写日期 · 场馆 · 区域，右侧是张数。不用庆祝式的成功页。
+- **结束**：连了票的直接进入第一场演出的小队列表，并提示「Welcome, Jordan · crews for your next show」。没连票的进入 Explore。小队列表**目前还没有按偏好排序**。
