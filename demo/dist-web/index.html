@@ -2893,9 +2893,313 @@ button.csloc{box-shadow:inset 0 0 0 1.5px #0B0B0C;background:transparent}
 .cpin.sel .cs.b1{transform:translateX(42px)!important;opacity:1!important}
 .cpin.sel .cs.f,.cpin.sel .cs.b1,.cpin.sel .cs.b2{box-shadow:0 0 0 1px rgba(11,11,12,.08),0 8px 18px rgba(11,11,12,.16)!important}
 @keyframes cpop2{0%{transform:scale(.9)}60%{transform:scale(1.1)}100%{transform:scale(1.06)}}
+
+/* ===== M51 Explore header: search sits on the right next to Find a crew ===== */
+.xhd2{grid-template-areas:". . r" "t t t"!important}
+.xact{grid-area:r;justify-self:end;display:flex;align-items:center;gap:8px}
+
+/* ===== M52 fixes =====
+   profile pages are light pages with a dark hero ('dk' only for the status bar), so keep the light page background */
+.app.dk #view:has(.phero){background:var(--bg)}
+/* + menu: hover lifts with a soft, layered shadow on the shape only, eased in */
+.pfan4 .pk.sh{transition:scale .3s cubic-bezier(.2,.8,.2,1)}
+.pfan4 .pk.sh .shp{transition:filter .3s ease;filter:drop-shadow(0 1px 1px rgba(11,11,12,0)) drop-shadow(0 4px 8px rgba(11,11,12,0))}
+.pk.sh.hot,.pk.sh.dealt.hot,.pk.sh:focus-visible{filter:none!important}
+.pfan4 .pk.sh.hot .shp,.pfan4 .pk.sh:focus-visible .shp{filter:drop-shadow(0 2px 3px rgba(11,11,12,.08)) drop-shadow(0 10px 18px rgba(11,11,12,.10))}
+.xcgrid{will-change:opacity,transform}
+
+/* ===== M53 + menu drop runs smoothly =====
+   the backdrop was a 20px live blur behind a 90%-opaque fill: it re-blurred the page on every frame of the drop.
+   Same look with a solid fill; the shape shadow filter only exists while hovered */
+.pfbg:has(+ .pfan4){background:rgba(242,242,244,.96)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+.pfan4 .pk.sh .shp{filter:none}
+.pfan4 .pk.sh{will-change:transform;backface-visibility:hidden}
+
+/* ===== M55 onboarding top: story-style progress bar, quiet nav row, framed card stage =====
+   progress sits right under the status bar; back / wordmark / Skip are plain text-weight controls, no pills */
+.obdots{position:absolute;left:16px;right:16px;top:calc(var(--st) + 4px);margin:0;gap:4px;z-index:2}
+.obdots i,.obdots i.on{flex:1;width:auto!important;height:3px;border-radius:2px;background:rgba(255,255,255,.18);position:relative;overflow:hidden}
+.obdots i.done{background:rgba(255,255,255,.85)}
+.obdots i.on::after{content:"";position:absolute;inset:0;background:#fff;transform-origin:0 50%;animation:obseg .5s cubic-bezier(.2,.8,.2,1) both}
+@keyframes obseg{from{transform:scaleX(0)}to{transform:none}}
+.obtop2{grid-template-columns:64px 1fr 64px;padding:calc(var(--st) + 14px) 8px 0;min-height:calc(var(--st) + 58px)}
+.obwm{font-size:17px;font-weight:600;letter-spacing:-.02em;color:rgba(255,255,255,.92)}
+.obic{width:44px;height:44px;background:none;box-shadow:none;color:rgba(255,255,255,.9)}
+.obic.sk{justify-self:end;height:44px;padding:0 10px;border-radius:0;background:none;box-shadow:none;font-size:15px;font-weight:500;color:rgba(255,255,255,.62)}
+.obic:active,.obic.sk:active{opacity:.5}
+.obmid{padding-top:18px}
+/* welcome stage: keep both cards inside the screen and calm the tilt */
+.obstage{margin:18px -22px 0}
+.obcard{width:196px;height:256px;border-radius:22px}
+.obcard.back{right:16px;top:22px;transform:rotate(8deg);opacity:.6}
+.obcard.front{left:30px;top:52px;transform:rotate(-6deg)}
+.obq{right:20px;top:-4px;max-width:210px}
+.obtix{left:24px;bottom:auto;top:322px;transform:rotate(-2deg)}
+
+/* ===== M56 onboarding in Apple's setup language =====
+   solid black, no starfield; iOS nav row (‹ Back · Skip); large title 34/700 with plain secondary words;
+   17px body in secondary label grey; page-control dots above a 50px / 14px-radius button; still cards */
+.obd{background:#000!important}
+.obsky{display:none}
+.obtop2{grid-template-columns:1fr auto 1fr;padding:calc(var(--st) + 2px) 8px 0;min-height:calc(var(--st) + 46px)}
+.obic.obbk{justify-self:start;width:auto;height:44px;padding:0 8px;gap:5px;display:inline-flex;align-items:center;font-size:17px;font-weight:400;letter-spacing:-.02em;color:#fff}
+.obic.sk{font-size:17px!important;font-weight:400!important;letter-spacing:-.02em;color:rgba(235,235,245,.6)!important;padding:0 8px!important}
+.obd{display:flex;flex-direction:column}.obtop2{order:0}.obmid{order:1}.obdots{order:2}.obbot{order:3}
+.obdots{position:relative!important;left:auto;right:auto;top:auto;justify-content:center;gap:8px!important;margin:10px 0 0!important}
+.obdots i,.obdots i.on,.obdots i.done{flex:none;width:7px!important;height:7px!important;border-radius:50%;background:rgba(235,235,245,.3)}
+.obdots i.on{background:#fff}.obdots i.on::after{display:none}
+.obmid{padding:12px 24px 0}
+.obh2{font-family:var(--body);font-size:34px;font-weight:700;letter-spacing:-.02em;line-height:1.12}
+.obh2 em{font-style:normal;font-weight:700;letter-spacing:-.02em;color:rgba(235,235,245,.6)}
+.obp2{margin-top:10px;max-width:320px;font-size:17px;line-height:1.35;letter-spacing:-.02em;color:rgba(235,235,245,.6)}
+.obh3{font-family:var(--body);font-weight:700;letter-spacing:-.02em}.obp3{letter-spacing:-.02em}
+.obbot{gap:2px;padding:14px 24px calc(10px + var(--sb))}
+.obgo{height:50px;border-radius:14px;font-size:17px;font-weight:600;letter-spacing:-.02em}
+.obgo.ghost{background:rgba(118,118,128,.24);box-shadow:none}
+.obskip3{min-height:44px;font-size:17px;font-weight:400;letter-spacing:-.02em;color:#fff}
+.s0 .obbot{background:none;margin-top:0}.obdots{z-index:2}
+/* welcome stage: still, soft shadows, iMessage-grey bubble */
+.obcard,.obcard.back,.obcard.front{animation:none!important;box-shadow:0 20px 40px rgba(0,0,0,.5),inset 0 0 0 .5px rgba(255,255,255,.14)}
+.obq{background:#262628;backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:none;font-size:15px}
+.obtix{box-shadow:0 8px 20px rgba(0,0,0,.35);font-weight:600}
+/* inputs and choice rows as iOS grouped cells */
+.obin2 input{height:52px;border-radius:12px;background:#1C1C1E;box-shadow:none;font-family:var(--body);font-size:20px;font-weight:600;letter-spacing:-.02em}
+.obsvc2 button{height:52px;border-radius:12px;background:#1C1C1E;box-shadow:none}
+.obcity2 button{border-radius:14px}.obcity2 b{font-family:var(--body);font-weight:700;letter-spacing:-.02em}
+.obchip{background:#1C1C1E;backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:none}
+
+/* M56 scenes step: chips wrap in centred rows (no falling heap, nothing cut off at the edges) */
+.obheap{display:flex;flex-wrap:wrap;justify-content:center;align-content:flex-start;gap:8px;height:auto!important;margin:22px 0 0!important}
+.obchip,.obchip.v,.obchip[aria-pressed=true]{position:static!important;left:auto!important;top:auto!important;bottom:auto!important;right:auto!important;transform:none!important;animation:obin .4s cubic-bezier(.2,.8,.2,1) both!important;height:36px;font-size:15px;font-weight:500;letter-spacing:-.01em}
+.obchip[aria-pressed=true]{background:#fff;color:#000}
+.s4 .obstate{margin-top:auto}
+
+/* ===== M57 welcome stage, composed: one upright hero card centred in the free space, the second card tucked
+   behind it, the message bubble on the top-right corner and the ticket tag straddling the bottom edge ===== */
+.obstage{flex:1;min-height:380px;margin:12px -24px 0}
+.obcard,.obcard.front,.obcard.back{left:50%!important;right:auto!important;width:224px;height:296px;margin-left:-112px;border-radius:24px}
+.obcard.front{top:calc(50% - 150px)!important;transform:none!important;z-index:2;box-shadow:0 24px 48px rgba(0,0,0,.6),inset 0 0 0 .5px rgba(255,255,255,.16)!important}
+.obcard.back{top:calc(50% - 150px)!important;transform:translate(58px,-12px) scale(.88) rotate(6deg)!important;opacity:.45!important;filter:saturate(.8) brightness(.8)!important;z-index:1}
+.obcard.front::after{background:linear-gradient(180deg,rgba(0,0,0,0) 40%,rgba(0,0,0,.82))}
+.obcb{left:16px;right:16px;bottom:30px}
+.obcb small{font-size:12px;font-weight:600;letter-spacing:0;color:rgba(255,255,255,.72)}
+.obcb b{font-family:var(--body);font-size:26px;font-weight:700;letter-spacing:-.025em;line-height:1.1}
+.obav3 em{font-size:13px;font-weight:600;color:rgba(255,255,255,.85)}
+.obq{left:calc(50% + 6px)!important;right:auto!important;top:calc(50% - 186px)!important;z-index:3;max-width:176px;padding:8px 12px;border-radius:18px 18px 18px 6px;font-size:15px;line-height:1.3;letter-spacing:-.01em;background:#2C2C2E;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.obtix{left:50%!important;top:calc(50% + 128px)!important;bottom:auto!important;z-index:3;height:36px;white-space:nowrap;padding:0 14px;gap:7px;font-size:14px;font-weight:600;letter-spacing:-.01em;transform:translateX(-50%)!important;animation:obin .5s .45s cubic-bezier(.2,.8,.2,1) both!important;box-shadow:0 10px 24px rgba(0,0,0,.45)}
+/* Sign in with Apple: logo + label, centred */
+.obsia{display:inline-flex;align-items:center;justify-content:center;gap:7px}.obapl{margin-top:-3px}
+
+/* ===== M58 onboarding without the gimmicks: one-colour titles, no pop/deal/fall animations,
+   every choice is an iOS inset grouped list (12px radius, 0.5px separators, checkmarks, chevrons) ===== */
+.obh2,.obp2,.obq,.obtix,.obwallet>span,.obchip{animation:none!important}
+.obmid{animation:obfade .28s ease both}@keyframes obfade{from{opacity:0}}
+.obp2{margin:8px auto 0;max-width:300px}
+.obmid{padding-bottom:12px}
+.iog{margin-top:26px;border-radius:12px;background:#1C1C1E;overflow:hidden}
+.iohd{margin:26px 16px 0;font-size:13px;text-transform:uppercase;letter-spacing:.02em;color:rgba(235,235,245,.6)}
+.iohd+.iog{margin-top:7px}
+.iofoot{margin:8px 16px 0;font-size:13px;line-height:1.35;color:rgba(235,235,245,.6)}
+.iorow{position:relative;display:flex;align-items:center;gap:12px;width:100%;min-height:44px;padding:8px 16px;text-align:left;color:#fff;background:none}
+.iorow+.iorow::before{content:"";position:absolute;top:0;right:0;left:16px;border-top:.5px solid rgba(84,84,88,.65)}
+.iorow:has(.iothumb,.iolg)+.iorow::before{left:68px}
+button.iorow:active{background:#2C2C2E}
+.iotx{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+.iotx b{font-size:17px;font-weight:400;letter-spacing:-.02em;line-height:1.25}
+.iotx small{font-size:13px;line-height:1.3;color:rgba(235,235,245,.6)}
+.iothumb{flex:none;width:40px;height:40px;border-radius:8px;overflow:hidden;background:#2C2C2E}.iothumb img{width:100%;height:100%;object-fit:cover}
+.iolg{flex:none;width:40px;height:40px;border-radius:9px;display:grid;place-items:center;background:#2C2C2E;font-size:17px;font-weight:600}
+.iochev{flex:none;color:rgba(235,235,245,.3)}
+.iock{flex:none;color:#fff}
+.iover{flex:none;display:inline-flex;align-items:center;gap:5px;font-style:normal;font-size:15px;color:rgba(235,235,245,.6)}.iover .iock{color:rgba(235,235,245,.6);width:12px}
+.iorow:disabled{opacity:1}.iorow:disabled .iotx{opacity:.5}
+.ioin{gap:16px}.ioin>span{flex:none;font-size:17px;letter-spacing:-.02em}
+.ioin input{flex:1;min-width:0;height:44px;border:0;outline:0;background:none;color:#fff;font:inherit;font-size:17px;letter-spacing:-.02em;text-align:right}
+.ioin input::placeholder{color:rgba(235,235,245,.3)}
+.obavx{display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:28px}
+.obavx>span{width:96px;height:96px;border-radius:50%;overflow:hidden}.obavx img,.obavx .avimg{width:100%;height:100%;object-fit:cover}
+.obavx button{font-size:15px;color:#fff;font-weight:500;padding:4px 8px}
+.ioch .iocirc{flex:none;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;box-shadow:inset 0 0 0 1.5px rgba(235,235,245,.3);transition:background .15s}
+.ioch .iocirc .iock{width:12px;opacity:0;color:#000}
+.ioch[aria-pressed=true] .iocirc{background:#fff;box-shadow:none}.ioch[aria-pressed=true] .iocirc .iock{opacity:1}
+.ioch .iotx small{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+/* M58 fixes: thumbnails contain their cover image; list header/footer text is left-aligned; service tiles at iOS icon size */
+.iothumb{position:relative}.iothumb img.cover{position:absolute;inset:0}
+.iohd,.iofoot,.iog{text-align:left}
+.iolg{width:30px;height:30px;border-radius:7px;font-size:15px}
+.iorow:has(.iolg)+.iorow::before{left:58px}
+
+.obh2{text-wrap:balance}
+
+/* M59 the device's power button restarts onboarding (wider invisible hit area, presses in) */
+.db.pw{cursor:pointer;transition:transform .12s}.db.pw::before{content:"";position:absolute;inset:-6px -14px -6px -8px}.db.pw:active{transform:translateX(-1.5px)}
+
+/* lists keep their full height so the step scrolls instead of clipping the last rows */
+.obmid>*{flex-shrink:0}
+
+/* ===== M60 onboarding p1–p4 =====
+   p1 photo: iOS action sheet + Recents picker; p2 platform sign-in: system prompt → web sheet (sign in → consent) → live verification;
+   p3 current-location row; p4 one-line descriptions and a live "n of 3" header */
+.obov{position:absolute;inset:0;z-index:20;background:rgba(0,0,0,.5);animation:obfade .2s ease both}
+.obavx>span.none{display:grid;place-items:center;background:#2C2C2E;color:rgba(235,235,245,.6)}
+.ioas{position:absolute;left:8px;right:8px;bottom:calc(8px + var(--sb));z-index:21;display:flex;flex-direction:column;gap:8px;animation:sheetup .32s cubic-bezier(.32,.72,0,1) both}
+.ioasg{border-radius:14px;background:rgba(44,44,46,.97);overflow:hidden}
+.ioasg button{display:block;width:100%;height:57px;font-size:20px;letter-spacing:-.02em;color:#fff;background:none}
+.ioasg button+button{border-top:.5px solid rgba(84,84,88,.65)}
+.ioasg button:active{background:rgba(255,255,255,.08)}
+.ioasg button.dst{color:#FF453A}.ioasg button.cx{font-weight:600}
+.iolib{position:absolute;left:0;right:0;bottom:0;top:calc(var(--st) + 10px);z-index:21;border-radius:12px 12px 0 0;background:#1C1C1E;animation:sheetup .35s cubic-bezier(.32,.72,0,1) both;overflow:hidden}
+.iolibh{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:56px;padding:0 16px}.iolibh button{justify-self:start;font-size:17px;color:#fff}.iolibh b{font-size:17px;font-weight:600}
+.iolibg{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}.iolibg button{aspect-ratio:1;overflow:hidden;background:#2C2C2E}.iolibg img{width:100%;height:100%;object-fit:cover;border-radius:0!important}
+.ioa{position:absolute;left:50%;top:50%;z-index:21;width:270px;margin-left:-135px;transform:translateY(-50%);border-radius:14px;background:rgba(44,44,46,.97);text-align:center;overflow:hidden;animation:ioapop .25s cubic-bezier(.2,.9,.3,1.1) both}
+@keyframes ioapop{from{opacity:0;transform:translateY(-50%) scale(1.1)}}
+.ioa b{display:block;padding:19px 16px 2px;font-size:17px;font-weight:600;line-height:1.3;letter-spacing:-.02em}
+.ioa p{margin:0;padding:2px 16px 19px;font-size:13px;line-height:1.35}
+.ioa-b{display:grid;grid-template-columns:1fr 1fr;border-top:.5px solid rgba(84,84,88,.65)}
+.ioa-b button{height:44px;font-size:17px;color:#fff;letter-spacing:-.02em}.ioa-b button+button{border-left:.5px solid rgba(84,84,88,.65);font-weight:600}
+.iows{position:absolute;left:0;right:0;bottom:0;top:calc(var(--st) + 10px);z-index:21;border-radius:12px 12px 0 0;background:#fff;color:#000;animation:sheetup .38s cubic-bezier(.32,.72,0,1) both;overflow:hidden;text-align:left}
+.iowsh{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:52px;padding:0 16px;background:#F2F2F7;border-bottom:.5px solid rgba(60,60,67,.29)}
+.iowsh button{justify-self:start;font-size:17px;color:#000}
+.iowsh span{display:inline-flex;align-items:center;gap:4px;font-size:13px;font-weight:500;color:rgba(60,60,67,.6)}.iowsh span svg{width:11px;height:11px}
+.iowsb{padding:28px 24px;display:flex;flex-direction:column;gap:12px}
+.iowsm{align-self:flex-start;font-size:15px;font-weight:700;letter-spacing:-.01em;padding:6px 10px;border-radius:6px;background:#000;color:#fff}
+.iowsb h2{margin:10px 0 6px;font-size:26px;font-weight:700;letter-spacing:-.02em;line-height:1.15}
+.iowsf{display:flex;flex-direction:column;gap:6px}.iowsf small{font-size:13px;font-weight:600;color:rgba(60,60,67,.6)}
+.iowsf input{height:48px;padding:0 14px;border:1px solid #D1D1D6;border-radius:10px;outline:0;font:inherit;font-size:17px;color:#000;background:#fff}
+.iowsgo{height:50px;margin-top:8px;border-radius:12px;background:#000;color:#fff;font-size:17px;font-weight:600}.iowsgo:disabled{opacity:.5}
+.iowsno{height:44px;font-size:17px;color:#000}
+.iowsp{margin:0;font-size:13px;line-height:1.4;color:rgba(60,60,67,.6)}
+.iowsl{list-style:none;margin:6px 0 4px;padding:0;display:flex;flex-direction:column;border-top:.5px solid rgba(60,60,67,.29)}
+.iowsl li{position:relative;padding:13px 0 13px 30px;font-size:15px;line-height:1.35;border-bottom:.5px solid rgba(60,60,67,.29)}
+.iowsl li::before{position:absolute;left:2px;top:12px;width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:700}
+.iowsl li.ok::before{content:"✓";background:#000;color:#fff}
+.iowsl li.no{color:rgba(60,60,67,.6)}.iowsl li.no::before{content:"✕";background:#E5E5EA;color:rgba(60,60,67,.6)}
+.iolg svg{width:16px;height:16px}
+.iog .obspin{flex:none;width:18px;height:18px}
+
+/* M60 re-renders inside a step don't replay entrance animations: the step fades only when it changes, the web sheet slides up once */
+.obmid{animation:none}.obmid.fresh{animation:obfade .28s ease both}
+.iows{animation:none}.iows.enter{animation:sheetup .38s cubic-bezier(.32,.72,0,1) both}
+.obov.still{animation:none}
+
+/* M61 location permission alert: three stacked actions, like iOS */
+.ioa3 .ioa-b{grid-template-columns:1fr}.ioa3 .ioa-b button+button{border-left:0;border-top:.5px solid rgba(84,84,88,.65);font-weight:400}
+
+/* M62 the ticket site's sign-in page offers Google and Apple; Google opens its account chooser */
+.iowsor{display:flex;align-items:center;gap:12px;margin:2px 0;color:rgba(60,60,67,.6);font-size:13px}.iowsor::before,.iowsor::after{content:"";flex:1;border-top:.5px solid rgba(60,60,67,.29)}
+.iowsalt{height:50px;border-radius:12px;display:flex;align-items:center;justify-content:center;gap:10px;background:#fff;color:#000;font-size:17px;font-weight:600;box-shadow:inset 0 0 0 1px #D1D1D6}
+.iowsalt:active{background:#F2F2F7}
+.iowsgg{display:flex;align-items:center;gap:8px;font-size:14px;color:rgba(60,60,67,.8)}.iowsgg b{font-weight:500}
+.iowsacc{display:flex;flex-direction:column;border-top:.5px solid rgba(60,60,67,.29)}
+.iowsacc button{display:flex;align-items:center;gap:12px;padding:12px 0;text-align:left;color:#000;border-bottom:.5px solid rgba(60,60,67,.29)}
+.iowsacc b{display:block;font-size:15px;font-weight:600}.iowsacc small{font-size:13px;color:rgba(60,60,67,.6)}
+.iowsav{flex:none;width:36px;height:36px;border-radius:50%;overflow:hidden;display:grid;place-items:center}.iowsav img{width:100%;height:100%;object-fit:cover}.iowsav.add{background:#F2F2F7;color:rgba(60,60,67,.8)}
+.iowsb{overflow-y:auto;max-height:calc(100% - 52px)}
+
+/* M63 consent page like a real OAuth screen */
+.iowsapps{display:flex;align-items:center;justify-content:center;gap:10px;margin:4px 0 6px}
+.iowsapp{min-width:52px;height:52px;padding:0 10px;border-radius:12px;display:grid;place-items:center;background:#000;color:#fff;font-size:15px;font-weight:700;letter-spacing:-.01em}
+.iowsapp.po{font-size:20px;letter-spacing:-.04em}
+.iowsapps i{width:34px;height:2px;background:repeating-linear-gradient(90deg,rgba(60,60,67,.35) 0 4px,transparent 4px 8px)}
+.iowsb h2{text-align:center;font-size:22px;margin:6px 0 2px}
+.iowsme{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;background:#F2F2F7}
+.iowsme b{display:block;font-size:15px;font-weight:600}.iowsme small{font-size:13px;color:rgba(60,60,67,.6)}
+.iowsme>span:nth-child(2){flex:1;min-width:0}
+.iowsme button{font-size:15px;color:#000;text-decoration:underline;text-underline-offset:2px}
+.iowss{margin:6px 0 0;font-size:15px;font-weight:600}
+.iowsl{margin:0!important}
+.iowsl li b{display:block;font-size:15px;font-weight:500}.iowsl li small{font-size:13px;color:rgba(60,60,67,.6)}
+.iowsp u{color:#000;text-underline-offset:2px}
+.iowsbtns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
+.iowsbtns .iowsgo{margin-top:0}.iowsbtns .iowsno{height:50px;border-radius:12px;background:#F2F2F7;font-weight:600}
+
+/* M64 consent page modelled on real OAuth authorize pages: provider brand on top, a proper app icon with publisher + verified,
+   compact account line, permission rows with line icons, fine print, full-width Agree with a plain Cancel, provider footer */
+.iowsb:has(.iocs){padding:0}
+.iocs{display:flex;flex-direction:column;padding:22px 24px 18px;min-height:100%}
+.iocs-brand{align-self:center;font-size:22px;font-weight:800;letter-spacing:-.04em;margin-bottom:22px}
+.iocs-app{display:flex;align-items:center;gap:12px;padding-bottom:16px;border-bottom:.5px solid rgba(60,60,67,.2)}
+.iocs-icon{flex:none;width:52px;height:52px;border-radius:12px;background:#0B0B0C;color:#fff;display:flex;flex-direction:column;justify-content:center;padding-left:9px;font-family:var(--display);font-size:13px;line-height:1;letter-spacing:-.03em;box-shadow:inset 0 0 0 .5px rgba(255,255,255,.12)}
+.iocs-icon b{font-weight:800}.iocs-icon b+b{font-weight:400;opacity:.75}
+.iocs-app>span:last-child b{display:block;font-size:17px;font-weight:600;letter-spacing:-.02em}
+.iocs-app small{display:inline-flex;align-items:center;gap:4px;font-size:13px;color:rgba(60,60,67,.6)}.iocs-app small svg{width:11px;height:11px}
+.iocs-acct{margin:14px 0 0;font-size:13px;color:rgba(60,60,67,.7)}.iocs-acct b{font-weight:600;color:#000}
+.iocs-acct button{font-size:13px;color:#000;font-weight:500;text-decoration:underline;text-underline-offset:2px}
+.iocs-h{margin:20px 0 6px!important;text-align:left!important;font-size:17px!important;font-weight:600!important;letter-spacing:-.02em}
+.iocs-l{list-style:none;margin:0;padding:0}
+.iocs-l li{display:flex;gap:12px;align-items:flex-start;padding:10px 0}
+.iocs-l li svg{flex:none;margin-top:1px;color:#000}
+.iocs-l b{display:block;font-size:15px;font-weight:500;letter-spacing:-.01em}.iocs-l small{font-size:13px;color:rgba(60,60,67,.6)}
+.iocs-fine{margin:10px 0 0;font-size:12px;line-height:1.45;color:rgba(60,60,67,.6)}.iocs-fine.c{text-align:center;margin-top:12px}.iocs-fine u{color:#000}
+.iocs-go{margin-top:18px!important;height:48px;border-radius:24px}
+.iocs-cx{height:44px;font-size:15px;font-weight:600;color:#000}
+.iocs-foot{margin-top:auto;padding-top:18px;display:flex;justify-content:center;gap:14px;font-size:11px;color:rgba(60,60,67,.5)}
+
+/* M65 tickets step result: a real success state — confirmation mark, "You're all set", connected accounts (+ add another),
+   the shows found with section and ticket count instead of a "Verified" on every row */
+.obok{align-self:center;width:56px;height:56px;border-radius:50%;background:#fff;display:grid;place-items:center;margin:2px auto 14px}
+.obok .iock{width:24px;height:20px;color:#000}
+.iocnt,.iocon{flex:none;font-style:normal;font-size:15px;color:rgba(235,235,245,.6)}
+.iocon{display:inline-flex;align-items:center;gap:5px}.iocon .iock{width:12px;color:rgba(235,235,245,.6)}
+.iolg.add{background:none;box-shadow:inset 0 0 0 1px rgba(235,235,245,.3)}
+.iorow.dim .iotx{opacity:.55}
+
+/* M66 tickets result as a standard settings state: same step title, Accounts group with an "Add Account" row, one-line show rows */
+.iog .iotx small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ioadd .iotx b{color:#fff;font-weight:400}
+.ioadd{min-height:44px}
+
+/* ===== M67 onboarding flow: Sign in with Apple sheet (name, share / hide email, Face ID), Skip moves one step ===== */
+.iosia{position:absolute;left:0;right:0;bottom:0;z-index:21;border-radius:12px 12px 0 0;background:#1C1C1E;padding-bottom:calc(14px + var(--sb))}
+.iosia.enter{animation:sheetup .38s cubic-bezier(.32,.72,0,1) both}
+.iosiah{display:flex;align-items:center;justify-content:space-between;padding:14px 16px 6px}
+.iosiah span{display:inline-flex;align-items:center;gap:6px;font-size:15px;font-weight:600}
+.iosiah button{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:#2C2C2E;color:rgba(235,235,245,.6)}
+.iosiab{display:flex;flex-direction:column;align-items:center;gap:0;padding:6px 16px 0}
+.iosiab .iocs-icon{width:56px;height:56px;margin-top:4px}
+.iosiab h3{margin:12px 8px 16px;text-align:center;font-size:20px;font-weight:700;letter-spacing:-.02em;line-height:1.2}
+.iog.lt{width:100%;margin-top:0;margin-bottom:12px;background:#2C2C2E}
+.iog.lt .iotx small{order:0}
+.iosiab .obgo{margin-top:6px}
+.iosiafid{height:300px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.iosiafid b{font-size:17px;font-weight:600}
+.fid{width:64px;height:64px;position:relative}
+.fid::before,.fid::after,.fid i{content:"";position:absolute}
+.fid::before{inset:0;border-radius:14px;border:3px solid #fff;-webkit-mask:linear-gradient(#000 0 0) top left/14px 14px no-repeat,linear-gradient(#000 0 0) top right/14px 14px no-repeat,linear-gradient(#000 0 0) bottom left/14px 14px no-repeat,linear-gradient(#000 0 0) bottom right/14px 14px no-repeat;mask:linear-gradient(#000 0 0) top left/14px 14px no-repeat,linear-gradient(#000 0 0) top right/14px 14px no-repeat,linear-gradient(#000 0 0) bottom left/14px 14px no-repeat,linear-gradient(#000 0 0) bottom right/14px 14px no-repeat}
+.fid i{left:20px;right:20px;top:36px;height:8px;border:3px solid #fff;border-top:0;border-radius:0 0 10px 10px}
+.fid::after{left:21px;top:20px;width:3px;height:8px;background:#fff;border-radius:2px;box-shadow:19px 0 0 #fff}
+.iosiafid .fid{animation:fidpulse .9s ease-in-out}@keyframes fidpulse{40%{transform:scale(.92)}}
+
+/* M68 Face ID as the system HUD: 160px rounded square in the centre, dark material, glyph scans then becomes a check */
+.fidhud{position:absolute;left:50%;top:50%;z-index:30;width:160px;height:160px;margin:-80px 0 0 -80px;border-radius:30px;background:rgba(40,40,42,.96);box-shadow:0 10px 40px rgba(0,0,0,.35);-webkit-backdrop-filter:blur(30px) saturate(1.6);backdrop-filter:blur(30px) saturate(1.6);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;color:#fff}.fidhud.scan{animation:fidin .22s ease-out both}
+@keyframes fidin{from{opacity:0;transform:scale(.92)}}
+.fidhud b{font-size:15px;font-weight:600;letter-spacing:-.01em}
+.fidg{width:64px;height:64px}
+.fidhud .done{opacity:0}
+.fidhud.scan .scan{transform-origin:32px 32px;animation:fidscan 1s ease-in-out both}
+@keyframes fidscan{0%{opacity:.4}35%{opacity:1;transform:scale(.94)}70%{transform:scale(1.02)}100%{opacity:1;transform:none}}
+.fidhud.ok .scan{opacity:0;transition:opacity .15s}
+.fidhud.ok .done{opacity:1;stroke-dasharray:180;stroke-dashoffset:180;animation:fidok .45s ease-out forwards}
+@keyframes fidok{to{stroke-dashoffset:0}}
+
+/* ===== M69 Face ID in the Dynamic Island (how iPhone 14 Pro and later show authentication) ===== */
+.fidhud{display:none!important}
+.isl{display:grid;place-items:center;overflow:hidden;transition:width .55s cubic-bezier(.34,1.32,.64,1),height .55s cubic-bezier(.34,1.32,.64,1),margin-left .55s cubic-bezier(.34,1.32,.64,1),border-radius .55s cubic-bezier(.34,1.32,.64,1)}
+.app.fid .isl{width:124px;height:124px;margin-left:-62px;border-radius:42px;box-shadow:0 0 0 .5px rgba(255,255,255,.1),0 12px 30px rgba(0,0,0,.5)}
+.islfid{width:58px;height:58px;color:#fff;opacity:0;transform:scale(.55);transition:opacity .18s,transform .3s}
+.app.fid .islfid{opacity:1;transform:none;transition:opacity .25s .18s,transform .45s .12s cubic-bezier(.34,1.4,.64,1)}
+.islfid .done{opacity:0}
+.app.fid:not(.fid-ok) .islfid .scan{transform-origin:32px 32px;animation:islscan 1.1s ease-in-out .25s both}
+@keyframes islscan{0%{opacity:.35}30%{opacity:1}45%{transform:rotateY(25deg) scale(.95)}70%{transform:rotateY(-15deg)}100%{transform:none}}
+.app.fid-ok .islfid .scan{opacity:0;transition:opacity .12s}
+.app.fid-ok .islfid .done{opacity:1;stroke-dasharray:180;stroke-dashoffset:180;animation:fidok .42s cubic-bezier(.4,0,.2,1) forwards}
+
+/* the status-bar icon rules paint svg strokes dark; the Face ID glyph is always white */
+.islfid g,.islfid path,.islfid circle{stroke:#fff!important;fill:none!important}
 </style>
 
-<div class="device"><i class="db act"></i><i class="db vu"></i><i class="db vd"></i><i class="db pw"></i><i class="db cc"></i>
+<div class="device"><i class="db act"></i><i class="db vu"></i><i class="db vd"></i><i class="db pw" role="button" aria-label="Power button · restart onboarding"></i><i class="db cc"></i>
 <div class="app framed" id="app">
   <div class="iosbar" aria-hidden="true"><span class="ist">9:41</span><span class="isl"></span><span class="isr"><svg width="19" height="12" viewBox="0 0 19 12" aria-hidden="true"><rect x="0" y="7.5" width="3.2" height="4.5" rx="1"/><rect x="5" y="5" width="3.2" height="7" rx="1"/><rect x="10" y="2.5" width="3.2" height="9.5" rx="1"/><rect x="15" y="0" width="3.2" height="12" rx="1"/></svg><svg width="17" height="12" viewBox="0 0 17 12" aria-hidden="true"><path d="M8.5 2.3c2.4 0 4.6.9 6.3 2.5.1.1.3.1.4 0l1.2-1.2c.1-.1.1-.3 0-.4A11.2 11.2 0 0 0 8.5 0 11.2 11.2 0 0 0 .6 3.2c-.1.1-.1.3 0 .4l1.2 1.2c.1.1.3.1.4 0A9 9 0 0 1 8.5 2.3zm0 3.8c1.3 0 2.6.5 3.6 1.4.1.1.3.1.4 0l1.2-1.2c.1-.1.1-.3 0-.4a7.4 7.4 0 0 0-10.4 0c-.1.1-.1.3 0 .4l1.2 1.2c.1.1.3.1.4 0 1-.9 2.3-1.4 3.6-1.4zm2.3 2.8c.1-.1.1-.3 0-.4a3.3 3.3 0 0 0-4.6 0c-.1.1-.1.3 0 .4l2.1 2.1c.1.1.3.1.4 0z"/></svg><svg width="28" height="13" viewBox="0 0 28 13" aria-hidden="true"><rect x=".5" y=".5" width="24" height="12" rx="3.8" fill="none" stroke="currentColor" opacity=".35"/><rect x="2" y="2" width="21" height="9" rx="2.4"/><path d="M26 4.4v4.2c.8-.3 1.4-1.1 1.4-2.1s-.6-1.8-1.4-2.1z" opacity=".4"/></svg></span></div>
   <div class="ioshome" aria-hidden="true"></div>
@@ -3369,7 +3673,7 @@ function shDrop(){ const L=[...document.querySelectorAll('#psheet .pk.sh')]; if(
   const G=3800, M={st:{e:.52,buzz:6},sq:{e:.42,buzz:8},sc:{e:.3,buzz:14}};
   const bodies=['st','sq','sc'].map((k,i)=>{ const c=L.find(x=>x.classList.contains(k)); if(!c) return null; const r=c.getBoundingClientRect(), tgt=parseFloat(getComputedStyle(c).getPropertyValue('--r'))||0, dir=i%2?1:-1;
     return {c,y:-(r.bottom+50+i*40),vy:0,x:dir*(14+Math.random()*16),vx:0,rot:tgt+dir*(30+Math.random()*25),vr:0,tgt,s:0,vs:0,e:M[k].e,buzz:M[k].buzz,delay:i*130,hit:0,rest:false,done:false}; }).filter(Boolean);
-  const put=b=>{ b.c.style.transform=`translate(${b.x}px,${b.y}px) scale(${1+b.s},${1-b.s}) rotate(${b.rot}deg)`; };
+  const put=b=>{ b.c.style.transform=`translate3d(${b.x}px,${b.y}px,0) scale(${1+b.s},${1-b.s}) rotate(${b.rot}deg)`; };
   bodies.forEach(b=>{ b.c.style.transition='none'; put(b); b.c.style.visibility='visible'; });
   let last=performance.now(); const t0=last;
   function step(now){ const dt=Math.min(.034,(now-last)/1000); last=now; let alive=false;
@@ -3934,7 +4238,7 @@ function explore(){
   const L=all.filter(c=>tag<0||c.j===tag);
   const xv=state.xview||'crews', CL=clipList();
   const seg=`<div class="tseg" role="tablist"><button data-act="xview" data-v="crews" aria-selected="${xv==='crews'}">Crews</button><button data-act="xview" data-v="clips" aria-selected="${xv==='clips'}">Clips</button><span class="tsegi s-${xv}"></span></div>`;
-  const head=`<div class="xtop xtop2"><header class="whead xhd2"><button class="wicon" data-act="search" aria-label="Search">${ic('search',20)}</button><div class="wtitle"><h1 class="sh1">Explore</h1><span class="wcity">${xv==='clips'?`${(state.clFeed==='fo'?CL.filter(clFo):CL).length} clips ${state.clFeed==='fo'?'from people you follow':'from shows in '+state.city}`:`${L.length} crews forming in ${state.city}`}</span></div>${xv==='clips'?`<button class="wicon" data-act="clshare" aria-label="Share a clip">${ic('camera',20)}</button>`:'<button class="xfind" data-act="ncopen">Find a crew</button>'}</header></div>`;
+  const head=`<div class="xtop xtop2"><header class="whead xhd2"><div class="wtitle"><h1 class="sh1">Explore</h1><span class="wcity">${xv==='clips'?`${(state.clFeed==='fo'?CL.filter(clFo):CL).length} clips ${state.clFeed==='fo'?'from people you follow':'from shows in '+state.city}`:`${L.length} crews forming in ${state.city}`}</span></div><div class="xact"><button class="wicon" data-act="search" aria-label="Search">${ic('search',20)}</button>${xv==='clips'?`<button class="wicon" data-act="clshare" aria-label="Share a clip">${ic('camera',20)}</button>`:'<button class="xfind" data-act="ncopen">Find a crew</button>'}</div></header></div>`;
   const cf=state.clFeed==='fo'?'fo':'fy', CF=cf==='fo'?CL.filter(clFo):CL;
   if(xv==='clips') return `<div class="scroll" id="xsc"><div class="xpg" style="padding-bottom:130px">${head}${seg}<div class="hs xchips xcf"><button class="gch" data-act="clfeed" data-v="fy" aria-pressed="${cf==='fy'}">For you</button><button class="gch" data-act="clfeed" data-v="fo" aria-pressed="${cf==='fo'}">Following</button></div><div class="xcgrid" data-clctx="${cf==='fo'?'Following':'For you'}">${CF.map(c=>{ const cv=c.vid!=null?CLIPV[c.vid]:null; return `<button class="xcg" data-act="clopen" data-id="${c.id}" aria-label="Clip of ${esc(c.s.artist)}">${cv?`<img class="cover" alt="" src="${cv.p}">`:img(c.s)}<em>${cv?mmss(cv.d):'0:14'}</em><span><b>${esc(c.s.artist)}</b><small>${ic('heart',11)} ${fmtK(c.likes)} · ${esc(VSH(c.s.venue))}</small></span></button>`; }).join('')}</div></div></div>${dock('explore')}`;
   const top=`${head}${seg}
@@ -4040,7 +4344,16 @@ function tSwitch(v,key='tview',second='spares'){ const seg=document.querySelecto
   seg.querySelector('.tsegi').className='tsegi s-'+v; seg.querySelectorAll('button').forEach(b=>b.setAttribute('aria-selected',b.dataset.v===v));
   below().forEach(e=>e.animate([{opacity:1,transform:'none'},{opacity:0,transform:`translateX(${-dir*18}px)`}],{duration:160,easing:'ease-in',fill:'forwards'}));
   setTimeout(()=>{ state[key]=v; render(); const sc=document.querySelector('#view .scroll'); if(sc) sc.scrollTop=0;
-    below().forEach((e,i)=>e.animate([{opacity:0,transform:`translateX(${dir*28}px)`},{opacity:1,transform:'none'}],{duration:320,delay:i*30,easing:'cubic-bezier(.2,.8,.2,1)',fill:'backwards'})); },170); }
+    const B=below(); B.forEach(e=>{ e.style.opacity='0'; });
+    const imgs=[...document.querySelectorAll('#view img')].slice(0,8).map(i=>i.decode?i.decode().catch(()=>{}):0);
+    Promise.race([Promise.all(imgs),new Promise(r=>setTimeout(r,180))]).then(()=>requestAnimationFrame(()=>B.forEach((e,i)=>{ e.style.opacity=''; e.animate([{opacity:0,transform:`translateX(${dir*24}px)`},{opacity:1,transform:'none'}],{duration:300,delay:i*24,easing:'cubic-bezier(.2,.8,.2,1)',fill:'backwards'}); }))); },150); }
+function xSoftSwap(dir){ const g=document.querySelector('#xsc .xcgrid'); if(!g||NX_RM.matches){ render(); return; }
+  const tmp=document.createElement('div'); tmp.innerHTML=explore();
+  const ng=tmp.querySelector('.xcgrid'), nc=tmp.querySelector('.wcity'); if(!ng){ render(); return; }
+  document.querySelectorAll('#xsc .xcf .gch').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===state.clFeed));
+  const oc=document.querySelector('#xsc .wcity'); if(oc&&nc) oc.textContent=nc.textContent;
+  g.animate([{opacity:1},{opacity:0,transform:`translateX(${-dir*14}px)`}],{duration:130,easing:'ease-in',fill:'forwards'}).onfinish=()=>{
+    g.replaceWith(ng); ng.animate([{opacity:0,transform:`translateX(${dir*20}px)`},{opacity:1,transform:'none'}],{duration:280,easing:'cubic-bezier(.2,.8,.2,1)'}); }; }
 function tSeg(k){ const n=allSpares().length; return `<div class="tseg" role="tablist"><button data-act="tview" data-v="mine" aria-selected="${k==='mine'}">My tickets</button><button data-act="tview" data-v="spares" aria-selected="${k==='spares'}">Spares <i>${n}</i></button><span class="tsegi s-${k}"></span></div>`; }
 function sparesView(){
   const f=state.spf||'all'; let L=allSpares();
@@ -4215,7 +4528,7 @@ function fvDrop(){ if(state.screen!=='home'||document.hidden||state.tsheet||stat
   row.insertAdjacentHTML('afterbegin',fvCard(x,true)); if(row.scrollLeft<40) row.scrollTo({left:0,behavior:'smooth'});
   const n=allSpares().length, c=document.getElementById('fvn'); if(c){ c.textContent=n; c.classList.remove('bump'); void c.offsetWidth; c.classList.add('bump'); }
   const m=row.querySelector('.fvmore small'); if(m) m.textContent=n+' spares'; }
-setInterval(fvDrop,9000);
+// M54: no live spare drops on Home — the row stays still (owner asked to remove the update animation)
 function fvHero(L){ const x=L.slice().sort((a,b)=>a.face-b.face)[0], tot=x.face+FEE, est=RESALE(x.face,x.id);
   return `<div class="fvhero"><span><b>Never pay double</b></span><span class="fvsv"><s>~$${est}</s><b>$${tot}</b><em>vs est. resale</em></span></div>`; }
 function sparesFor(s){ if(!s||LOCKED(s)) return []; const k=h(s.id); const n=s.artist==='Harry Styles'?2:[0,1,0,2,1,0,1][k%7];
@@ -4556,11 +4869,14 @@ function profileView(mine){
 
 // ===== First run: sign in → name → link tickets → city → scenes → home (skippable at every step) =====
 const OB_STEPS=['you','tickets','city','scenes'];
-function onb(){ const k=state.ob||0, N=5;
-  const dots=`<div class="obdots" role="progressbar" aria-valuemin="1" aria-valuemax="${N}" aria-valuenow="${k+1}">${Array.from({length:N},(_,i)=>`<i class="${i===k?'on':''}"></i>`).join('')}</div>`;
-  const top=`<div class="obtop2">${k?`<button class="obic" data-act="obback" aria-label="Back">${ic('back',18)}</button>`:'<i></i>'}<span class="obwm">plus one</span><button class="obic sk" data-act="obskip">Skip</button></div>${dots}`;
-  const h=(a,em,b)=>`<h1 class="obh2">${a} <em>${em}</em>${b?' '+b:''}</h1>`;
-  let mid='', cta='', foot='';
+// step order by value: sign in, then tickets (the core), then profile; the city is known from ticket venues, so it's only asked without tickets
+const obSeq=()=>[0,2,1].concat((state.obConnected||[]).length?[]:[3]).concat([4]);
+function onb(){ const SEQ=obSeq(), pos=Math.min(state.ob||0,SEQ.length-1), k=SEQ[pos], N=SEQ.length;
+  const dots=`<div class="obdots" role="progressbar" aria-valuemin="1" aria-valuemax="${N}" aria-valuenow="${pos+1}">${Array.from({length:N},(_,i)=>`<i class="${i===pos?'on':i<pos?'done':''}"></i>`).join('')}</div>`;
+  const top=`<div class="obtop2">${pos?`<button class="obic obbk" data-act="obback"><svg viewBox="0 0 12 20" width="11" height="19" aria-hidden="true"><path d="M10 2 2 10l8 8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Back</button>`:'<i></i>'}<span></span>${k===0?'<i></i>':'<button class="obic sk" data-act="obskip">Skip</button>'}</div>${dots}`;
+  const h=(a,em,b)=>`<h1 class="obh2">${a} ${em}${b?' '+b:''}</h1>`;
+  const CHK='<svg class="iock" viewBox="0 0 16 13" width="15" height="12" aria-hidden="true"><path d="M1.5 7 6 11.5 14.5 1.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>', CHEV='<svg class="iochev" viewBox="0 0 8 14" width="8" height="14" aria-hidden="true"><path d="M1.5 1.5 6.5 7l-5 5.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  let mid='', cta='', foot='', ov=''; const fresh=state._obLast!==k; state._obLast=k;
   if(k===0){ const hs=A('Harry Styles')||SHOWS[0];
     mid=`${h('Never go','alone.')}<p class="obp2">Find a crew for the same show. Swap spare tickets at face value.</p>
       <div class="obstage" aria-hidden="true">
@@ -4569,28 +4885,72 @@ function onb(){ const k=state.ob||0, N=5;
         <div class="obcard front"><img class="cover" alt="" decoding="sync" src="${ONB.hs}"><span class="obcb"><small>Pit crew · Sep 30 · MSG</small><b>Harry Styles</b><span class="obav3">${[0,1,3].map(i=>`<span>${avi(PEOPLE[i][3])}</span>`).join('')}<em>3 of 6 · you?</em></span></span></div>
         <span class="obtix">${ic('ticket',14)} Floor GA · $135 face value</span>
       </div>`;
-    cta=`<button class="obgo" data-act="obnext">Continue with Apple</button>`; foot=`<button class="obskip3" data-act="obnext">Use email instead</button>`; }
-  if(k===1){ mid=`${h('What should crews','call','you?')}<p class="obp2">Your first name and photo show up when you join. Your ID stays private.</p>
-      <div class="obav2"><span>${avi(MEP[3])}</span><button data-act="toast" data-msg="Photo picker opens here · using your current photo" aria-label="Change photo">${ic('camera',16)}</button></div>
-      <label class="obin2"><span hidden>First name</span><input id="obname" value="${esc(state.obName||'Jordan')}" autocomplete="given-name" maxlength="24"></label>`;
-    cta=`<button class="obgo" data-act="obnext">Continue</button>`; }
-  if(k===2){ const L=state.obLink, sv=['Ticketmaster','AXS','SeatGeek','Dice'];
-    mid=`${h('Bring your','tickets.')}<p class="obp2">We read your upcoming shows to verify you and open the right crews. We never move a ticket without you.</p>
-      ${L&&L.st==='done'?`<div class="obwallet">${[A('Gorillaz'),A('Doja Cat'),A('Steve Lacy')].filter(Boolean).map((x,i)=>`<span class="obw${i}" style="--d:${i*90}ms">${img(x)}<span><small>${sd(x.dates[0])} · ${esc(VSH(x.venue))}</small><b>${esc(x.artist)}</b></span><i>${ic('check',12)} Verified</i></span>`).join('')}</div>`
-      :`<div class="obsvc2">${sv.map(n=>`<button data-act="oblink" data-v="${n}" ${L?'disabled':''}><b>${n}</b>${L&&L.svc===n?'<span class="obspin"></span>':ic('right',16)}</button>`).join('')}</div>`}`;
-    cta=L&&L.st==='done'?`<button class="obgo" data-act="obnext">Continue</button>`:`<button class="obgo ghost" data-act="obnext">I’ll do this later</button>`; }
+    cta=`<button class="obgo obsia" data-act="obnext"><svg class="obapl" viewBox="0 0 20 24" width="17" height="20" aria-hidden="true"><path fill="currentColor" d="M16.37 12.6c-.03-2.9 2.37-4.3 2.48-4.37-1.35-1.98-3.45-2.25-4.2-2.28-1.79-.18-3.49 1.05-4.4 1.05-.9 0-2.3-1.03-3.78-1-1.95.03-3.74 1.13-4.75 2.87-2.02 3.5-.52 8.7 1.45 11.55.97 1.39 2.12 2.95 3.63 2.9 1.46-.06 2-.94 3.76-.94 1.75 0 2.25.94 3.78.91 1.56-.03 2.55-1.42 3.5-2.82 1.1-1.62 1.56-3.18 1.58-3.26-.03-.02-3.03-1.17-3.05-4.61zM13.5 4.08c.8-.97 1.34-2.32 1.19-3.66-1.15.05-2.55.77-3.38 1.73-.74.86-1.39 2.23-1.21 3.55 1.28.1 2.6-.65 3.4-1.62z"/></svg>Continue with Apple</button>`.replace('data-act="obnext"','data-act="obapple"'); foot=`<button class="obskip3" data-act="obnext">Use email instead</button>`;
+    if(state.obSheet==='apple'||state.obSheet==='faceid'){ const hide=state.obHide; ov=`<div class="obov${state.obSheet==='faceid'?' still':''}"></div><div class="iosia${state.obSheet==='apple'&&!state.obFid?' enter':''}"><div class="iosiah"><span><svg viewBox="0 0 20 24" width="14" height="17" aria-hidden="true"><path fill="currentColor" d="M16.37 12.6c-.03-2.9 2.37-4.3 2.48-4.37-1.35-1.98-3.45-2.25-4.2-2.28-1.79-.18-3.49 1.05-4.4 1.05-.9 0-2.3-1.03-3.78-1-1.95.03-3.74 1.13-4.75 2.87-2.02 3.5-.52 8.7 1.45 11.55.97 1.39 2.12 2.95 3.63 2.9 1.46-.06 2-.94 3.76-.94 1.75 0 2.25.94 3.78.91 1.56-.03 2.55-1.42 3.5-2.82 1.1-1.62 1.56-3.18 1.58-3.26-.03-.02-3.03-1.17-3.05-4.61zM13.5 4.08c.8-.97 1.34-2.32 1.19-3.66-1.15.05-2.55.77-3.38 1.73-.74.86-1.39 2.23-1.21 3.55 1.28.1 2.6-.65 3.4-1.62z"/></svg> Sign in with Apple</span><button data-act="obapplex" aria-label="Close">${ic('x',14)}</button></div>
+      ${false?'':`<div class="iosiab"><span class="iocs-icon"><b>plus</b><b>one</b></span><h3>Create a Plus One account using your Apple Account</h3>
+      <div class="iog lt"><div class="iorow"><span class="iotx"><small>Name</small><b>Jordan Lee</b></span></div></div>
+      <div class="iog lt"><button class="iorow" data-act="obhide" data-v="0"><span class="iotx"><b>Share My Email</b><small>jordan.lee@icloud.com</small></span>${hide?'':CHK}</button><button class="iorow" data-act="obhide" data-v="1"><span class="iotx"><b>Hide My Email</b><small>Forward to: jordan.lee@icloud.com</small></span>${hide?CHK:''}</button></div>
+      <button class="obgo" data-act="obapplego">Continue</button></div>`}</div>${state.obFid?`<div class="fidhud ${state.obFid}" role="status" aria-label="Face ID"><svg class="fidg" viewBox="0 0 64 64" aria-hidden="true"><g class="scan" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18v-8a6 6 0 0 1 6-6h8M46 4h8a6 6 0 0 1 6 6v8M60 46v8a6 6 0 0 1-6 6h-8M18 60h-8a6 6 0 0 1-6-6v-8"/><path d="M22 22v6M42 22v6M32 22v13h-3M22 44c5 5 15 5 20 0"/></g><g class="done" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="32" r="27"/><path d="M20 33l8 8 16-17"/></g></svg><b>Face ID</b></div>`:''}`; } }
+  if(k===1){ mid=`${h('Your name','and photo')}<p class="obp2">${state.obApple?'Filled in from your Apple Account. Change anything you like.':'This is how you appear to people in your crews.'}</p>
+      <div class="obavx"><span class="${state.obPhoto===-1?'none':''}">${state.obPhoto===-1?ic('user',40):avi(state.obPhoto!=null?state.obPhoto:MEP[3])}</span><button data-act="obphoto">${state.obPhoto===-1?'Add Photo':'Edit Photo'}</button></div>
+      <div class="iog"><label class="iorow ioin"><span>First name</span><input id="obname" value="${esc(state.obName||'Jordan')}" autocomplete="given-name" maxlength="24" placeholder="Required"></label></div>
+      <p class="iofoot">Only your first name is shown. Your ID stays private.</p>`;
+    cta=`<button class="obgo" data-act="obnext">Continue</button>`;
+    if(state.obSheet==='photo') ov=`<div class="obov" data-act="obphx"></div><div class="ioas"><div class="ioasg"><button data-act="obphv" data-v="take">Take Photo</button><button data-act="obphv" data-v="lib">Choose from Library</button><button data-act="obphv" data-v="apple">Use Apple Account Photo</button>${state.obPhoto===-1?'':'<button class="dst" data-act="obphv" data-v="remove">Remove Photo</button>'}</div><div class="ioasg"><button class="cx" data-act="obphx">Cancel</button></div></div>`;
+    if(state.obSheet==='lib') ov=`<div class="obov" data-act="obphx"></div><div class="iolib"><div class="iolibh"><button data-act="obphx">Cancel</button><b>Recents</b><i></i></div><div class="iolibg">${[10,3,7,12,1,5,9,14,2].map(n=>`<button data-act="obphpick" data-v="${n}" aria-label="Choose this photo">${avi(n)}</button>`).join('')}</div></div>`; }
+  if(k===2){ const L=state.obLink, SV=[['Ticketmaster','ticketmaster.com','Live Nation and most arena shows'],['AXS','axs.com','AEG venues and festivals'],['SeatGeek','seatgeek.com','Primary and resale tickets'],['Dice','dice.fm','Clubs and smaller rooms']];
+    const T=[A('Gorillaz'),A('Doja Cat'),A('Steve Lacy')].filter(Boolean), dom=L?(SV.find(x=>x[0]===L.svc)||[])[1]:'', vf=L&&(L.st==='verifying'||L.st==='done');
+    const CON=state.obConnected||[], META=[['Floor GA',2],['Sec 105',1],['Orch M',2]];
+    const showDone=!vf&&!state.obAdding&&CON.length>0||(L&&L.st==='done'&&!state.obAdding);
+    const rows=(n)=>T.map((x,i)=>`<div class="iorow"><span class="iothumb">${img(x)}</span><span class="iotx"><b>${esc(x.artist)}</b><small>${sd(x.dates[0])} · ${esc(VSH(x.venue))} · ${META[i][0]}</small></span>${n==null||i<n?`<em class="iocnt">${META[i][1]} ${META[i][1]>1?'tickets':'ticket'}</em>`:'<span class="obspin"></span>'}</div>`).join('');
+    const acctRow=(svc)=>`<div class="iorow"><span class="iolg">${svc[0]}</span><span class="iotx"><b>${esc(svc)}</b><small>${L&&L.via==='google'?'jordan.lee@gmail.com':L&&L.via==='apple'?'Hide My Email':'jordan.lee@icloud.com'}</small></span><em class="iocon">${CHK}Connected</em></div>`;
+    if(showDone){
+      mid=`${h('Connect','your tickets')}<p class="obp2">${T.length} upcoming shows verified. You’ll see crews for each one.</p>
+      <p class="iohd">Accounts</p><div class="iog">${CON.map(acctRow).join('')}<button class="iorow ioadd" data-act="obladd"><span class="iotx"><b>Add Account</b></span></button></div>
+      <p class="iohd">Upcoming shows</p><div class="iog">${rows(null)}</div>
+      <p class="iofoot">Tickets are read-only. New orders appear automatically. Manage accounts in Settings › Ticket Accounts.</p>`;
+      cta=`<button class="obgo" data-act="obnext">Continue</button>`;
+    } else if(vf){
+      mid=`${h('Checking','your tickets')}<p class="obp2">Looking for upcoming shows on ${esc(L.svc)} and matching each ticket to your name.</p>
+      <p class="iohd">${esc(L.svc)} · ${L.n} of ${T.length} checked</p><div class="iog">${rows(L.n)}</div>`;
+      cta=`<button class="obgo" disabled>Checking…</button>`;
+    } else {
+      mid=`${h('Connect','your tickets')}<p class="obp2">Sign in to where you bought them. We check the tickets are yours, then open the right crews.</p>
+      <p class="iohd">${state.obAdding?'Add another account':'Ticket accounts'}</p><div class="iog">${SV.map(([n,,d])=>CON.includes(n)?`<div class="iorow dim"><span class="iolg">${n[0]}</span><span class="iotx"><b>${n}</b><small>${d}</small></span><em class="iocon">${CHK}Connected</em></div>`:`<button class="iorow" data-act="oblink" data-v="${n}"><span class="iolg">${n[0]}</span><span class="iotx"><b>${n}</b><small>${d}</small></span>${CHEV}</button>`).join('')}</div>
+      <p class="iohd">Other ways</p><div class="iog"><button class="iorow" data-act="toast" data-msg="Photo picker opens · we read the QR code, show and seat"><span class="iolg">${ic('camera',16)}</span><span class="iotx"><b>Upload a ticket screenshot</b></span>${CHEV}</button><button class="iorow" data-act="toast" data-msg="Forward your confirmation email to tickets@plusone.app"><span class="iolg">${ic('send',15)}</span><span class="iotx"><b>Forward a confirmation email</b></span>${CHEV}</button></div>
+      <p class="iofoot">Read-only. Plus One can’t transfer, sell or see payment details.</p>`;
+      cta=state.obAdding?`<button class="obgo" data-act="obladdx">Done</button>`:`<button class="obgo ghost" data-act="obnext">I’ll do this later</button>`;
+    }
+    if(L&&L.st==='alert') ov=`<div class="obov"></div><div class="ioa" role="alertdialog"><b>“Plus One” Wants to Use “${dom}” to Sign In</b><p>This allows the app and website to share information about you.</p><div class="ioa-b"><button data-act="oblcancel">Cancel</button><button data-act="oblweb">Continue</button></div></div>`;
+    if(L&&(L.st==='login'||L.st==='signing'||L.st==='consent'||L.st==='google')) ov=`<div class="obov${L.st==='login'?'':' still'}"></div><div class="iows${L.st==='login'?' enter':''}"><div class="iowsh"><button data-act="${L.st==='google'?'oblgback':'oblcancel'}">${L.st==='google'?'Back':'Cancel'}</button><span>${ic('lock',11)} ${L.st==='google'?'accounts.google.com':dom}</span><i></i></div><div class="iowsb">${L.st==='google'
+      ?`<div class="iowsgg"><svg viewBox="0 0 18 18" width="18" height="18" aria-hidden="true"><path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.92c1.7-1.57 2.68-3.88 2.68-6.62z"/><path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.92-2.26c-.8.54-1.84.86-3.04.86-2.34 0-4.32-1.58-5.03-3.7H.96v2.33A9 9 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.97 10.72a5.4 5.4 0 0 1 0-3.44V4.95H.96a9 9 0 0 0 0 8.1l3.01-2.33z"/><path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.58A9 9 0 0 0 .96 4.95l3.01 2.33C4.68 5.16 6.66 3.58 9 3.58z"/></svg><b>Sign in with Google</b></div><h2>Choose an account</h2><p class="iowsp">to continue to ${esc(L.svc)}</p><div class="iowsacc"><button data-act="oblgpick"><span class="iowsav">${avi(state.obPhoto!=null&&state.obPhoto>=0?state.obPhoto:MEP[3])}</span><span><b>Jordan Lee</b><small>jordan.lee@gmail.com</small></span></button><button data-act="toast" data-msg="Google sign-in for another account opens here"><span class="iowsav add">${ic('user',16)}</span><span><b>Use another account</b></span></button></div><p class="iowsp">Google will share your name, email address and profile picture with ${esc(L.svc)}.</p>`
+      :L.st==='consent'
+      ?`<div class="iocs">
+      <div class="iocs-brand">${esc(L.svc)}</div>
+      <div class="iocs-app"><span class="iocs-icon"><b>plus</b><b>one</b></span><span><b>Plus One</b><small>Plus One Labs, Inc. · ${ic('check',11)} Verified app</small></span></div>
+      <p class="iocs-acct">Logged in as <b>${L.via==='google'?'jordan.lee@gmail.com':L.via==='apple'?'Hide My Email (Apple)':'jordan.lee@icloud.com'}</b> · <button data-act="oblweb">Not you?</button></p>
+      <h2 class="iocs-h">Plus One would like to:</h2>
+      <ul class="iocs-l"><li>${ic('cal',18)}<span><b>View your upcoming orders</b><small>Event name, date, venue and seat section</small></span></li><li>${ic('shield',18)}<span><b>Confirm tickets are in your name</b><small>Checked once for each show</small></span></li></ul>
+      <p class="iocs-fine">Plus One won’t be able to buy, sell or transfer tickets, or see your payment details. You can remove access at any time in Account › Connected Apps.</p>
+      <button class="iowsgo iocs-go" data-act="obllow">Agree</button><button class="iocs-cx" data-act="oblcancel">Cancel</button>
+      <p class="iocs-fine c">By agreeing, you allow ${esc(L.svc)} to share this information with Plus One under their <u>Privacy Policy</u> and <u>Terms</u>.</p>
+      <div class="iocs-foot"><span>Help</span><span>Privacy</span><span>Terms</span><span>© 2026 ${esc(L.svc)}</span></div></div>`
+      :`<div class="iowsm">${esc(L.svc)}</div><h2>Sign in</h2><label class="iowsf"><small>Email</small><input value="jordan.lee@icloud.com" readonly></label><label class="iowsf"><small>Password</small><input type="password" value="placeholder" readonly></label><button class="iowsgo" data-act="oblsign" ${L.st==='signing'?'disabled':''}>${L.st==='signing'?'Signing in…':'Sign In'}</button><div class="iowsor"><span>or</span></div><button class="iowsalt" data-act="oblgoogle"><svg viewBox="0 0 18 18" width="18" height="18" aria-hidden="true"><path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.92c1.7-1.57 2.68-3.88 2.68-6.62z"/><path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.92-2.26c-.8.54-1.84.86-3.04.86-2.34 0-4.32-1.58-5.03-3.7H.96v2.33A9 9 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.97 10.72a5.4 5.4 0 0 1 0-3.44V4.95H.96a9 9 0 0 0 0 8.1l3.01-2.33z"/><path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.58A9 9 0 0 0 .96 4.95l3.01 2.33C4.68 5.16 6.66 3.58 9 3.58z"/></svg>Continue with Google</button><button class="iowsalt" data-act="oblapple"><svg viewBox="0 0 20 24" width="15" height="18" aria-hidden="true"><path fill="currentColor" d="M16.37 12.6c-.03-2.9 2.37-4.3 2.48-4.37-1.35-1.98-3.45-2.25-4.2-2.28-1.79-.18-3.49 1.05-4.4 1.05-.9 0-2.3-1.03-3.78-1-1.95.03-3.74 1.13-4.75 2.87-2.02 3.5-.52 8.7 1.45 11.55.97 1.39 2.12 2.95 3.63 2.9 1.46-.06 2-.94 3.76-.94 1.75 0 2.25.94 3.78.91 1.56-.03 2.55-1.42 3.5-2.82 1.1-1.62 1.56-3.18 1.58-3.26-.03-.02-3.03-1.17-3.05-4.61zM13.5 4.08c.8-.97 1.34-2.32 1.19-3.66-1.15.05-2.55.77-3.38 1.73-.74.86-1.39 2.23-1.21 3.55 1.28.1 2.6-.65 3.4-1.62z"/></svg>Continue with Apple</button><p class="iowsp">You’re signing in on ${dom}. Plus One never sees your password.</p>`}</div></div>`; }
   if(k===3){ const cs=Object.keys(CITIES), cur=state.obCity||state.city;
-    mid=`${h('Where do you go to','shows?')}<p class="obp2">You can switch cities anytime.</p>
-      <div class="obcity2">${cs.map(c=>`<button data-act="obcity" data-v="${c}" aria-pressed="${c===cur}"><span class="obci2">${img(heroOf(c))}</span><b>${c}</b><small>${CITIES[c].length} shows</small></button>`).join('')}</div>`;
-    cta=`<button class="obgo" data-act="obnext">Continue</button>`; }
+    mid=`${h('Your','city')}<p class="obp2">Where you usually go to shows. You can change it anytime.</p>
+      <div class="iog"><button class="iorow" data-act="obloc"><span class="iolg">${ic('pin',16)}</span><span class="iotx"><b>Use Current Location</b>${state.obLoc==='on'?'<small>You’re near New York, NY</small>':state.obLoc==='off'?'<small>Location is off · choose a city below</small>':''}</span>${state.obLoc==='on'?'':CHEV}</button></div>
+      <p class="iohd">Cities with shows</p><div class="iog">${cs.map(c=>`<button class="iorow" data-act="obcity" data-v="${c}" aria-pressed="${c===cur}"><span class="iothumb">${img(heroOf(c))}</span><span class="iotx"><b>${c}</b><small>${CITIES[c].length} shows coming up</small></span>${c===cur?CHK:''}</button>`).join('')}</div>`;
+    cta=`<button class="obgo" data-act="obnext">Continue</button>`;
+    if(state.obLocAsk) ov=`<div class="obov"></div><div class="ioa ioa3" role="alertdialog"><b>Allow “Plus One” to use your location?</b><p>Used once to find shows and crews near you. Your exact location is never shared.</p><div class="ioa-b"><button data-act="oblocv" data-v="once">Allow Once</button><button data-act="oblocv" data-v="on">Allow While Using App</button><button data-act="oblocv" data-v="off">Don’t Allow</button></div></div>`; }
   if(k===4){ const sel=state.obScenes||[], ok=sel.length>0;
-    const POS=[[2,8,-6],[6,30,8],[38,27,-5],[14,51,-9],[40,6,4],[52,49,7],[76,10,-8],[73,31,11]];
-    mid=`<div class="obstate"><p class="obp3">Most people go to shows</p><h1 class="obh3">with no one</h1><p class="obp3">Pick how you like to go. Up to 3.</p></div>
-      <div class="obheap">${SCENE_LIST.map((x,i)=>{ const [l,b,r]=POS[i]; return `<button class="obchip" style="left:${l}%;bottom:${b}%;--r:${r}deg;--d:${i*70}ms" data-act="obscene" data-v="${i}" aria-pressed="${sel.includes(i)}"><i>${SCENE_EMO[i]}</i>${x[0]}</button>`; }).join('')}</div>`;
-    cta=`<button class="obgo" data-act="obdone" ${ok?'':'disabled'}>${ok?'Find my crews':'Pick at least one'}</button>`; }
-  return `<div class="obd s${k}"><div class="obsky" aria-hidden="true"></div>${top}<div class="obmid">${mid}</div><div class="obbot">${cta}${foot}</div></div>`; }
-function obFinish(toExplore){ try{ localStorage.setItem('po_onb','1'); }catch(_){} const c=state.obCity||state.city; state.screen='home'; state.history=[]; state.ob=0; if(c!==state.city) setCity(c); else render(true); if(toExplore){ state.xtag=null; go('explore'); }
-  const n=(state.obScenes||[]).length; if(n) toast('You’re in · your scenes come first on Explore'); }
+    mid=`${h('How do you','like to go?')}<p class="obp2">Choose up to 3. Crews like these show up first.</p>
+      <p class="iohd" id="obscn">${sel.length} of 3 selected</p><div class="iog">${SCENE_LIST.map((x,i)=>`<button class="iorow ioch" data-act="obscene" data-v="${i}" aria-pressed="${sel.includes(i)}"><span class="iotx"><b>${x[0]}</b><small>${['Meet up before doors','Early line, loud singalongs','Eat nearby, walk over together','New to the city or the venue','Good seats, no shoving','The night goes on after the encore','All of the music, none of the drinks','Hosted by and for women'][i]}</small></span><span class="iocirc">${CHK}</span></button>`).join('')}</div>`;
+    cta=`<button class="obgo" data-act="obdone" ${ok?'':'disabled'}>Continue</button>`; }
+  return `<div class="obd s${k}"><div class="obsky" aria-hidden="true"></div>${top}<div class="obmid${fresh?' fresh':''}">${mid}</div><div class="obbot">${cta}${foot}</div>${ov}</div>`; }
+function obFinish(to){ try{ localStorage.setItem('po_onb','1'); }catch(_){} const c=(state.obConnected||[]).length?'New York':(state.obCity||state.city); state.screen='home'; state.history=[]; state.ob=0; state.obSheet=null; if(c!==state.city) setCity(c); else render(true);
+  const sc=(state.obScenes||[]).map(i=>SCENE_LIST[i][0]), first=(state.obConnected||[]).length?A('Gorillaz'):null;
+  if(to==='crews'&&first){ go('show',first.id); setTimeout(()=>shGo('crews'),400); toast(`Welcome, ${state.obName||'Jordan'} · crews for your next show`); }
+  else if(to){ state.xtag=null; go('explore'); if(sc.length) toast(`Crews like ${sc.join(', ')} come first`); } }
 
 // Content-heavy flows are pages, not sheets: Start a crew (pick show → form) and the crew preview.
 const PF_STAR='M50 2 C56 2 58 12 64 14 C70 16 78 9 83 13 C88 18 81 26 83 32 C85 38 96 40 97 46 C98 52 88 56 87 62 C86 68 94 76 90 81 C85 86 77 79 71 81 C65 83 62 94 56 96 C50 98 46 88 40 87 C34 86 26 94 21 90 C16 85 23 77 21 71 C19 65 8 62 7 56 C6 50 16 46 17 40 C18 34 10 26 14 21 C19 16 27 23 33 21 C39 19 44 2 50 2Z';
@@ -4920,6 +5280,8 @@ function render(anim){ window._dockActive=null; const _ap=document.getElementByI
 function formSubmit(f){ f.dispatchEvent(new Event('submit',{cancelable:true,bubbles:true})); }
 document.addEventListener('click',e=>{ const b=e.target.closest&&e.target.closest('button'); if(!b||b.type!=='submit'||!b.form) return; e.preventDefault(); if(!b.disabled) formSubmit(b.form); },true);
 document.addEventListener('keydown',e=>{ if(e.key!=='Enter'||e.isComposing||e.keyCode===229||e.shiftKey) return; const x=e.target; if(!x||x.tagName!=='INPUT'||!x.form) return; e.preventDefault(); formSubmit(x.form); },true);
+// the device frame sits outside #app: its power button restarts onboarding
+document.querySelector('.db.pw')?.addEventListener('click',()=>{ state.ob=0; state.obLink=null; state.obConnected=[]; state.obAdding=false; state.obScenes=[]; state.history=[]; state.screen='onb'; state.psheet=false; state.sheet=false; state.tsheet=null; render(true); });
 document.getElementById('app').addEventListener('click',e=>{
   const t=e.target.closest('[data-act]'); if(!t) return;
   const a=t.dataset.act, id=t.dataset.id, v=t.dataset.v;
@@ -5052,7 +5414,7 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='cmview'){ cmView(t.querySelector('img').src,t); }
   else if(a==='cmlike'){ state.cml=state.cml||{}; const on=state.cml[v]=!state.cml[v], n=t.querySelector('small'); t.setAttribute('aria-pressed',on); n.textContent=(+n.textContent)+(on?1:-1); t.classList.remove('pop'); void t.offsetWidth; on&&t.classList.add('pop'); }
   else if(a==='clmute'){ state.clMute=state.clMute===false; const b=t; b.innerHTML=ic(state.clMute!==false?'mute':'sound',20); b.setAttribute('aria-label',state.clMute!==false?'Unmute':'Mute'); document.querySelectorAll('.clp video').forEach(x=>{ x.muted=state.clMute!==false; }); toast(state.clMute!==false?'Muted':(CL_FB?'No sound in this preview':'Sound on')); }
-  else if(a==='clfeed'){ state.clFeed=v; state.clY=0; render(); }
+  else if(a==='clfeed'){ if((state.clFeed||'fy')===v) return; state.clFeed=v; state.clY=0; xSoftSwap(v==='fo'?1:-1); }
   else if(a==='clshare'){ if(document.getElementById('psheet')) closePlus(); if(document.getElementById('cssh')||state.screen==='cs') return; state.cs={v:0,loc:CSVID[0].geo,src:'geo',stage:'pick',tab:'album'}; go('cs'); }
   else if(a==='csclose'){ if(state.screen==='cs'){ csStash(); if(csDirty(state.cs)){ state.cs.confirm=true; render(); return; } state.cs=null; back(); } else { state.cs=null; sheetDrop(document.getElementById('cssh')); } }
   else if(a==='cstab'){ const k=state.cs; if(!k) return; csStash(); k.tab=v; if(v==='text'){ if(k.v!==-1){ k._v=k.v; k.v=-1; if(k.src==='geo'){ k.loc=null; k.src=null; } } } else if(k.v===-1){ const i=k._v!=null?k._v:0, vd=CSVID[i]; k.v=i; if(vd&&vd.geo){ k.loc=vd.geo; k.src='geo'; } } render(); ncBuzz(5); }
@@ -5143,13 +5505,38 @@ document.getElementById('app').addEventListener('click',e=>{
   else if(a==='closesheet'){ closeSheet(); }
   else if(a==='obnext'){ const i=document.getElementById('obname'); if(i) state.obName=i.value.trim()||'Jordan'; state.ob=(state.ob||0)+1; render(); }
   else if(a==='obback'){ state.ob=Math.max(0,(state.ob||0)-1); render(); }
-  else if(a==='obskip'){ obFinish(); }
-  else if(a==='oblink'){ if(state.obLink) return; state.obLink={svc:v,st:'busy'}; render(); setTimeout(()=>{ if(state.screen!=='onb') return; state.obLink={svc:v,st:'done'}; render(); },1300); }
+  else if(a==='obskip'){ const SEQ=obSeq(), pos=state.ob||0; if(pos>=SEQ.length-1) obFinish(); else { state.ob=pos+1; render(); } }
+  else if(a==='obapple'){ state.obSheet='apple'; render(); }
+  else if(a==='obapplex'){ if(state.obFid) return; state.obSheet=null; render(); }
+  else if(a==='obhide'){ state.obHide=v==='1'; render(); }
+  else if(a==='obapplego'){ if(state.obFid) return; state.obFid='scan'; const app=document.getElementById('app'), il=app.querySelector('.isl');
+    if(il&&!il.querySelector('.islfid')) il.insertAdjacentHTML('beforeend','<svg class="islfid" viewBox="0 0 64 64" aria-hidden="true"><g class="scan" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18v-8a6 6 0 0 1 6-6h8M46 4h8a6 6 0 0 1 6 6v8M60 46v8a6 6 0 0 1-6 6h-8M18 60h-8a6 6 0 0 1-6-6v-8"/><path d="M22 22v6M42 22v6M32 22v13h-3M22 44c5 5 15 5 20 0"/></g><g class="done" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="32" r="27"/><path d="M20 33l8 8 16-17"/></g></svg>');
+    app.classList.remove('fid-ok'); app.classList.add('fid'); render();
+    setTimeout(()=>{ app.classList.add('fid-ok'); try{ ncBuzz(10); }catch(_){}
+      setTimeout(()=>{ app.classList.remove('fid','fid-ok');
+        setTimeout(()=>{ state.obFid=null; state.obSheet=null; state.obApple=true; state.obName='Jordan'; state.ob=1; render(); },380); },750); },1150); }
+  else if(a==='oblink'){ state.obLink={svc:v,st:'alert'}; render(); }
+  else if(a==='oblcancel'){ state.obLink=null; render(); }
+  else if(a==='oblweb'){ state.obLink.st='login'; render(); }
+  else if(a==='oblgoogle'){ state.obLink.st='google'; render(); }
+  else if(a==='oblgback'){ state.obLink.st='login'; render(); }
+  else if(a==='oblgpick'){ const L=state.obLink; L.via='google'; L.st='signing'; L.st='consent'; render(); }
+  else if(a==='oblapple'){ const L=state.obLink; L.via='apple'; L.st='consent'; render(); }
+  else if(a==='oblsign'){ const L=state.obLink; L.st='signing'; render(); setTimeout(()=>{ if(state.obLink!==L) return; L.st='consent'; render(); },900); }
+  else if(a==='obllow'){ const L=state.obLink; L.st='verifying'; L.n=0; state.obAdding=false; render(); const t=setInterval(()=>{ if(state.obLink!==L||state.screen!=='onb'){ clearInterval(t); return; } L.n++; if(L.n>=3){ L.st='done'; clearInterval(t); const C=state.obConnected=state.obConnected||[]; if(!C.includes(L.svc)) C.push(L.svc); } render(); },650); }
+  else if(a==='obladd'){ state.obAdding=true; state.obLink=null; render(); }
+  else if(a==='obladdx'){ state.obAdding=false; render(); }
+  else if(a==='obphoto'){ state.obSheet='photo'; render(); }
+  else if(a==='obphx'){ state.obSheet=null; render(); }
+  else if(a==='obphv'){ state.obSheet=null; if(v==='take') toast('Camera opens here'); else if(v==='lib') state.obSheet='lib'; else if(v==='apple') state.obPhoto=MEP[3]; else if(v==='remove') state.obPhoto=-1; render(); }
+  else if(a==='obphpick'){ state.obPhoto=+v; state.obSheet=null; render(); }
+  else if(a==='obloc'){ if(state.obLoc==='on') return; state.obLocAsk=true; render(); }
+  else if(a==='oblocv'){ state.obLocAsk=false; if(v==='off') state.obLoc='off'; else { state.obLoc='on'; state.obCity='New York'; } render(); }
   else if(a==='obcity'){ state.obCity=v; render(); }
-  else if(a==='obscene'){ const L=state.obScenes=(state.obScenes||[]), i=+v, at=L.indexOf(i); if(at>=0) L.splice(at,1); else if(L.length<3) L.push(i); else toast('Pick up to 3 · tap one to swap it out'); render(); }
-  else if(a==='obdone'){ obFinish(true); }
+  else if(a==='obscene'){ const L=state.obScenes=(state.obScenes||[]), i=+v, at=L.indexOf(i); if(at>=0) L.splice(at,1); else if(L.length<3) L.push(i); else toast('Pick up to 3 · tap one to swap it out'); document.querySelectorAll('.ioch[data-act=obscene]').forEach(b=>b.setAttribute('aria-pressed',L.includes(+b.dataset.v))); const cn=document.getElementById('obscn'); if(cn) cn.textContent=L.length+' of 3 selected'; const g=document.querySelector('.obbot [data-act=obdone]'); if(g) g.disabled=!L.length; else render(); }
+  else if(a==='obdone'){ obFinish('crews'); }
   else if(a==='nxgo'){ const c=document.getElementById('nxcar'); if(c) c.scrollTo({left:+v*(c.firstElementChild.offsetWidth+10),behavior:'smooth'}); }
-  else if(a==='obreplay'){ state.ob=0; state.obLink=null; state.history=[]; state.screen='onb'; render(true); }
+  else if(a==='obreplay'){ state.ob=0; state.obLink=null; state.obConnected=[]; state.obAdding=false; state.obScenes=[]; state.history=[]; state.screen='onb'; state.psheet=false; state.sheet=false; state.tsheet=null; render(true); }
   else if(a==='cpin'){ if(t.dataset.grp&&t.classList.contains('grp')){ const cs2=[v,...t.dataset.grp.split('|')], pts=cs2.map(mxy), xs=pts.map(p=>p[0]), ys=pts.map(p=>p[1]); const sc=Math.min(1.3,Math.max(1.05,Math.min((VW-150)/(Math.max(...xs)-Math.min(...xs)+1),(VH-170)/(Math.max(...ys)-Math.min(...ys)+1)))); flyTo(viewFor((Math.min(...xs)+Math.max(...xs))/2,(Math.min(...ys)+Math.max(...ys))/2,sc)); } else if(state.csel===v&&t.classList.contains('sel')){ if(v===state.city) closeSheet(); else closeSheet(()=>setCity(v)); } else { state.csel=v; paintSel(true); } }
   else if(a==='cchip'){ state.csel=v; paintSel(true); }
   else if(a==='zin'){ zoomAt(1.45,VW/2,VH/2); }
