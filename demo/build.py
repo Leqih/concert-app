@@ -14,13 +14,24 @@ import sys, shutil
 WEB = '--web' in sys.argv   # web build: page + separate clip files (for the hosted artifact); default: one self-contained file
 clipv = [{('src' if WEB else 'v'): ('clips/'+x['n']+'.mp4' if WEB else b64(x['n']+'.mp4','video/mp4')), 'p': ('clips/'+x['n']+'.jpg' if WEB else b64(x['n']+'.jpg','image/jpeg')), 'd': x['d'],
           'k': {'c': x['c'], 'dsc': x['dsc'], 'fps': x['fps'], 'pk': x['pk']}} for x in json.load(open(p('clips/index.json')))]
+onb = json.load(open(p('onb.json')))  # onboarding card photos (hi-res portrait crops)
 av = json.load(open(p('avatars.json'))); ci = json.load(open(p('cities.json'))); mp = json.load(open(p('mapdots.json')))
 out = (s.replace('/*SHOWS*/', shows)
         .replace('/*AVATARS*/', json.dumps([x['img'] for x in av]))
+        .replace('/*ONB*/', json.dumps(onb))
         .replace('/*CITIES*/', json.dumps(ci))
         .replace('/*MAP*/', json.dumps(mp))
         .replace('/*CLIPV*/', json.dumps(clipv)))
 if WEB:
+    # bundled photos (posters, avatars, city cards) become files too, so the page itself stays small
+    import re, hashlib
+    os.makedirs(p('dist-web/img'), exist_ok=True)
+    def ext(m):
+        raw = base64.b64decode(m.group(2)); name = hashlib.md5(raw).hexdigest()[:12] + '.' + ('jpg' if m.group(1) == 'jpeg' else m.group(1))
+        f = p('dist-web/img/' + name)
+        if not os.path.exists(f): open(f, 'wb').write(raw)
+        return 'img/' + name
+    out = re.sub(r'data:image/(jpeg|png|webp);base64,([A-Za-z0-9+/=]{1500,})', ext, out)
     os.makedirs(p('dist-web/clips'), exist_ok=True)
     for x in json.load(open(p('clips/index.json'))):
         for ext in ('.mp4', '.jpg'): shutil.copy(p('clips/'+x['n']+ext), p('dist-web/clips/'+x['n']+ext))

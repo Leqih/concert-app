@@ -14,4 +14,4 @@ def rep(mo):
     return json.dumps(h[k]) if (k in h and not noimg) else 'null'
 code = re.sub(r'"@(m\d+)"', rep, code)
 code = re.sub(r"'@@(⟨d\d+⟩)'", lambda mo: "'" + m[mo.group(1)] + "'", code)
-out = f'{D}/calls/_ready.js'; open(out, 'w').write(code); print(len(code))
+out = f'{D}/calls/_ready_' + sys.argv[1]; open(out, 'w').write(code); print(len(code))

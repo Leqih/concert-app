@@ -5,7 +5,14 @@
   "buildCommand": "",
   "outputDirectory": ".",
   "rewrites": [
-    { "source": "/", "destination": "/demo/dist/plusone-demo.html" },
-    { "source": "/demo", "destination": "/demo/dist/plusone-demo.html" }
+    { "source": "/", "destination": "/demo/dist-web/index.html" },
+    { "source": "/demo", "destination": "/demo/dist-web/index.html" },
+    { "source": "/img/:path*", "destination": "/demo/dist-web/img/:path*" },
+    { "source": "/clips/:path*", "destination": "/demo/clips/:path*" },
+    { "source": "/offline", "destination": "/demo/dist/plusone-demo.html" }
+  ],
+  "headers": [
+    { "source": "/img/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }] },
+    { "source": "/clips/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=86400" }] }
   ]
 }

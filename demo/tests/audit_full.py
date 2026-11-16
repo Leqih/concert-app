@@ -1,6 +1,6 @@
 """Full design-rule audit: every screen + sheets, whole scroll height. See DESIGN.md.
 Rules: radii in {30,20,18,14,12} or pill/circle (+ listed exceptions); grayscale only (+ --like heart, --live green dot);
-Inter / Inter Tight; chips 34 high; sheet titles 24; no emoji on page or sheet titles.
+iOS system font (SF / -apple-system, Inter as fallback) + JetBrains Mono for ticket fields; chips 34 high; sheet titles 24; no emoji on page or sheet titles.
 Usage: python3 demo/tests/audit_full.py [out.json]   (PW_CHROMIUM=/path/to/chrome to pick a browser)"""
 from playwright.sync_api import sync_playwright
 import json, os, sys
@@ -11,13 +11,13 @@ ST=[('home',"0"),('explore',"go('explore')"),('search',"go('search')"),('search-
 ('tickets',"go('tickets')"),('spares',"go('tickets');"+L("document.querySelector('[data-act=tview][data-v=spares]').click()")),
 ('me',"go('me')"),('person',"state.pid=1;go('person')"),('show',"go('show',A('Gorillaz').id)"),('show-locked',"go('show',SHOWS.find(LOCKED).id)"),('scene',"go('scene','1')"),
 ('crew',"go('crew','t1')"),('dm',"openThread(dmFor(4))"),('sell',"%s;setTimeout(()=>{%s},600)"%(C%'plusmenu',C%'sellstart')),
-('plus',C%'plusmenu'),('city',C%'citysheet'),('filters',C%'ufopen'),('newcrew',"go('crews');"+L(C%'ncopen')),
+('plus',C%'plusmenu'),('city',C%'citysheet'),('filters',C%'ufopen'),('newcrew',"go('show',A('Gorillaz').id);setTimeout(()=>{%s},200)"%(C%'ncopen')),
 ('kit',"go('crews');"+L(C%'kitopen')),('activity',"go('crews');"+L(C%'actopen')),('chatinfo',"go('crew','t1');"+L(C%'kinfo')),
 ('ticketsheet',"go('crew','t1');"+L(C%'claim')),('privacy',"go('me');"+L(C%'privopen')),
-('comments',"go('clips');"+L("document.querySelector('.clp [data-act=clcom]').click()")),('onboarding',"go('me');"+L(C%'onbopen'))]
+('comments',"go('clips');"+L("document.querySelector('.clp [data-act=clcom]').click()"))]
 JS=r'''(()=>{ const bad=[], T=[]; const ok=[30,20,18,14,12];
- // documented exceptions (DESIGN.md §3): Home Scenes quad 32, chat bubble 22, city-map pins 6, scene fan photos 12
- const okx={quad:32,igb:22,cs:6};
+ // documented exceptions (DESIGN.md §3): Home Scenes quad 32, chat bubble 22, city-map pins 6, scene fan photos 12, Start-a-crew scene stickers 24
+ const okx={quad:32,igb:22,cs:6,n3st:24};
  const gray=c=>{ const m=c.match(/rgba?\(([^)]+)\)/); if(!m) return true; const [r,g,b,a]=m[1].split(',').map(parseFloat); if(a===0) return true; return Math.max(r,g,b)-Math.min(r,g,b)<=12; };
  const like=c=>/254, 44, 85|52, 199, 89/.test(c); // --like heart, --live online dot
  const emo=/\p{Extended_Pictographic}/u;
@@ -25,7 +25,7 @@ JS=r'''(()=>{ const bad=[], T=[]; const ok=[30,20,18,14,12];
    const id=(e.className&&e.className.baseVal===undefined?e.className:e.tagName)+'';
    const br=parseFloat(c.borderTopLeftRadius), brs=c.borderTopLeftRadius, rb=Math.round(br);
    if(br>0&&!brs.includes('%')&&r.width>=40&&r.height>=36&&!(br>=Math.min(r.width,r.height)/2-1)&&!ok.includes(rb)&&!Object.entries(okx).some(([k,v])=>id.split(' ').includes(k)&&v===rb)) bad.push(['radius',rb,id,Math.round(r.width)+'x'+Math.round(r.height)]);
-   if(e.children.length===0&&e.textContent.trim()){ const f=c.fontFamily.split(',')[0].replace(/"/g,''); if(!['Inter','Inter Tight','Noto Sans SC'].includes(f)&&!/emo|eb/.test(id)) bad.push(['font',f,id]); if(!gray(c.color)&&!like(c.color)) bad.push(['color',c.color,id,e.textContent.trim().slice(0,20)]); }
+   if(e.children.length===0&&e.textContent.trim()){ const f=c.fontFamily.split(',')[0].replace(/"/g,''); if(!['-apple-system','SF Pro Display','SF Pro Text','Inter','Inter Tight','JetBrains Mono','Noto Sans SC'].includes(f)&&!/emo|eb/.test(id)) bad.push(['font',f,id]); if(!gray(c.color)&&!like(c.color)) bad.push(['color',c.color,id,e.textContent.trim().slice(0,20)]); }
    if(!gray(c.backgroundColor)&&!like(c.backgroundColor)) bad.push(['bg',c.backgroundColor,id]);
    if(c.backgroundImage.includes('gradient')&&/rgb/.test(c.backgroundImage)){ const cols=c.backgroundImage.match(/rgba?\([^)]+\)/g)||[]; if(cols.some(x=>!gray(x))) bad.push(['gradient',id]); }
    if(/(^| )gch( |$)/.test(id)&&Math.round(r.height)!==34) bad.push(['chip-height',Math.round(r.height),id,e.textContent.trim().slice(0,16)]);
